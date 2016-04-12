@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.usermanagment.UserManagementService;
 import com.ccighgo.service.transport.common.beans.deletereq.DeleteRequest;
+import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.usermanagement.beans.cciuser.CCIUsers;
 import com.ccighgo.service.transport.usermanagement.beans.cciuser.SupervisorDetails;
 import com.ccighgo.service.transport.usermanagement.beans.deafultpermissions.StaffUserDefaultPermissionGroupOptions;
@@ -247,8 +248,8 @@ public class UserManagement {
    @GET
    @Path("reset/auth/{id}")
    @Produces("application/json")
-   public User resetPassword(@PathParam("id") String id) {
-      return userMgmtServices.resetPassword(id);
+   public Response resetPassword(@PathParam("id") String loginId) {
+      return userMgmtServices.resetPassword(loginId, request);
    }
 
    /**
