@@ -71,6 +71,7 @@ import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.components.errormessages.constants.UserManagementMessageConstants;
 import com.ccighgo.service.transport.common.beans.deletereq.DeleteRequest;
+import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.usermanagement.beans.cciuser.CCIUser;
 import com.ccighgo.service.transport.usermanagement.beans.cciuser.CCIUserDepartmentProgram;
 import com.ccighgo.service.transport.usermanagement.beans.cciuser.CCIUserStaffRole;
@@ -102,6 +103,7 @@ import com.ccighgo.service.transport.utility.beans.role.Role;
 import com.ccighgo.service.transport.utility.beans.role.Roles;
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.CCIUtils;
+import com.ccighgo.utils.ExceptionUtil;
 import com.ccighgo.utils.PasswordUtil;
 import com.ccighgo.utils.UuidUtils;
 import com.ccighgo.utils.ValidationUtils;
@@ -148,6 +150,8 @@ public class UserManagementServiceImpl implements UserManagementService {
    @Autowired CCIStaffUsersResourcePermissionRepository cciStaffUsersResourcePermissionRepository;
 
    @Autowired CCISaffDefaultPermissionRepository cciSaffDefaultPermissionRepository;
+   
+   @Autowired EmailServiceImpl emailingService;
 
    @Autowired CommonComponentUtils componentUtils;
 
@@ -1598,9 +1602,45 @@ public class UserManagementServiceImpl implements UserManagementService {
       return userDepartmentProgramsList;
    }
 
-   public User resetPassword(String userId) {
-      return null;
+   public Response resetPassword(String loginId, HttpServletRequest request) {
+      Response response = new Response();
+      try {
+         if (loginId == null || Integer.valueOf(loginId) == 0 || Integer.valueOf(loginId) < 0) {
+            throw new CcighgoException("invalig goId, unable to process reset request");
+         }
+         Login login = loginRepository.findByLoginId(Integer.valueOf(loginId));
+         if (login != null) {
+            String body = "<p>Ciao! </p>" + "<p>This email was sent automatically by Greenheart Online (GO) in response to your request for a new password. </p>" + "<p>"
+                  + "Your username is : " + login.getLoginName() + "</p>" + "<p>Please click on the link below to create a new password:</p> " + "<p>"
+                  + formResetURL(request).concat(login.getKeyValue()) + "</p>" + "<p>If you didn't request a new password, please let us know.</p>" + "<p>Thank you,</p>"
+                  + "<p>CCI Greenheart.</p>";
+            emailingService.send(login.getEmail(), CCIConstants.RESET_PASSWORD_SUBJECT, body, true);
+            response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
+                  "An email has been sent to address " + "\'" + login.getEmail() + "\'" + " for login name " + "\'" + login.getLoginName() + "\'"
+                        + " with instructions to reset password"));
+         } else {
+            response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
+                  messageUtil.getMessage(CCIConstants.NO_RECORD)));
+            LOGGER.error(messageUtil.getMessage(CCIConstants.NO_RECORD));
+         }
+      } catch (CcighgoException e) {
+         response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_USER.getValue(), e.getMessage()));
+         LOGGER.error(e.getMessage());
+      }
+      return response;
    }
+   
+   private String formResetURL(HttpServletRequest request) {
+      String url = "";
+      try {
+         url = request.getHeader("Origin") + CCIConstants.RESET_PASSWORD_LINK;
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, LOGGER);
+      }
+      return url;
+   }
+   
+   
 
    /**
     * @param user
