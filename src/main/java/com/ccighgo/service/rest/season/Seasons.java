@@ -54,6 +54,17 @@ import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.WPCAPProgr
 import com.ccighgo.service.transport.seasons.beans.seasonwpcapdetails.WPCAPTraineeDetails;
 import com.ccighgo.service.transport.utility.beans.documenttype.DocumentTypes;
 
+/**
+ * <p>
+ * Rest service interface exposes list of services for Season management.
+ * </p>
+ * 
+ * @see com.ccighgo.service.components.season.SeasonServiceInterface
+ * @see com.ccighgo.service.components.season.SeasonServiceInterfaceImpl
+ * 
+ * @author ravi
+ *
+ */
 @Path("/season/")
 @Produces("application/json")
 @Consumes("application/json")
@@ -71,78 +82,94 @@ public class Seasons {
       return input;
    }
 
+   /**
+    * Service to list all available seasons in the system
+    * 
+    * @return list of seasons in json format
+    */
    @GET
    @Path("list/")
    @Produces("application/json")
    public SeasonsList getAllSeasons() {
       LOGGER.debug("Calling Get All Seasons 'func:getAllSeasons'");
-      SeasonsList result = seasonServices.getAllSeasons();
-      LOGGER.debug("Result Count : " + result.getRecordCount());
-      return result;
+      return seasonServices.getAllSeasons();
    }
 
+   /**
+    * Service to edit existing season.
+    * 
+    * @param id
+    * @return Season object as JSON 
+    */
    @GET
    @Path("edit/{id}")
    @Produces("application/json")
    public SeasonBean editSeason(@PathParam("id") String id) {
       LOGGER.debug("Calling Edit Season By Id 'func:editSeason'");
-      LOGGER.debug("Season ID  : " + id);
-      SeasonBean result = seasonServices.editSeason(id);
-      return result;
+      return seasonServices.editSeason(id);
    }
 
+   /**
+    * Service to view details of existing season
+    * 
+    * @param id
+    * @return
+    */
    @GET
    @Path("view/{id}")
    @Produces("application/json")
    public SeasonBean view(@PathParam("id") String id) {
       LOGGER.debug("Calling Get Season By Id 'func:View'");
-      LOGGER.debug("Season ID  : " + id);
-      SeasonBean result = seasonServices.viewSeason(id);
-      return result;
+      return seasonServices.viewSeason(id);
    }
 
+   /**
+    * Service to create a new season.
+    * 
+    * @param seasonBean
+    * @return newly created season
+    */
    @POST
    @Path("create")
    @Consumes("application/json")
    public SeasonBean createSeason(SeasonBean seasonBean) {
       LOGGER.debug("Calling Create Season function 'func:createSeason'");
-      if (seasonBean != null)
-         LOGGER.debug("Season ID  : " + seasonBean.getSeasonId());
-      else
-         LOGGER.debug("Object SeasonBean is NULL !!");
       return seasonServices.createSeason(seasonBean);
    }
 
+   /**
+    * Update an existing season.
+    * 
+    * @param seasonBean
+    * @return updated season
+    */
    @POST
    @Path("update")
    @Consumes("application/json")
    public SeasonBean updateSeason(SeasonBean seasonBean) {
       LOGGER.debug("Calling Update Season'func:updateSeason'");
-      if (seasonBean != null)
-         LOGGER.debug("Season ID  : " + seasonBean.getSeasonId());
-      else
-         LOGGER.debug("Object SeasonBean is NULL !!");
       return seasonServices.updateSeason(seasonBean);
    }
 
-   @GET
-   @Path("deleteSeason/{id}")
-   @Produces("application/json")
-   public DeleteRequest deleteSeason(@PathParam("id") String id) {
-      LOGGER.debug("Calling Delete Season'func:deleteSeason'");
-      LOGGER.debug("Season ID  : " + id);
-      return seasonServices.deleteSeason(id);
-   }
-
+   /**
+    * Gets season programs for high level season
+    * 
+    * @param seasonId
+    * @return
+    */
    @GET
    @Path("program/season/{seasonId}")
    @Produces("application/json")
    public SeasonPrograms getSeasonProgram(@PathParam("seasonId") String seasonId) {
       LOGGER.debug("Calling 'fun:getSeasonProgram' ");
-      LOGGER.debug("Season ID  : " + seasonId);
       return seasonServices.getSeasonPrograms(seasonId);
    }
 
+   /**
+    * Gets the status of season if it is open, closed or draft
+    * 
+    * @return
+    */
    @GET
    @Path("status")
    @Produces("application/json")
@@ -153,15 +180,22 @@ public class Seasons {
 
    // HSP J1HS view services
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("j1hs/details/view/{seasonProgramId}")
    @Produces("application/json")
    public SeasonHspJ1HSDetails getJ1Details(@PathParam("seasonProgramId") String seasonProgramId) {
       LOGGER.debug("Calling 'fun:getJ1Details'");
-      LOGGER.debug("seasonProgramId  : " + seasonProgramId);
       return seasonServices.getHSPJ1HSSeasonDetails(seasonProgramId);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("j1hs/base/view/{seasonProgramId}")
    @Produces("application/json")
@@ -171,6 +205,10 @@ public class Seasons {
       return seasonServices.getHSPJ1HSSeasonNameAndStatus(seasonProgramId);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("j1hs/jan/view/{seasonProgramId}")
    @Produces("application/json")
@@ -180,6 +218,10 @@ public class Seasons {
       return seasonServices.getHSPJ1HSSeasonJanStartDetails(seasonProgramId);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("j1hs/aug/view/{seasonProgramId}")
    @Produces("application/json")
@@ -189,6 +231,10 @@ public class Seasons {
       return seasonServices.getHSPJ1HSSeasonAugStartDetails(seasonProgramId);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("j1hs/field/view/{seasonProgramId}/settings")
    @Produces("application/json")
@@ -198,6 +244,10 @@ public class Seasons {
       return seasonServices.getHSPJ1HSSeasonFieldSettings(seasonProgramId);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("j1hs/program/view/{seasonProgramId}/allocation")
    @Produces("application/json")
@@ -209,6 +259,10 @@ public class Seasons {
 
    // HSP J1HS edit services
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("j1hs/details/edit/{seasonProgramId}")
    @Produces("application/json")
@@ -218,6 +272,10 @@ public class Seasons {
       return seasonServices.getHSPJ1HSSeasonDetails(seasonProgramId);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("j1hs/base/edit/{seasonProgramId}")
    @Produces("application/json")
@@ -227,6 +285,10 @@ public class Seasons {
       return seasonServices.getHSPJ1HSSeasonNameAndStatus(seasonProgramId);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("j1hs/jan/edit/{seasonProgramId}")
    @Produces("application/json")
@@ -236,6 +298,10 @@ public class Seasons {
       return seasonServices.getHSPJ1HSSeasonJanStartDetails(seasonProgramId);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("j1hs/aug/edit/{seasonProgramId}")
    @Produces("application/json")
@@ -245,6 +311,10 @@ public class Seasons {
       return seasonServices.getHSPJ1HSSeasonAugStartDetails(seasonProgramId);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("j1hs/field/edit/{seasonProgramId}/settings")
    @Produces("application/json")
@@ -254,6 +324,10 @@ public class Seasons {
       return seasonServices.getHSPJ1HSSeasonFieldSettings(seasonProgramId);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("j1hs/program/edit/{seasonProgramId}/allocation")
    @Produces("application/json")
@@ -265,6 +339,10 @@ public class Seasons {
 
    // HSP J1HS update services
 
+   /**
+    * @param seasonHspJ1HSDetails
+    * @return
+    */
    @POST
    @Path("j1hs/details/update")
    @Consumes("application/json")
@@ -277,6 +355,10 @@ public class Seasons {
       return seasonServices.updateHSPJ1HSSeasonDetails(seasonHspJ1HSDetails);
    }
 
+   /**
+    * @param j1hsBasicDetail
+    * @return
+    */
    @POST
    @Path("j1hs/base/update")
    @Consumes("application/json")
@@ -289,6 +371,10 @@ public class Seasons {
       return seasonServices.updateHSPJ1HSSeasonNameAndStatus(j1hsBasicDetail);
    }
 
+   /**
+    * @param j1hsJanStart
+    * @return
+    */
    @POST
    @Path("j1hs/jan/update")
    @Consumes("application/json")
@@ -298,6 +384,10 @@ public class Seasons {
       return seasonServices.updateHSPJ1HSSeasonJanStartDetails(j1hsJanStart);
    }
 
+   /**
+    * @param j1hsAugStart
+    * @return
+    */
    @POST
    @Path("j1hs/aug/update")
    @Consumes("application/json")
@@ -310,6 +400,10 @@ public class Seasons {
       return seasonServices.updateHSPJ1HSSeasonAugStartDetails(j1hsAugStart);
    }
 
+   /**
+    * @param j1hsFieldSettings
+    * @return
+    */
    @POST
    @Path("j1hs/field/settings/update")
    @Consumes("application/json")
@@ -322,6 +416,10 @@ public class Seasons {
       return seasonServices.updateHSPJ1HSSeasonFieldSettings(j1hsFieldSettings);
    }
 
+   /**
+    * @param j1hsProgramAllocations
+    * @return
+    */
    @POST
    @Path("j1hs/program/update/allocation")
    @Consumes("application/json")
@@ -340,6 +438,10 @@ public class Seasons {
     * view - Edit- update
     */
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("f1/view/details/{seasonProgramId}")
    @Produces("application/json")
@@ -349,6 +451,10 @@ public class Seasons {
       return seasonServices.getSeasonHSPF1Details(seasonProgramId);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("f1/edit/details/{seasonProgramId}")
    @Produces("application/json")
@@ -358,6 +464,10 @@ public class Seasons {
       return seasonServices.getSeasonHSPF1Details(seasonProgramId);
    }
 
+   /**
+    * @param seasonHSPF1Details
+    * @return
+    */
    @POST
    @Path("f1/update/details")
    @Produces("application/json")
@@ -370,6 +480,10 @@ public class Seasons {
       return seasonServices.updateF1Details(seasonHSPF1Details);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("f1/view/basicdetails/{seasonProgramId}")
    @Produces("application/json")
@@ -379,6 +493,10 @@ public class Seasons {
       return seasonServices.getHSPF1NameAndStatus(seasonProgramId);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("f1/edit/basicdetails/{seasonProgramId}")
    @Produces("application/json")
@@ -388,6 +506,10 @@ public class Seasons {
       return seasonServices.getHSPF1NameAndStatus(seasonProgramId);
    }
 
+   /**
+    * @param hspf1BasicDetails
+    * @return
+    */
    @POST
    @Path("f1/update/basicdetails")
    @Produces("application/json")
@@ -400,6 +522,10 @@ public class Seasons {
       return seasonServices.updateHSPF1NameAndStatus(hspf1BasicDetails);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("f1/view/accounting/{seasonProgramId}")
    @Produces("application/json")
@@ -409,6 +535,10 @@ public class Seasons {
       return seasonServices.getHSPF1Accounting(seasonProgramId);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("f1/edit/accounting/{seasonProgramId}")
    @Produces("application/json")
@@ -418,6 +548,10 @@ public class Seasons {
       return seasonServices.getHSPF1Accounting(seasonProgramId);
    }
 
+   /**
+    * @param hspf1Accounting
+    * @return
+    */
    @POST
    @Path("f1/update/accounting")
    @Produces("application/json")
@@ -430,6 +564,10 @@ public class Seasons {
       return seasonServices.updateF1Accounting(hspf1Accounting);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("f1/view/jan/startdetails/{seasonProgramId}")
    @Produces("application/json")
@@ -439,6 +577,10 @@ public class Seasons {
       return seasonServices.getHSPF1JanuaryStart2NdSemesterDetails(seasonProgramId);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("f1/edit/jan/startdetails/{seasonProgramId}")
    @Produces("application/json")
@@ -448,6 +590,10 @@ public class Seasons {
       return seasonServices.getHSPF1JanuaryStart2NdSemesterDetails(seasonProgramId);
    }
 
+   /**
+    * @param hspf1JanuaryStart2NdSemesterDetails
+    * @return
+    */
    @POST
    @Path("f1/update/jan/startdetails")
    @Produces("application/json")
@@ -460,6 +606,10 @@ public class Seasons {
       return seasonServices.updateF1JanStart2NdSemesterDetails(hspf1JanuaryStart2NdSemesterDetails);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("f1/view/jan/fulldetails/{seasonProgramId}")
    @Produces("application/json")
@@ -469,6 +619,10 @@ public class Seasons {
       return seasonServices.getHSPF1JanuaryStartFullYearDetails(seasonProgramId);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("f1/edit/jan/fulldetails/{seasonProgramId}")
    @Produces("application/json")
@@ -478,6 +632,10 @@ public class Seasons {
       return seasonServices.getHSPF1JanuaryStartFullYearDetails(seasonProgramId);
    }
 
+   /**
+    * @param hspf1JanuaryStartFullYearDetail
+    * @return
+    */
    @POST
    @Path("f1/update/jan/fulldetails")
    @Produces("application/json")
@@ -490,6 +648,10 @@ public class Seasons {
       return seasonServices.updateF1JanStartFullYearDetails(hspf1JanuaryStartFullYearDetail);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("f1/view/august/startdetail/{seasonProgramId}")
    @Produces("application/json")
@@ -499,6 +661,10 @@ public class Seasons {
       return seasonServices.getHSPF1AugustStart1StSemesterDetails(seasonProgramId);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("f1/edit/august/startdetail/{seasonProgramId}")
    @Produces("application/json")
@@ -508,6 +674,10 @@ public class Seasons {
       return seasonServices.getHSPF1AugustStart1StSemesterDetails(seasonProgramId);
    }
 
+   /**
+    * @param hspf1AugustStart1StSemesterDetails
+    * @return
+    */
    @POST
    @Path("f1/update/august/startdetail")
    @Produces("application/json")
@@ -520,6 +690,10 @@ public class Seasons {
       return seasonServices.updateF1AugStart1StSemesterDetails(hspf1AugustStart1StSemesterDetails);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("f1/view/august/fulldetail/{seasonProgramId}")
    @Produces("application/json")
@@ -529,6 +703,10 @@ public class Seasons {
       return seasonServices.getHSPF1AugustStartFullYearDetails(seasonProgramId);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("f1/edit/august/fulldetail/{seasonProgramId}")
    @Produces("application/json")
@@ -538,6 +716,10 @@ public class Seasons {
       return seasonServices.getHSPF1AugustStartFullYearDetails(seasonProgramId);
    }
 
+   /**
+    * @param hspf1AugustStartFullYearDetails
+    * @return
+    */
    @POST
    @Path("f1/update/august/fulldetail")
    @Produces("application/json")
@@ -550,6 +732,10 @@ public class Seasons {
       return seasonServices.updateF1AugStartFullYearDetails(hspf1AugustStartFullYearDetails);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("f1/view/fieldsettings/{seasonProgramId}")
    @Produces("application/json")
@@ -559,6 +745,10 @@ public class Seasons {
       return seasonServices.getHSPF1FieldSettings(seasonProgramId);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("f1/edit/fieldsettings/{seasonProgramId}")
    @Produces("application/json")
@@ -568,6 +758,10 @@ public class Seasons {
       return seasonServices.getHSPF1FieldSettings(seasonProgramId);
    }
 
+   /**
+    * @param hspf1FieldSettings
+    * @return
+    */
    @POST
    @Path("f1/update/fieldsettings")
    @Produces("application/json")
@@ -580,6 +774,10 @@ public class Seasons {
       return seasonServices.updateF1FieldSettings(hspf1FieldSettings);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("f1/view/allocation/{seasonProgramId}")
    @Produces("application/json")
@@ -589,6 +787,10 @@ public class Seasons {
       return seasonServices.getHSPF1ProgramAllocations(seasonProgramId);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("f1/edit/allocation/{seasonProgramId}")
    @Produces("application/json")
@@ -598,6 +800,10 @@ public class Seasons {
       return seasonServices.getHSPF1ProgramAllocations(seasonProgramId);
    }
 
+   /**
+    * @param hspf1ProgramAllocations
+    * @return
+    */
    @POST
    @Path("f1/update/allocation")
    @Produces("application/json")
@@ -615,6 +821,10 @@ public class Seasons {
 
    // GHT Volunteer abroad services
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("ght/va/details/view/{seasonProgramId}")
    @Produces("application/json")
@@ -624,6 +834,10 @@ public class Seasons {
       return seasonServices.getGHTVASeasonDetails(seasonProgramId);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("ght/va/base/view/{seasonProgramId}")
    @Produces("application/json")
@@ -631,6 +845,10 @@ public class Seasons {
       return seasonServices.getGHTVASeasonNameAndStatus(seasonProgramId);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("ght/va/date/section/view/{seasonProgramId}")
    @Produces("application/json")
@@ -639,6 +857,10 @@ public class Seasons {
    }
 
    // edit
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("ght/va/details/edit/{seasonProgramId}")
    @Produces("application/json")
@@ -646,6 +868,10 @@ public class Seasons {
       return seasonServices.getGHTVASeasonDetails(seasonProgramId);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("ght/va/base/edit/{seasonProgramId}")
    @Produces("application/json")
@@ -653,6 +879,10 @@ public class Seasons {
       return seasonServices.getGHTVASeasonNameAndStatus(seasonProgramId);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("ght/va/date/section/edit/{seasonProgramId}")
    @Produces("application/json")
@@ -661,6 +891,10 @@ public class Seasons {
    }
 
    // update
+   /**
+    * @param seasonGHTDetails
+    * @return
+    */
    @POST
    @Path("ght/va/details/update")
    @Consumes("application/json")
@@ -668,6 +902,10 @@ public class Seasons {
       return seasonServices.updateGHTVASeasonDetails(seasonGHTDetails);
    }
 
+   /**
+    * @param ghtSection1Base
+    * @return
+    */
    @POST
    @Path("ght/va/base/update")
    @Consumes("application/json")
@@ -675,6 +913,10 @@ public class Seasons {
       return seasonServices.updateGHTVASeasonNameAndStatus(ghtSection1Base);
    }
 
+   /**
+    * @param ghtSection2Dates
+    * @return
+    */
    @POST
    @Path("ght/va/date/section/update")
    @Consumes("application/json")
@@ -684,6 +926,10 @@ public class Seasons {
 
    // GHT work abroad services
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("ght/wa/details/view/{seasonProgramId}")
    @Produces("application/json")
@@ -691,6 +937,10 @@ public class Seasons {
       return seasonServices.getGHTWASeasonDetails(seasonProgramId);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("ght/wa/base/view/{seasonProgramId}")
    @Produces("application/json")
@@ -698,6 +948,10 @@ public class Seasons {
       return seasonServices.getGHTWASeasonNameAndStatus(seasonProgramId);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("ght/wa/date/section/view/{seasonProgramId}")
    @Produces("application/json")
@@ -706,6 +960,10 @@ public class Seasons {
    }
 
    // edit
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("ght/wa/details/edit/{seasonProgramId}")
    @Produces("application/json")
@@ -713,6 +971,10 @@ public class Seasons {
       return seasonServices.getGHTWASeasonDetails(seasonProgramId);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("ght/wa/base/edit/{seasonProgramId}")
    @Produces("application/json")
@@ -720,6 +982,10 @@ public class Seasons {
       return seasonServices.getGHTWASeasonNameAndStatus(seasonProgramId);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("ght/wa/date/section/edit/{seasonProgramId}")
    @Produces("application/json")
@@ -728,6 +994,10 @@ public class Seasons {
    }
 
    // update
+   /**
+    * @param seasonGHTDetails
+    * @return
+    */
    @POST
    @Path("ght/wa/details/update")
    @Consumes("application/json")
@@ -735,6 +1005,10 @@ public class Seasons {
       return seasonServices.updateGHTWASeasonDetails(seasonGHTDetails);
    }
 
+   /**
+    * @param ghtSection1Base
+    * @return
+    */
    @POST
    @Path("ght/wa/base/update")
    @Consumes("application/json")
@@ -742,6 +1016,10 @@ public class Seasons {
       return seasonServices.updateGHTWASeasonNameAndStatus(ghtSection1Base);
    }
 
+   /**
+    * @param ghtSection2Dates
+    * @return
+    */
    @POST
    @Path("ght/wa/date/section/update")
    @Consumes("application/json")
@@ -750,6 +1028,10 @@ public class Seasons {
    }
 
    // GHT (HS abroad , Language School, Teach Abroad)
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("ght/hsa/view/details/{seasonProgramId}")
    @Produces("application/json")
@@ -757,6 +1039,10 @@ public class Seasons {
       return seasonServices.getGHTHSAbroad(seasonProgramId);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("ght/hsa/edit/details/{seasonProgramId}")
    @Produces("application/json")
@@ -764,6 +1050,10 @@ public class Seasons {
       return seasonServices.getGHTHSAbroad(seasonProgramId);
    }
 
+   /**
+    * @param seasonGHTDetails
+    * @return
+    */
    @POST
    @Path("ght/hsa/update/details")
    @Produces("application/json")
@@ -772,6 +1062,10 @@ public class Seasons {
    }
 
    // sections
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("ght/hsa/view/sec1/{seasonProgramId}")
    @Produces("application/json")
@@ -779,6 +1073,10 @@ public class Seasons {
       return seasonServices.getGHTHSSection1BaseAbroad(seasonProgramId);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("ght/hsa/edit/sec1/{seasonProgramId}")
    @Produces("application/json")
@@ -786,6 +1084,10 @@ public class Seasons {
       return seasonServices.getGHTHSSection1BaseAbroad(seasonProgramId);
    }
 
+   /**
+    * @param ghtSection1Base
+    * @return
+    */
    @POST
    @Path("ght/hsa/update/sec1")
    @Produces("application/json")
@@ -793,6 +1095,10 @@ public class Seasons {
       return seasonServices.updateGHTHSSection1BaseAbroad(ghtSection1Base);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("ght/hsa/view/datesec/{seasonProgramId}")
    @Produces("application/json")
@@ -800,6 +1106,10 @@ public class Seasons {
       return seasonServices.getGHTHSSection2DatesAbroad(seasonProgramId);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("ght/hsa/edit/datesec/{seasonProgramId}")
    @Produces("application/json")
@@ -807,6 +1117,10 @@ public class Seasons {
       return seasonServices.getGHTHSSection2DatesAbroad(seasonProgramId);
    }
 
+   /**
+    * @param ghtSection2Dates
+    * @return
+    */
    @POST
    @Path("ght/hsa/update/datesec")
    @Produces("application/json")
@@ -816,6 +1130,10 @@ public class Seasons {
 
    // LS
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("ght/ls/view/{seasonProgramId}")
    @Produces("application/json")
@@ -823,6 +1141,10 @@ public class Seasons {
       return seasonServices.getGHTLanguageSchool(seasonProgramId);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("ght/ls/edit/{seasonProgramId}")
    @Produces("application/json")
@@ -830,6 +1152,10 @@ public class Seasons {
       return seasonServices.getGHTLanguageSchool(seasonProgramId);
    }
 
+   /**
+    * @param seasonGHTDetails
+    * @return
+    */
    @POST
    @Path("ght/ls/update")
    @Produces("application/json")
@@ -838,6 +1164,10 @@ public class Seasons {
    }
 
    // sections
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("ght/ls/view/sec1/{seasonProgramId}")
    @Produces("application/json")
@@ -845,6 +1175,10 @@ public class Seasons {
       return seasonServices.getGHTLanguageSchoolSection1(seasonProgramId);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("ght/ls/edit/sec1/{seasonProgramId}")
    @Produces("application/json")
@@ -852,6 +1186,10 @@ public class Seasons {
       return seasonServices.getGHTLanguageSchoolSection1(seasonProgramId);
    }
 
+   /**
+    * @param seasonGHTDetails
+    * @return
+    */
    @POST
    @Path("ght/ls/update/sec1")
    @Produces("application/json")
@@ -859,6 +1197,10 @@ public class Seasons {
       return seasonServices.updateGHTLanguageSchoolSection1(seasonGHTDetails);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("ght/ls/view/datesec/{seasonProgramId}")
    @Produces("application/json")
@@ -866,6 +1208,10 @@ public class Seasons {
       return seasonServices.getGHTLanguageSchoolSection2Dates(seasonProgramId);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("ght/ls/edit/datesec/{seasonProgramId}")
    @Produces("application/json")
@@ -873,6 +1219,10 @@ public class Seasons {
       return seasonServices.getGHTLanguageSchoolSection2Dates(seasonProgramId);
    }
 
+   /**
+    * @param ghtSection2Dates
+    * @return
+    */
    @POST
    @Path("ght/ls/update/datesec")
    @Produces("application/json")
@@ -882,6 +1232,10 @@ public class Seasons {
 
    // TA
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("ght/ta/view/{seasonProgramId}")
    @Produces("application/json")
@@ -889,6 +1243,10 @@ public class Seasons {
       return seasonServices.getGHTTeachAbroad(seasonProgramId);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("ght/ta/edit/{seasonProgramId}")
    @Produces("application/json")
@@ -896,6 +1254,10 @@ public class Seasons {
       return seasonServices.getGHTTeachAbroad(seasonProgramId);
    }
 
+   /**
+    * @param seasonGHTDetails
+    * @return
+    */
    @POST
    @Path("ght/ta/update")
    @Produces("application/json")
@@ -904,6 +1266,10 @@ public class Seasons {
    }
 
    // sections
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("ght/ta/view/sec1/{seasonProgramId}")
    @Produces("application/json")
@@ -911,6 +1277,10 @@ public class Seasons {
       return seasonServices.getGHTTeachAbroadSection1(seasonProgramId);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("ght/ta/edit/sec1/{seasonProgramId}")
    @Produces("application/json")
@@ -918,6 +1288,10 @@ public class Seasons {
       return seasonServices.getGHTTeachAbroadSection1(seasonProgramId);
    }
 
+   /**
+    * @param ghtSection1Base
+    * @return
+    */
    @POST
    @Path("ght/ta/update/sec1")
    @Produces("application/json")
@@ -925,6 +1299,10 @@ public class Seasons {
       return seasonServices.updateGHTTeachAbroadSection1(ghtSection1Base);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("ght/ta/view/datesec/{seasonProgramId}")
    @Produces("application/json")
@@ -932,6 +1310,10 @@ public class Seasons {
       return seasonServices.getGHTTeachAbroadSection2Dates(seasonProgramId);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("ght/ta/edit/datesec/{seasonProgramId}")
    @Produces("application/json")
@@ -939,6 +1321,10 @@ public class Seasons {
       return seasonServices.getGHTTeachAbroadSection2Dates(seasonProgramId);
    }
 
+   /**
+    * @param ghtSection2Dates
+    * @return
+    */
    @POST
    @Path("ght/ta/update/datesec")
    @Produces("application/json")
@@ -947,14 +1333,21 @@ public class Seasons {
    }
 
    // work program --> Cap
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("wp/cap/view/details/{seasonProgramId}")
    @Produces("application/json")
    public SeasonWPCAPDetails getWPCAPDetails(@PathParam("seasonProgramId") String seasonProgramId) {
-
       return seasonServices.getWPCAPDetails(seasonProgramId);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("wp/cap/edit/details/{seasonProgramId}")
    @Produces("application/json")
@@ -962,6 +1355,10 @@ public class Seasons {
       return seasonServices.getWPCAPDetails(seasonProgramId);
    }
 
+   /**
+    * @param seasonWPCAPDetails
+    * @return
+    */
    @POST
    @Path("wp/cap/update/details")
    @Produces("application/json")
@@ -970,6 +1367,10 @@ public class Seasons {
    }
 
    // basic
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("wp/cap/view/basic/details/{seasonProgramId}")
    @Produces("application/json")
@@ -977,6 +1378,10 @@ public class Seasons {
       return seasonServices.getWPCAPBasicDetails(seasonProgramId);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("wp/cap/edit/basic/details/{seasonProgramId}")
    @Produces("application/json")
@@ -984,6 +1389,10 @@ public class Seasons {
       return seasonServices.getWPCAPBasicDetails(seasonProgramId);
    }
 
+   /**
+    * @param seasonWpcapBasicDetails
+    * @return
+    */
    @POST
    @Path("wp/cap/update/basic/details")
    @Produces("application/json")
@@ -992,6 +1401,10 @@ public class Seasons {
    }
 
    // internship
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("wp/cap/view/internship/details/{seasonProgramId}")
    @Produces("application/json")
@@ -999,6 +1412,10 @@ public class Seasons {
       return seasonServices.getWPCAPInternshipDetails(seasonProgramId);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("wp/cap/edit/internship/details/{seasonProgramId}")
    @Produces("application/json")
@@ -1006,6 +1423,10 @@ public class Seasons {
       return seasonServices.getWPCAPInternshipDetails(seasonProgramId);
    }
 
+   /**
+    * @param wpcapInternshipDetails
+    * @return
+    */
    @POST
    @Path("wp/cap/update/internship/details")
    @Produces("application/json")
@@ -1014,6 +1435,10 @@ public class Seasons {
    }
 
    // trainee details
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("wp/cap/view/trainee/details/{seasonProgramId}")
    @Produces("application/json")
@@ -1021,6 +1446,10 @@ public class Seasons {
       return seasonServices.getWPCAPTraineeDetails(seasonProgramId);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("wp/cap/edit/trainee/details/{seasonProgramId}")
    @Produces("application/json")
@@ -1028,6 +1457,10 @@ public class Seasons {
       return seasonServices.getWPCAPTraineeDetails(seasonProgramId);
    }
 
+   /**
+    * @param wpcapTraineeDetails
+    * @return
+    */
    @POST
    @Path("wp/cap/update/trainee/details")
    @Produces("application/json")
@@ -1036,6 +1469,10 @@ public class Seasons {
    }
 
    // cap allocation
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("wp/cap/view/allocation/details/{seasonProgramId}")
    @Produces("application/json")
@@ -1043,6 +1480,10 @@ public class Seasons {
       return seasonServices.getWPCAPAllocationDetails(seasonProgramId);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("wp/cap/edit/allocation/details/{seasonProgramId}")
    @Produces("application/json")
@@ -1050,6 +1491,10 @@ public class Seasons {
       return seasonServices.getWPCAPAllocationDetails(seasonProgramId);
    }
 
+   /**
+    * @param wpcapProgramAllocations
+    * @return
+    */
    @POST
    @Path("wp/cap/update/allocation/details")
    @Consumes("application/json")
@@ -1062,6 +1507,10 @@ public class Seasons {
 
    // wp summer full details
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("wp/summer/view/details/{seasonProgramId}")
    @Produces("application/json")
@@ -1069,6 +1518,10 @@ public class Seasons {
       return seasonServices.getWPSumDetails(seasonProgramId);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("wp/summer/edit/details/{seasonProgramId}")
    @Produces("application/json")
@@ -1076,6 +1529,10 @@ public class Seasons {
       return seasonServices.getWPSumDetails(seasonProgramId);
    }
 
+   /**
+    * @param seasonWPDetails
+    * @return
+    */
    @POST
    @Path("wp/summer/update/details")
    @Consumes("application/json")
@@ -1086,6 +1543,10 @@ public class Seasons {
 
    // wp summer basic details
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("wp/summer/view/base/details/{seasonProgramId}")
    @Produces("application/json")
@@ -1093,6 +1554,10 @@ public class Seasons {
       return seasonServices.getWPSumBaseDetails(seasonProgramId);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("wp/summer/edit/base/details/{seasonProgramId}")
    @Produces("application/json")
@@ -1100,6 +1565,10 @@ public class Seasons {
       return seasonServices.getWPSumBaseDetails(seasonProgramId);
    }
 
+   /**
+    * @param wpBasicDetail
+    * @return
+    */
    @POST
    @Path("wp/summer/update/base/details")
    @Consumes("application/json")
@@ -1110,6 +1579,10 @@ public class Seasons {
 
    // wp summer section 1 details
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("wp/summer/view/section/one/details/{seasonProgramId}")
    @Produces("application/json")
@@ -1117,6 +1590,10 @@ public class Seasons {
       return seasonServices.getWPSumSectionOneDetails(seasonProgramId);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("wp/summer/edit/section/one/details/{seasonProgramId}")
    @Produces("application/json")
@@ -1124,6 +1601,10 @@ public class Seasons {
       return seasonServices.getWPSumSectionOneDetails(seasonProgramId);
    }
 
+   /**
+    * @param wpSectionOne
+    * @return
+    */
    @POST
    @Path("wp/summer/update/section/one/details")
    @Consumes("application/json")
@@ -1134,6 +1615,10 @@ public class Seasons {
 
    // wp summer allocation details
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("wp/summer/view/allocation/details/{seasonProgramId}")
    @Produces("application/json")
@@ -1141,6 +1626,10 @@ public class Seasons {
       return seasonServices.getWPSumAllocationDetails(seasonProgramId);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("wp/summer/edit/allocation/details/{seasonProgramId}")
    @Produces("application/json")
@@ -1148,6 +1637,10 @@ public class Seasons {
       return seasonServices.getWPSumAllocationDetails(seasonProgramId);
    }
 
+   /**
+    * @param wpProgramAllocations
+    * @return
+    */
    @POST
    @Path("wp/summer/update/allocation/details")
    @Consumes("application/json")
@@ -1158,6 +1651,10 @@ public class Seasons {
 
    // wp spring full details
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("wp/spring/view/details/{seasonProgramId}")
    @Produces("application/json")
@@ -1165,6 +1662,10 @@ public class Seasons {
       return seasonServices.getWPSpringDetails(seasonProgramId);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("wp/spring/edit/details/{seasonProgramId}")
    @Produces("application/json")
@@ -1172,6 +1673,10 @@ public class Seasons {
       return seasonServices.getWPSpringDetails(seasonProgramId);
    }
 
+   /**
+    * @param seasonWPDetails
+    * @return
+    */
    @POST
    @Path("wp/spring/update/details")
    @Consumes("application/json")
@@ -1182,6 +1687,10 @@ public class Seasons {
 
    // wp spring basic details
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("wp/spring/view/base/details/{seasonProgramId}")
    @Produces("application/json")
@@ -1189,6 +1698,10 @@ public class Seasons {
       return seasonServices.getWPSpringBaseDetails(seasonProgramId);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("wp/spring/edit/base/details/{seasonProgramId}")
    @Produces("application/json")
@@ -1196,6 +1709,10 @@ public class Seasons {
       return seasonServices.getWPSpringBaseDetails(seasonProgramId);
    }
 
+   /**
+    * @param wpBasicDetail
+    * @return
+    */
    @POST
    @Path("wp/spring/update/base/details")
    @Consumes("application/json")
@@ -1206,6 +1723,10 @@ public class Seasons {
 
    // wp spring section 1 details
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("wp/spring/view/section/one/details/{seasonProgramId}")
    @Produces("application/json")
@@ -1213,6 +1734,10 @@ public class Seasons {
       return seasonServices.getWPSpringSectionOneDetails(seasonProgramId);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("wp/spring/edit/section/one/details/{seasonProgramId}")
    @Produces("application/json")
@@ -1220,6 +1745,10 @@ public class Seasons {
       return seasonServices.getWPSpringSectionOneDetails(seasonProgramId);
    }
 
+   /**
+    * @param wpSectionOne
+    * @return
+    */
    @POST
    @Path("wp/spring/update/section/one/details")
    @Consumes("application/json")
@@ -1230,6 +1759,10 @@ public class Seasons {
 
    // wp spring allocation details
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("wp/spring/view/allocation/details/{seasonProgramId}")
    @Produces("application/json")
@@ -1237,6 +1770,10 @@ public class Seasons {
       return seasonServices.getWPSpringAllocationDetails(seasonProgramId);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("wp/spring/edit/allocation/details/{seasonProgramId}")
    @Produces("application/json")
@@ -1244,6 +1781,10 @@ public class Seasons {
       return seasonServices.getWPSpringAllocationDetails(seasonProgramId);
    }
 
+   /**
+    * @param wpProgramAllocations
+    * @return
+    */
    @POST
    @Path("wp/spring/update/allocation/details")
    @Consumes("application/json")
@@ -1254,6 +1795,10 @@ public class Seasons {
 
    // wp winter full details
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("wp/winter/view/details/{seasonProgramId}")
    @Produces("application/json")
@@ -1261,6 +1806,10 @@ public class Seasons {
       return seasonServices.getWPWinterDetails(seasonProgramId);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("wp/winter/edit/details/{seasonProgramId}")
    @Produces("application/json")
@@ -1268,6 +1817,10 @@ public class Seasons {
       return seasonServices.editWPWinterDetails(seasonProgramId);
    }
 
+   /**
+    * @param seasonWPDetails
+    * @return
+    */
    @POST
    @Path("wp/winter/update/details")
    @Consumes("application/json")
@@ -1278,6 +1831,10 @@ public class Seasons {
 
    // wp winter basic details
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("wp/winter/view/base/details/{seasonProgramId}")
    @Produces("application/json")
@@ -1285,6 +1842,10 @@ public class Seasons {
       return seasonServices.getWPWinterBaseDetails(seasonProgramId);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("wp/winter/edit/base/details/{seasonProgramId}")
    @Produces("application/json")
@@ -1292,6 +1853,10 @@ public class Seasons {
       return seasonServices.editWPWinterBaseDetails(seasonProgramId);
    }
 
+   /**
+    * @param wpBasicDetail
+    * @return
+    */
    @POST
    @Path("wp/winter/update/base/details")
    @Consumes("application/json")
@@ -1302,6 +1867,10 @@ public class Seasons {
 
    // wp winter section 1 details
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("wp/winter/view/section/one/details/{seasonProgramId}")
    @Produces("application/json")
@@ -1309,6 +1878,10 @@ public class Seasons {
       return seasonServices.getWPWinterSectionOneDetails(seasonProgramId);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("wp/winter/edit/section/one/details/{seasonProgramId}")
    @Produces("application/json")
@@ -1316,6 +1889,10 @@ public class Seasons {
       return seasonServices.editWPWinterSectionOneDetails(seasonProgramId);
    }
 
+   /**
+    * @param wpSectionOne
+    * @return
+    */
    @POST
    @Path("wp/winter/update/section/one/details")
    @Consumes("application/json")
@@ -1326,6 +1903,10 @@ public class Seasons {
 
    // wp winter allocation details
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("wp/winter/view/allocation/details/{seasonProgramId}")
    @Produces("application/json")
@@ -1333,6 +1914,10 @@ public class Seasons {
       return seasonServices.getWPWinterAllocationDetails(seasonProgramId);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("wp/winter/edit/allocation/details/{seasonProgramId}")
    @Produces("application/json")
@@ -1340,6 +1925,10 @@ public class Seasons {
       return seasonServices.getWPWinterAllocationDetails(seasonProgramId);
    }
 
+   /**
+    * @param wpProgramAllocations
+    * @return
+    */
    @POST
    @Path("wp/winter/update/allocation/details")
    @Consumes("application/json")
@@ -1348,6 +1937,10 @@ public class Seasons {
       return seasonServices.updateWPWinterAllocationDetails(wpProgramAllocations);
    }
 
+   /**
+    * @param cloneSeason
+    * @return
+    */
    @POST
    @Path("clone")
    @Consumes("application/json")
@@ -1356,6 +1949,10 @@ public class Seasons {
       return seasonServices.cloneSeason(cloneSeason);
    }
 
+   /**
+    * @param seasonDepartmentNotes
+    * @return
+    */
    @POST
    @Path("add/department/note")
    @Consumes("application/json")
@@ -1364,6 +1961,10 @@ public class Seasons {
       return seasonServices.addSeasonDepartmentNote(seasonDepartmentNotes);
    }
 
+   /**
+    * @param seasonDepartmentDocument
+    * @return
+    */
    @POST
    @Path("add/department/doc")
    @Consumes("application/json")
@@ -1372,6 +1973,10 @@ public class Seasons {
       return seasonServices.addSeasonDepartmentDoc(seasonDepartmentDocument);
    }
 
+   /**
+    * @param seasonProgramNote
+    * @return
+    */
    @POST
    @Path("add/program/note")
    @Consumes("application/json")
@@ -1380,6 +1985,10 @@ public class Seasons {
       return seasonServices.addSeasonProgramNote(seasonProgramNote);
    }
 
+   /**
+    * @param seasonProgramDocument
+    * @return
+    */
    @POST
    @Path("add/program/doc")
    @Consumes("application/json")
@@ -1388,6 +1997,9 @@ public class Seasons {
       return seasonServices.addSeasonProgramDoc(seasonProgramDocument);
    }
 
+   /**
+    * @return
+    */
    @GET
    @Path("doc/type")
    @Produces("application/json")
@@ -1397,6 +2009,10 @@ public class Seasons {
 
    // HST- STP- IHP Program
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("ihp/details/view/{seasonProgramId}")
    @Produces("application/json")
@@ -1406,6 +2022,10 @@ public class Seasons {
       return seasonServices.getIHPDetails(seasonProgramId);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("ihp/details/edit/{seasonProgramId}")
    @Produces("application/json")
@@ -1415,6 +2035,10 @@ public class Seasons {
       return seasonServices.getIHPDetails(seasonProgramId);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("ihp/name/details/edit/{seasonProgramId}")
    @Produces("application/json")
@@ -1424,6 +2048,10 @@ public class Seasons {
       return seasonServices.getIHPNameAndStatus(seasonProgramId);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("ihp/date/details/edit/{seasonProgramId}")
    @Produces("application/json")
@@ -1433,6 +2061,10 @@ public class Seasons {
       return seasonServices.getIHPDates(seasonProgramId);
    }
 
+   /**
+    * @param seasonProgramId
+    * @return
+    */
    @GET
    @Path("ihp/program/config/edit/{seasonProgramId}")
    @Produces("application/json")
@@ -1444,6 +2076,10 @@ public class Seasons {
 
    // Update IHP
 
+   /**
+    * @param seasonHspStpIhpDetails
+    * @return
+    */
    @POST
    @Path("ihp/details/update")
    @Consumes("application/json")
@@ -1454,6 +2090,10 @@ public class Seasons {
       return seasonServices.updateIHPDetails(seasonHspStpIhpDetails);
    }
 
+   /**
+    * @param ihpNameAndStatus
+    * @return
+    */
    @POST
    @Path("ihp/name/details/update")
    @Consumes("application/json")
@@ -1464,6 +2104,10 @@ public class Seasons {
       return seasonServices.updateIHPNameAndStatus(ihpNameAndStatus);
    }
 
+   /**
+    * @param ihpDates
+    * @return
+    */
    @POST
    @Path("ihp/date/details/update")
    @Consumes("application/json")
@@ -1474,6 +2118,10 @@ public class Seasons {
       return seasonServices.updateIHPDates(ihpDates);
    }
 
+   /**
+    * @param ihpProgramConfiguration
+    * @return
+    */
    @POST
    @Path("ihp/program/config/update")
    @Consumes("application/json")

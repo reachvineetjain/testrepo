@@ -50,35 +50,39 @@ import com.ccighgo.service.transport.utility.beans.documenttype.DocumentTypes;
 public interface SeasonServiceInterface {
 
    /**
+    * Service to return list of seasons in the system.
+    * 
     * @return
     */
    public SeasonsList getAllSeasons();
 
    /**
+    * Creates a new season and season programs for the season.
+    * 
     * @param seasonBean
     * @return
     */
    public SeasonBean createSeason(SeasonBean seasonBean);
 
    /**
-    * @param id
-    * @return
-    */
-   public DeleteRequest deleteSeason(String id);
-
-   /**
+    * Edits already existing season.
+    * 
     * @param id
     * @return
     */
    public SeasonBean editSeason(String id);
 
    /**
+    * View details on an existing season.
+    * 
     * @param id
     * @return
     */
    public SeasonBean viewSeason(String id);
 
    /**
+    * Updates an existing season with new details.
+    * 
     * @param seasonBean
     * @return
     */

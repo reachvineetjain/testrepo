@@ -62,7 +62,7 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
    public RegionManagementDetails getCompleteRegionDetails(String seasonId) {
       RegionManagementDetails regionManagementDetails = new RegionManagementDetails();
       if (Integer.valueOf(seasonId) == 0 || Integer.valueOf(seasonId) < 0) {
-         regionManagementDetails.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_SEASON_ID.getValue(),
+         regionManagementDetails.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_SUP_REG_LIST.getValue(),
                messageUtil.getMessage(CCIConstants.SEASON_ID_INVALID)));
          LOGGER.error(messageUtil.getMessage(CCIConstants.SEASON_ID_INVALID));
          return regionManagementDetails;
@@ -170,7 +170,7 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
    public SuperRegion addSuperRegionToSeason(String seasonId, SuperRegion superRegion) {
       SuperRegion sRegion = new SuperRegion();
       if (seasonId != null && (Integer.valueOf(seasonId) == 0 || Integer.valueOf(seasonId) < 0)) {
-         sRegion.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_SEASON_ID.getValue(),
+         sRegion.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_SUP_REG_ADD.getValue(),
                messageUtil.getMessage(CCIConstants.SEASON_ID_INVALID)));
          LOGGER.error(messageUtil.getMessage(CCIConstants.SEASON_ID_INVALID));
          return superRegion;
@@ -234,7 +234,7 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
    public SuperRegion addExistingSuperRegionToSeason(String seasonId, SuperRegion superRegion) {
       SuperRegion sRegion = new SuperRegion();
       if (seasonId != null && (Integer.valueOf(seasonId) == 0 || Integer.valueOf(seasonId) < 0)) {
-         sRegion.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_SEASON_ID.getValue(),
+         sRegion.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_SUP_REG_ADD.getValue(),
                messageUtil.getMessage(CCIConstants.SEASON_ID_INVALID)));
          LOGGER.error(messageUtil.getMessage(CCIConstants.SEASON_ID_INVALID));
          return superRegion;
@@ -394,7 +394,7 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
    public Region addRegion(String superRegionId, String seasonId, Region region) {
       Region rgn = new Region();
       if (seasonId != null && (Integer.valueOf(seasonId) == 0 || Integer.valueOf(seasonId) < 0)) {
-         rgn.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_SEASON_ID.getValue(),
+         rgn.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_ADD_REGION.getValue(),
                messageUtil.getMessage(CCIConstants.SEASON_ID_INVALID)));
          LOGGER.error(messageUtil.getMessage(CCIConstants.SEASON_ID_INVALID));
          return rgn;
@@ -463,7 +463,7 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
    public Region addExistingRegion(String superRegionId, String seasonId, Region region) {
       Region rgn = new Region();
       if (seasonId != null && (Integer.valueOf(seasonId) == 0 || Integer.valueOf(seasonId) < 0)) {
-         rgn.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_SEASON_ID.getValue(),
+         rgn.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_ADD_REGION.getValue(),
                messageUtil.getMessage(CCIConstants.SEASON_ID_INVALID)));
          LOGGER.error(messageUtil.getMessage(CCIConstants.SEASON_ID_INVALID));
          return rgn;
@@ -554,19 +554,19 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
    public DeleteRequest deleteRegion(String regionId, String superRegionId, String seasonId) {
       DeleteRequest request = new DeleteRequest();
       if (regionId != null && (Integer.valueOf(regionId) == 0 || Integer.valueOf(regionId) < 0)) {
-         request.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_REG_ID.getValue(),
+         request.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_DELETE_REGION.getValue(),
                messageUtil.getMessage(RegionManagementMessageConstants.REG_ID_ZERO_OR_NEG)));
          LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.REG_ID_ZERO_OR_NEG));
          return request;
       }
       if (superRegionId != null && (Integer.valueOf(superRegionId) == 0 || Integer.valueOf(superRegionId) < 0)) {
-         request.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_REQUEST.getValue(),
+         request.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_DELETE_REGION.getValue(),
                messageUtil.getMessage(RegionManagementMessageConstants.SUP_REG_ID_ZERO_OR_NEG)));
          LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.SUP_REG_ID_ZERO_OR_NEG));
          return request;
       }
       if (seasonId != null && (Integer.valueOf(seasonId) == 0 || Integer.valueOf(seasonId) < 0)) {
-         request.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_SEASON_ID.getValue(),
+         request.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_DELETE_REGION.getValue(),
                messageUtil.getMessage(CCIConstants.SEASON_ID_INVALID)));
          LOGGER.error(messageUtil.getMessage(CCIConstants.SEASON_ID_INVALID));
          return request;
@@ -613,13 +613,13 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
    public StateRegions getStateRegions(String superRegionId, String seasonId) {
       StateRegions stateRegions = new StateRegions();
       if (superRegionId != null && (Integer.valueOf(superRegionId) == 0 || Integer.valueOf(superRegionId) < 0)) {
-         stateRegions.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_REQUEST.getValue(),
+         stateRegions.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.STATE_REGION_LIST.getValue(),
                messageUtil.getMessage(RegionManagementMessageConstants.SUP_REG_ID_ZERO_OR_NEG)));
          LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.SUP_REG_ID_ZERO_OR_NEG));
          return stateRegions;
       }
       if (Integer.valueOf(seasonId) == 0 || Integer.valueOf(seasonId) < 0) {
-         stateRegions.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_SEASON_ID.getValue(),
+         stateRegions.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.STATE_REGION_LIST.getValue(),
                messageUtil.getMessage(CCIConstants.SEASON_ID_INVALID)));
          LOGGER.error(messageUtil.getMessage(CCIConstants.SEASON_ID_INVALID));
          return stateRegions;
@@ -668,19 +668,19 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
    public StateRegions updateStateRegions(StateRegions stateRegions) {
       StateRegions stRegions = new StateRegions();
       if (stateRegions == null || stateRegions.getStateRegions() == null || stateRegions.getStateRegions().isEmpty()) {
-         stRegions.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.STATE_REG_NULL.getValue(),
+         stRegions.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.STATE_REGION_LIST.getValue(),
                messageUtil.getMessage(RegionManagementMessageConstants.STATE_REGION_NULL)));
          LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.STATE_REGION_NULL));
          return stRegions;
       }
       if (stateRegions.getSuperRegionId() == 0 || stateRegions.getSuperRegionId() < 0) {
-         stRegions.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_REQUEST.getValue(),
+         stRegions.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.STATE_REGION_LIST.getValue(),
                messageUtil.getMessage(RegionManagementMessageConstants.SUP_REG_ID_ZERO_OR_NEG)));
          LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.SUP_REG_ID_ZERO_OR_NEG));
          return stRegions;
       }
       if (stateRegions.getSeasonId() == 0 || stateRegions.getSeasonId() < 0) {
-         stRegions.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_SEASON_ID.getValue(),
+         stRegions.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.STATE_REGION_LIST.getValue(),
                messageUtil.getMessage(CCIConstants.SEASON_ID_INVALID)));
          LOGGER.error(messageUtil.getMessage(CCIConstants.SEASON_ID_INVALID));
          return stRegions;
@@ -728,19 +728,19 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
    public Region addStateRegions(String superRegionId, String seasonId, Region region) {
       Region rgn = new Region();
       if (region == null || region.getRegionStates() == null || region.getRegionStates().isEmpty()) {
-         rgn.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.REG_NULL.getValue(),
+         rgn.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_ADD_STATES_REG.getValue(),
                messageUtil.getMessage(RegionManagementMessageConstants.STATE_LIST_NULL)));
          LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.STATE_LIST_NULL));
          return rgn;
       }
       if (superRegionId != null && (Integer.valueOf(superRegionId) == 0 || Integer.valueOf(superRegionId) < 0)) {
-         rgn.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_REQUEST.getValue(),
+         rgn.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_ADD_STATES_REG.getValue(),
                messageUtil.getMessage(RegionManagementMessageConstants.SUP_REG_ID_ZERO_OR_NEG)));
          LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.SUP_REG_ID_ZERO_OR_NEG));
          return rgn;
       }
       if (seasonId != null && (Integer.valueOf(seasonId) == 0 || Integer.valueOf(seasonId) < 0)) {
-         rgn.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_SEASON_ID.getValue(),
+         rgn.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_ADD_STATES_REG.getValue(),
                messageUtil.getMessage(CCIConstants.SEASON_ID_INVALID)));
          LOGGER.error(messageUtil.getMessage(CCIConstants.SEASON_ID_INVALID));
          return rgn;
@@ -794,13 +794,13 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
    public RegionManagementDetails moveRegions(MoveRegions mvRegions) {
       RegionManagementDetails rMgDet = new RegionManagementDetails();
       if (mvRegions.getSeasonId() == 0 || mvRegions.getSeasonId() < 0) {
-         rMgDet.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_SEASON_ID.getValue(),
+         rMgDet.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_SUP_REG_LIST.getValue(),
                messageUtil.getMessage(CCIConstants.SEASON_ID_INVALID)));
          LOGGER.error(messageUtil.getMessage(CCIConstants.SEASON_ID_INVALID));
          return rMgDet;
       }
       if (mvRegions.getMoveRegions() == null || mvRegions.getMoveRegions().isEmpty()) {
-         rMgDet.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_SEASON_ID.getValue(),
+         rMgDet.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_SUP_REG_LIST.getValue(),
                messageUtil.getMessage(CCIConstants.SEASON_ID_INVALID)));
          LOGGER.error(messageUtil.getMessage(CCIConstants.SEASON_ID_INVALID));
          return rMgDet;
@@ -832,19 +832,19 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
    public DeleteRequest deleteState(String seasonId, String superRegionId, String regionId, String stateId) {
       DeleteRequest request = new DeleteRequest();
       if (regionId != null && (Integer.valueOf(regionId) == 0 || Integer.valueOf(regionId) < 0)) {
-         request.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_REG_ID.getValue(),
+         request.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_DELETE_REGION.getValue(),
                messageUtil.getMessage(RegionManagementMessageConstants.REG_ID_ZERO_OR_NEG)));
          LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.REG_ID_ZERO_OR_NEG));
          return request;
       }
       if (superRegionId != null && (Integer.valueOf(superRegionId) == 0 || Integer.valueOf(superRegionId) < 0)) {
-         request.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_REQUEST.getValue(),
+         request.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_DELETE_REGION.getValue(),
                messageUtil.getMessage(RegionManagementMessageConstants.SUP_REG_ID_ZERO_OR_NEG)));
          LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.SUP_REG_ID_ZERO_OR_NEG));
          return request;
       }
       if (seasonId != null && (Integer.valueOf(seasonId) == 0 || Integer.valueOf(seasonId) < 0)) {
-         request.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_SEASON_ID.getValue(),
+         request.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_DELETE_REGION.getValue(),
                messageUtil.getMessage(CCIConstants.SEASON_ID_INVALID)));
          LOGGER.error(messageUtil.getMessage(CCIConstants.SEASON_ID_INVALID));
          return request;

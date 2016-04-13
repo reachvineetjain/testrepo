@@ -6,16 +6,38 @@ package com.ccighgo.service.components.errormessages.constants;
  */
 public class SeasonMessageConstants {
 
-   // SEASON LIST
-   public static final String GET_SEASON_LIST_ERROR = "error.get.seasonlist";
-   public static final String FAILURE_VIEW_SEASON_SERVICE_CODE = "error.view.season";
+   // get list of seasons
+   public static final String ERROR_GET_SEASON_LIST = "error.get.season.list";
+
+   // view and edit season
+   public static final String ERROR_GET_SEASON_DETAILS = "error.view.season";
+
+   // create new season
+   public static final String INVALID_SEASON_NAME = "invalid.season.name";
+   public static final String SEASON_ALREADY_EXISTS = "season.already.exists";
+   public static final String ERROR_CREATE_NEW_SEASON = "error.create.new.season";
+   
+   //update season
+   public static final String ERROR_UPDATE_SEASON_VALUE_NULL = "error.update.season.value.null";
+   public static final String ERROR_UPDATE_SEASON = "error.update.season.details";
+   
+   //Season Programs
+   public static final String ERROR_GET_SEASON_DEPARTMENT_DETAILS = "error.get.season.program.dept.details";
+   public static final String ERROR_GET_SEASON_PROGRAMS = "error.get.season.programs";
+   
+   //Season status list
+   public static final String ERROR_GET_SEASON_STATUS = "error.get.season.status.list";
+   
+   //Season J1HS 
+   public static final String INVALID_J1HS_PROGRAM_ID = "invalid.j1hs.season.program.id";
+   public static final String ERROR_GET_J1HS_SEASON_DETAILS = "error.get.j1hs.season.details";
+   public static final String ERROR_GET_HSPJ1_BASIC_DETAILS = "error.get.j1.hs.season.name.status";
 
    // SeasonBean
-   public static final String FAILED_EDIT_SEASON_BEAN_SERVICE = "error.edit.seasonbean.service";
-   public static final String FAILED_TO_GET_SEASON_PROGRAMS = "error.get.season.programs";
-   public static final String FAILED_TO_GET_SEASON_STATUS = "error.get.season.status.value";
-   public static final String FAILED_TO_GET_HSP_J1_HS_SEASON_DETAILS = "error.get.hsp.j1.hs.season.details";
-   public static final String FAILED_TO_GET_J1_HS_SEASON_NAME_AND_STATUS = "error.get.j1.hs.season.name.status";
+   
+   
+   
+   
    public static final String FAILED_TO_GET_J1_HS_SEASON_JAN_START_DETAILS = "error.get.j1.hs.season.jan.start.details";
    public static final String FAILED_TO_GET_HSP_J1_HS_AUG_START = "error.get.j1.hs.season.aug.start.details";
    public static final String FAILED_TO_GET_HSP_J1_HS_SEASON_FIELD_SETTINGS = "error.get.hsp.j1.hs.season.field.settings";
@@ -113,15 +135,15 @@ public class SeasonMessageConstants {
    public static final String FAILED_UPDATE_WP_WINTER_ALLOCATION_DETAILS = "error.update.wp.winter.allocatio.details";
    public static final String FAILED_EDIT_WP_WINTER_ALLOCATION_DETAILS = "error.edit.wp.winter.allocatio.details";
    public static final String FAILED_CLONE_SEASON = "error.clone.season";
-   public static final String FAILED_CREATE_SEASON_BEAN = "error.create.season.bean";
-   public static final String FAILED_UPDATE_SEASON = "error.update.season.bean";
+
+  
    public static final String FAILED_ADD_SEASON_DEPARTMENT_NOTE = "error.add.season.department.note";
    public static final String FAILED_ADD_SEASON_DEPARTMENT_DOC = "error.add.season.department.doc";
    public static final String FAILED_ADD_SEASON_PROGRAM_NOTE = "error.add.season.program.note";
    public static final String FAILED_ADD_SEASON_PROGRAM_DOC = "error.add.season.program.doc";
    public static final String FAILED_GET_DOCUMENT_TYPES = "error.get.document.types";
    public static final String FAILED_GET_IHP_DETAILS = "error.get.ihp.details";
-   public static final String INVALID_PROGRAM_ID = "error.invalid.program.id";
+   
    public static final String FAILED_GET_IHP_NAME_AND_STATUS = "error.get.ihp.name.and.status";
    public static final String FAILED_GET_IHP_DATES = "error.get.ihp.dates";
    public static final String FAILED_GET_IHP_PROGRAM_CONFIGURATION_DETAIL = "error.get.ihp.program.configuration.details";
@@ -145,7 +167,7 @@ public class SeasonMessageConstants {
    public static final String FAILED_TO_GET_J1_HS_BASIC_DETAILS = "error.get.j1.hs.basic.detils";
    public static final String INVALID_SEASON_GHT_DETAILS = "error.invalid.season.ght.details";
    public static final String FAILED_GET_SEASON_BEAN_DETAILS = "error.get.season.bean.details";
-   public static final String FAILED_TO_GET_DEPT_DETAILS = "error.get.dept.details";
+  
    public static final String INVALID_SEASON_ID_AND_PROGRAM_ID = "invalid.season.id.and.program.id";
    public static final String FAILED_GET_SEASON_GHT_DETAILS = "error.get.season.ght.details";
    public static final String FAILED_CREATE_SEASON_NAME = "error.create.season.name";
@@ -154,6 +176,5 @@ public class SeasonMessageConstants {
    public static final String FAILED_SEASON_HSP_F1_DETAILS = "error.get.season.hsp.f1.details";
    public static final String FAILED_GET_SEASON_WP_CAP_DETAILS = "error.get.season.wp.cap.details";
    public static final String FAILED_GET_SEASON_DETAILS = "error.get.season.details";
-   public static final String INVALID_SEASON_NAME = "invalid.season.name";
-   public static final String DUPLICATED_SEASON_NAME = "duplicated.season.name";
+
 }
