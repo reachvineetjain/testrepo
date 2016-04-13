@@ -315,8 +315,8 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
                   continue;
                Region region = sgc.getRegion();
                if (region != null) {
-                  List<FieldStaffLeadershipSeason> assignedUsers = fieldStaffLeadershipSeasonRepository.findAllFieldStaffBySeasonIdSuperRegionIdRegionIdAndFieldStaffType(seasonId,
-                        superRegionId, region.getRegionId(), CCIConstants.FieldStaffTypeCode_RD);
+                  List<FieldStaffLeadershipSeason> assignedUsers = fieldStaffLeadershipSeasonRepository
+                        .findRegionFieldStaffBySeasonId(seasonId, CCIConstants.FieldStaffTypeCode_RD);
                   if (assignedUsers != null) {
                      for (FieldStaffLeadershipSeason fieldStaff : assignedUsers) {
                         AssignedRDStaff assignedRDStaff = new AssignedRDStaff();
@@ -439,8 +439,7 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
                         state.getUsStatesId(), seasonId);
                   sInfo.setSeasonGeographyConfigurationId(configurations.getSeasonGeographyConfigurationId());
 
-                  List<FieldStaffLeadershipSeason> assignedUsers = fieldStaffLeadershipSeasonRepository.findStateFieldStaffBySeasonIdSuperRegionIdRegionIdAndStateId(seasonId,
-                        superRegionId, regionId, state.getUsStatesId());
+                  List<FieldStaffLeadershipSeason> assignedUsers = fieldStaffLeadershipSeasonRepository.findStateFieldStaffBySeasonId(seasonId);
                   if (assignedUsers != null) {
                      for (FieldStaffLeadershipSeason fieldStaff : assignedUsers) {
                         AssignedStateStaff assignedStateStaff = new AssignedStateStaff();
@@ -489,8 +488,7 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
                if (state == null)
                   continue;
                if (state != null) {
-                  List<FieldStaffLeadershipSeason> assignedUsers = fieldStaffLeadershipSeasonRepository.findStateFieldStaffBySeasonIdSuperRegionIdRegionIdAndStateId(seasonId,
-                        superRegionId, regionId, state.getUsStatesId());
+                  List<FieldStaffLeadershipSeason> assignedUsers = fieldStaffLeadershipSeasonRepository.findStateFieldStaffBySeasonId(seasonId);
                   if (assignedUsers != null) {
                      for (FieldStaffLeadershipSeason fieldStaff : assignedUsers) {
                         AssignedStateStaff assignedStateStaff = new AssignedStateStaff();
