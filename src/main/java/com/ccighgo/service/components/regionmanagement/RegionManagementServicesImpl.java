@@ -198,7 +198,7 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
             SeasonGeographyConfiguration configuration = seasonGeographyConfigurationRepository.findSuperRegionRowBySuperRegionIdSeasonId(sReg.getSuperRegionId(),
                   Integer.valueOf(seasonId));
             if (configuration != null) {
-               sRegion.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.SUP_REG_ALREADY_EXIST.getValue(),
+               sRegion.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.SUP_REG_ALREADY_EXIST_SAME_SEASON.getValue(),
                      messageUtil.getMessage(RegionManagementMessageConstants.SUP_REG_NAME_DUPLICATE_SAME_SEASON)));
                LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.SUP_REG_NAME_DUPLICATE_SAME_SEASON));
                return sRegion;
@@ -445,7 +445,7 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
             SeasonGeographyConfiguration configuration = seasonGeographyConfigurationRepository.findRegionRowBySuperRegionIdRegionIdSeasonId(Integer.valueOf(superRegionId),
                   regionExist.getRegionId(), Integer.valueOf(seasonId));
             if (configuration != null) {
-               rgn.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.REG_ALREADY_EXIST.getValue(),
+               rgn.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.REG_ALREADY_EXIST_SAME_SEASON.getValue(),
                      messageUtil.getMessage(RegionManagementMessageConstants.REG_NAME_DUP_SAME_SEASON)));
                LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.REG_NAME_DUP_SAME_SEASON));
                return rgn;
