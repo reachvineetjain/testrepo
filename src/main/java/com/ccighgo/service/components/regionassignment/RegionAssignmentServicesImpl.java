@@ -53,6 +53,9 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
    private static final Logger LOGGER = Logger.getLogger(RegionAssignmentServicesImpl.class);
    private static final String NOT_ASSIGNED = "Not Assigned";
    private static final String SP_FIELD_STAFF_REGION_ASSIGN = "CALL SPFieldStaffRegionAssignment(?,?)";
+   private static final Integer ASSIGN_FS_STATES_FLAG = 3;
+   private static final Integer ASSIGN_FS_REGION_FLAG = 2;
+   private static final Integer ASSIGN_FS_SUPER_REGION_FLAG = 1;
 
    @Autowired CommonComponentUtils componentUtils;
    @Autowired MessageUtils messageUtil;
@@ -136,20 +139,22 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
                if (superRegion != null) {
                   sr.setSuperRegionId(superRegion.getSuperRegionId());
                   sr.setSuperRegionName(superRegion.getSuperRegionName());
-                  List<FieldStaffLeadershipSeason> assignedUsers = fieldStaffLeadershipSeasonRepository.findAllFieldStaffBySeasonIdAndSuperRegionIdAndFieldStaffType(seasonId,
-                        superRegion.getSuperRegionId(), CCIConstants.FieldStaffTypeCode_ERD);
+
+                  Query query = em.createNativeQuery(SP_FIELD_STAFF_REGION_ASSIGN);
+                  query.setParameter(1, seasonId);
+                  query.setParameter(2, ASSIGN_FS_SUPER_REGION_FLAG);
+                  @SuppressWarnings("unchecked")
+                  List<Object[]> assignedUsers = query.getResultList();
                   if (assignedUsers != null) {
-                     for (FieldStaffLeadershipSeason fieldStaff : assignedUsers) {
+                     for (Object[] fieldStaff : assignedUsers) {
                         AssignedERDStaff assignedERDStaff = new AssignedERDStaff();
-                        assignedERDStaff.setAssignedSuperRegion(superRegion.getSuperRegionName() != null ? superRegion.getSuperRegionName() : NOT_ASSIGNED);
-                        assignedERDStaff.setFirstName(fieldStaff.getFieldStaff().getFirstName());
-                        assignedERDStaff.setLastName(fieldStaff.getFieldStaff().getLastName());
-                        assignedERDStaff.setPhoto(fieldStaff.getFieldStaff().getPhoto());
-                        assignedERDStaff.setStaffId(fieldStaff.getFieldStaff().getFieldStaffGoId());
-                        assignedERDStaff.setSeasonGeographyConfigurationId(fieldStaff.getSeasonGeographyConfiguration().getSeasonGeographyConfigurationId());
-                        assignedERDStaff.setFieldStaffLeadershipSeasonId(fieldStaff.getFieldStaffLeadershipSeasonId());
-                        if (staffExist.get(fieldStaff.getFieldStaff().getFieldStaffGoId()) == null) {
-                           staffExist.put(fieldStaff.getFieldStaff().getFieldStaffGoId(), true);
+                        assignedERDStaff.setAssignedSuperRegion(fieldStaff[4] != null ? fieldStaff[1].toString() : NOT_ASSIGNED);
+                        assignedERDStaff.setFirstName(fieldStaff[2].toString());
+                        assignedERDStaff.setLastName(fieldStaff[3].toString());
+                        assignedERDStaff.setStaffId(Integer.valueOf(fieldStaff[1].toString()));
+
+                        if (staffExist.get(Integer.valueOf(fieldStaff[1].toString())) == null) {
+                           staffExist.put(Integer.valueOf(fieldStaff[1].toString()), true);
                            if (superRegionId != null && superRegionId.equals(superRegion.getSuperRegionId()))
                               continue;
                            superRegionsERDs.getAssignedERDStaffs().add(assignedERDStaff);
@@ -166,25 +171,7 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
                   }
                }
             }
-            /**
-             * Fetching All ERD's and Staff Table and merge them with ERDS
-             * manage superRegions
-             */
-            List<FieldStaff> allERDs = fieldStaffRepository.findAllERDStaff(CCIConstants.FieldStaffTypeCode_ERD);
-            if (allERDs != null) {
-               for (FieldStaff fieldStaff : allERDs) {
-                  AssignedERDStaff assignedERDStaff = new AssignedERDStaff();
-                  assignedERDStaff.setAssignedSuperRegion(NOT_ASSIGNED);
-                  assignedERDStaff.setFirstName(fieldStaff.getFirstName());
-                  assignedERDStaff.setLastName(fieldStaff.getLastName());
-                  assignedERDStaff.setPhoto(fieldStaff.getPhoto());
-                  assignedERDStaff.setStaffId(fieldStaff.getFieldStaffGoId());
-                  if (staffExist.get(fieldStaff.getFieldStaffGoId()) == null) {
-                     superRegionsERDs.getAssignedERDStaffs().add(assignedERDStaff);
-                     staffExist.put(fieldStaff.getFieldStaffGoId(), true);
-                  }
-               }
-            }
+
          }
          superRegionsERDs.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
@@ -320,89 +307,39 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
                   continue;
                Region region = sgc.getRegion();
                if (region != null) {
-                  List<FieldStaffLeadershipSeason> assignedUsers = fieldStaffLeadershipSeasonRepository
-                        .findRegionFieldStaffBySeasonId(seasonId, CCIConstants.FieldStaffTypeCode_RD);
+                  Query query = em.createNativeQuery(SP_FIELD_STAFF_REGION_ASSIGN);
+                  query.setParameter(1, seasonId);
+                  query.setParameter(2, ASSIGN_FS_REGION_FLAG);
+                  @SuppressWarnings("unchecked")
+                  List<Object[]> assignedUsers = query.getResultList();
                   if (assignedUsers != null) {
-                     for (FieldStaffLeadershipSeason fieldStaff : assignedUsers) {
+                     for (Object[] fieldStaff : assignedUsers) {
                         AssignedRDStaff assignedRDStaff = new AssignedRDStaff();
-                        assignedRDStaff.setFirstName(fieldStaff.getFieldStaff().getFirstName());
-                        assignedRDStaff.setLastName(fieldStaff.getFieldStaff().getLastName());
-                        assignedRDStaff.setPhoto(fieldStaff.getFieldStaff().getPhoto());
-                        assignedRDStaff.setStaffId(fieldStaff.getFieldStaff().getFieldStaffGoId());
-                        assignedRDStaff.setSeasonGeographyConfigurationId(fieldStaff.getSeasonGeographyConfiguration().getSeasonGeographyConfigurationId());
-                        assignedRDStaff.setFieldStaffLeadershipSeasonId(fieldStaff.getFieldStaffLeadershipSeasonId());
+                        assignedRDStaff.setStaffId(Integer.valueOf(fieldStaff[1].toString()));
+                        assignedRDStaff.setFirstName(fieldStaff[2].toString());
+                        assignedRDStaff.setLastName(fieldStaff[3].toString());
 
                         com.ccighgo.service.transport.season.beans.assignedregion.RegionAssignedArea regionAssignedArea = new com.ccighgo.service.transport.season.beans.assignedregion.RegionAssignedArea();
-                        if (region.getRegionName() == null && sgc.getLookupUsstate().getStateCode() == null) {
+                        if (fieldStaff[5] == null && fieldStaff[6] == null) {
                            regionAssignedArea.setRegionArea(CCIConstants.EMPTY);
                            regionAssignedArea.setStateCode(CCIConstants.EMPTY);
                         } else {
-                           regionAssignedArea.setRegionArea(region.getRegionName());
-                           regionAssignedArea.setStateCode(sgc.getLookupUsstate() != null ? sgc.getLookupUsstate().getStateCode() : CCIConstants.EMPTY);
+                           regionAssignedArea.setRegionArea(fieldStaff[5] != null ? fieldStaff[5].toString() : CCIConstants.EMPTY);
+                           regionAssignedArea.setStateCode(fieldStaff[6] != null ? fieldStaff[6].toString() : CCIConstants.EMPTY);
                         }
                         assignedRDStaff.getAssignedArea().add(regionAssignedArea);
 
-                        if (staffExist.get(fieldStaff.getFieldStaff().getFieldStaffGoId()) == null) {
-                           staffExist.put(fieldStaff.getFieldStaff().getFieldStaffGoId(), true);
-                           if (regionId != null && regionId.equals(region.getRegionId()))
-                              continue;
+                        if (staffExist.get(Integer.valueOf(fieldStaff[1].toString())) == null) {
+                           staffExist.put(Integer.valueOf(fieldStaff[1].toString()), true);
+
                            regionsRDs.getAssignedRDStaffs().add(assignedRDStaff);
-                        } else {
-                           if (regionId != null && regionId.equals(region.getRegionId())) {
-                              try {
-                                 for (int i = 0; i < regionsRDs.getAssignedRDStaffs().size(); i++) {
-                                    if (regionsRDs.getAssignedRDStaffs().get(i).getStaffId() == assignedRDStaff.getStaffId()) {
-                                       regionsRDs.getAssignedRDStaffs().remove(i);
-                                    }
-                                 }
-                              } catch (Exception e) {
-                                 LOGGER.error(e.getMessage(), e);
-                              }
-                           } else {
-                              for (int i = 0; i < regionsRDs.getAssignedRDStaffs().size(); i++) {
-                                 if (regionsRDs.getAssignedRDStaffs().get(i).getStaffId() == assignedRDStaff.getStaffId()) {
-                                    boolean exist = false;
-                                    for (com.ccighgo.service.transport.season.beans.assignedregion.RegionAssignedArea ra : regionsRDs.getAssignedRDStaffs().get(i)
-                                          .getAssignedArea()) {
-                                       if (ra.getRegionArea().equals(regionAssignedArea.getRegionArea())) {
-                                          exist = true;
-                                          break;
-                                       }
-                                       if (exist)
-                                          break;
-                                    }
-                                    if (!exist)
-                                       regionsRDs.getAssignedRDStaffs().get(i).getAssignedArea().add(regionAssignedArea);
-                                 }
-                              }
-                           }
                         }
                      }
                   }
+
                }
             }
-            /**
-             * Fetching All RD's and Staff Table and merge them with ERDS manage
-             * superRegions
-             */
-            List<FieldStaff> allRDs = fieldStaffRepository.findAllRDStaff(CCIConstants.FieldStaffTypeCode_RD);
-            if (allRDs != null) {
-               for (FieldStaff fieldStaff : allRDs) {
-                  AssignedRDStaff assignedRDStaff = new AssignedRDStaff();
-                  assignedRDStaff.setFirstName(fieldStaff.getFirstName());
-                  assignedRDStaff.setLastName(fieldStaff.getLastName());
-                  assignedRDStaff.setPhoto(fieldStaff.getPhoto());
-                  assignedRDStaff.setStaffId(fieldStaff.getFieldStaffGoId());
-                  com.ccighgo.service.transport.season.beans.assignedregion.RegionAssignedArea regionAssignedArea = new com.ccighgo.service.transport.season.beans.assignedregion.RegionAssignedArea();
-                  regionAssignedArea.setRegionArea(CCIConstants.EMPTY);
-                  regionAssignedArea.setStateCode(CCIConstants.EMPTY);
-                  assignedRDStaff.getAssignedArea().add(regionAssignedArea);
-                  if (staffExist.get(fieldStaff.getFieldStaffGoId()) == null) {
-                     regionsRDs.getAssignedRDStaffs().add(assignedRDStaff);
-                     staffExist.put(fieldStaff.getFieldStaffGoId(), true);
-                  }
-               }
-            }
+
          }
          regionsRDs.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
@@ -439,7 +376,6 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
                   sInfo.setStateCode(state.getStateCode());
                   sInfo.setStateName(state.getStateName());
                   sInfo.setStateId(state.getUsStatesId());
-
                   SeasonGeographyConfiguration configurations = seasonGeographyConfigurationRepository.findStateRowBySuperRegionIdRegionIdStateIdSeasonId(superRegionId, regionId,
                         state.getUsStatesId(), seasonId);
                   sInfo.setSeasonGeographyConfigurationId(configurations.getSeasonGeographyConfigurationId());
@@ -489,16 +425,14 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
             return stateStaff;
          } else {
-            Region region = regionRepository.findOne(regionId);
+
             for (LookupUSState state : list) {
                if (state == null)
                   continue;
                if (state != null) {
-                  // List<FieldStaffLeadershipSeason> assignedUsers =
-                  // fieldStaffLeadershipSeasonRepository.findStateFieldStaffBySeasonId(seasonId);
                   Query query = em.createNativeQuery(SP_FIELD_STAFF_REGION_ASSIGN);
                   query.setParameter(1, seasonId);
-                  query.setParameter(2, 3);
+                  query.setParameter(2, ASSIGN_FS_STATES_FLAG);
                   @SuppressWarnings("unchecked")
                   List<Object[]> assignedUsers = query.getResultList();
                   if (assignedUsers != null) {
@@ -507,14 +441,10 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
                         assignedStateStaff.setStaffId(Integer.valueOf(fieldStaff[1].toString()));
                         assignedStateStaff.setFirstName(fieldStaff[2].toString());
                         assignedStateStaff.setLastName(fieldStaff[3].toString());
-                        // assignedStateStaff.setPhoto(fieldStaff.getFieldStaff().getPhoto());
-
                         assignedStateStaff.setRole(fieldStaff[4].toString());
-                        assignedStateStaff.setSeasonGeographyConfigurationId(0);
-                        assignedStateStaff.setFieldStaffLeadershipSeasonId(0);
 
                         RegionAssignedArea regionAssignedArea = new RegionAssignedArea();
-                        if (region.getRegionName() == null && state.getStateCode() == null) {
+                        if (fieldStaff[5] == null && fieldStaff[6] == null) {
                            regionAssignedArea.setRegionArea(CCIConstants.EMPTY);
                            regionAssignedArea.setStateCode(CCIConstants.EMPTY);
                         } else {
@@ -522,6 +452,7 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
                            regionAssignedArea.setStateCode(fieldStaff[6] != null ? fieldStaff[6].toString() : CCIConstants.EMPTY);
                         }
                         assignedStateStaff.getAssignedArea().add(regionAssignedArea);
+
                         String staffIdAndStateCode = Integer.valueOf(fieldStaff[1].toString()) + "|" + state.getStateCode();
                         staff.put(Integer.valueOf(fieldStaff[1].toString()), true);
                         if (!state.getUsStatesId().equals(stateId))
@@ -538,26 +469,6 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
                }
             }
 
-            /*
-             * List<FieldStaff> allRDs =
-             * fieldStaffRepository.findAllStaffRatherERD(); if (allRDs != null)
-             * { for (FieldStaff fieldStaff : allRDs) { if
-             * (staff.get(fieldStaff.getFieldStaffGoId()) != null) continue;
-             * AssignedStateStaff assignedStateStaff = new AssignedStateStaff();
-             * assignedStateStaff.setFirstName(fieldStaff.getFirstName());
-             * assignedStateStaff.setLastName(fieldStaff.getLastName());
-             * assignedStateStaff.setPhoto(fieldStaff.getPhoto());
-             * assignedStateStaff.setStaffId(fieldStaff.getFieldStaffGoId());
-             * assignedStateStaff
-             * .setRole(fieldStaff.getFieldStaffType().getFieldStaffTypeName());
-             * RegionAssignedArea regionAssignedArea = new RegionAssignedArea();
-             * regionAssignedArea.setRegionArea(CCIConstants.EMPTY);
-             * regionAssignedArea.setStateCode(CCIConstants.EMPTY);
-             * assignedStateStaff.getAssignedArea().add(regionAssignedArea); if
-             * (staffExist.get(fieldStaff.getFieldStaffGoId()) == null) {
-             * staffExist.put(fieldStaff.getFieldStaffGoId(),
-             * assignedStateStaff); } } }
-             */
             stateStaff.getAssignedStateStaffs().addAll(staffExist.values());
          }
          stateStaff.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
