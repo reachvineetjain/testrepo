@@ -3,6 +3,9 @@ package com.ccighgo.service.components.regionassignment;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -49,6 +52,7 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
 
    private static final Logger LOGGER = Logger.getLogger(RegionAssignmentServicesImpl.class);
    private static final String NOT_ASSIGNED = "Not Assigned";
+   private static final String SP_FIELD_STAFF_REGION_ASSIGN = "CALL SPFieldStaffRegionAssignment(?,?)";
 
    @Autowired CommonComponentUtils componentUtils;
    @Autowired MessageUtils messageUtil;
@@ -59,6 +63,7 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
    @Autowired FieldStaffRepository fieldStaffRepository;
    @Autowired StateRepository stateRepository;
    @Autowired SeasonRepository seasonRepository;
+   @Autowired EntityManager em;
 
    @Override
    public AssignedSuperRegion getAssignedSuperRegionDetails(Integer seasonId) {
@@ -472,6 +477,7 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
 
    @Override
    public StatesStaff getAssignedStateStaff(Integer superRegionId, Integer regionId, Integer seasonId, Integer stateId) {
+
       HashMap<Integer, AssignedStateStaff> staffExist = new HashMap<Integer, AssignedStateStaff>();
       HashMap<String, Boolean> staffAndAreaExist = new HashMap<String, Boolean>();
       HashMap<Integer, Boolean> staff = new HashMap<Integer, Boolean>();
@@ -488,36 +494,43 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
                if (state == null)
                   continue;
                if (state != null) {
-                  List<FieldStaffLeadershipSeason> assignedUsers = fieldStaffLeadershipSeasonRepository.findStateFieldStaffBySeasonId(seasonId);
+                  // List<FieldStaffLeadershipSeason> assignedUsers =
+                  // fieldStaffLeadershipSeasonRepository.findStateFieldStaffBySeasonId(seasonId);
+                  Query query = em.createNativeQuery(SP_FIELD_STAFF_REGION_ASSIGN);
+                  query.setParameter(1, seasonId);
+                  query.setParameter(2, 3);
+                  @SuppressWarnings("unchecked")
+                  List<Object[]> assignedUsers = query.getResultList();
                   if (assignedUsers != null) {
-                     for (FieldStaffLeadershipSeason fieldStaff : assignedUsers) {
+                     for (Object[] fieldStaff : assignedUsers) {
                         AssignedStateStaff assignedStateStaff = new AssignedStateStaff();
-                        assignedStateStaff.setFirstName(fieldStaff.getFieldStaff().getFirstName());
-                        assignedStateStaff.setLastName(fieldStaff.getFieldStaff().getLastName());
-                        assignedStateStaff.setPhoto(fieldStaff.getFieldStaff().getPhoto());
-                        assignedStateStaff.setStaffId(fieldStaff.getFieldStaff().getFieldStaffGoId());
-                        assignedStateStaff.setRole(fieldStaff.getFieldStaff().getFieldStaffType().getFieldStaffTypeName());
-                        assignedStateStaff.setSeasonGeographyConfigurationId(fieldStaff.getSeasonGeographyConfiguration().getSeasonGeographyConfigurationId());
-                        assignedStateStaff.setFieldStaffLeadershipSeasonId(fieldStaff.getFieldStaffLeadershipSeasonId());
+                        assignedStateStaff.setStaffId(Integer.valueOf(fieldStaff[1].toString()));
+                        assignedStateStaff.setFirstName(fieldStaff[2].toString());
+                        assignedStateStaff.setLastName(fieldStaff[3].toString());
+                        // assignedStateStaff.setPhoto(fieldStaff.getFieldStaff().getPhoto());
+
+                        assignedStateStaff.setRole(fieldStaff[4].toString());
+                        assignedStateStaff.setSeasonGeographyConfigurationId(0);
+                        assignedStateStaff.setFieldStaffLeadershipSeasonId(0);
 
                         RegionAssignedArea regionAssignedArea = new RegionAssignedArea();
                         if (region.getRegionName() == null && state.getStateCode() == null) {
                            regionAssignedArea.setRegionArea(CCIConstants.EMPTY);
                            regionAssignedArea.setStateCode(CCIConstants.EMPTY);
                         } else {
-                           regionAssignedArea.setRegionArea(region.getRegionName());
-                           regionAssignedArea.setStateCode(state.getStateCode());
+                           regionAssignedArea.setRegionArea(fieldStaff[5] != null ? fieldStaff[5].toString() : CCIConstants.EMPTY);
+                           regionAssignedArea.setStateCode(fieldStaff[6] != null ? fieldStaff[6].toString() : CCIConstants.EMPTY);
                         }
                         assignedStateStaff.getAssignedArea().add(regionAssignedArea);
-                        String staffIdAndStateCode = fieldStaff.getFieldStaff().getFieldStaffGoId() + "|" + state.getStateCode();
-                        staff.put(fieldStaff.getFieldStaff().getFieldStaffGoId(), true);
+                        String staffIdAndStateCode = Integer.valueOf(fieldStaff[1].toString()) + "|" + state.getStateCode();
+                        staff.put(Integer.valueOf(fieldStaff[1].toString()), true);
                         if (!state.getUsStatesId().equals(stateId))
-                           if (staffExist.get(fieldStaff.getFieldStaff().getFieldStaffGoId()) == null) {
-                              staffExist.put(fieldStaff.getFieldStaff().getFieldStaffGoId(), assignedStateStaff);
+                           if (staffExist.get(Integer.valueOf(fieldStaff[1].toString())) == null) {
+                              staffExist.put(Integer.valueOf(fieldStaff[1].toString()), assignedStateStaff);
                               staffAndAreaExist.put(staffIdAndStateCode, true);
                            } else {
                               if (staffAndAreaExist.get(staffIdAndStateCode) == null) {
-                                 staffExist.get(fieldStaff.getFieldStaff().getFieldStaffGoId()).getAssignedArea().add(regionAssignedArea);
+                                 staffExist.get(Integer.valueOf(fieldStaff[1].toString())).getAssignedArea().add(regionAssignedArea);
                               }
                            }
                      }
@@ -525,26 +538,26 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
                }
             }
 
-            List<FieldStaff> allRDs = fieldStaffRepository.findAllStaffRatherERD();
-            if (allRDs != null) {
-               for (FieldStaff fieldStaff : allRDs) {
-                  if (staff.get(fieldStaff.getFieldStaffGoId()) != null)
-                     continue;
-                  AssignedStateStaff assignedStateStaff = new AssignedStateStaff();
-                  assignedStateStaff.setFirstName(fieldStaff.getFirstName());
-                  assignedStateStaff.setLastName(fieldStaff.getLastName());
-                  assignedStateStaff.setPhoto(fieldStaff.getPhoto());
-                  assignedStateStaff.setStaffId(fieldStaff.getFieldStaffGoId());
-                  assignedStateStaff.setRole(fieldStaff.getFieldStaffType().getFieldStaffTypeName());
-                  RegionAssignedArea regionAssignedArea = new RegionAssignedArea();
-                  regionAssignedArea.setRegionArea(CCIConstants.EMPTY);
-                  regionAssignedArea.setStateCode(CCIConstants.EMPTY);
-                  assignedStateStaff.getAssignedArea().add(regionAssignedArea);
-                  if (staffExist.get(fieldStaff.getFieldStaffGoId()) == null) {
-                     staffExist.put(fieldStaff.getFieldStaffGoId(), assignedStateStaff);
-                  }
-               }
-            }
+            /*
+             * List<FieldStaff> allRDs =
+             * fieldStaffRepository.findAllStaffRatherERD(); if (allRDs != null)
+             * { for (FieldStaff fieldStaff : allRDs) { if
+             * (staff.get(fieldStaff.getFieldStaffGoId()) != null) continue;
+             * AssignedStateStaff assignedStateStaff = new AssignedStateStaff();
+             * assignedStateStaff.setFirstName(fieldStaff.getFirstName());
+             * assignedStateStaff.setLastName(fieldStaff.getLastName());
+             * assignedStateStaff.setPhoto(fieldStaff.getPhoto());
+             * assignedStateStaff.setStaffId(fieldStaff.getFieldStaffGoId());
+             * assignedStateStaff
+             * .setRole(fieldStaff.getFieldStaffType().getFieldStaffTypeName());
+             * RegionAssignedArea regionAssignedArea = new RegionAssignedArea();
+             * regionAssignedArea.setRegionArea(CCIConstants.EMPTY);
+             * regionAssignedArea.setStateCode(CCIConstants.EMPTY);
+             * assignedStateStaff.getAssignedArea().add(regionAssignedArea); if
+             * (staffExist.get(fieldStaff.getFieldStaffGoId()) == null) {
+             * staffExist.put(fieldStaff.getFieldStaffGoId(),
+             * assignedStateStaff); } } }
+             */
             stateStaff.getAssignedStateStaffs().addAll(staffExist.values());
          }
          stateStaff.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
