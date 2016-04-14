@@ -348,10 +348,6 @@ public class Seasons {
    @Consumes("application/json")
    public SeasonHspJ1HSDetails updateJ1Details(SeasonHspJ1HSDetails seasonHspJ1HSDetails) {
       LOGGER.debug("Calling 'fun:updateJ1Details' ");
-      if (seasonHspJ1HSDetails != null)
-         LOGGER.debug("Season ID  : " + seasonHspJ1HSDetails.getSeasonId());
-      else
-         LOGGER.debug("Object seasonHspJ1HSDetails is Null");
       return seasonServices.updateHSPJ1HSSeasonDetails(seasonHspJ1HSDetails);
    }
 
@@ -364,10 +360,6 @@ public class Seasons {
    @Consumes("application/json")
    public J1HSBasicDetail updateJ1NameAndStatus(J1HSBasicDetail j1hsBasicDetail) {
       LOGGER.debug("Calling 'fun:updateJ1NameAndStatus'");
-      if (j1hsBasicDetail != null)
-         LOGGER.debug("Season ID  : " + j1hsBasicDetail.getSeasonId());
-      else
-         LOGGER.debug("Object updateJ1NameAndStatus  is Null");
       return seasonServices.updateHSPJ1HSSeasonNameAndStatus(j1hsBasicDetail);
    }
 
@@ -380,7 +372,6 @@ public class Seasons {
    @Consumes("application/json")
    public J1HSJanStart updateJ1JanStartDetails(J1HSJanStart j1hsJanStart) {
       LOGGER.debug("Calling 'fun:updateJ1JanStartDetails'");
-      LOGGER.debug("Season ID  : " + j1hsJanStart.getSeasonId());
       return seasonServices.updateHSPJ1HSSeasonJanStartDetails(j1hsJanStart);
    }
 
@@ -392,11 +383,6 @@ public class Seasons {
    @Path("j1hs/aug/update")
    @Consumes("application/json")
    public J1HSAugStart updateJ1AugStartDetails(J1HSAugStart j1hsAugStart) {
-      LOGGER.debug("Calling ");
-      if (j1hsAugStart != null)
-         LOGGER.debug("Season ID  :" + j1hsAugStart.getSeasonId());
-      else
-         LOGGER.debug("Object j1hsAugStart is Null");
       return seasonServices.updateHSPJ1HSSeasonAugStartDetails(j1hsAugStart);
    }
 
@@ -408,11 +394,6 @@ public class Seasons {
    @Path("j1hs/field/settings/update")
    @Consumes("application/json")
    public J1HSFieldSettings updateJ1FieldSettings(J1HSFieldSettings j1hsFieldSettings) {
-      LOGGER.debug("Calling 'fun:updateJ1FieldSettings'");
-      if (j1hsFieldSettings != null)
-         LOGGER.debug("Season ID  : " + j1hsFieldSettings.getSeasonId());
-      else
-         LOGGER.debug("Object j1hsFieldSettings is Null");
       return seasonServices.updateHSPJ1HSSeasonFieldSettings(j1hsFieldSettings);
    }
 
@@ -424,12 +405,6 @@ public class Seasons {
    @Path("j1hs/program/update/allocation")
    @Consumes("application/json")
    public J1HSProgramAllocations updateJ1ProgramAllocation(J1HSProgramAllocations j1hsProgramAllocations) {
-      LOGGER.debug("Calling  'fun:updateJ1ProgramAllocation'");
-      if (j1hsProgramAllocations != null)
-         LOGGER.debug("Season ID  : " + j1hsProgramAllocations.getSeasonId());
-      else
-         LOGGER.debug("Object j1hsProgramAllocations is Null");
-
       return seasonServices.updateHSPJ1HSSeasonProgramAllocation(j1hsProgramAllocations);
    }
 
@@ -446,8 +421,6 @@ public class Seasons {
    @Path("f1/view/details/{seasonProgramId}")
    @Produces("application/json")
    public SeasonHSPF1Details getF1Details(@PathParam("seasonProgramId") String seasonProgramId) {
-      LOGGER.debug("Calling 'fun:getF1Details'");
-      LOGGER.debug("seasonProgramId  : " + seasonProgramId);
       return seasonServices.getSeasonHSPF1Details(seasonProgramId);
    }
 

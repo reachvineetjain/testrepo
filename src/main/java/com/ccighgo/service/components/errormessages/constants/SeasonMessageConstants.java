@@ -31,23 +31,39 @@ public class SeasonMessageConstants {
    //Season J1HS 
    public static final String INVALID_J1HS_PROGRAM_ID = "invalid.j1hs.season.program.id";
    public static final String ERROR_GET_J1HS_SEASON_DETAILS = "error.get.j1hs.season.details";
-   public static final String ERROR_GET_HSPJ1_BASIC_DETAILS = "error.get.j1.hs.season.name.status";
+   public static final String ERROR_GET_HSPJ1_BASIC_DETAILS = "error.get.j1hs.season.basic.detail";
+   public static final String ERROR_GET_HSPJ1_JAN_START_DETAILS = "error.get.j1hs.season.jan.start.details";
+   public static final String ERROR_GET_HSPJ1_AUG_START_DETAILS = "error.get.j1hs.season.aug.start.details";
+   public static final String ERROR_GET_HSPJ1_FIELD_SETTINGS = "error.get.hsp.j1hs.season.field.settings";
+   public static final String ERROR_GET_HSPJ1_PROGRAM_ALLOCATION = "error.get.hsp.j1hs.program.allocation";
+   public static final String INVALID_J1HS_UPDATE_DATA = "error.update.j1hs.invalid.object";
+   public static final String ERROR_UPDATE_J1HS_SEASON_DETAILS = "error.update.j1hs.season.details";
+   public static final String INVALID_J1HS_BASIC_DATA = "error.update.j1hs.invalid.base.object";
+   public static final String ERROR_UPDATE_BASIC_DATA = "error.update.j1hs.base.object";
+   public static final String INVALID_J1HS_JAN_DATA = "error.update.j1hs.invalid.jan.object";
+   public static final String ERROR_UPDATE_HSPJ1_JAN_START = "error.update.j1hs.jan.start";
+   public static final String INVALID_J1HS_AUG_DATA = "error.update.j1hs.invalid.aug.object";
+   public static final String ERROR_UPDATE_HSPJ1_AUG_START = "error.update.j1hs.aug.start";
+   public static final String INVALID_J1HS_FIELD_SETTINGS_DATA = "error.update.j1hs.invalid.field.settings.object";
+   public static final String ERROR_UPDATE_HSPJ1_FIELD_SETTINGS = "error.update.j1hs.season.field.settings";
+   public static final String INVALID_J1HS_ALLOCATION_DATA = "error.update.j1hs.invalid.allocation.object";
+   public static final String ERROR_UPDATE_HSPJ1_PROGRAM_ALLOCATION = "error.update.hsp.j1.hs.season.program.allocation";
 
    // SeasonBean
    
    
    
    
-   public static final String FAILED_TO_GET_J1_HS_SEASON_JAN_START_DETAILS = "error.get.j1.hs.season.jan.start.details";
-   public static final String FAILED_TO_GET_HSP_J1_HS_AUG_START = "error.get.j1.hs.season.aug.start.details";
-   public static final String FAILED_TO_GET_HSP_J1_HS_SEASON_FIELD_SETTINGS = "error.get.hsp.j1.hs.season.field.settings";
-   public static final String FAILED_TO_GET_HSP_J1_HS_PROGRAM_ALLOCATION = "error.get.hsp.j1.hs.program.allocation";
-   public static final String FAILED_UPDATE_HSP_J1_HS_SEASON_DETAILS = "error.get.hsp.j1.hs.season.details";
-   public static final String FAILED_UPDATE_HSP_J1_HS_SEASON_NAME_AND_STATUS = "error.get.hsp.j1.hs.season.name.and.status";
-   public static final String FAILED_TO_UPDATE_J1_HS_JAN_START = "error.update.hsp.j1.hs.jan.start";
-   public static final String FAILED_TO_UPDATE_HSP_J1_HS_AUG_START = "error.update.hsp.j1.hs.aug.start";
-   public static final String FAILED_TO_UPDATE_HSP_J1_HS_SEASON_FIELD_SETTINGS = "error.update.hsp.j1.hs.season.field.settings";
-   public static final String FAILED_TO_UPDATE_HSP_J1_HS_PROGRAM_ALLOCATION = "error.update.hsp.j1.hs.season.program.allocation";
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
    public static final String FAILED_TO_GET_HSP_F1_SEASON_DETAILS = "error.get.hsp.f1.season.details";
    public static final String FAILED_UPDATE_F1_DETAILS = "error.update.f1.details";
    public static final String FAILED_TO_GET_HSP_F1_NAME_AND_STATUS = "error.get.hsp.f1.name.and.status";
@@ -154,15 +170,15 @@ public class SeasonMessageConstants {
    public static final String FAILED_UPDATE_IHP_PROGRAM_CONFIGURATION_DETAILS = "error.update.ihp.program.configuration.details";
 
    public static final String FAILED_SEASON_NAME_ALREADY_EXIST = "error.season.name.already.exist";
-   public static final String FAILED_J1HS_AUG_START_NOT_NULL = "error.j1hs.aug.start.not.null";
-   public static final String FAILED_J1HS_FIELD_SETTINGS_NOT_NULL = "error.j1hs.field.settings.not.null";
+  
+   
    public static final String FAILED_WP_BASIC_DETAILS = "error.get.wp.basic.details";
    public static final String FAILED_GET_WP_SECTION_ONE_DETAILS = "error.get.wp.section.one.details";
    public static final String FAILED_GET_SEASON_WP_DETAILS = "error.get.wp.section.details";
    public static final String INVALID_SEASON_ID = "error.invalid.season.id";
    public static final String INVALID_DEPARTMENT_ID = "error.invalid.department.id";
    public static final String NO_SEASON_FOUND = "error.no.season.found";
-   public static final String FAILED_TO_GET_J1_HS_JAN_START = "error.get.j1.hs.jan.start";
+ 
    public static final String SEASON_ID_ZERO_OR_NEG = "error.seasonid.zero.or.negative";
    public static final String FAILED_TO_GET_J1_HS_BASIC_DETAILS = "error.get.j1.hs.basic.detils";
    public static final String INVALID_SEASON_GHT_DETAILS = "error.invalid.season.ght.details";

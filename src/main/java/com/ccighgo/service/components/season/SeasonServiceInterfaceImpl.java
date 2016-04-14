@@ -524,117 +524,101 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       } catch (CcighgoException e) {
          j1hsBasicDetail.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, SeasonCodes.ERROR_GET_HSPJ1_BASIC_DETAILS.getValue(),
                messageUtil.getMessage(SeasonMessageConstants.ERROR_GET_HSPJ1_BASIC_DETAILS)));
-         LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.ERROR_GET_HSPJ1_BASIC_DETAILS));
+         LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.ERROR_GET_HSPJ1_BASIC_DETAILS) + CCIConstants.HYPHEN_SPACE + e.getMessage());
       }
       return j1hsBasicDetail;
    }
 
    @Transactional(readOnly = true)
    public J1HSJanStart getHSPJ1HSSeasonJanStartDetails(String seasonProgramId) {
-      J1HSJanStart j1hsJanStart = null;
+      J1HSJanStart j1hsJanStart = new J1HSJanStart();
+      if (seasonProgramId == null || seasonProgramId.isEmpty()) {
+         j1hsJanStart.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, SeasonCodes.ERROR_GET_HSPJ1_JAN_START_DETAILS.getValue(),
+               messageUtil.getMessage(SeasonMessageConstants.INVALID_J1HS_PROGRAM_ID)));
+         LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.INVALID_J1HS_PROGRAM_ID));
+         return j1hsJanStart;
+      }
       try {
-         if (seasonProgramId == null || seasonProgramId.isEmpty()) {
-            j1hsJanStart = setJ1HSJanStartStatus(j1hsJanStart, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_PROGRAM_ID.getValue(),
-                  messageUtil.getMessage(SeasonMessageConstants.INVALID_PROGRAM_ID));
-            LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.INVALID_PROGRAM_ID));
-            return j1hsJanStart;
-         }
          SeasonJ1Detail seasonJ1Detail = seasonJ1DetailsRepository.findOne(Integer.valueOf(seasonProgramId));
-         if (seasonJ1Detail == null) {
-            j1hsJanStart = setJ1HSJanStartStatus(j1hsJanStart, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_SEASSON_J1_DETAILS.getValue(),
-                  messageUtil.getMessage(SeasonMessageConstants.FAILED_GET_SEASSON_J1_DETAILS));
-            LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.FAILED_GET_SEASSON_J1_DETAILS));
-            return j1hsJanStart;
+         if (seasonJ1Detail != null) {
+            j1hsJanStart = seasonServiceImplUtil.getJ1HSJanStart(seasonJ1Detail);
+            j1hsJanStart.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, SeasonCodes.SUCCESS.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         } else {
+            j1hsJanStart.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, SeasonCodes.SUCCESS.getValue(),
+                  messageUtil.getMessage(CCIConstants.NO_RECORD)));
          }
-         j1hsJanStart = seasonServiceImplUtil.getJ1HSJanStart(seasonJ1Detail);
-         if (j1hsJanStart == null) {
-            j1hsJanStart = setJ1HSJanStartStatus(j1hsJanStart, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_TO_GET_J1_HS_SEASON_JAN_START_DETAILS.getValue(),
-                  messageUtil.getMessage(SeasonMessageConstants.FAILED_TO_GET_J1_HS_SEASON_JAN_START_DETAILS));
-            LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.FAILED_TO_GET_J1_HS_SEASON_JAN_START_DETAILS));
-            return j1hsJanStart;
-         }
-         j1hsJanStart = setJ1HSJanStartStatus(j1hsJanStart, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.SEASON_LIST_SERVICE_CODE.getValue(),
-               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
-
       } catch (CcighgoException e) {
-         j1hsJanStart = setJ1HSJanStartStatus(j1hsJanStart, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_TO_GET_J1_HS_SEASON_JAN_START_DETAILS.getValue(),
-               messageUtil.getMessage(SeasonMessageConstants.FAILED_TO_GET_J1_HS_SEASON_JAN_START_DETAILS));
-         LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.FAILED_TO_GET_J1_HS_SEASON_JAN_START_DETAILS));
+         j1hsJanStart.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, SeasonCodes.ERROR_GET_HSPJ1_JAN_START_DETAILS.getValue(),
+               messageUtil.getMessage(SeasonMessageConstants.ERROR_GET_HSPJ1_JAN_START_DETAILS)));
+         LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.ERROR_GET_HSPJ1_JAN_START_DETAILS) + CCIConstants.HYPHEN_SPACE + e.getMessage());
       }
       return j1hsJanStart;
    }
 
    @Transactional(readOnly = true)
    public J1HSAugStart getHSPJ1HSSeasonAugStartDetails(String seasonProgramId) {
-      J1HSAugStart j1hsAugStart = null;
+      J1HSAugStart j1hsAugStart = new J1HSAugStart();
+      if (seasonProgramId == null || seasonProgramId.isEmpty()) {
+         j1hsAugStart.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, SeasonCodes.ERROR_GET_HSPJ1_AUG_START_DETAILS.getValue(),
+               messageUtil.getMessage(SeasonMessageConstants.INVALID_J1HS_PROGRAM_ID)));
+         LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.INVALID_J1HS_PROGRAM_ID));
+         return j1hsAugStart;
+      }
       try {
-         if (seasonProgramId == null || seasonProgramId.isEmpty()) {
-            j1hsAugStart = setJ1HSAugStartStatus(j1hsAugStart, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_PROGRAM_ID.getValue(),
-                  messageUtil.getMessage(SeasonMessageConstants.INVALID_PROGRAM_ID));
-            LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.INVALID_PROGRAM_ID));
-            return j1hsAugStart;
-         }
          SeasonJ1Detail seasonJ1Detail = seasonJ1DetailsRepository.findOne(Integer.valueOf(seasonProgramId));
-         if (seasonJ1Detail == null) {
-            j1hsAugStart = setJ1HSAugStartStatus(j1hsAugStart, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_PROGRAM_ID.getValue(),
-                  messageUtil.getMessage(SeasonMessageConstants.INVALID_PROGRAM_ID));
-            LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.INVALID_PROGRAM_ID));
-            return j1hsAugStart;
+         if (seasonJ1Detail != null) {
+            j1hsAugStart = seasonServiceImplUtil.getJ1HSAugStart(seasonJ1Detail);
+            j1hsAugStart.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, SeasonCodes.SUCCESS.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         } else {
+            j1hsAugStart.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, SeasonCodes.SUCCESS.getValue(),
+                  messageUtil.getMessage(CCIConstants.NO_RECORD)));
          }
-         j1hsAugStart = seasonServiceImplUtil.getJ1HSAugStart(seasonJ1Detail);
-         if (j1hsAugStart == null) {
-            j1hsAugStart = setJ1HSAugStartStatus(j1hsAugStart, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_TO_GET_HSP_J1_HS_AUG_START.getValue(),
-                  messageUtil.getMessage(SeasonMessageConstants.FAILED_TO_GET_HSP_J1_HS_AUG_START));
-            LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.FAILED_TO_GET_HSP_J1_HS_AUG_START));
-            return j1hsAugStart;
-         }
-         j1hsAugStart = setJ1HSAugStartStatus(j1hsAugStart, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.SEASON_LIST_SERVICE_CODE.getValue(),
-               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
       } catch (CcighgoException e) {
-         j1hsAugStart = setJ1HSAugStartStatus(j1hsAugStart, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_TO_GET_HSP_J1_HS_AUG_START.getValue(),
-               messageUtil.getMessage(SeasonMessageConstants.FAILED_TO_GET_HSP_J1_HS_AUG_START));
-         LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.FAILED_TO_GET_HSP_J1_HS_AUG_START));
+         j1hsAugStart.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, SeasonCodes.ERROR_GET_HSPJ1_AUG_START_DETAILS.getValue(),
+               messageUtil.getMessage(SeasonMessageConstants.ERROR_GET_HSPJ1_AUG_START_DETAILS)));
+         LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.ERROR_GET_HSPJ1_AUG_START_DETAILS) + CCIConstants.HYPHEN_SPACE + e.getMessage());
       }
       return j1hsAugStart;
    }
 
    @Transactional(readOnly = true)
    public J1HSFieldSettings getHSPJ1HSSeasonFieldSettings(String seasonProgramId) {
-      J1HSFieldSettings j1hsFieldSettings = null;
+      J1HSFieldSettings j1hsFieldSettings = new J1HSFieldSettings();
+      if (seasonProgramId == null || seasonProgramId.isEmpty()) {
+         j1hsFieldSettings.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, SeasonCodes.ERROR_GET_HSPJ1_FIELD_SETTINGS.getValue(),
+               messageUtil.getMessage(SeasonMessageConstants.INVALID_J1HS_PROGRAM_ID)));
+         LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.INVALID_J1HS_PROGRAM_ID));
+         return j1hsFieldSettings;
+      }
       try {
-         if (seasonProgramId == null || seasonProgramId.isEmpty()) {
-            j1hsFieldSettings = setJ1HSFieldSettingsStatus(j1hsFieldSettings, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_PROGRAM_ID.getValue(),
-                  messageUtil.getMessage(SeasonMessageConstants.INVALID_PROGRAM_ID));
-            LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.INVALID_PROGRAM_ID));
-            return j1hsFieldSettings;
-         }
          SeasonJ1Detail seasonJ1Detail = seasonJ1DetailsRepository.findOne(Integer.valueOf(seasonProgramId));
-         if (seasonJ1Detail == null) {
-            j1hsFieldSettings = setJ1HSFieldSettingsStatus(j1hsFieldSettings, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_PROGRAM_ID.getValue(),
-                  messageUtil.getMessage(SeasonMessageConstants.INVALID_PROGRAM_ID));
-            LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.INVALID_PROGRAM_ID));
-            return j1hsFieldSettings;
+         if (seasonJ1Detail != null) {
+            j1hsFieldSettings = seasonServiceImplUtil.getJ1HSFieldSettings(seasonJ1Detail);
+            j1hsFieldSettings.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, SeasonCodes.SUCCESS.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         } else {
+            j1hsFieldSettings.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, SeasonCodes.SUCCESS.getValue(),
+                  messageUtil.getMessage(CCIConstants.NO_RECORD)));
          }
-         j1hsFieldSettings = seasonServiceImplUtil.getJ1HSFieldSettings(seasonJ1Detail);
-         if (j1hsFieldSettings == null) {
-            j1hsFieldSettings = setJ1HSFieldSettingsStatus(j1hsFieldSettings, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR,
-                  ErrorCode.FAILED_TO_GET_HSP_J1_HS_SEASON_FIELD_SETTINGS.getValue(), messageUtil.getMessage(SeasonMessageConstants.FAILED_TO_GET_HSP_J1_HS_SEASON_FIELD_SETTINGS));
-            LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.FAILED_TO_GET_HSP_J1_HS_SEASON_FIELD_SETTINGS));
-            return j1hsFieldSettings;
-         }
-         j1hsFieldSettings = setJ1HSFieldSettingsStatus(j1hsFieldSettings, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.SEASON_LIST_SERVICE_CODE.getValue(),
-               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
       } catch (CcighgoException e) {
-         j1hsFieldSettings = setJ1HSFieldSettingsStatus(j1hsFieldSettings, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR,
-               ErrorCode.FAILED_TO_GET_HSP_J1_HS_SEASON_FIELD_SETTINGS.getValue(), messageUtil.getMessage(SeasonMessageConstants.FAILED_TO_GET_HSP_J1_HS_SEASON_FIELD_SETTINGS));
-         LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.FAILED_TO_GET_HSP_J1_HS_SEASON_FIELD_SETTINGS));
+         j1hsFieldSettings.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, SeasonCodes.ERROR_GET_HSPJ1_FIELD_SETTINGS.getValue(),
+               messageUtil.getMessage(SeasonMessageConstants.ERROR_GET_HSPJ1_FIELD_SETTINGS)));
+         LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.ERROR_GET_HSPJ1_FIELD_SETTINGS) + CCIConstants.HYPHEN_SPACE + e.getMessage());
       }
       return j1hsFieldSettings;
    }
 
    @Transactional(readOnly = true)
    public J1HSProgramAllocations getHSPJ1HSSeasonProgramAllocation(String seasonProgramId) {
-      J1HSProgramAllocations j1hsProgramAllocations = null;
+      J1HSProgramAllocations j1hsProgramAllocations = new J1HSProgramAllocations();
+      if (seasonProgramId == null || seasonProgramId.isEmpty()) {
+         j1hsProgramAllocations.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, SeasonCodes.ERROR_GET_HSPJ1_PROGRAM_ALLOCATION.getValue(),
+               messageUtil.getMessage(SeasonMessageConstants.INVALID_J1HS_PROGRAM_ID)));
+         LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.INVALID_J1HS_PROGRAM_ID));
+         return j1hsProgramAllocations;
+      }
       try {
          SeasonJ1Detail seasonJ1Detail = seasonJ1DetailsRepository.findOne(Integer.valueOf(seasonProgramId));
          if (seasonJ1Detail != null) {
@@ -681,22 +665,20 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
                j1hsProgramAllocations.setTotalRemainingParticpants(0);
                j1hsProgramAllocations.setTotalUnGuarnteedParticipants(totalUnGuarant);
                j1hsProgramAllocations.setTotalGuarnteedParticipants(totalGurant);
-               j1hsProgramAllocations = setJ1HSProgramAllocationsStatus(j1hsProgramAllocations, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO,
-                     ErrorCode.SEASON_LIST_SERVICE_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
+               j1hsProgramAllocations.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, SeasonCodes.SUCCESS.getValue(),
+                     messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
             } else {
-               j1hsProgramAllocations = setJ1HSProgramAllocationsStatus(j1hsProgramAllocations, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR,
-                     ErrorCode.INVALID_SEASON_ID.getValue(), messageUtil.getMessage(SeasonMessageConstants.INVALID_SEASON_ID));
-               LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.INVALID_SEASON_ID));
+               j1hsProgramAllocations.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, SeasonCodes.SUCCESS.getValue(),
+                     messageUtil.getMessage(CCIConstants.NO_RECORD)));
             }
          } else {
-            j1hsProgramAllocations = setJ1HSProgramAllocationsStatus(j1hsProgramAllocations, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR,
-                  ErrorCode.INVALID_PROGRAM_ID.getValue(), messageUtil.getMessage(SeasonMessageConstants.INVALID_PROGRAM_ID));
-            LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.INVALID_PROGRAM_ID));
+            j1hsProgramAllocations.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, SeasonCodes.SUCCESS.getValue(),
+                  messageUtil.getMessage(CCIConstants.NO_RECORD)));
          }
       } catch (CcighgoException e) {
-         j1hsProgramAllocations = setJ1HSProgramAllocationsStatus(j1hsProgramAllocations, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR,
-               ErrorCode.FAILED_TO_GET_HSP_J1_HS_PROGRAM_ALLOCATION.getValue(), messageUtil.getMessage(SeasonMessageConstants.FAILED_TO_GET_HSP_J1_HS_PROGRAM_ALLOCATION));
-         LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.FAILED_TO_GET_HSP_J1_HS_PROGRAM_ALLOCATION));
+         j1hsProgramAllocations.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, SeasonCodes.ERROR_GET_HSPJ1_PROGRAM_ALLOCATION.getValue(),
+               messageUtil.getMessage(SeasonMessageConstants.ERROR_GET_HSPJ1_PROGRAM_ALLOCATION)));
+         LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.ERROR_GET_HSPJ1_PROGRAM_ALLOCATION) + CCIConstants.HYPHEN_SPACE + e.getMessage());
       }
       return j1hsProgramAllocations;
    }
@@ -704,78 +686,37 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    @Override
    @Transactional
    public SeasonHspJ1HSDetails updateHSPJ1HSSeasonDetails(SeasonHspJ1HSDetails seasonHspJ1HSDetails) {
-      SeasonHspJ1HSDetails returnObject = null;
-      if (seasonHspJ1HSDetails == null) {
-         returnObject = setSeasonHspJ1HSDetailsStatus(returnObject, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_TO_GET_HSP_J1_HS_SEASON_DETAILS.getValue(),
-               messageUtil.getMessage(SeasonMessageConstants.FAILED_TO_GET_HSP_J1_HS_SEASON_DETAILS));
-         LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.FAILED_TO_GET_HSP_J1_HS_SEASON_DETAILS));
+      SeasonHspJ1HSDetails returnObject = new SeasonHspJ1HSDetails();
+      if (seasonHspJ1HSDetails == null || seasonHspJ1HSDetails.getJ1HsBasicDetail() == null || seasonHspJ1HSDetails.getJ1HsJanStart() == null
+            || seasonHspJ1HSDetails.getJ1HsAugStart() == null || seasonHspJ1HSDetails.getJ1HsFieldSettings() == null || seasonHspJ1HSDetails.getJ1HsProgramAllocations() == null
+            || seasonHspJ1HSDetails.getJ1HsNotes() == null || seasonHspJ1HSDetails.getJ1HsDocuments() == null) {
+         returnObject.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, SeasonCodes.ERROR_UPDATE_J1HS_SEASON_DETAILS.getValue(),
+               messageUtil.getMessage(SeasonMessageConstants.INVALID_J1HS_UPDATE_DATA)));
+         LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.INVALID_J1HS_UPDATE_DATA));
          return returnObject;
       }
       try {
          SeasonJ1Detail seasonJ1Detail = seasonJ1DetailsRepository.findOne(Integer.valueOf(seasonHspJ1HSDetails.getSeasonProgramId()));
          if (seasonJ1Detail != null) {
-            try {
-               if (seasonHspJ1HSDetails.getJ1HsBasicDetail() != null) {
-                  seasonServiceImplUtil.updateJ1BasicDetails(seasonHspJ1HSDetails.getJ1HsBasicDetail(), seasonJ1Detail);
-               }
-            } catch (Exception e) {
-               ExceptionUtil.logException(e, LOGGER);
-            }
-            try {
-               if (seasonHspJ1HSDetails.getJ1HsJanStart() != null) {
-                  seasonServiceImplUtil.updateJ1JanStartDetails(seasonHspJ1HSDetails.getJ1HsJanStart(), seasonJ1Detail);
-               }
-            } catch (Exception e) {
-               ExceptionUtil.logException(e, LOGGER);
-            }
-            try {
-               if (seasonHspJ1HSDetails.getJ1HsAugStart() != null) {
-                  seasonServiceImplUtil.updateJ1AugStartDetails(seasonHspJ1HSDetails.getJ1HsAugStart(), seasonJ1Detail);
-               }
-            } catch (Exception e) {
-               ExceptionUtil.logException(e, LOGGER);
-            }
-            try {
-               if (seasonHspJ1HSDetails.getJ1HsFieldSettings() != null) {
-                  seasonServiceImplUtil.updateJ1FSSettings(seasonHspJ1HSDetails.getJ1HsFieldSettings(), seasonJ1Detail);
-               }
-            } catch (Exception e) {
-               ExceptionUtil.logException(e, LOGGER);
-            }
-            try {
-               if (seasonHspJ1HSDetails.getJ1HsProgramAllocations() != null) {
-                  updateHSPJ1HSSeasonProgramAllocation(seasonHspJ1HSDetails.getJ1HsProgramAllocations());
-               }
-            } catch (Exception e) {
-               ExceptionUtil.logException(e, LOGGER);
-            }
-            try {
-               if (seasonHspJ1HSDetails.getJ1HsNotes() != null) {
-                  seasonServiceImplUtil.updateJ1Notes(seasonHspJ1HSDetails, seasonJ1Detail.getSeason());
-               }
-            } catch (Exception e) {
-               ExceptionUtil.logException(e, LOGGER);
-            }
-            try {
-               if (seasonHspJ1HSDetails.getJ1HsDocuments() != null) {
-                  seasonServiceImplUtil.updateJ1HSDocs(seasonHspJ1HSDetails, seasonJ1Detail.getSeason());
-               }
-            } catch (Exception e) {
-               ExceptionUtil.logException(e, LOGGER);
-            }
+            seasonServiceImplUtil.updateJ1BasicDetails(seasonHspJ1HSDetails.getJ1HsBasicDetail(), seasonJ1Detail);
+            seasonServiceImplUtil.updateJ1JanStartDetails(seasonHspJ1HSDetails.getJ1HsJanStart(), seasonJ1Detail);
+            seasonServiceImplUtil.updateJ1AugStartDetails(seasonHspJ1HSDetails.getJ1HsAugStart(), seasonJ1Detail);
+            seasonServiceImplUtil.updateJ1FSSettings(seasonHspJ1HSDetails.getJ1HsFieldSettings(), seasonJ1Detail);
+            updateHSPJ1HSSeasonProgramAllocation(seasonHspJ1HSDetails.getJ1HsProgramAllocations());
+            seasonServiceImplUtil.updateJ1Notes(seasonHspJ1HSDetails, seasonJ1Detail.getSeason());
+            seasonServiceImplUtil.updateJ1HSDocs(seasonHspJ1HSDetails, seasonJ1Detail.getSeason());
             seasonJ1Detail = seasonJ1DetailsRepository.saveAndFlush(seasonJ1Detail);
             returnObject = getHSPJ1HSSeasonDetails(String.valueOf(seasonJ1Detail.getSeasonJ1DetailsId()));
-            returnObject = setSeasonHspJ1HSDetailsStatus(returnObject, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.SEASON_LIST_SERVICE_CODE.getValue(),
-                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
+            returnObject.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, SeasonCodes.SUCCESS.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          } else {
-            returnObject = setSeasonHspJ1HSDetailsStatus(returnObject, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_PROGRAM_ID.getValue(),
-                  messageUtil.getMessage(SeasonMessageConstants.INVALID_PROGRAM_ID));
-            LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.INVALID_PROGRAM_ID));
+            returnObject.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, SeasonCodes.SUCCESS.getValue(),
+                  messageUtil.getMessage(CCIConstants.NO_RECORD)));
          }
       } catch (CcighgoException e) {
-         returnObject = setSeasonHspJ1HSDetailsStatus(returnObject, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_UPDATE_HSP_J1_HS_SEASON_DETAILS.getValue(),
-               messageUtil.getMessage(SeasonMessageConstants.FAILED_UPDATE_HSP_J1_HS_SEASON_DETAILS));
-         LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.FAILED_UPDATE_HSP_J1_HS_SEASON_DETAILS));
+         returnObject.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, SeasonCodes.ERROR_UPDATE_J1HS_SEASON_DETAILS.getValue(),
+               messageUtil.getMessage(SeasonMessageConstants.ERROR_UPDATE_J1HS_SEASON_DETAILS)));
+         LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.ERROR_UPDATE_J1HS_SEASON_DETAILS) + CCIConstants.HYPHEN_SPACE + e.getMessage());
       }
       return returnObject;
    }
@@ -783,30 +724,29 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    @Override
    @Transactional
    public J1HSBasicDetail updateHSPJ1HSSeasonNameAndStatus(J1HSBasicDetail j1hsBasicDetail) {
-      J1HSBasicDetail returnObject = null;
+      J1HSBasicDetail returnObject = new J1HSBasicDetail();
+      if (j1hsBasicDetail == null || j1hsBasicDetail.getSeasonId() == 0) {
+         returnObject.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, SeasonCodes.ERROR_UPDATE_HSPJ1_BASIC_DETAILS.getValue(),
+               messageUtil.getMessage(SeasonMessageConstants.INVALID_J1HS_BASIC_DATA)));
+         LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.INVALID_J1HS_BASIC_DATA));
+         return returnObject;
+      }
       try {
-         if (j1hsBasicDetail == null || j1hsBasicDetail.getSeasonId() == 0) {
-            returnObject = setJ1HSBasicDetailStatus(returnObject, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_TO_GET_J1_HS_BASIC_DETAILS.getValue(),
-                  messageUtil.getMessage(SeasonMessageConstants.FAILED_TO_GET_J1_HS_BASIC_DETAILS));
-            LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.FAILED_TO_GET_J1_HS_BASIC_DETAILS));
-            return returnObject;
-         }
          SeasonJ1Detail seasonJ1Detail = seasonJ1DetailsRepository.findOne(Integer.valueOf(j1hsBasicDetail.getSeasonProgramId()));
          if (seasonJ1Detail != null) {
             seasonServiceImplUtil.updateJ1BasicDetails(j1hsBasicDetail, seasonJ1Detail);
             seasonJ1Detail = seasonJ1DetailsRepository.saveAndFlush(seasonJ1Detail);
-            returnObject = j1hsBasicDetail;
-            returnObject = setJ1HSBasicDetailStatus(returnObject, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.SEASON_LIST_SERVICE_CODE.getValue(),
-                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
+            returnObject = seasonServiceImplUtil.getJ1HSBasicDetail(seasonJ1Detail);
+            returnObject.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, SeasonCodes.SUCCESS.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          } else {
-            returnObject = setJ1HSBasicDetailStatus(returnObject, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_SEASON_ID.getValue(),
-                  messageUtil.getMessage(SeasonMessageConstants.INVALID_SEASON_ID));
-            LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.INVALID_SEASON_ID));
+            returnObject.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, SeasonCodes.SUCCESS.getValue(),
+                  messageUtil.getMessage(CCIConstants.NO_RECORD)));
          }
       } catch (CcighgoException e) {
-         returnObject = setJ1HSBasicDetailStatus(returnObject, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_UPDATE_HSP_J1_HS_SEASON_NAME_AND_STATUS.getValue(),
-               messageUtil.getMessage(SeasonMessageConstants.FAILED_UPDATE_HSP_J1_HS_SEASON_NAME_AND_STATUS));
-         LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.FAILED_UPDATE_HSP_J1_HS_SEASON_NAME_AND_STATUS));
+         returnObject.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, SeasonCodes.ERROR_UPDATE_HSPJ1_BASIC_DETAILS.getValue(),
+               messageUtil.getMessage(SeasonMessageConstants.ERROR_UPDATE_BASIC_DATA)));
+         LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.ERROR_UPDATE_BASIC_DATA) + CCIConstants.HYPHEN_SPACE + e.getMessage());
       }
       return returnObject;
    }
@@ -814,30 +754,29 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    @Override
    @Transactional
    public J1HSJanStart updateHSPJ1HSSeasonJanStartDetails(J1HSJanStart j1hsJanStart) {
-      J1HSJanStart returnObject = null;
+      J1HSJanStart returnObject = new J1HSJanStart();
+      if (j1hsJanStart == null || j1hsJanStart.getSeasonProgramId() == 0) {
+         returnObject.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, SeasonCodes.ERROR_UPDATE_HSPJ1_JAN_START.getValue(),
+               messageUtil.getMessage(SeasonMessageConstants.INVALID_J1HS_JAN_DATA)));
+         LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.INVALID_J1HS_JAN_DATA));
+         return returnObject;
+      }
       try {
-         if (j1hsJanStart == null) {
-            returnObject = setJ1HSJanStartStatus(returnObject, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_TO_GET_J1_HS_JAN_START.getValue(),
-                  messageUtil.getMessage(SeasonMessageConstants.FAILED_TO_GET_J1_HS_JAN_START));
-            LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.FAILED_TO_GET_J1_HS_JAN_START));
-            return returnObject;
-         }
          SeasonJ1Detail seasonJ1Detail = seasonJ1DetailsRepository.findOne(Integer.valueOf(j1hsJanStart.getSeasonProgramId()));
-         if (seasonJ1Detail == null) {
-            returnObject = setJ1HSJanStartStatus(returnObject, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_PROGRAM_ID.getValue(),
-                  messageUtil.getMessage(SeasonMessageConstants.INVALID_PROGRAM_ID));
-            LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.INVALID_PROGRAM_ID));
-            return returnObject;
+         if (seasonJ1Detail != null) {
+            seasonServiceImplUtil.updateJ1JanStartDetails(j1hsJanStart, seasonJ1Detail);
+            seasonJ1Detail = seasonJ1DetailsRepository.saveAndFlush(seasonJ1Detail);
+            returnObject = seasonServiceImplUtil.getJ1HSJanStart(seasonJ1Detail);
+            returnObject.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, SeasonCodes.SUCCESS.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         } else {
+            returnObject.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, SeasonCodes.SUCCESS.getValue(),
+                  messageUtil.getMessage(CCIConstants.NO_RECORD)));
          }
-         seasonServiceImplUtil.updateJ1JanStartDetails(j1hsJanStart, seasonJ1Detail);
-         seasonJ1Detail = seasonJ1DetailsRepository.saveAndFlush(seasonJ1Detail);
-         returnObject = j1hsJanStart;
-         returnObject = setJ1HSJanStartStatus(returnObject, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.SEASON_LIST_SERVICE_CODE.getValue(),
-               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
       } catch (CcighgoException e) {
-         returnObject = setJ1HSJanStartStatus(returnObject, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_TO_UPDATE_J1_HS_JAN_START.getValue(),
-               messageUtil.getMessage(SeasonMessageConstants.FAILED_TO_UPDATE_J1_HS_JAN_START));
-         LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.FAILED_TO_UPDATE_J1_HS_JAN_START));
+         returnObject.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, SeasonCodes.ERROR_UPDATE_HSPJ1_JAN_START.getValue(),
+               messageUtil.getMessage(SeasonMessageConstants.ERROR_UPDATE_HSPJ1_JAN_START)));
+         LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.ERROR_UPDATE_HSPJ1_JAN_START) + CCIConstants.HYPHEN_SPACE + e.getMessage());
       }
       return returnObject;
    }
@@ -845,30 +784,29 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    @Override
    @Transactional
    public J1HSAugStart updateHSPJ1HSSeasonAugStartDetails(J1HSAugStart j1hsAugStart) {
-      J1HSAugStart returnObject = null;
+      J1HSAugStart returnObject = new J1HSAugStart();
+      if (j1hsAugStart == null || j1hsAugStart.getSeasonProgramId() == 0) {
+         returnObject.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, SeasonCodes.ERROR_UPDATE_HSPJ1_AUG_START.getValue(),
+               messageUtil.getMessage(SeasonMessageConstants.INVALID_J1HS_AUG_DATA)));
+         LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.INVALID_J1HS_AUG_DATA));
+         return returnObject;
+      }
       try {
-         if (j1hsAugStart == null) {
-            returnObject = setJ1HSAugStartStatus(returnObject, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_J1HS_AUG_START_NOT_NULL.getValue(),
-                  messageUtil.getMessage(SeasonMessageConstants.FAILED_J1HS_AUG_START_NOT_NULL));
-            LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.FAILED_J1HS_AUG_START_NOT_NULL));
-            return returnObject;
-         }
          SeasonJ1Detail seasonJ1Detail = seasonJ1DetailsRepository.findOne(Integer.valueOf(j1hsAugStart.getSeasonProgramId()));
-         if (seasonJ1Detail == null) {
-            returnObject = setJ1HSAugStartStatus(returnObject, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_PROGRAM_ID.getValue(),
-                  messageUtil.getMessage(SeasonMessageConstants.INVALID_PROGRAM_ID));
-            LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.INVALID_PROGRAM_ID));
-            return returnObject;
+         if (seasonJ1Detail != null) {
+            seasonServiceImplUtil.updateJ1AugStartDetails(j1hsAugStart, seasonJ1Detail);
+            seasonJ1Detail = seasonJ1DetailsRepository.saveAndFlush(seasonJ1Detail);
+            returnObject = seasonServiceImplUtil.getJ1HSAugStart(seasonJ1Detail);
+            returnObject.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, SeasonCodes.SUCCESS.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         } else {
+            returnObject.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, SeasonCodes.SUCCESS.getValue(),
+                  messageUtil.getMessage(CCIConstants.NO_RECORD)));
          }
-         seasonServiceImplUtil.updateJ1AugStartDetails(j1hsAugStart, seasonJ1Detail);
-         seasonJ1Detail = seasonJ1DetailsRepository.saveAndFlush(seasonJ1Detail);
-         returnObject = j1hsAugStart;
-         returnObject = setJ1HSAugStartStatus(returnObject, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.SEASON_LIST_SERVICE_CODE.getValue(),
-               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
       } catch (CcighgoException e) {
-         returnObject = setJ1HSAugStartStatus(returnObject, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_TO_UPDATE_HSP_J1_HS_AUG_START.getValue(),
-               messageUtil.getMessage(SeasonMessageConstants.FAILED_TO_UPDATE_HSP_J1_HS_AUG_START));
-         LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.FAILED_TO_UPDATE_HSP_J1_HS_AUG_START));
+         returnObject.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, SeasonCodes.ERROR_UPDATE_HSPJ1_AUG_START.getValue(),
+               messageUtil.getMessage(SeasonMessageConstants.ERROR_UPDATE_HSPJ1_AUG_START)));
+         LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.ERROR_UPDATE_HSPJ1_AUG_START) + CCIConstants.HYPHEN_SPACE + e.getMessage());
       }
       return returnObject;
    }
@@ -876,31 +814,29 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    @Override
    @Transactional
    public J1HSFieldSettings updateHSPJ1HSSeasonFieldSettings(J1HSFieldSettings j1hsFieldSettings) {
-      J1HSFieldSettings returnObject = null;
+      J1HSFieldSettings returnObject = new J1HSFieldSettings();
+      if (j1hsFieldSettings == null || j1hsFieldSettings.getSeasonProgramId() == 0) {
+         returnObject.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, SeasonCodes.ERROR_UPDATE_HSPJ1_FIELD_SETTINGS.getValue(),
+               messageUtil.getMessage(SeasonMessageConstants.INVALID_J1HS_FIELD_SETTINGS_DATA)));
+         LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.INVALID_J1HS_FIELD_SETTINGS_DATA));
+         return returnObject;
+      }
       try {
-         if (j1hsFieldSettings == null) {
-            returnObject = setJ1HSFieldSettingsStatus(returnObject, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_J1HS_FIELD_SETTINGS_NOT_NULL.getValue(),
-                  messageUtil.getMessage(SeasonMessageConstants.FAILED_J1HS_FIELD_SETTINGS_NOT_NULL));
-            LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.FAILED_J1HS_FIELD_SETTINGS_NOT_NULL));
-            return returnObject;
-         }
          SeasonJ1Detail seasonJ1Detail = seasonJ1DetailsRepository.findOne(Integer.valueOf(j1hsFieldSettings.getSeasonProgramId()));
-         if (seasonJ1Detail == null) {
-            returnObject = setJ1HSFieldSettingsStatus(returnObject, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_PROGRAM_ID.getValue(),
-                  messageUtil.getMessage(SeasonMessageConstants.INVALID_PROGRAM_ID));
-            LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.INVALID_PROGRAM_ID));
-            return returnObject;
+         if (seasonJ1Detail != null) {
+            seasonServiceImplUtil.updateJ1FSSettings(j1hsFieldSettings, seasonJ1Detail);
+            seasonJ1Detail = seasonJ1DetailsRepository.saveAndFlush(seasonJ1Detail);
+            returnObject = seasonServiceImplUtil.getJ1HSFieldSettings(seasonJ1Detail);
+            returnObject.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, SeasonCodes.SUCCESS.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         } else {
+            returnObject.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, SeasonCodes.SUCCESS.getValue(),
+                  messageUtil.getMessage(CCIConstants.NO_RECORD)));
          }
-         seasonServiceImplUtil.updateJ1FSSettings(j1hsFieldSettings, seasonJ1Detail);
-         seasonJ1Detail = seasonJ1DetailsRepository.saveAndFlush(seasonJ1Detail);
-         returnObject = j1hsFieldSettings;
-         returnObject = setJ1HSFieldSettingsStatus(returnObject, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.SEASON_LIST_SERVICE_CODE.getValue(),
-               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
       } catch (CcighgoException e) {
-         returnObject = setJ1HSFieldSettingsStatus(returnObject, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR,
-               ErrorCode.FAILED_TO_UPDATE_HSP_J1_HS_SEASON_FIELD_SETTINGS.getValue(),
-               messageUtil.getMessage(SeasonMessageConstants.FAILED_TO_UPDATE_HSP_J1_HS_SEASON_FIELD_SETTINGS));
-         LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.FAILED_TO_UPDATE_HSP_J1_HS_SEASON_FIELD_SETTINGS));
+         returnObject.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, SeasonCodes.ERROR_UPDATE_HSPJ1_FIELD_SETTINGS.getValue(),
+               messageUtil.getMessage(SeasonMessageConstants.ERROR_UPDATE_HSPJ1_FIELD_SETTINGS)));
+         LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.ERROR_UPDATE_HSPJ1_FIELD_SETTINGS) + CCIConstants.HYPHEN_SPACE + e.getMessage());
       }
       return returnObject;
    }
@@ -908,59 +844,48 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
    @Override
    @Transactional
    public J1HSProgramAllocations updateHSPJ1HSSeasonProgramAllocation(J1HSProgramAllocations j1hsProgramAllocations) {
-      J1HSProgramAllocations returnObject = null;
+      J1HSProgramAllocations returnObject = new J1HSProgramAllocations();
+      if (j1hsProgramAllocations == null || j1hsProgramAllocations.getSeasonProgramId() == 0) {
+         returnObject.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, SeasonCodes.ERROR_UPDATE_HSPJ1_PROGRAM_ALLOCATION.getValue(),
+               messageUtil.getMessage(SeasonMessageConstants.INVALID_J1HS_ALLOCATION_DATA)));
+         LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.INVALID_J1HS_ALLOCATION_DATA));
+         return returnObject;
+      }
       try {
          if (j1hsProgramAllocations != null && j1hsProgramAllocations.getSeasonId() > 0 && j1hsProgramAllocations.getSeasonProgramId() > 0) {
             List<SeasonHSPAllocation> hspAllocations = seasonHSPAllocationRepository.findSeasonHSPAllocationBySeasonId(j1hsProgramAllocations.getSeasonId());
             List<SeasonHSPAllocation> updatedList = new ArrayList<SeasonHSPAllocation>();
             for (SeasonHSPAllocation hspAllocation : hspAllocations) {
                if (hspAllocation.getDepartmentProgramOption().getDepartmentProgram().getDepartmentProgramId() == CCIConstants.HSP_J1_HS_ID) {
-                  try {
-                     if (hspAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.AUGUST_FY_J1)) {
-                        SeasonHSPAllocation allocation = new SeasonHSPAllocation();
-                        allocation = hspAllocation;
-                        allocation.setMaxGuaranteedPax(j1hsProgramAllocations.getAugStartGuarnteedParticipants());
-                        allocation.setMaxUnguaranteedPax(j1hsProgramAllocations.getAugStartUnGuarnteedParticipants());
-                        updatedList.add(allocation);
-                     }
-                  } catch (Exception e) {
-                     ExceptionUtil.logException(e, LOGGER);
+                  if (hspAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.AUGUST_FY_J1)) {
+                     SeasonHSPAllocation allocation = new SeasonHSPAllocation();
+                     allocation = hspAllocation;
+                     allocation.setMaxGuaranteedPax(j1hsProgramAllocations.getAugStartGuarnteedParticipants());
+                     allocation.setMaxUnguaranteedPax(j1hsProgramAllocations.getAugStartUnGuarnteedParticipants());
+                     updatedList.add(allocation);
                   }
-                  try {
-                     if (hspAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.JANUARY_FY_J1)) {
-                        SeasonHSPAllocation allocation = new SeasonHSPAllocation();
-                        allocation = hspAllocation;
-                        allocation.setMaxGuaranteedPax(j1hsProgramAllocations.getJanStartGuarnteedParticipants());
-                        allocation.setMaxUnguaranteedPax(j1hsProgramAllocations.getJanStartUnGuarnteedParticipants());
-                        updatedList.add(allocation);
-                     }
-                  } catch (Exception e) {
-                     ExceptionUtil.logException(e, LOGGER);
+                  if (hspAllocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.JANUARY_FY_J1)) {
+                     SeasonHSPAllocation allocation = new SeasonHSPAllocation();
+                     allocation = hspAllocation;
+                     allocation.setMaxGuaranteedPax(j1hsProgramAllocations.getJanStartGuarnteedParticipants());
+                     allocation.setMaxUnguaranteedPax(j1hsProgramAllocations.getJanStartUnGuarnteedParticipants());
+                     updatedList.add(allocation);
                   }
-
                }
             }
             seasonHSPAllocationRepository.save(updatedList);
             seasonHSPAllocationRepository.flush();
             returnObject = getHSPJ1HSSeasonProgramAllocation(String.valueOf(j1hsProgramAllocations.getSeasonProgramId()));
-            if (returnObject == null) {
-               returnObject = setJ1HSProgramAllocationsStatus(returnObject, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR,
-                     ErrorCode.FAILED_TO_UPDATE_HSP_J1_HS_PROGRAM_ALLOCATION.getValue(),
-                     messageUtil.getMessage(SeasonMessageConstants.FAILED_TO_UPDATE_HSP_J1_HS_PROGRAM_ALLOCATION));
-               LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.FAILED_TO_UPDATE_HSP_J1_HS_PROGRAM_ALLOCATION));
-               return returnObject;
-            }
-            returnObject = setJ1HSProgramAllocationsStatus(returnObject, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.SEASON_LIST_SERVICE_CODE.getValue(),
-                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
+            returnObject.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, SeasonCodes.SUCCESS.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          } else {
-            returnObject = setJ1HSProgramAllocationsStatus(returnObject, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_SEASON_ID_AND_PROGRAM_ID.getValue(),
-                  messageUtil.getMessage(SeasonMessageConstants.INVALID_SEASON_ID_AND_PROGRAM_ID));
-            LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.INVALID_SEASON_ID_AND_PROGRAM_ID));
+            returnObject.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, SeasonCodes.SUCCESS.getValue(),
+                  messageUtil.getMessage(CCIConstants.NO_RECORD)));
          }
       } catch (CcighgoException e) {
-         returnObject = setJ1HSProgramAllocationsStatus(returnObject, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR,
-               ErrorCode.FAILED_TO_UPDATE_HSP_J1_HS_PROGRAM_ALLOCATION.getValue(), messageUtil.getMessage(SeasonMessageConstants.FAILED_TO_UPDATE_HSP_J1_HS_PROGRAM_ALLOCATION));
-         LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.FAILED_TO_UPDATE_HSP_J1_HS_PROGRAM_ALLOCATION));
+         returnObject.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, SeasonCodes.ERROR_UPDATE_HSPJ1_PROGRAM_ALLOCATION.getValue(),
+               messageUtil.getMessage(SeasonMessageConstants.ERROR_UPDATE_HSPJ1_PROGRAM_ALLOCATION)));
+         LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.ERROR_UPDATE_HSPJ1_PROGRAM_ALLOCATION) + CCIConstants.HYPHEN_SPACE + e.getMessage());
       }
       return returnObject;
    }
@@ -997,6 +922,46 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       } catch (CcighgoException e) {
          ExceptionUtil.logException(e, LOGGER);
       }
+   }
+   
+   public SeasonHSPF1Details getSeasonHSPF1Details(String seasonProgramId) {
+      SeasonHSPF1Details seasonHSPF1Details = null;
+      if (seasonProgramId == null || seasonProgramId.isEmpty()) {
+         seasonHSPF1Details = setseasonHSPF1DetailsStatus(seasonHSPF1Details, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_PROGRAM_ID.getValue(),
+               messageUtil.getMessage(SeasonMessageConstants.INVALID_PROGRAM_ID));
+         LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.INVALID_PROGRAM_ID));
+         return seasonHSPF1Details;
+      }
+      try {
+         SeasonF1Detail allF1Details = seasonF1DetailsRepository.findOne(Integer.valueOf(seasonProgramId));
+         if (allF1Details != null) {
+            seasonHSPF1Details = new SeasonHSPF1Details();
+            seasonHSPF1Details.setSeasonId(allF1Details.getSeason().getSeasonId());
+            seasonHSPF1Details.setSeasonProgramId(allF1Details.getSeasonF1DetailsId());
+            seasonHSPF1Details.setDepartmentProgramId(CCIConstants.HSP_F1_ID);
+            seasonHSPF1Details.setDetails(seasonServiceImplUtil.getHSPF1NameAndStatus(allF1Details));
+            seasonHSPF1Details.setJanuaryStart2NdSemesterDetails(seasonServiceImplUtil.getHSPF1JanuaryStart2NdSemesterDetails(allF1Details));
+            seasonHSPF1Details.setJanuaryStartFullYearDetail(seasonServiceImplUtil.getHSPF1JanuaryStartFullYearDetails(allF1Details));
+            seasonHSPF1Details.setAugustStart1StSemesterDetails(seasonServiceImplUtil.getHSPF1AugustStart1StSemesterDetails(allF1Details));
+            seasonHSPF1Details.setAugustStartFullYearDetails(seasonServiceImplUtil.getHSPF1AugustStartFullYearDetails(allF1Details));
+            seasonHSPF1Details.setAccounting(seasonServiceImplUtil.getHSPF1Accounting(allF1Details));
+            seasonHSPF1Details.setFieldSettings(seasonServiceImplUtil.getHSPF1FieldSettings(allF1Details));
+            seasonHSPF1Details.setProgramAllocations(getHSPF1ProgramAllocations(allF1Details.getSeasonF1DetailsId() + ""));
+            seasonHSPF1Details.getNotes().addAll(seasonServiceImplUtil.getHSPF1Notes(allF1Details));
+            seasonHSPF1Details.getDocuments().addAll(seasonServiceImplUtil.getHSPF1Documents(allF1Details, Integer.parseInt(seasonProgramId)));
+            seasonHSPF1Details = setseasonHSPF1DetailsStatus(seasonHSPF1Details, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.SEASON_LIST_SERVICE_CODE.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
+         } else {
+            seasonHSPF1Details = setseasonHSPF1DetailsStatus(seasonHSPF1Details, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_PROGRAM_ID.getValue(),
+                  messageUtil.getMessage(SeasonMessageConstants.INVALID_PROGRAM_ID));
+            LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.INVALID_PROGRAM_ID));
+         }
+      } catch (CcighgoException e) {
+         seasonHSPF1Details = setseasonHSPF1DetailsStatus(seasonHSPF1Details, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR,
+               ErrorCode.FAILED_TO_GET_HSP_F1_SEASON_DETAILS.getValue(), messageUtil.getMessage(SeasonMessageConstants.FAILED_TO_GET_HSP_F1_SEASON_DETAILS));
+         LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.FAILED_TO_GET_HSP_F1_SEASON_DETAILS));
+      }
+      return seasonHSPF1Details;
    }
 
    @Transactional(readOnly = true)
@@ -1299,45 +1264,7 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
       return hspf1Accounting;
    }
 
-   public SeasonHSPF1Details getSeasonHSPF1Details(String seasonProgramId) {
-      SeasonHSPF1Details seasonHSPF1Details = null;
-      if (seasonProgramId == null || seasonProgramId.isEmpty()) {
-         seasonHSPF1Details = setseasonHSPF1DetailsStatus(seasonHSPF1Details, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_PROGRAM_ID.getValue(),
-               messageUtil.getMessage(SeasonMessageConstants.INVALID_PROGRAM_ID));
-         LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.INVALID_PROGRAM_ID));
-         return seasonHSPF1Details;
-      }
-      try {
-         SeasonF1Detail allF1Details = seasonF1DetailsRepository.findOne(Integer.valueOf(seasonProgramId));
-         if (allF1Details != null) {
-            seasonHSPF1Details = new SeasonHSPF1Details();
-            seasonHSPF1Details.setSeasonId(allF1Details.getSeason().getSeasonId());
-            seasonHSPF1Details.setSeasonProgramId(allF1Details.getSeasonF1DetailsId());
-            seasonHSPF1Details.setDepartmentProgramId(CCIConstants.HSP_F1_ID);
-            seasonHSPF1Details.setDetails(seasonServiceImplUtil.getHSPF1NameAndStatus(allF1Details));
-            seasonHSPF1Details.setJanuaryStart2NdSemesterDetails(seasonServiceImplUtil.getHSPF1JanuaryStart2NdSemesterDetails(allF1Details));
-            seasonHSPF1Details.setJanuaryStartFullYearDetail(seasonServiceImplUtil.getHSPF1JanuaryStartFullYearDetails(allF1Details));
-            seasonHSPF1Details.setAugustStart1StSemesterDetails(seasonServiceImplUtil.getHSPF1AugustStart1StSemesterDetails(allF1Details));
-            seasonHSPF1Details.setAugustStartFullYearDetails(seasonServiceImplUtil.getHSPF1AugustStartFullYearDetails(allF1Details));
-            seasonHSPF1Details.setAccounting(seasonServiceImplUtil.getHSPF1Accounting(allF1Details));
-            seasonHSPF1Details.setFieldSettings(seasonServiceImplUtil.getHSPF1FieldSettings(allF1Details));
-            seasonHSPF1Details.setProgramAllocations(getHSPF1ProgramAllocations(allF1Details.getSeasonF1DetailsId() + ""));
-            seasonHSPF1Details.getNotes().addAll(seasonServiceImplUtil.getHSPF1Notes(allF1Details));
-            seasonHSPF1Details.getDocuments().addAll(seasonServiceImplUtil.getHSPF1Documents(allF1Details, Integer.parseInt(seasonProgramId)));
-            seasonHSPF1Details = setseasonHSPF1DetailsStatus(seasonHSPF1Details, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.SEASON_LIST_SERVICE_CODE.getValue(),
-                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
-         } else {
-            seasonHSPF1Details = setseasonHSPF1DetailsStatus(seasonHSPF1Details, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_PROGRAM_ID.getValue(),
-                  messageUtil.getMessage(SeasonMessageConstants.INVALID_PROGRAM_ID));
-            LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.INVALID_PROGRAM_ID));
-         }
-      } catch (CcighgoException e) {
-         seasonHSPF1Details = setseasonHSPF1DetailsStatus(seasonHSPF1Details, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR,
-               ErrorCode.FAILED_TO_GET_HSP_F1_SEASON_DETAILS.getValue(), messageUtil.getMessage(SeasonMessageConstants.FAILED_TO_GET_HSP_F1_SEASON_DETAILS));
-         LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.FAILED_TO_GET_HSP_F1_SEASON_DETAILS));
-      }
-      return seasonHSPF1Details;
-   }
+   
 
    @Transactional
    public SeasonHSPF1Details updateF1Details(SeasonHSPF1Details seasonHSPF1Details) {
@@ -4764,608 +4691,6 @@ public class SeasonServiceInterfaceImpl implements SeasonServiceInterface {
          LOGGER.error(messageUtil.getMessage(SeasonMessageConstants.FAILED_UPDATE_IHP_PROGRAM_CONFIGURATION_DETAILS));
          return returnObject;
       }
-   }
-
-   /**
-    * 
-    * @param SeasonHspJ1HSDetails
-    * @param code
-    * @param type
-    * @param serviceCode
-    * @param message
-    * @return seasonHspJ1HSDetails
-    */
-
-   private SeasonHspJ1HSDetails setSeasonHspJ1HSDetailsStatus(SeasonHspJ1HSDetails seasonHspJ1HSDetails, String code, String type, int serviceCode, String message) {
-      if (seasonHspJ1HSDetails == null)
-         seasonHspJ1HSDetails = new SeasonHspJ1HSDetails();
-      seasonHspJ1HSDetails.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
-      return seasonHspJ1HSDetails;
-   }
-
-   /**
-    * 
-    * @param J1HSBasicDetail
-    * @param code
-    * @param type
-    * @param serviceCode
-    * @param message
-    * @return j1hsBasicDetail
-    */
-
-   private J1HSBasicDetail setJ1HSBasicDetailStatus(J1HSBasicDetail j1hsBasicDetail, String code, String type, int serviceCode, String message) {
-      if (j1hsBasicDetail == null)
-         j1hsBasicDetail = new J1HSBasicDetail();
-      j1hsBasicDetail.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
-      return j1hsBasicDetail;
-   }
-
-   /**
-    * 
-    * @param J1HSJanStart
-    * @param code
-    * @param type
-    * @param serviceCode
-    * @param message
-    * @return j1hsJanStart
-    */
-
-   private J1HSJanStart setJ1HSJanStartStatus(J1HSJanStart j1hsJanStart, String code, String type, int serviceCode, String message) {
-      if (j1hsJanStart == null)
-         j1hsJanStart = new J1HSJanStart();
-      j1hsJanStart.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
-      return j1hsJanStart;
-   }
-
-   /**
-    * 
-    * @param J1HSAugStart
-    * @param code
-    * @param type
-    * @param serviceCode
-    * @param message
-    * @return j1hsAugStart
-    */
-
-   private J1HSAugStart setJ1HSAugStartStatus(J1HSAugStart j1hsAugStart, String code, String type, int serviceCode, String message) {
-      if (j1hsAugStart == null)
-         j1hsAugStart = new J1HSAugStart();
-      j1hsAugStart.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
-      return j1hsAugStart;
-   }
-
-   /**
-    * 
-    * @param J1HSFieldSettings
-    * @param code
-    * @param type
-    * @param serviceCode
-    * @param message
-    * @return j1hsAugStart
-    */
-
-   private J1HSFieldSettings setJ1HSFieldSettingsStatus(J1HSFieldSettings j1hsFieldSettings, String code, String type, int serviceCode, String message) {
-      if (j1hsFieldSettings == null)
-         j1hsFieldSettings = new J1HSFieldSettings();
-      j1hsFieldSettings.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
-      return j1hsFieldSettings;
-   }
-
-   // J1HSProgramAllocations
-   /**
-    * 
-    * @param J1HSProgramAllocations
-    * @param code
-    * @param type
-    * @param serviceCode
-    * @param message
-    * @return j1hsProgramAllocations
-    */
-
-   private J1HSProgramAllocations setJ1HSProgramAllocationsStatus(J1HSProgramAllocations j1hsProgramAllocations, String code, String type, int serviceCode, String message) {
-      if (j1hsProgramAllocations == null)
-         j1hsProgramAllocations = new J1HSProgramAllocations();
-      j1hsProgramAllocations.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
-      return j1hsProgramAllocations;
-   }
-
-   // setHSPF1ProgramAllocationsStatus
-
-   /**
-    * 
-    * @param HSPF1ProgramAllocations
-    * @param code
-    * @param type
-    * @param serviceCode
-    * @param message
-    * @return hSPF1ProgramAllocations
-    */
-
-   private HSPF1ProgramAllocations setHSPF1ProgramAllocationsStatus(HSPF1ProgramAllocations hSPF1ProgramAllocations, String code, String type, int serviceCode, String message) {
-      if (hSPF1ProgramAllocations == null)
-         hSPF1ProgramAllocations = new HSPF1ProgramAllocations();
-      hSPF1ProgramAllocations.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
-      return hSPF1ProgramAllocations;
-   }
-
-   /**
-    * 
-    * @param HSPF1FieldSettings
-    * @param code
-    * @param type
-    * @param serviceCode
-    * @param message
-    * @return hSPF1FieldSettings
-    */
-   private HSPF1FieldSettings setHSPF1FieldSettingsStatus(HSPF1FieldSettings hSPF1FieldSettings, String code, String type, int serviceCode, String message) {
-      if (hSPF1FieldSettings == null)
-         hSPF1FieldSettings = new HSPF1FieldSettings();
-      hSPF1FieldSettings.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
-      return hSPF1FieldSettings;
-   }
-
-   /**
-    * 
-    * @param HSPF1AugustStart1StSemesterDetails
-    * @param code
-    * @param type
-    * @param serviceCode
-    * @param message
-    * @return hSPF1AugustStart1StSemesterDetails
-    */
-   private HSPF1AugustStart1StSemesterDetails setHSPF1AugustStart1StSemesterDetailsStatus(HSPF1AugustStart1StSemesterDetails hSPF1AugustStart1StSemesterDetails, String code,
-         String type, int serviceCode, String message) {
-      if (hSPF1AugustStart1StSemesterDetails == null)
-         hSPF1AugustStart1StSemesterDetails = new HSPF1AugustStart1StSemesterDetails();
-      hSPF1AugustStart1StSemesterDetails.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
-      return hSPF1AugustStart1StSemesterDetails;
-   }
-
-   /**
-    * 
-    * @param HSPF1AugustStartFullYearDetails
-    * @param code
-    * @param type
-    * @param serviceCode
-    * @param message
-    * @return hSPF1AugustStartFullYearDetails
-    */
-   private HSPF1AugustStartFullYearDetails setHSPF1AugustStartFullYearDetailsStatus(HSPF1AugustStartFullYearDetails hSPF1AugustStartFullYearDetails, String code, String type,
-         int serviceCode, String message) {
-      if (hSPF1AugustStartFullYearDetails == null)
-         hSPF1AugustStartFullYearDetails = new HSPF1AugustStartFullYearDetails();
-      hSPF1AugustStartFullYearDetails.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
-      return hSPF1AugustStartFullYearDetails;
-   }
-
-   /**
-    * 
-    * @param HSPF1JanuaryStart2NdSemesterDetails
-    * @param code
-    * @param type
-    * @param serviceCode
-    * @param message
-    * @return hSPF1JanuaryStart2NdSemesterDetails
-    */
-   private HSPF1JanuaryStart2NdSemesterDetails setHSPF1JanuaryStart2NdSemesterDetailsStatus(HSPF1JanuaryStart2NdSemesterDetails hSPF1JanuaryStart2NdSemesterDetails, String code,
-         String type, int serviceCode, String message) {
-
-      if (hSPF1JanuaryStart2NdSemesterDetails == null)
-         hSPF1JanuaryStart2NdSemesterDetails = new HSPF1JanuaryStart2NdSemesterDetails();
-      hSPF1JanuaryStart2NdSemesterDetails.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
-      return hSPF1JanuaryStart2NdSemesterDetails;
-   }
-
-   /**
-    * 
-    * @param SeasonHSPF1Details
-    * @param code
-    * @param type
-    * @param serviceCode
-    * @param message
-    * @return seasonHSPF1Details
-    */
-   private SeasonHSPF1Details setseasonHSPF1DetailsStatus(SeasonHSPF1Details seasonHSPF1Details, String code, String type, int serviceCode, String message) {
-      if (seasonHSPF1Details == null)
-         seasonHSPF1Details = new SeasonHSPF1Details();
-      seasonHSPF1Details.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
-      return seasonHSPF1Details;
-   }
-
-   /**
-    * 
-    * @param HSPF1Accounting
-    * @param code
-    * @param type
-    * @param serviceCode
-    * @param message
-    * @return hSPF1Accounting
-    */
-   private HSPF1Accounting setHSPF1AccountingStatus(HSPF1Accounting hSPF1Accounting, String code, String type, int serviceCode, String message) {
-      if (hSPF1Accounting == null)
-         hSPF1Accounting = new HSPF1Accounting();
-      hSPF1Accounting.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
-      return hSPF1Accounting;
-   }
-
-   /**
-    * 
-    * @param HSPF1JanuaryStartFullYearDetail
-    * @param code
-    * @param type
-    * @param serviceCode
-    * @param message
-    * @return hSPF1JanuaryStartFullYearDetail
-    */
-   private HSPF1JanuaryStartFullYearDetail setHSPF1JanuaryStartFullYearDetailStatus(HSPF1JanuaryStartFullYearDetail hSPF1JanuaryStartFullYearDetail, String code, String type,
-         int serviceCode, String message) {
-      if (hSPF1JanuaryStartFullYearDetail == null)
-         hSPF1JanuaryStartFullYearDetail = new HSPF1JanuaryStartFullYearDetail();
-      hSPF1JanuaryStartFullYearDetail.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
-      return hSPF1JanuaryStartFullYearDetail;
-   }
-
-   /**
-    * 
-    * @param HSPF1BasicDetails
-    * @param code
-    * @param type
-    * @param serviceCode
-    * @param message
-    * @return hSPF1BasicDetails
-    */
-   private HSPF1BasicDetails setHSPF1BasicDetailsStatus(HSPF1BasicDetails hSPF1BasicDetails, String code, String type, int serviceCode, String message) {
-      if (hSPF1BasicDetails == null)
-         hSPF1BasicDetails = new HSPF1BasicDetails();
-      hSPF1BasicDetails.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
-      return hSPF1BasicDetails;
-   }
-
-   /**
-    * 
-    * @param SeasonGHTDetails
-    * @param code
-    * @param type
-    * @param serviceCode
-    * @param message
-    * @return seasonGHTDetails
-    */
-   private SeasonGHTDetails setSeasonGHTDetailsStatus(SeasonGHTDetails seasonGHTDetails, String code, String type, int serviceCode, String message) {
-      if (seasonGHTDetails == null)
-         seasonGHTDetails = new SeasonGHTDetails();
-      seasonGHTDetails.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
-      return seasonGHTDetails;
-   }
-
-   /**
-    * 
-    * @param GHTSection1Base
-    * @param code
-    * @param type
-    * @param serviceCode
-    * @param message
-    * @return ghtSection1Base
-    */
-   private GHTSection1Base setGHTSection1BaseStatus(GHTSection1Base ghtSection1Base, String code, String type, int serviceCode, String message) {
-      if (ghtSection1Base == null)
-         ghtSection1Base = new GHTSection1Base();
-      ghtSection1Base.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
-      return ghtSection1Base;
-   }
-
-   /**
-    * 
-    * @param GHTSection2Dates
-    * @param code
-    * @param type
-    * @param serviceCode
-    * @param message
-    * @return ghtSection2Dates
-    */
-
-   private GHTSection2Dates setGHTSection2DatesStatus(GHTSection2Dates ghtSection2Dates, String code, String type, int serviceCode, String message) {
-      if (ghtSection2Dates == null)
-         ghtSection2Dates = new GHTSection2Dates();
-      ghtSection2Dates.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
-      return ghtSection2Dates;
-   }
-
-   /**
-    * 
-    * @param SeasonWPDetails
-    * @param code
-    * @param type
-    * @param serviceCode
-    * @param message
-    * @return seasonWPDetails
-    */
-   private SeasonWPDetails setSeasonWPDetailsStatus(SeasonWPDetails seasonWPDetails, String code, String type, int serviceCode, String message) {
-      if (seasonWPDetails == null)
-         seasonWPDetails = new SeasonWPDetails();
-      seasonWPDetails.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
-      return seasonWPDetails;
-   }
-
-   /**
-    * 
-    * @param WPBasicDetail
-    * @param code
-    * @param type
-    * @param serviceCode
-    * @param message
-    * @return wpBasicDetail
-    */
-   private WPBasicDetail setWPBasicDetailStatus(WPBasicDetail wpBasicDetail, String code, String type, int serviceCode, String message) {
-      if (wpBasicDetail == null)
-         wpBasicDetail = new WPBasicDetail();
-      wpBasicDetail.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
-
-      return wpBasicDetail;
-   }
-
-   /**
-    * 
-    * @param WPSectionOne
-    * @param code
-    * @param type
-    * @param serviceCode
-    * @param message
-    * @return wpSectionOne
-    */
-   private WPSectionOne setWPSectionOneStatus(WPSectionOne wpSectionOne, String code, String type, int serviceCode, String message) {
-      if (wpSectionOne == null)
-         wpSectionOne = new WPSectionOne();
-      wpSectionOne.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
-
-      return wpSectionOne;
-   }
-
-   /**
-    * 
-    * @param WPProgramAllocations
-    * @param code
-    * @param type
-    * @param serviceCode
-    * @param message
-    * @return wpProgramAllocations
-    */
-   private WPProgramAllocations setWPProgramAllocationsStatus(WPProgramAllocations wpProgramAllocations, String code, String type, int serviceCode, String message) {
-      if (wpProgramAllocations == null)
-         wpProgramAllocations = new WPProgramAllocations();
-      wpProgramAllocations.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
-      return wpProgramAllocations;
-   }
-
-   /**
-    * 
-    * @param SeasonDepartmentNotes
-    * @param code
-    * @param type
-    * @param serviceCode
-    * @param message
-    * @return returnObject
-    */
-   private SeasonDepartmentNotes setSeasonDepartmentNotesStatus(SeasonDepartmentNotes returnObject, String code, String type, int serviceCode, String message) {
-      if (returnObject == null)
-         returnObject = new SeasonDepartmentNotes();
-      returnObject.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
-      return returnObject;
-   }
-
-   /**
-    * 
-    * @param SeasonProgramNote
-    * @param code
-    * @param type
-    * @param serviceCode
-    * @param message
-    * @return returnObject
-    */
-
-   private SeasonProgramNote setSeasonProgramNoteStatus(SeasonProgramNote returnObject, String code, String type, int serviceCode, String message) {
-      if (returnObject == null)
-         returnObject = new SeasonProgramNote();
-      returnObject.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
-      return returnObject;
-   }
-
-   /**
-    * 
-    * @param SeasonProgramDocument
-    * @param code
-    * @param type
-    * @param serviceCode
-    * @param message
-    * @return returnObject
-    */
-   private SeasonProgramDocument setSeasonProgramDocumentStatus(SeasonProgramDocument returnObject, String code, String type, int serviceCode, String message) {
-      if (returnObject == null)
-         returnObject = new SeasonProgramDocument();
-      returnObject.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
-      return returnObject;
-   }
-
-   /**
-    * 
-    * @param WPCAPProgramAllocations
-    * @param code
-    * @param type
-    * @param serviceCode
-    * @param message
-    * @return wpcapProgramAllocations
-    */
-   private WPCAPProgramAllocations setWPCAPProgramAllocationsStatus(WPCAPProgramAllocations wpcapProgramAllocations, String code, String type, int serviceCode, String message) {
-      if (wpcapProgramAllocations == null)
-         wpcapProgramAllocations = new WPCAPProgramAllocations();
-      wpcapProgramAllocations.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
-      return wpcapProgramAllocations;
-   }
-
-   /**
-    * @param seasonWPCAPDetails
-    * @param code
-    * @param type
-    * @param serviceCode
-    * @param message
-    * @return seasonWPCAPDetails
-    */
-   private SeasonWPCAPDetails setSeasonWPCAPDetailsStatus(SeasonWPCAPDetails seasonWPCAPDetails, String code, String type, int serviceCode, String message) {
-      if (seasonWPCAPDetails == null)
-         seasonWPCAPDetails = new SeasonWPCAPDetails();
-      seasonWPCAPDetails.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
-      return seasonWPCAPDetails;
-   }
-
-   /**
-    * @param wpcapBasicDetails
-    * @param code
-    * @param type
-    * @param serviceCode
-    * @param message
-    * @return wpcapBasicDetails
-    */
-   private WPCAPBasicDetails setWPCAPBasicDetailsStatus(WPCAPBasicDetails wpcapBasicDetails, String code, String type, int serviceCode, String message) {
-      if (wpcapBasicDetails == null)
-         wpcapBasicDetails = new WPCAPBasicDetails();
-      wpcapBasicDetails.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
-      return wpcapBasicDetails;
-   }
-
-   /**
-    * @param wpcapInternshipDetails
-    * @param code
-    * @param type
-    * @param serviceCode
-    * @param message
-    * @return wpcapInternshipDetails
-    */
-   private WPCAPInternshipDetails setWPCAPInternshipDetailsStatus(WPCAPInternshipDetails wpcapInternshipDetails, String code, String type, int serviceCode, String message) {
-      if (wpcapInternshipDetails == null)
-         wpcapInternshipDetails = new WPCAPInternshipDetails();
-      wpcapInternshipDetails.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
-      return wpcapInternshipDetails;
-   }
-
-   /**
-    * @param wpcapTraineeDetails
-    * @param code
-    * @param type
-    * @param serviceCode
-    * @param message
-    * @return wpcapTraineeDetails
-    */
-   private WPCAPTraineeDetails setWPCAPTraineeDetailsStatus(WPCAPTraineeDetails wpcapTraineeDetails, String code, String type, int serviceCode, String message) {
-      if (wpcapTraineeDetails == null)
-         wpcapTraineeDetails = new WPCAPTraineeDetails();
-      wpcapTraineeDetails.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
-      return wpcapTraineeDetails;
-   }
-
-   /**
-    * @param cloneSeason
-    * @param code
-    * @param type
-    * @param serviceCode
-    * @param message
-    * @return cloneSeason
-    */
-   private CloneSeason setCloneSeasonStatus(CloneSeason cloneSeason, String code, String type, int serviceCode, String message) {
-      if (cloneSeason == null)
-         cloneSeason = new CloneSeason();
-      cloneSeason.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
-      return cloneSeason;
-   }
-
-   /**
-    * @param seasonDepartmentDocument
-    * @param code
-    * @param type
-    * @param serviceCode
-    * @param message
-    * @return seasonDepartmentDocument
-    */
-   private com.ccighgo.service.transport.season.beans.seasondepartdoc.SeasonDepartmentDocument setSeasonDepartmentDocumentStatus(
-         com.ccighgo.service.transport.season.beans.seasondepartdoc.SeasonDepartmentDocument seasonDepartmentDocument, String code, String type, int serviceCode, String message) {
-      if (seasonDepartmentDocument == null)
-         seasonDepartmentDocument = new com.ccighgo.service.transport.season.beans.seasondepartdoc.SeasonDepartmentDocument();
-      seasonDepartmentDocument.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
-      return seasonDepartmentDocument;
-   }
-
-   /**
-    * @param documentType
-    * @param code
-    * @param type
-    * @param serviceCode
-    * @param message
-    * @return documentType
-    */
-   private DocumentTypes setDocumentTypesStatus(DocumentTypes documentType, String code, String type, int serviceCode, String message) {
-      if (documentType == null)
-         documentType = new DocumentTypes();
-      documentType.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
-      return documentType;
-   }
-
-   /**
-    * @param seasonHspStpIhpDetails
-    * @param code
-    * @param type
-    * @param serviceCode
-    * @param message
-    * @return seasonHspStpIhpDetails
-    */
-   private SeasonHspStpIhpDetails setSeasonHspStpIhpDetailsStatus(SeasonHspStpIhpDetails seasonHspStpIhpDetails, String code, String type, int serviceCode, String message) {
-      if (seasonHspStpIhpDetails == null)
-         seasonHspStpIhpDetails = new SeasonHspStpIhpDetails();
-      seasonHspStpIhpDetails.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
-      return seasonHspStpIhpDetails;
-   }
-
-   /**
-    * @param ihpNameAndStatus
-    * @param code
-    * @param type
-    * @param serviceCode
-    * @param message
-    * @return ihpNameAndStatus
-    */
-   private IHPNameAndStatus setIHPNameAndStatusStatus(IHPNameAndStatus ihpNameAndStatus, String code, String type, int serviceCode, String message) {
-      if (ihpNameAndStatus == null)
-         ihpNameAndStatus = new IHPNameAndStatus();
-      ihpNameAndStatus.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
-      return ihpNameAndStatus;
-   }
-
-   /**
-    * @param ihpDates
-    * @param code
-    * @param type
-    * @param serviceCode
-    * @param message
-    * @return ihpDates
-    */
-   private IHPDates setIHPDatesStatus(IHPDates ihpDates, String code, String type, int serviceCode, String message) {
-
-      if (ihpDates == null)
-         ihpDates = new IHPDates();
-      ihpDates.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
-      return ihpDates;
-   }
-
-   /**
-    * @param ihpProgramConfiguration
-    * @param code
-    * @param type
-    * @param serviceCode
-    * @param message
-    * @return ihpProgramConfiguration
-    */
-   private IHPProgramConfiguration setIHPProgramConfigurationStatus(IHPProgramConfiguration ihpProgramConfiguration, String code, String type, int serviceCode, String message) {
-      if (ihpProgramConfiguration == null)
-         ihpProgramConfiguration = new IHPProgramConfiguration();
-      ihpProgramConfiguration.setStatus(componentUtils.getStatus(code, type, serviceCode, message));
-      return ihpProgramConfiguration;
    }
 
 }
