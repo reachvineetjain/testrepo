@@ -21,7 +21,7 @@ import com.ccighgo.service.transport.partner.beans.partnerwntdetails.PartnerWnTD
 public interface PartnerService {
 
    /**
-    * Service to load partner dashboard
+    * Service to load partner dashboard.
     * 
     * @param userId
     * @return
@@ -29,35 +29,51 @@ public interface PartnerService {
    public PartnerDashboard getPartnerDashboard(String partnerGoId);
 
    /**
+    * Load Partner J1 Dashboard data.
+    * 
     * @param partnerGoId
     * @return
     */
    public PartnerJ1HSDashboard getJ1HSDashboard(String partnerGoId);
 
    /**
+    * Load Partner F1 Dashboard data.
+    * 
     * @param partnerGoId
     * @return
     */
    public PartnerF1Dashboard getF1Dashboard(String partnerGoId);
 
    /**
+    * Load Partner IHP Dashboard data.
+    * 
     * @param partnerGoId
     * @return
     */
    public PartnerIHPDashboard getIHPDashboard(String partnerGoId);
 
    /**
+    * Load Partner IHP Dashboard data.
+    * 
     * @param partnerGoId
     * @return
     */
    public PartnerCAPDashboard getWnTDashboard(String partnerGoId);
 
    /**
+    * Load Partner Cap Dashboard data.
+    * 
     * @param partnerGoId
     * @return
     */
    public PartnerWnTDashboard getCAPDashboard(String partnerGoId);
 
-   public PartnerRecruitmentLead getPartnerInquiryLeadData(int parseInt);
+   /**
+    * Load Partner Inquiry Lead Data.
+    * 
+    * @param partnerAgentGoId
+    * @return
+    */
+   public PartnerRecruitmentLead getPartnerInquiryLeadData(String partnerAgentGoId);
 
 }

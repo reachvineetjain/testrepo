@@ -16,6 +16,8 @@ import org.apache.http.util.EntityUtils;
 import org.springframework.stereotype.Component;
 
 import com.ccighgo.service.components.greenheartclub.GHClubmpl;
+import com.ccighgo.service.components.greenheartclub.GhcProgram;
+import com.ccighgo.service.components.greenheartclub.GhcPrograms;
 import com.ccighgo.service.components.greenheartclub.utils.GHC_Response;
 import com.ccighgo.service.rest.greenheartclub.GciApiUser;
 import com.google.gson.Gson;
@@ -49,6 +51,9 @@ public class GCIWithOAuth {
    }
 
    public static void main(String[] args) {
+
+      // oauth_token=oxb5K1JCWO1CDRrQ1CqDCjPv&oauth_token_secret=q9HJ8cRuijZDZLPsi7WOQCiuhyaLaWJwOmNnLasi418vnJRK
+
       GCIWithOAuth d = new GCIWithOAuth();
       // System.out.println(d.readPrivate("https://gcidev.wpengine.com/api/v2/test/read"));
       // System.out.println(d.testCreate("https://gcidev.wpengine.com/api/v2/test/create/",
@@ -74,8 +79,9 @@ public class GCIWithOAuth {
       // user.setEmail("ahmed.amer.samir@gmail.com");
       // user.setFirstName("Ahmed");
       // user.setLastName("Abdelmaaboud");
-      // user.setPassword("asd123!@#");
-      // user.setProgram("Workprogram");
+      // user.setPassword("asd123!@#asd123!@#");
+      // user.setProgram("3_92");
+      // user.setId("98989");
       // user.setUsername("ahmedsamircpp");
       // System.out.println(d.createUser(GHClubmpl.CREATE_USER, user));
 
@@ -92,7 +98,7 @@ public class GCIWithOAuth {
 
       // Gson gson = new Gson();
       // String authenticate2 =
-      // d.authenticate("https://gcidev.wpengine.com/oauth1/request");
+      // System.out.println(d.authenticate("https://gcidev.wpengine.com/oauth1/request"));
       // AuthenticationObject authenticate = gson.fromJson(authenticate2,
       // AuthenticationObject.class);
       /**
@@ -142,9 +148,18 @@ public class GCIWithOAuth {
       /**
        * 
        */
-      System.out.println(d.getAllHoursByParticipant(GHClubmpl.FETCH_HOURS_BY_PARTICIPANT, "333"));
+      // System.out.println(d.getAllHoursByParticipant(GHClubmpl.FETCH_HOURS_BY_PARTICIPANT,
+      // "79264"));
+      // YYYY-MM--DD
+      // YYYY-MM-DD
 
-      System.out.println(d.getHoursByProgram(GHClubmpl.FETCH_HOURS_BY_PROGRAM, "333", "05/08/2012", "05/08/2016"));
+      // System.out.println(d.getHoursByProgram(GHClubmpl.FETCH_HOURS_BY_PROGRAM,
+      // "79264", "05/08/2012", "05/08/2016"));
+
+      // System.out.println(d.getUserToken(GHClubmpl.GET_USER_TOKEN, "79264"));
+      // System.out.println(d.loginUser(GHClubmpl.USER_LOGIN,
+      // "l0wbGm8z1FosvOfqswgn0bLns54jYinU1mSU8an8tJrTXGzKTepJA8lGcUfs"));
+      System.out.println(d.getPrograms(GHClubmpl.GET_PROGRAM));
 
    }
 
@@ -465,6 +480,75 @@ public class GCIWithOAuth {
          params.add(new BasicNameValuePair("program", program));
          params.add(new BasicNameValuePair("date_start", startDate));
          params.add(new BasicNameValuePair("date_end", endDate));
+         request.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
+         consumer.sign(request);
+         HttpClient httpClient = new DefaultHttpClient();
+         HttpResponse response = httpClient.execute(request);
+         return EntityUtils.toString(response.getEntity());
+      } catch (Exception e) {
+         e.printStackTrace();
+         return "";
+      }
+   }
+
+   public String getUserToken(String getUserToken, String goId) {
+      try {
+         OAuthConsumer consumer = new CommonsHttpOAuthConsumer(CONSUMER_KEY, CONSUMER_SECRET);
+         consumer.setTokenWithSecret(TOKEN, TOKEN_SECRET);
+         HttpPost request = new HttpPost(getUserToken);
+         List<NameValuePair> params = new ArrayList<NameValuePair>(2);
+         params.add(new BasicNameValuePair("id", goId));
+         request.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
+         consumer.sign(request);
+         HttpClient httpClient = new DefaultHttpClient();
+         HttpResponse response = httpClient.execute(request);
+         return EntityUtils.toString(response.getEntity());
+      } catch (Exception e) {
+         e.printStackTrace();
+         return "";
+      }
+   }
+
+   public String loginUser(String userLogin, String token) {
+      try {
+         OAuthConsumer consumer = new CommonsHttpOAuthConsumer(CONSUMER_KEY, CONSUMER_SECRET);
+         consumer.setTokenWithSecret(TOKEN, TOKEN_SECRET);
+         HttpGet request = new HttpGet(userLogin + "?token=" + token);
+         consumer.sign(request);
+         HttpClient httpClient = new DefaultHttpClient();
+         HttpResponse response = httpClient.execute(request);
+         return EntityUtils.toString(response.getEntity());
+      } catch (Exception e) {
+         e.printStackTrace();
+         return "";
+      }
+   }
+
+   public String getPrograms(String getProgram) {
+      try {
+         OAuthConsumer consumer = new CommonsHttpOAuthConsumer(CONSUMER_KEY, CONSUMER_SECRET);
+         consumer.setTokenWithSecret(TOKEN, TOKEN_SECRET);
+         HttpGet request = new HttpGet(getProgram);
+         consumer.sign(request);
+         HttpClient httpClient = new DefaultHttpClient();
+         HttpResponse response = httpClient.execute(request);
+         return EntityUtils.toString(response.getEntity());
+      } catch (Exception e) {
+         e.printStackTrace();
+         return "";
+      }
+   }
+
+   public String setPrograms(String setProgram, GhcPrograms ghcPrograms) {
+      try {
+         OAuthConsumer consumer = new CommonsHttpOAuthConsumer(CONSUMER_KEY, CONSUMER_SECRET);
+         consumer.setTokenWithSecret(TOKEN, TOKEN_SECRET);
+         HttpPost request = new HttpPost(setProgram);
+         List<NameValuePair> params = new ArrayList<NameValuePair>(2);
+         if (ghcPrograms.getPrograms() != null)
+            for (GhcProgram p : ghcPrograms.getPrograms()) {
+               params.add(new BasicNameValuePair(p.getProgramKey(), p.getProgramName()));
+            }
          request.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
          consumer.sign(request);
          HttpClient httpClient = new DefaultHttpClient();

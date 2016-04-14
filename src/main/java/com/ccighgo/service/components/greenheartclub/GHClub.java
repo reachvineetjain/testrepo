@@ -38,4 +38,12 @@ public interface GHClub {
 
    GHC_Response getUser(String goId);
 
+   GHC_Response getUserToken(String goId);
+
+   GHC_Response loginUser(String token);
+
+   GHC_Response getPrograms();
+
+   GHC_Response setPrograms(GhcPrograms ghcPrograms);
+
 }

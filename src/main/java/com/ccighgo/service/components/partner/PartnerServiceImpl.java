@@ -119,7 +119,6 @@ public class PartnerServiceImpl implements PartnerService {
 
    @Override
    public PartnerDashboard getPartnerDashboard(String partnerGoId) {
-      LOGGER.info("Partner GoId : " + partnerGoId);
       PartnerDashboard partnerDashboard = new PartnerDashboard();
       if (partnerGoId == null || Integer.valueOf(partnerGoId) == 0 || Integer.valueOf(partnerGoId) < 0) {
          partnerDashboard.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_PARTNER_ID.getValue(),
@@ -282,9 +281,8 @@ public class PartnerServiceImpl implements PartnerService {
                      messageUtil.getMessage(PartnerDashboardMessageConstants.FETCH_DATA_SUCCESSFULLY)));
             } else {
                // no partner found with the goid provided
-               partnerDashboard.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_PROGRAM_DETAILS_FOUND.getValue(),
+               partnerDashboard.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD_IN_DB, CCIConstants.TYPE_INFO, CCIConstants.NO_DATA_CODE,
                      messageUtil.getMessage(PartnerDashboardMessageConstants.NO_PROGRAM_DETAILS_FOUND)));
-               LOGGER.error(messageUtil.getMessage(PartnerDashboardMessageConstants.NO_PROGRAM_DETAILS_FOUND));
             }
          } catch (CcighgoException e) {
             partnerDashboard.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_PROGRAM_DETAILS_FOUND.getValue(),
@@ -300,7 +298,7 @@ public class PartnerServiceImpl implements PartnerService {
       LOGGER.info("Partner GoId : " + partnerGoId);
       PartnerJ1HSDashboard j1hsDashboard = new PartnerJ1HSDashboard();
       if (partnerGoId == null || Integer.valueOf(partnerGoId) == 0 || Integer.valueOf(partnerGoId) < 0) {
-         j1hsDashboard.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_PARTNER_ID.getValue(),
+         j1hsDashboard.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_J1_PARTNER_ID.getValue(),
                messageUtil.getMessage(PartnerDashboardMessageConstants.INVALID_PARTNER_ID)));
          LOGGER.error(messageUtil.getMessage(PartnerDashboardMessageConstants.INVALID_PARTNER_ID));
          return j1hsDashboard;
@@ -312,7 +310,6 @@ public class PartnerServiceImpl implements PartnerService {
                j1hsDashboard.setPartnerCompany(partner.getCompanyName());
                j1hsDashboard.setPartnerLogo(partner.getPartnerLogo());
 
-               // announcements
                List<PartnerJ1HSAnnouncement> partnerJ1HSAnnouncements = new ArrayList<PartnerJ1HSAnnouncement>();
                if (partner.getPartnerAnnouncements() != null && !partner.getPartnerAnnouncements().isEmpty()) {
                   for (PartnerAnnouncement ann : partner.getPartnerAnnouncements()) {
@@ -489,12 +486,11 @@ public class PartnerServiceImpl implements PartnerService {
                   }
                }
                j1hsDashboard.getPartnerJ1HSPrograms().addAll(partnerJ1HSProgramsList);
-               j1hsDashboard.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FETCH_DATA_SUCCESSFULLY.getValue(),
+               j1hsDashboard.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE,
                      messageUtil.getMessage(PartnerDashboardMessageConstants.FETCH_DATA_SUCCESSFULLY)));
             } else {
-               j1hsDashboard.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_PROGRAM_DETAILS_FOUND.getValue(),
+               j1hsDashboard.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD_IN_DB, CCIConstants.TYPE_INFO, CCIConstants.NO_DATA_CODE,
                      messageUtil.getMessage(PartnerDashboardMessageConstants.NO_PROGRAM_DETAILS_FOUND)));
-               LOGGER.error(messageUtil.getMessage(PartnerDashboardMessageConstants.NO_PROGRAM_DETAILS_FOUND));
                return j1hsDashboard;
             }
          } catch (CcighgoException e) {
@@ -508,10 +504,9 @@ public class PartnerServiceImpl implements PartnerService {
 
    @Override
    public PartnerF1Dashboard getF1Dashboard(String partnerGoId) {
-      LOGGER.info("Partner GoId : " + partnerGoId);
       PartnerF1Dashboard f1Dashboard = new PartnerF1Dashboard();
       if (partnerGoId == null || Integer.valueOf(partnerGoId) == 0 || Integer.valueOf(partnerGoId) < 0) {
-         f1Dashboard.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_PARTNER_ID.getValue(),
+         f1Dashboard.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_F1_PARTNER_ID.getValue(),
                messageUtil.getMessage(PartnerDashboardMessageConstants.INVALID_PARTNER_ID)));
          LOGGER.error(messageUtil.getMessage(PartnerDashboardMessageConstants.INVALID_PARTNER_ID));
          return f1Dashboard;
@@ -677,12 +672,11 @@ public class PartnerServiceImpl implements PartnerService {
                   }
                }
                f1Dashboard.getPartnerF1Programs().addAll(partnerF1ProgramsList);
-               f1Dashboard.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FETCH_DATA_SUCCESSFULLY.getValue(),
+               f1Dashboard.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE,
                      messageUtil.getMessage(PartnerDashboardMessageConstants.FETCH_DATA_SUCCESSFULLY)));
             } else {
-               f1Dashboard.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_PROGRAM_DETAILS_FOUND.getValue(),
+               f1Dashboard.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD_IN_DB, CCIConstants.TYPE_INFO, CCIConstants.NO_DATA_CODE,
                      messageUtil.getMessage(PartnerDashboardMessageConstants.NO_PROGRAM_DETAILS_FOUND)));
-               LOGGER.error(messageUtil.getMessage(PartnerDashboardMessageConstants.NO_PROGRAM_DETAILS_FOUND));
                return f1Dashboard;
             }
          } catch (CcighgoException e) {
@@ -696,10 +690,9 @@ public class PartnerServiceImpl implements PartnerService {
 
    @Override
    public PartnerIHPDashboard getIHPDashboard(String partnerGoId) {
-      LOGGER.info("partner goId : " + partnerGoId);
       PartnerIHPDashboard ihpDashboard = new PartnerIHPDashboard();
       if (partnerGoId == null || Integer.valueOf(partnerGoId) == 0 || Integer.valueOf(partnerGoId) < 0) {
-         ihpDashboard.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_PARTNER_ID.getValue(),
+         ihpDashboard.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_IHP_PARTNER_ID.getValue(),
                messageUtil.getMessage(PartnerDashboardMessageConstants.INVALID_PARTNER_ID)));
          LOGGER.error(messageUtil.getMessage(PartnerDashboardMessageConstants.INVALID_PARTNER_ID));
          return ihpDashboard;
@@ -824,12 +817,11 @@ public class PartnerServiceImpl implements PartnerService {
                   }
                   ihpDashboard.getPartnerIHPPrograms().addAll(partnerIHPProgramsList);
                }
-               ihpDashboard.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FETCH_DATA_SUCCESSFULLY.getValue(),
+               ihpDashboard.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE,
                      messageUtil.getMessage(PartnerDashboardMessageConstants.FETCH_DATA_SUCCESSFULLY)));
             } else {
-               ihpDashboard.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_PROGRAM_DETAILS_FOUND.getValue(),
+               ihpDashboard.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD_IN_DB, CCIConstants.TYPE_INFO, CCIConstants.NO_DATA_CODE,
                      messageUtil.getMessage(PartnerDashboardMessageConstants.NO_PROGRAM_DETAILS_FOUND)));
-               LOGGER.error(messageUtil.getMessage(PartnerDashboardMessageConstants.NO_PROGRAM_DETAILS_FOUND));
                return ihpDashboard;
             }
          } catch (CcighgoException e) {
@@ -873,10 +865,16 @@ public class PartnerServiceImpl implements PartnerService {
    }
 
    @Override
-   public PartnerRecruitmentLead getPartnerInquiryLeadData(int goId) {
-      LOGGER.info("GOID: " + goId);
+   public PartnerRecruitmentLead getPartnerInquiryLeadData(String id) {
       PartnerRecruitmentLead pwt = new PartnerRecruitmentLead();
       try {
+         if (id == null || Integer.valueOf(id) == 0 || Integer.valueOf(id) < 0) {
+            pwt.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_PARTNER_INQUIRY_LEAD_ID.getValue(),
+                  messageUtil.getMessage(PartnerDashboardMessageConstants.INVALID_PARTNER_ID)));
+            LOGGER.error(messageUtil.getMessage(PartnerDashboardMessageConstants.INVALID_PARTNER_ID));
+            return pwt;
+         }
+         int goId = Integer.parseInt(id);
          pwt.setGoId(goId);
          PartnerAgentInquiry partnerAgentInquiry = partnerAgentInquiryRepository.findPartnerByGoId(goId);
          if (partnerAgentInquiry == null) {
@@ -966,8 +964,7 @@ public class PartnerServiceImpl implements PartnerService {
             ExceptionUtil.logException(e, LOGGER);
          }
 
-         pwt.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.PARTNER_INQUIURY_LEAD.getValue(),
-               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         pwt.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE, messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
          pwt.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_WOEKQUEUE_PARTNER_INQUIRY_LEAD_DETAIL.getValue(),
@@ -976,5 +973,4 @@ public class PartnerServiceImpl implements PartnerService {
       }
       return pwt;
    }
-
 }

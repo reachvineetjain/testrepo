@@ -35,6 +35,11 @@ public class GHClubmpl implements GHClub {
    public static final String FETCH_HOURS_BY_PARTICIPANT = "https://gcidev.wpengine.com/api/v2/hours/get/id";
    public static final String FETCH_HOURS_BY_PROGRAM = "https://gcidev.wpengine.com/api/v2/hours/get/program";
 
+   public static final String GET_USER_TOKEN = "https://gcidev.wpengine.com/api/v2/user/get/token";
+   public static final String USER_LOGIN = "https://gcidev.wpengine.com/api/v2/user/login";
+   public static final String GET_PROGRAM = "https://gcidev.wpengine.com/api/v2/program/get";
+   public static final String SET_PROGRAM = "https://gcidev.wpengine.com/api/v2/program/set";
+
    @Autowired GCIWithOAuth gciWithOAuth;
 
    @Override
@@ -181,6 +186,46 @@ public class GHClubmpl implements GHClub {
    public GHC_Response getUser(String goId) {
       try {
          return GCIAPI_Util.parseGHCAPIResult(gciWithOAuth.getUser(FETCH_USER, goId));
+      } catch (Exception e) {
+         LOGGER.error(e.getMessage(), e);
+      }
+      return null;
+   }
+
+   @Override
+   public GHC_Response getUserToken(String goId) {
+      try {
+         return GCIAPI_Util.parseGHCAPIResult(gciWithOAuth.getUserToken(GET_USER_TOKEN, goId));
+      } catch (Exception e) {
+         LOGGER.error(e.getMessage(), e);
+      }
+      return null;
+   }
+
+   @Override
+   public GHC_Response loginUser(String token) {
+      try {
+         return GCIAPI_Util.parseGHCAPIResult(gciWithOAuth.loginUser(USER_LOGIN, token));
+      } catch (Exception e) {
+         LOGGER.error(e.getMessage(), e);
+      }
+      return null;
+   }
+
+   @Override
+   public GHC_Response getPrograms() {
+      try {
+         return GCIAPI_Util.parseGHCAPIResult(gciWithOAuth.getPrograms(GET_PROGRAM));
+      } catch (Exception e) {
+         LOGGER.error(e.getMessage(), e);
+      }
+      return null;
+   }
+
+   @Override
+   public GHC_Response setPrograms(GhcPrograms ghcPrograms) {
+      try {
+         return GCIAPI_Util.parseGHCAPIResult(gciWithOAuth.setPrograms(SET_PROGRAM, ghcPrograms));
       } catch (Exception e) {
          LOGGER.error(e.getMessage(), e);
       }
