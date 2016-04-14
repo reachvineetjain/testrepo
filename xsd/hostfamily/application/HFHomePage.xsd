@@ -1,53 +1,80 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema targetNamespace="http://www.ccighgo.com/hfhomepage" elementFormDefault="unqualified" attributeFormDefault="unqualified" jaxb:version="2.0"
-   xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:pu="http://www.ccighgo.com/hfhomepage" xmlns:Q1="http://www.ccighgo.com"
-   xmlns:common="http://www.ccighgo.com/common">
-   <xsd:annotation>
-      <xsd:appinfo>
-         <jaxb:schemaBindings>
-            <jaxb:package name="com.ccighgo.service.transport.hostfamily.beans.application.homepage" />
-         </jaxb:schemaBindings>
-      </xsd:appinfo>
-   </xsd:annotation>
-   <xsd:import schemaLocation="../../Common.xsd" namespace="http://www.ccighgo.com/common" />
+<xsd:schema targetNamespace="http://www.ccighgo.com/hfhomepage"
+	elementFormDefault="unqualified" attributeFormDefault="unqualified"
+	jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:pu="http://www.ccighgo.com/hfhomepage"
+	xmlns:Q1="http://www.ccighgo.com" xmlns:common="http://www.ccighgo.com/common">
+	<xsd:annotation>
+		<xsd:appinfo>
+			<jaxb:schemaBindings>
+				<jaxb:package
+					name="com.ccighgo.service.transport.hostfamily.beans.application.homepage" />
+			</jaxb:schemaBindings>
+		</xsd:appinfo>
+	</xsd:annotation>
+	<xsd:import schemaLocation="../../Common.xsd" namespace="http://www.ccighgo.com/common" />
 
-   <xsd:element name="HFHomePage" type="pu:HFHomePage" />
+	<xsd:element name="HFHomePage" type="pu:HFHomePage" />
 
 
-<xsd:complexType name="HFHomePage">
-      <xsd:complexContent>
-         <xsd:extension base="common:Response">
-            <xsd:sequence>
-               <xsd:element name="loginId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="announcements" type="pu:HFAnnouncements" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="applicationCheckList" type="pu:HFApplicationCheckList" minOccurs="1" maxOccurs="1" />
-            </xsd:sequence>
-         </xsd:extension>
-      </xsd:complexContent>
-   </xsd:complexType>
-   
-     <xsd:complexType name="HFAnnouncements">
-      <xsd:sequence>
-         <xsd:sequence>
-            <xsd:element name="hfAnnouncement" type="xsd:string" minOccurs="1" maxOccurs="1" />
-            <xsd:element name="announcementDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         </xsd:sequence>
-      </xsd:sequence>
-   </xsd:complexType>
+	<xsd:complexType name="HFHomePage">
+		<xsd:complexContent>
+			<xsd:extension base="common:Response">
+				<xsd:sequence>
+					<xsd:element name="loginId" type="xsd:int" minOccurs="1"
+						maxOccurs="1" />
+					<xsd:element name="applicantName" type="xsd:string"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="seasonId" type="xsd:int" minOccurs="1"
+						maxOccurs="1" />
+					<xsd:element name="hostfamilySeasonId" type="xsd:int"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="departmentProgramId" type="xsd:int"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="hostFamilyGoId" type="xsd:int"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="announcements" type="pu:HFAnnouncements"
+						minOccurs="1" maxOccurs="unbounded" />
+					<xsd:element name="applicationCheckList" type="pu:HFApplicationCheckList"
+						minOccurs="1" maxOccurs="1" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
 
-   <xsd:complexType name="HFApplicationCheckList">
-      <xsd:sequence>
-         <xsd:element name="applicantName" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="photoUrl" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="percentage" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="stages" type="pu:HFApplicationCheckListStages"  maxOccurs="unbounded" />
-      </xsd:sequence>
-   </xsd:complexType>
-   
-   <xsd:complexType name="HFApplicationCheckListStages">
-      <xsd:sequence>
-         <xsd:element name="category" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="status" type="xsd:string" minOccurs="1" maxOccurs="1" />
-      </xsd:sequence>
-   </xsd:complexType>
+	<xsd:complexType name="HFAnnouncements">
+		<xsd:sequence>
+			<xsd:sequence>
+				<xsd:element name="hfAnnouncement" type="xsd:string"
+					minOccurs="1" maxOccurs="1" />
+				<xsd:element name="announcementDate" type="xsd:string"
+					minOccurs="1" maxOccurs="1" />
+			</xsd:sequence>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="HFApplicationCheckList">
+		<xsd:sequence>
+			<xsd:element name="applicantName" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="photoUrl" type="xsd:string" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="percentage" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="stages" type="pu:HFApplicationCheckListStages"
+				maxOccurs="unbounded" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="HFApplicationCheckListStages">
+		<xsd:sequence>
+			<xsd:element name="category" type="xsd:string" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="status" type="xsd:string" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="hostFamilyApplicationCategoriesId"
+				type="xsd:int" minOccurs="1" maxOccurs="1" />
+
+		</xsd:sequence>
+	</xsd:complexType>
 </xsd:schema>

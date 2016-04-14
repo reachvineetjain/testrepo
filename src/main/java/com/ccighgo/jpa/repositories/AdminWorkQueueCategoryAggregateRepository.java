@@ -18,5 +18,5 @@ public interface AdminWorkQueueCategoryAggregateRepository extends JpaRepository
 
    @Query("SELECT c FROM AdminWorkQueueCategoryAggregate c WHERE c.adminWorkQueueType.adminWQTypeId= ?1 AND c.adminWorkQueueCategory.adminWorkQueueCategoryId=?2 AND c.ccistaffUser.cciStaffUserId=?3")
    AdminWorkQueueCategoryAggregate findAggregateValueForCategory(int adminWorkQueueTypeId, Integer adminWorkQueueCategoryId, int userId);
-      
+
 }

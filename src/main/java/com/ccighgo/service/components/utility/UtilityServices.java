@@ -6,13 +6,11 @@ package com.ccighgo.service.components.utility;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.core.Context;
 
 import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.partner.beans.partnerseason.PartnerSeasonProgramStatus;
 import com.ccighgo.service.transport.partner.beans.partnerseasondetail.NoteTags;
 import com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatuses;
-import com.ccighgo.service.transport.seasons.beans.seasonslist.SeasonsList;
 import com.ccighgo.service.transport.utility.beans.cciuserlist.CCIUsersList;
 import com.ccighgo.service.transport.utility.beans.country.Countries;
 import com.ccighgo.service.transport.utility.beans.country.Country;
@@ -29,6 +27,7 @@ import com.ccighgo.service.transport.utility.beans.reset.request.ResetRequest;
 import com.ccighgo.service.transport.utility.beans.role.Roles;
 import com.ccighgo.service.transport.utility.beans.state.States;
 import com.ccighgo.service.transport.utility.beans.userdepartment.UserDepartments;
+import com.ccighgo.service.transport.utility.beans.usertypes.UserTypes;
 
 /**
  * 
@@ -43,7 +42,7 @@ public interface UtilityServices {
     * @return list of countries with ISO3166 code and name
     */
    public Countries getAllCountries();
-   
+
    /**
     * This method fatech country by id
     * 
@@ -51,9 +50,10 @@ public interface UtilityServices {
     * @return country
     */
    public Country getCountryById(int countryId);
-   
+
    /**
     * Adding new country
+    * 
     * @param country
     * @return
     */
@@ -121,62 +121,61 @@ public interface UtilityServices {
     * @return
     */
    public Genders getGenders();
-   
+
    public Salutations getSalutation();
-   
-   
+
    /**
     * @param req
     */
    public Response forgotPassword(ForgotRequest req, HttpServletRequest request);
-   
+
    /**
     * @param req
     */
-   public  Response resetPassword(ResetRequest req);
-   
+   public Response resetPassword(ResetRequest req);
+
    /**
     * check UserName
     * 
     * @return
     */
-   public  boolean checkUserName(String userName);
-   
+   public boolean checkUserName(String userName);
+
    /**
     * check UserName
     * 
     * @return
     */
-   public  boolean checkEmail(String email);
-   
+   public boolean checkEmail(String email);
+
    /**
     * get list of Programs in system
     * 
     * @return
     */
    public Programs getProgramOptionsByDepartment(String deptId);
-   
+
    /**
     * get list of ProgramOptions in system
     * 
     * @return
     */
    public ProgramOptions getAllProgramOptions();
-   
+
    /**
     * get list of PartnerSeasonProgramStatus in system
     * 
     * @return
     */
    public List<PartnerSeasonProgramStatus> getPartnerSeasonStatus();
-   
+
    /**
     * get list of NoteTags in system
     * 
     * @return
     */
    public List<NoteTags> getAllTags();
-   
+
    /**
     * get list of DocumentTypes in system
     * 
@@ -193,4 +192,6 @@ public interface UtilityServices {
     * @return
     */
    public PartnerStatuses getPartnerStatus();
+
+   public UserTypes getUserTypes();
 }

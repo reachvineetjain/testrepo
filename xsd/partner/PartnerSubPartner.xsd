@@ -1,64 +1,86 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema targetNamespace="http://www.ccighgo.com/subpartner" elementFormDefault="unqualified" attributeFormDefault="unqualified" jaxb:version="2.0"
-   xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:psp="http://www.ccighgo.com/subpartner" xmlns:Q1="http://www.ccighgo.com"
-   xmlns:common="http://www.ccighgo.com/common">
-   <xsd:annotation>
-      <xsd:appinfo>
-         <jaxb:schemaBindings>
-            <jaxb:package name="com.ccighgo.service.transport.partner.beans.subpartner" />
-         </jaxb:schemaBindings>
-      </xsd:appinfo>
-   </xsd:annotation>
-   <xsd:import schemaLocation="../Common.xsd" namespace="http://www.ccighgo.com/common" />
+<xsd:schema targetNamespace="http://www.ccighgo.com/subpartner"
+	elementFormDefault="unqualified" attributeFormDefault="unqualified"
+	jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:psp="http://www.ccighgo.com/subpartner"
+	xmlns:Q1="http://www.ccighgo.com" xmlns:common="http://www.ccighgo.com/common">
+	<xsd:annotation>
+		<xsd:appinfo>
+			<jaxb:schemaBindings>
+				<jaxb:package
+					name="com.ccighgo.service.transport.partner.beans.subpartner" />
+			</jaxb:schemaBindings>
+		</xsd:appinfo>
+	</xsd:annotation>
+	<xsd:import schemaLocation="../Common.xsd" namespace="http://www.ccighgo.com/common" />
 
-   <xsd:element name="PartnerSubPartners" type="psp:PartnerSubPartners" />
+	<xsd:element name="PartnerSubPartners" type="psp:PartnerSubPartners" />
 
-   <xsd:complexType name="PartnerSubPartners">
-      <xsd:complexContent>
-         <xsd:extension base="common:Response">
-            <xsd:sequence>
-               <xsd:element name="count" type="xsd:int" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="partnerGoId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="subPartners" type="psp:SubPartners" minOccurs="0" maxOccurs="unbounded" />
-            </xsd:sequence>
-         </xsd:extension>
-      </xsd:complexContent>
-   </xsd:complexType>
+	<xsd:complexType name="PartnerSubPartners">
+		<xsd:complexContent>
+			<xsd:extension base="common:Response">
+				<xsd:sequence>
+					<xsd:element name="count" type="xsd:int" minOccurs="1"
+						maxOccurs="1" />
+					<xsd:element name="partnerGoId" type="xsd:int"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="subPartners" type="psp:SubPartners"
+						minOccurs="0" maxOccurs="unbounded" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
 
-   <xsd:complexType name="SubPartners">
-      <xsd:sequence>
-         <xsd:element name="subPartnerId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="subPartnerFirstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="subPartnerLastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="subPartnerCompanyName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="subPartnerEmail" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="subPartnerUserName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="subPartnerSeasons" type="psp:SubPartnerSeasons" minOccurs="0" maxOccurs="unbounded" />
-         <xsd:element name="subPartnerCountry" type="psp:SubPartnerCountry" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="subPartnerStatus" type="psp:SubPartnerStatus" minOccurs="1" maxOccurs="1" />
-      </xsd:sequence>
-   </xsd:complexType>
+	<xsd:complexType name="SubPartners">
+		<xsd:sequence>
+			<xsd:element name="subPartnerId" type="xsd:int"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="subPartnerFirstName" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="subPartnerLastName" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="subPartnerCompanyName" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="subPartnerEmail" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="subPartnerUserName" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="subPartnerSeasons" type="psp:SubPartnerSeasons"
+				minOccurs="0" maxOccurs="unbounded" />
+			<xsd:element name="subPartnerCountry" type="psp:SubPartnerCountry"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="subPartnerStatus" type="psp:SubPartnerStatus"
+				minOccurs="1" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
 
-   <xsd:complexType name="SubPartnerSeasons">
-      <xsd:sequence>
-         <xsd:element name="subPartnerSeasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="subPartnerSeasonProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="subPartnerSeasonProgram" type="xsd:string" minOccurs="1" maxOccurs="1" />
-      </xsd:sequence>
-   </xsd:complexType>
-   
-   <xsd:complexType name="SubPartnerCountry">
-      <xsd:sequence>
-         <xsd:element name="subPartnerCountryId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="subPartnerCountry" type="xsd:string" minOccurs="1" maxOccurs="1" />
-      </xsd:sequence>
-   </xsd:complexType>
-   
-   <xsd:complexType name="SubPartnerStatus">
-      <xsd:sequence>
-         <xsd:element name="subPartnerStatusId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-         <xsd:element name="subPartnerStatus" type="xsd:string" minOccurs="1" maxOccurs="1" />
-      </xsd:sequence>
-   </xsd:complexType>
+	<xsd:complexType name="SubPartnerSeasons">
+		<xsd:sequence>
+			<xsd:element name="subPartnerSeasonId" type="xsd:int"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="subPartnerSeasonProgramId" type="xsd:int"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="subPartnerSeasonProgram" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="SubPartnerCountry">
+		<xsd:sequence>
+			<xsd:element name="subPartnerCountryId" type="xsd:int"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="subPartnerCountry" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="SubPartnerStatus">
+		<xsd:sequence>
+			<xsd:element name="subPartnerStatusId" type="xsd:int"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="subPartnerStatus" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
 </xsd:schema>
 

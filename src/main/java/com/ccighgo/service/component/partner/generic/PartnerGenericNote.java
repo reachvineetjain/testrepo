@@ -39,27 +39,19 @@ public class PartnerGenericNote implements PartnerGenericNoteInterface {
 
    private static final Logger LOGGER = Logger.getLogger(SubPartnerInterfaceImpl.class);
 
-   @Autowired
-   CommonComponentUtils componentUtils;
+   @Autowired CommonComponentUtils componentUtils;
 
-   @Autowired
-   PartnerRepository partnerRepository;
+   @Autowired PartnerRepository partnerRepository;
 
-   @Autowired
-   PartnerNoteRepository partnerNoteRepository;
+   @Autowired PartnerNoteRepository partnerNoteRepository;
 
-   @Autowired
-   PartnerNoteTopicRepository partnerNoteTopicRepository;
+   @Autowired PartnerNoteTopicRepository partnerNoteTopicRepository;
 
-   @Autowired
-   MessageUtils messageUtil;
+   @Autowired MessageUtils messageUtil;
 
-   @Autowired
-   PartnerUserRepository partnerUserRepository;
-   @Autowired
-   LoginRepository loginRepository;
-   @Autowired
-   ReusedFunctions reusedFunctions;
+   @Autowired PartnerUserRepository partnerUserRepository;
+   @Autowired LoginRepository loginRepository;
+   @Autowired ReusedFunctions reusedFunctions;
 
    @Override
    public WSDefaultResponse addNote(ScreenNote note) {
@@ -68,7 +60,7 @@ public class PartnerGenericNote implements PartnerGenericNoteInterface {
             LOGGER.info("noteId: " + note.getNoteId() + " noteValue: " + note.getNoteValue() + "_public: " + note.isPublic() + " createdOn: " + note.getCreatedOn() + " loginId: "
                   + note.getLoginId() + " topicId: " + note.getLoginId() + " partnerId: " + note.getPartnerId());
       } catch (Exception e) {
-         e.printStackTrace();
+         LOGGER.error(e.getMessage(), e);
       }
       WSDefaultResponse wsDefaultResponse = new WSDefaultResponse();
       try {
@@ -77,10 +69,10 @@ public class PartnerGenericNote implements PartnerGenericNoteInterface {
          if (note.getCreatedOn() == null) {
             note.setCreatedOn(DateUtils.getDateAndTime2(new Date()));
          }
-         noteEntity.setCreatedOn(new java.sql.Timestamp(DateUtils.getMysqlDateFromString_FormatwithSlash(note.getCreatedOn()).getTime()));
-         noteEntity.setModifiedOn(new java.sql.Timestamp(DateUtils.getMysqlDateFromString_FormatwithSlash(note.getCreatedOn()).getTime()));
+         noteEntity.setCreatedOn(new java.sql.Timestamp(DateUtils.getMysqlDateFromStringFormatwithSlash(note.getCreatedOn()).getTime()));
+         noteEntity.setModifiedOn(new java.sql.Timestamp(DateUtils.getMysqlDateFromStringFormatwithSlash(note.getCreatedOn()).getTime()));
          noteEntity.setModifiedBy(note.getLoginId());
-         
+
          Partner partner = partnerRepository.findOne(note.getPartnerId());
          noteEntity.setPartner(partner);
          noteEntity.setPartnerNote(note.getNoteValue());
@@ -97,7 +89,7 @@ public class PartnerGenericNote implements PartnerGenericNoteInterface {
             noteCreator.setUserName(userInformationOfCreatedBy.getUserName());
             wsDefaultResponse.setCreatedBy(noteCreator);
          }
-         
+
          wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NOTE_CREATED.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
 
@@ -114,10 +106,10 @@ public class PartnerGenericNote implements PartnerGenericNoteInterface {
    @Override
    public WSDefaultResponse deleteNote(DeleteNote deleteNote) {
       try {
-         if(deleteNote!=null)
-         LOGGER.info("noteId: "+deleteNote.getNoteId());
+         if (deleteNote != null)
+            LOGGER.info("noteId: " + deleteNote.getNoteId());
       } catch (Exception e) {
-        e.printStackTrace();
+         LOGGER.error(e.getMessage(), e);
       }
       WSDefaultResponse responce = new WSDefaultResponse();
       try {
@@ -137,9 +129,9 @@ public class PartnerGenericNote implements PartnerGenericNoteInterface {
    @Override
    public Topics viewTopics(int partnerId) {
       try {
-         LOGGER.info("partnerId: "+partnerId);
+         LOGGER.info("partnerId: " + partnerId);
       } catch (Exception e) {
-         e.printStackTrace();
+         LOGGER.error(e.getMessage(), e);
       }
       Topics topicsList = new Topics();
       try {
@@ -217,15 +209,14 @@ public class PartnerGenericNote implements PartnerGenericNoteInterface {
    @Override
    public WSDefaultResponse tagTopic(Topic topic) {
       try {
-         if(topic!=null)
-         LOGGER.info("loginId: "+topic.getLoginId()+"isTopicPublic: "+topic.isIsTopicPublic()+"goId: "+topic.getGoId()+
-               "partnerNoteTopicId: "+topic.getPartnerNoteTopicId()+"partnerNoteTopicName: "+topic.getPartnerNoteTopicName()+
-               "embassyVisaInfo: "+topic.isEmbassyVisaInfo()+"f1: "+topic.isF1()+"ght: "+topic.isGht()+"intern: "+topic.isIntern()+
-               "isPublic: "+topic.isIsPublic()+"j1: "+topic.isMeetingVisit()+" meetingVisit: "+topic.isMeetingVisit()+
-               "seasonInfo: "+topic.isSeasonInfo()+"stInbound: "+topic.isStInbound()+"trainee: "+topic.isTrainee()+
-               "wt: "+topic.isWT()+" createdBy: "+topic.getCreatedBy());
+         if (topic != null)
+            LOGGER.info("loginId: " + topic.getLoginId() + "isTopicPublic: " + topic.isIsTopicPublic() + "goId: " + topic.getGoId() + "partnerNoteTopicId: "
+                  + topic.getPartnerNoteTopicId() + "partnerNoteTopicName: " + topic.getPartnerNoteTopicName() + "embassyVisaInfo: " + topic.isEmbassyVisaInfo() + "f1: "
+                  + topic.isF1() + "ght: " + topic.isGht() + "intern: " + topic.isIntern() + "isPublic: " + topic.isIsPublic() + "j1: " + topic.isMeetingVisit()
+                  + " meetingVisit: " + topic.isMeetingVisit() + "seasonInfo: " + topic.isSeasonInfo() + "stInbound: " + topic.isStInbound() + "trainee: " + topic.isTrainee()
+                  + "wt: " + topic.isWT() + " createdBy: " + topic.getCreatedBy());
       } catch (Exception e) {
-        e.printStackTrace();
+         LOGGER.error(e.getMessage(), e);
       }
       WSDefaultResponse responce = new WSDefaultResponse();
       try {
@@ -283,15 +274,14 @@ public class PartnerGenericNote implements PartnerGenericNoteInterface {
    @Override
    public WSDefaultResponse createTopic(Topic topic) {
       try {
-         if(topic!=null)
-         LOGGER.info("loginId: "+topic.getLoginId()+"isTopicPublic: "+topic.isIsTopicPublic()+"goId: "+topic.getGoId()+
-               "partnerNoteTopicId: "+topic.getPartnerNoteTopicId()+"partnerNoteTopicName: "+topic.getPartnerNoteTopicName()+
-               "embassyVisaInfo: "+topic.isEmbassyVisaInfo()+"f1: "+topic.isF1()+"ght: "+topic.isGht()+"intern: "+topic.isIntern()+
-               "isPublic: "+topic.isIsPublic()+"j1: "+topic.isMeetingVisit()+" meetingVisit: "+topic.isMeetingVisit()+
-               "seasonInfo: "+topic.isSeasonInfo()+"stInbound: "+topic.isStInbound()+"trainee: "+topic.isTrainee()+
-               "wt: "+topic.isWT()+" createdBy: "+topic.getCreatedBy());
+         if (topic != null)
+            LOGGER.info("loginId: " + topic.getLoginId() + "isTopicPublic: " + topic.isIsTopicPublic() + "goId: " + topic.getGoId() + "partnerNoteTopicId: "
+                  + topic.getPartnerNoteTopicId() + "partnerNoteTopicName: " + topic.getPartnerNoteTopicName() + "embassyVisaInfo: " + topic.isEmbassyVisaInfo() + "f1: "
+                  + topic.isF1() + "ght: " + topic.isGht() + "intern: " + topic.isIntern() + "isPublic: " + topic.isIsPublic() + "j1: " + topic.isMeetingVisit()
+                  + " meetingVisit: " + topic.isMeetingVisit() + "seasonInfo: " + topic.isSeasonInfo() + "stInbound: " + topic.isStInbound() + "trainee: " + topic.isTrainee()
+                  + "wt: " + topic.isWT() + " createdBy: " + topic.getCreatedBy());
       } catch (Exception e) {
-        e.printStackTrace();
+         LOGGER.error(e.getMessage(), e);
       }
       WSDefaultResponse responce = new WSDefaultResponse();
       try {

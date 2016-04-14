@@ -31,34 +31,34 @@ public class Partner {
    private static final Logger LOGGER = LoggerFactory.getLogger(Partner.class);
 
    @Autowired PartnerService partnerService;
-   
+
    @GET
    @Path("j1/program/details/{partnerGoId}")
    @Produces("application/json")
-   public PartnerJ1HSDashboard getJ1HSDashboard(@PathParam("partnerGoId") String partnerGoId){
-      LOGGER.info("calling Partner.getJ1HSDashboard for partner id {}",partnerGoId);
+   public PartnerJ1HSDashboard getJ1HSDashboard(@PathParam("partnerGoId") String partnerGoId) {
+      LOGGER.info("calling Partner.getJ1HSDashboard for partner id {}", partnerGoId);
       return partnerService.getJ1HSDashboard(partnerGoId);
-      
+
    }
-   
+
    @GET
    @Path("f1/program/details/{partnerGoId}")
    @Produces("application/json")
-   public PartnerF1Dashboard getActiveParticipangetF1DashboardtsList(@PathParam("partnerGoId") String partnerGoId){
-      LOGGER.info("calling Partner.getF1Dashboard for partner id {}",partnerGoId);
+   public PartnerF1Dashboard getActiveParticipangetF1DashboardtsList(@PathParam("partnerGoId") String partnerGoId) {
+      LOGGER.info("calling Partner.getF1Dashboard for partner id {}", partnerGoId);
       return partnerService.getF1Dashboard(partnerGoId);
-      
+
    }
-   
+
    @GET
    @Path("ihp/program/details/{partnerGoId}")
    @Produces("application/json")
-   public PartnerIHPDashboard getIHPDashboard(@PathParam("partnerGoId") String partnerGoId){
-      LOGGER.info("calling Partner.getIHPDashboard for partner id {}",partnerGoId);
+   public PartnerIHPDashboard getIHPDashboard(@PathParam("partnerGoId") String partnerGoId) {
+      LOGGER.info("calling Partner.getIHPDashboard for partner id {}", partnerGoId);
       return partnerService.getIHPDashboard(partnerGoId);
-      
+
    }
-   
+
    @GET
    @Path("partnerInquiryLeadData/{partnerAgentGoId}")
    @Produces("application/json")

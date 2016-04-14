@@ -14,8 +14,8 @@ import com.ccighgo.service.transport.common.response.beans.Status;
  */
 @Component
 public class CommonComponentUtils {
-   
-   public Status getStatus(String code, String type, int serviceCode, String message){
+
+   public Status getStatus(String code, String type, int serviceCode, String message) {
       Status status = new Status();
       status.setStatusCode(code);
       Message msg = new Message();

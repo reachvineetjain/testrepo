@@ -58,7 +58,7 @@ public class FieldStaffSeason {
       LOGGER.info("calling FieldStaffSeason.getFSSeasonDetails ");
       return fieldStaffSeasonService.getFSSeasonDetails(fieldStaffGoId, fsSeasonId);
    }
-   
+
    @GET
    @Path("status/list/{fsSeasonStatus}")
    @Produces("application/json")
@@ -66,7 +66,7 @@ public class FieldStaffSeason {
       LOGGER.info("calling FieldStaffSeason.getFieldStaffStatusList ");
       return fieldStaffSeasonService.getFieldStaffStatusList(fsSeasonStatus);
    }
-   
+
    @GET
    @Path("payment/schedule/list")
    @Produces("application/json")
@@ -74,7 +74,7 @@ public class FieldStaffSeason {
       LOGGER.info("calling FieldStaffSeason.getPaymentScheduleList ");
       return fieldStaffSeasonService.getPaymentScheduleList();
    }
-   
+
    @POST
    @Path("update")
    @Produces("application/json")
@@ -82,7 +82,7 @@ public class FieldStaffSeason {
       LOGGER.info("calling FieldStaffSeason.updateFieldStaffAdminSeasonDetails ");
       return fieldStaffSeasonService.updateFieldStaffAdminSeasonDetails(details);
    }
-   
+
    @GET
    @Path("delete/{fsSeasonId}")
    @Produces("application/json")
@@ -90,7 +90,7 @@ public class FieldStaffSeason {
       LOGGER.info("calling FieldStaffSeason.deleteFSAdminSeason ");
       return fieldStaffSeasonService.deleteFSAdminSeason(fsSeasonId);
    }
-   
+
    @GET
    @Path("deactivate/{fsSeasonId}")
    @Produces("application/json")

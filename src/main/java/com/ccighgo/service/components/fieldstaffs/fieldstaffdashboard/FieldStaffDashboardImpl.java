@@ -2,8 +2,6 @@ package com.ccighgo.service.components.fieldstaffs.fieldstaffdashboard;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -29,12 +27,10 @@ import com.ccighgo.service.components.errormessages.constants.FieldStaffMessageC
 import com.ccighgo.service.transport.beans.fieldstaffdashboard.erdaccount.ERDPersonalInfo;
 import com.ccighgo.service.transport.beans.fieldstaffdashboard.erdaccount.ErdMyAccount;
 import com.ccighgo.service.transport.beans.fieldstaffdashboard.erddashboard.ErdDashboard;
-import com.ccighgo.service.transport.beans.fieldstaffdashboard.erddashboard.ErdDashboardAccount;
 import com.ccighgo.service.transport.beans.fieldstaffdashboard.erddashboard.ErdDashboardAnnouncements;
 import com.ccighgo.service.transport.beans.fieldstaffdashboard.erddashboard.ErdDashboardCategorieDetails;
 import com.ccighgo.service.transport.beans.fieldstaffdashboard.erddashboard.ErdDashboardType;
 import com.ccighgo.service.transport.beans.fieldstaffdashboard.erddashboard.ErdDashboardTypes;
-import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.DateUtils;
 
@@ -42,29 +38,35 @@ import com.ccighgo.utils.DateUtils;
 public class FieldStaffDashboardImpl implements FieldStaffDashboardInterface {
 
    private static final Logger LOGGER = Logger.getLogger(FieldStaffDashboardInterface.class);
-   @Autowired
-   FieldStaffWorkQueueTypeRepository fieldStaffWorkQueueTypeRepository;
-   @Autowired
-   FieldStaffWorkQueueTypeAggregateRepository fieldStaffWorkQueueTypeAggregateRepository;
-   @Autowired
-   FieldStaffWorkQueueCategoryAggregateRepository fieldStaffWorkQueueCategoryAggregateRepository;
-   @Autowired
-   FieldStaffWorkQueueCategoriesRepository fieldStaffWorkQueueCategoriesRepository;
-   @Autowired
-   FieldStaffRepository fieldStaffRepository;
-   @Autowired
-   LoginRepository loginRepository;
-   @Autowired
-   FieldStaffAnnouncementRepository fieldStaffAnnouncementRepository;
-   @Autowired
-   CommonComponentUtils componentUtils;
-   @Autowired
-   MessageUtils messageUtil;
+   @Autowired FieldStaffWorkQueueTypeRepository fieldStaffWorkQueueTypeRepository;
+   @Autowired FieldStaffWorkQueueTypeAggregateRepository fieldStaffWorkQueueTypeAggregateRepository;
+   @Autowired FieldStaffWorkQueueCategoryAggregateRepository fieldStaffWorkQueueCategoryAggregateRepository;
+   @Autowired FieldStaffWorkQueueCategoriesRepository fieldStaffWorkQueueCategoriesRepository;
+   @Autowired FieldStaffRepository fieldStaffRepository;
+   @Autowired LoginRepository loginRepository;
+   @Autowired FieldStaffAnnouncementRepository fieldStaffAnnouncementRepository;
+   @Autowired CommonComponentUtils componentUtils;
+   @Autowired MessageUtils messageUtil;
 
    @Override
    public ErdDashboard getErdDashboardWorkQueues(String fieldStaffGoId) {
 
       ErdDashboard erdDashboard = new ErdDashboard();
+      if (fieldStaffGoId == null || fieldStaffGoId.isEmpty()) {
+         erdDashboard.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_FIELD_STAFF_ID.getValue(),
+               messageUtil.getMessage(FieldStaffMessageConstants.INVALID_FIELDSTAFF_ID)));
+         LOGGER.error(messageUtil.getMessage(FieldStaffMessageConstants.INVALID_FIELDSTAFF_ID));
+         return erdDashboard;
+      }
+      FieldStaff fs = fieldStaffRepository.findOne(Integer.valueOf(fieldStaffGoId));
+      Login login = loginRepository.findByGoId(fs.getGoIdSequence());
+      erdDashboard.setGoId(Integer.valueOf(fieldStaffGoId));
+      erdDashboard.setFirstName(fs.getFirstName());
+      erdDashboard.setLastName(fs.getLastName());
+      erdDashboard.setEmail(login.getEmail());
+      erdDashboard.setUserName(login.getLoginName());
+      erdDashboard.setPhotoUrl(fs.getPhoto());
+      erdDashboard.setFsRole(fs.getFieldStaffType().getFieldStaffTypeName());
       ErdDashboardTypes erdDashboardTypes = new ErdDashboardTypes();
       try {
          List<FieldStaffWorkQueueType> fieldStaffWorkQueueTypes = fieldStaffWorkQueueTypeRepository.findAll();
@@ -89,7 +91,7 @@ public class FieldStaffDashboardImpl implements FieldStaffDashboardInterface {
                erdDashboardTypes.getTypes().add(t);
             }
          erdDashboard.setErdDashboardTypes(erdDashboardTypes);
-         
+
          List<FieldStaffAnnouncement> announcements = fieldStaffAnnouncementRepository.getERDStaffAnnouncements();
          if (announcements != null)
             for (FieldStaffAnnouncement ann : announcements) {
@@ -99,7 +101,7 @@ public class FieldStaffDashboardImpl implements FieldStaffDashboardInterface {
                   erdAnn.setTimestamp(DateUtils.getTimestamp(ann.getCreatedOn()));
                erdDashboard.getAnnouncements().add(erdAnn);
             }
-         
+
          erdDashboard.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
@@ -136,7 +138,7 @@ public class FieldStaffDashboardImpl implements FieldStaffDashboardInterface {
          pi.setMallingAddress2(fs.getMailingAddress2());
          pi.setMallingCity(fs.getMailingCity());
          pi.setMallingZip(fs.getMailingZipCode());
-         pi.setMallingState(fs.getLookupUsstate1().getStateName()); 
+         pi.setMallingState(fs.getLookupUsstate1().getStateName());
          erdMyAccount.setPersonalInfo(pi);
          erdMyAccount.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ccighgo.com/hfcommunityandschoolpage"
+	elementFormDefault="unqualified" attributeFormDefault="unqualified"
+	jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:pu="http://www.ccighgo.com/hfcommunityandschoolpage"
+	xmlns:Q1="http://www.ccighgo.com" xmlns:common="http://www.ccighgo.com/common">
+	<xsd:annotation>
+		<xsd:appinfo>
+			<jaxb:schemaBindings>
+				<jaxb:package
+					name="com.ccighgo.service.transport.hostfamily.beans.application.hfcommunityandschoolpage" />
+			</jaxb:schemaBindings>
+		</xsd:appinfo>
+	</xsd:annotation>
+	<xsd:import schemaLocation="../../Common.xsd" namespace="http://www.ccighgo.com/common" />
+
+	<xsd:element name="HFCommunityAndSchoolPage" type="pu:HFCommunityAndSchoolPage" />
+
+
+<xsd:complexType name="HFCommunityAndSchoolPage">
+      <xsd:complexContent>
+         <xsd:extension base="common:Response">
+            <xsd:sequence>
+               <xsd:element name="loginId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+                <xsd:element name="programId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="hostFamilyId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="hostFamilyCommunityId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="community" type="pu:HFCommunity" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="schoolLife" type="pu:HFSchoolLife" minOccurs="1" maxOccurs="1" />
+             <xsd:element name="fieldsFilled" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="percentUpdate" type="xsd:double" minOccurs="1" maxOccurs="1" />
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   
+     <xsd:complexType name="HFCommunity">
+      <xsd:sequence>
+         <xsd:sequence>
+            <xsd:element name="populationOfTheTown" type="xsd:string" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="cityOrTownWebSite" type="xsd:string" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="nearestMajorCity" type="xsd:string" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="populationOfNearestCity" type="xsd:string" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="distanceFromCity" type="xsd:string" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="uniqueAboutYourCommunity" type="xsd:string" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="placesAndEventsMightInterestTheStudent" type="xsd:string" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="areasToBeAvoidedInTheNeighbourhood" type="xsd:string" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="volunteeringOpportunitiesInTheCommunity" type="xsd:string" minOccurs="1" maxOccurs="1" />
+           <xsd:element name="hostFamilySeasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+           <xsd:element name="hostFamilyCommunityId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+           
+          </xsd:sequence>
+      </xsd:sequence>
+   </xsd:complexType>
+	
+   <xsd:complexType name="HFSchoolLife">
+      <xsd:sequence>
+         <xsd:sequence>
+            <xsd:element name="studentWillGotoSchoolBy" type="xsd:string" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="distanceBetweenSchoolAndHome" type="xsd:string" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="provideSpecialTransformation" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="specialTransformationDetails" type="xsd:string" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="familyChildEnrolledInTheSameSchool" type="xsd:string" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="activitiesChildrenInvolvedInAtSchool" type="xsd:string" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="contactedCoatchForParticularAthleticAbility" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="althleticAbilityDetails" type="xsd:string" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="anyMemberTeachOrCoachAtSchool" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+        <xsd:element name="hostFamilySeasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+           <xsd:element name="hostFamilySchoolLifeId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+       </xsd:sequence>
+      </xsd:sequence>
+   </xsd:complexType>
+   
+</xsd:schema>

@@ -26,8 +26,7 @@ public class Insurance {
 
    private static final Logger LOGGER = Logger.getLogger(Insurance.class);
 
-   @Autowired
-   InsuranceServiceInterface insuranceServiceInterface;
+   @Autowired InsuranceServiceInterface insuranceServiceInterface;
 
    @GET
    @Path("ping/{input}")

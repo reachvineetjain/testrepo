@@ -11,12 +11,14 @@ import java.sql.Timestamp;
  * 
  */
 @Entity
+@Table(name="PartnerSeasonAllocation")
 @NamedQuery(name="PartnerSeasonAllocation.findAll", query="SELECT p FROM PartnerSeasonAllocation p")
 public class PartnerSeasonAllocation implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer partnerSeasonAllocationId;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -25,8 +27,10 @@ public class PartnerSeasonAllocation implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date allocationRequestReviewedOn;
 
+	@Column(nullable=false)
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
 	private Integer expectedPaxCount;
@@ -38,8 +42,10 @@ public class PartnerSeasonAllocation implements Serializable {
 
 	private Integer maxPax;
 
+	@Column(nullable=false)
 	private Integer modifiedBy;
 
+	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
 	private Integer requestedMaxGuaranteedPax;

@@ -58,8 +58,7 @@ public class PartnerAdmin {
 
    private static final Logger LOGGER = LoggerFactory.getLogger(PartnerAdmin.class);
 
-   @Autowired
-   PartnerAdminService partnerAdminService;
+   @Autowired PartnerAdminService partnerAdminService;
 
    @GET
    @Path("ping/{input}")
@@ -80,9 +79,9 @@ public class PartnerAdmin {
    @GET
    @Path("workQueueCategory/{adminWorkQueueTypeId}/{loginId}")
    @Produces("application/json")
-   public AdminPartnerWorkQueueCategory getWorkQueueCategory(@PathParam("adminWorkQueueTypeId") String adminWorkQueueTypeId,@PathParam("loginId") String loginId) {
+   public AdminPartnerWorkQueueCategory getWorkQueueCategory(@PathParam("adminWorkQueueTypeId") String adminWorkQueueTypeId, @PathParam("loginId") String loginId) {
       LOGGER.debug("fun : getWorkQueueCategory []");
-      return partnerAdminService.getWorkQueueCategory(Integer.parseInt(adminWorkQueueTypeId),Integer.parseInt(loginId));
+      return partnerAdminService.getWorkQueueCategory(Integer.parseInt(adminWorkQueueTypeId), Integer.parseInt(loginId));
    }
 
    // TODO
@@ -172,13 +171,15 @@ public class PartnerAdmin {
       LOGGER.debug("fun : changePartnerApplicationStatus []");
       return partnerAdminService.changePartnerApplicationStatus(Integer.parseInt(goId), newStatus);
    }
+
    @GET
    @Path("changeApplicationStatus/{goId}/{newStatus}/{note}")
    @Produces("application/json")
    public WSDefaultResponse changePartnerApplicationStatus(@PathParam("goId") String goId, @PathParam("newStatus") String newStatus, @PathParam("note") String note) {
       LOGGER.debug("fun : changePartnerApplicationStatus []");
-      return partnerAdminService.changePartnerApplicationStatus(Integer.parseInt(goId), newStatus,note);
+      return partnerAdminService.changePartnerApplicationStatus(Integer.parseInt(goId), newStatus, note);
    }
+
    @GET
    @Path("updatePartnerApplicationFollowUpDate/{goId}/{followUpdate}")
    @Produces("application/json")
@@ -235,7 +236,9 @@ public class PartnerAdmin {
       return partnerAdminService.updatePartnerInquiryLeadData(partnerRecruitmentAdminLead);
    }
 
-   /***************************************** partial Updates ********************/
+   /*****************************************
+    * partial Updates
+    ********************/
    /*
     * Partner Documents
     */
@@ -267,6 +270,7 @@ public class PartnerAdmin {
       LOGGER.debug("fun : addNewPartnerInquiryOffice");
       return partnerAdminService.addNewPartnerInquiryOffice(officesDetails);
    }
+
    @POST
    @Path("updatePartnerInquiryOffice/")
    @Produces("application/json")
@@ -274,7 +278,7 @@ public class PartnerAdmin {
       LOGGER.debug("fun : updatePartnerInquiryOffice");
       return partnerAdminService.updatePartnerInquiryOffice(officesDetails);
    }
-   
+
    @POST
    @Path("removeNewPartnerInquiryOffice")
    @Produces("application/json")
@@ -294,6 +298,7 @@ public class PartnerAdmin {
       LOGGER.debug("fun : addNewPartnerInquiryContact");
       return partnerAdminService.addNewPartnerInquiryContact(ContactsDetails);
    }
+
    @POST
    @Path("updatePartnerInquiryContacts/")
    @Produces("application/json")
@@ -301,7 +306,7 @@ public class PartnerAdmin {
       LOGGER.debug("fun : updatePartnerInquiryContact");
       return partnerAdminService.updatePartnerInquiryContact(ContactsDetails);
    }
-   
+
    @POST
    @Path("removeNewPartnerInquiryContact")
    @Produces("application/json")
@@ -357,13 +362,13 @@ public class PartnerAdmin {
       LOGGER.debug("fun : getAllCCIUsers");
       return partnerAdminService.getAllCCIUsers();
    }
-   
+
    @GET
    @Path("markAsRead/{noteId}/{loginId}")
    @Produces("application/json")
    public WSDefaultResponse markNoteRead(@PathParam("noteId") String noteId, @PathParam("loginId") String loginId) {
       LOGGER.debug("fun : markNoteRead []");
-      return partnerAdminService.markNoteRead(noteId,loginId);
+      return partnerAdminService.markNoteRead(noteId, loginId);
    }
 
    @GET
@@ -372,7 +377,7 @@ public class PartnerAdmin {
    public PartnerStatusAsPatterns getPartnerStatusAsPattern() {
       return partnerAdminService.getPartnerStatusAsPattern();
    }
-   
+
    @GET
    @Path("updatePartnerDeadLineChangeFollowUpDate/{SeasonId}/{ProgramId}/{PartnerGoId}/{followUpdate}")
    @Produces("application/json")
@@ -398,37 +403,38 @@ public class PartnerAdmin {
       LOGGER.debug("fun : updatePartnerAllocationNotesReviewUpDate");
       return partnerAdminService.updatePartnerNotesReviewFollowUpDate(Integer.valueOf(partnerNotesId), followUpdate);
    }
+
    @GET
    @Path("assignSeason/{seasonId}/{subPartner}/{departmentProgramId}/{loginId}")
    @Produces("application/json")
-   public WSDefaultResponse assignSeasonToSubPartner(@PathParam("seasonId") String seasonId,@PathParam("subPartner")String subpartnerId,@PathParam("departmentProgramId")String departmentProgramId,@PathParam("loginId")String loginId){
+   public WSDefaultResponse assignSeasonToSubPartner(@PathParam("seasonId") String seasonId, @PathParam("subPartner") String subpartnerId,
+         @PathParam("departmentProgramId") String departmentProgramId, @PathParam("loginId") String loginId) {
       LOGGER.info("calling assignSeasonToSubPartner ");
-      return partnerAdminService.assignSeasonToSubPartner(seasonId,subpartnerId, departmentProgramId,loginId);
+      return partnerAdminService.assignSeasonToSubPartner(seasonId, subpartnerId, departmentProgramId, loginId);
    }
-   
+
    @POST
    @Path("assignSeason")
    @Produces("application/json")
-   public WSDefaultResponse assignSeasonToSubPartner(AssignSeasonToSubPartner assignSubpartnerToSeason){
+   public WSDefaultResponse assignSeasonToSubPartner(AssignSeasonToSubPartner assignSubpartnerToSeason) {
       LOGGER.info("calling assignSeasonToSubPartner ");
       return partnerAdminService.assignSeasonToSubPartner(assignSubpartnerToSeason);
    }
-   
+
    @GET
    @Path("allSeasons")
    @Produces("application/json")
-   public SeasonsForPartners getAllAvailableSeasons(){
+   public SeasonsForPartners getAllAvailableSeasons() {
       LOGGER.info("calling getAllAvailableSeasons ");
       return partnerAdminService.getAllAvailableSeasons();
    }
+
    @GET
    @Path("allSeasons/{partnerId}")
    @Produces("application/json")
-   public SeasonsForPartners getAllAvailableSeasons(@PathParam("partnerId")  String partnerId){
+   public SeasonsForPartners getAllAvailableSeasons(@PathParam("partnerId") String partnerId) {
       LOGGER.info("calling getAllAvailableSeasons ");
       return partnerAdminService.getAllAvailableSeasons2(partnerId);
    }
-   
-   
-   
+
 }

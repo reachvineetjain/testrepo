@@ -10,21 +10,29 @@ import java.util.List;
  * 
  */
 @Entity
+@Table(name="StateProcess")
 @NamedQuery(name="StateProcess.findAll", query="SELECT s FROM StateProcess s")
 public class StateProcess implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer stateProcessId;
 
+	@Column(length=50)
 	private String stateProcessName;
 
+	@Column(length=50)
 	private String workQueue;
 
 	//bi-directional many-to-one association to FieldStaffWorkQueueType
 	@OneToMany(mappedBy="stateProcess")
 	private List<FieldStaffWorkQueueType> fieldStaffWorkQueueTypes;
+
+	//bi-directional many-to-one association to HostFamilyWorkQueueType
+	@OneToMany(mappedBy="stateProcess")
+	private List<HostFamilyWorkQueueType> hostFamilyWorkQueueTypes;
 
 	//bi-directional many-to-one association to PartnerWorkQueueType
 	@OneToMany(mappedBy="stateProcess")
@@ -81,6 +89,28 @@ public class StateProcess implements Serializable {
 		fieldStaffWorkQueueType.setStateProcess(null);
 
 		return fieldStaffWorkQueueType;
+	}
+
+	public List<HostFamilyWorkQueueType> getHostFamilyWorkQueueTypes() {
+		return this.hostFamilyWorkQueueTypes;
+	}
+
+	public void setHostFamilyWorkQueueTypes(List<HostFamilyWorkQueueType> hostFamilyWorkQueueTypes) {
+		this.hostFamilyWorkQueueTypes = hostFamilyWorkQueueTypes;
+	}
+
+	public HostFamilyWorkQueueType addHostFamilyWorkQueueType(HostFamilyWorkQueueType hostFamilyWorkQueueType) {
+		getHostFamilyWorkQueueTypes().add(hostFamilyWorkQueueType);
+		hostFamilyWorkQueueType.setStateProcess(this);
+
+		return hostFamilyWorkQueueType;
+	}
+
+	public HostFamilyWorkQueueType removeHostFamilyWorkQueueType(HostFamilyWorkQueueType hostFamilyWorkQueueType) {
+		getHostFamilyWorkQueueTypes().remove(hostFamilyWorkQueueType);
+		hostFamilyWorkQueueType.setStateProcess(null);
+
+		return hostFamilyWorkQueueType;
 	}
 
 	public List<PartnerWorkQueueType> getPartnerWorkQueueTypes() {

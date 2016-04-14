@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ccighgo.com/hfbackground"
+	elementFormDefault="unqualified" attributeFormDefault="unqualified"
+	jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:pu="http://www.ccighgo.com/hfbackground"
+	xmlns:Q1="http://www.ccighgo.com" xmlns:common="http://www.ccighgo.com/common">
+	<xsd:annotation>
+		<xsd:appinfo>
+			<jaxb:schemaBindings>
+				<jaxb:package
+					name="com.ccighgo.service.transport.hostfamily.beans.application.background.check" />
+			</jaxb:schemaBindings>
+		</xsd:appinfo>
+	</xsd:annotation>
+	<xsd:import schemaLocation="../../Common.xsd" namespace="http://www.ccighgo.com/common" />
+
+	<xsd:element name="HFBackgroundCheck" type="pu:HFBackgroundCheck" />
+
+	<xsd:complexType name="HFBackgroundCheck">
+		<xsd:complexContent>
+			<xsd:extension base="common:Response">
+				<xsd:sequence>
+					<xsd:element name="loginId" type="xsd:int" minOccurs="1"
+						maxOccurs="1" />
+					<xsd:element name="hfSeasonId" type="xsd:int"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="fieldsFilled" type="xsd:int"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="percentUpdate" type="xsd:double"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="members" type="pu:Member" minOccurs="0"
+						maxOccurs="unbounded" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="Member">
+		<xsd:sequence>
+			<xsd:element name="firstName" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="lastName" type="xsd:string" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="birthDate" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="relationship" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="backgroundCheckStatus" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="dateCheckedByCCI" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+</xsd:schema>
+

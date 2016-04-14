@@ -10,76 +10,75 @@ import java.sql.Timestamp;
  * 
  */
 @Entity
+@Table(name="HostFamilyCommunity")
 @NamedQuery(name="HostFamilyCommunity.findAll", query="SELECT h FROM HostFamilyCommunity h")
 public class HostFamilyCommunity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer hostFamilyCommunityId;
 
 	private Byte active;
 
-	@Lob
+	@Column(length=1000)
 	private String areasToAvoid;
 
-	@Lob
+	@Column(length=1000)
 	private String childrenActivities;
 
-	@Lob
+	@Column(length=1000)
 	private String childrenEnrolled;
 
-	private String cityPopulation;
-
+	@Column(length=50)
 	private String cityWebsite;
 
-	@Lob
-	private String communityDetails;
+	private Byte contactACoach;
 
-	@Lob
+	@Column(length=1000)
 	private String contactByCoachDetails;
-
-	private Byte contactedByCoach;
 
 	private Integer createdBy;
 
 	private Timestamp createdOn;
 
+	@Column(length=50)
 	private String distanceFromCity;
 
+	@Column(length=50)
 	private String distanceToSchool;
-
-	private Byte involvedInVolunteerService;
-
-	@Lob
-	private String involvedInVolunteerServiceDetails;
 
 	private Integer modifiedBy;
 
 	private Timestamp modifiedOn;
 
+	@Column(length=50)
 	private String nearestCity;
+
+	@Column(length=50)
+	private String nearestCityPopulation;
 
 	private Byte parentIsTeacher;
 
-	@Lob
-	private String parentIsTeacherDetails;
-
-	@Lob
+	@Column(length=1000)
 	private String placesOfInterest;
 
+	@Column(length=50)
 	private String population;
 
+	@Column(length=100)
 	private String schoolTravelMethod;
 
 	private Byte transportationToActivities;
 
-	@Lob
+	@Column(length=1000)
 	private String transportationToActivitiesDetails;
 
-	private String usRegion;
+	@Column(length=100)
+	private String uniquenessAboutCommunity;
 
-	@Lob
+	@Column(length=1000)
 	private String volunteeringOpportunitiesCommunity;
 
 	//bi-directional many-to-one association to HostFamilySeason
@@ -130,14 +129,6 @@ public class HostFamilyCommunity implements Serializable {
 		this.childrenEnrolled = childrenEnrolled;
 	}
 
-	public String getCityPopulation() {
-		return this.cityPopulation;
-	}
-
-	public void setCityPopulation(String cityPopulation) {
-		this.cityPopulation = cityPopulation;
-	}
-
 	public String getCityWebsite() {
 		return this.cityWebsite;
 	}
@@ -146,12 +137,12 @@ public class HostFamilyCommunity implements Serializable {
 		this.cityWebsite = cityWebsite;
 	}
 
-	public String getCommunityDetails() {
-		return this.communityDetails;
+	public Byte getContactACoach() {
+		return this.contactACoach;
 	}
 
-	public void setCommunityDetails(String communityDetails) {
-		this.communityDetails = communityDetails;
+	public void setContactACoach(Byte contactACoach) {
+		this.contactACoach = contactACoach;
 	}
 
 	public String getContactByCoachDetails() {
@@ -160,14 +151,6 @@ public class HostFamilyCommunity implements Serializable {
 
 	public void setContactByCoachDetails(String contactByCoachDetails) {
 		this.contactByCoachDetails = contactByCoachDetails;
-	}
-
-	public Byte getContactedByCoach() {
-		return this.contactedByCoach;
-	}
-
-	public void setContactedByCoach(Byte contactedByCoach) {
-		this.contactedByCoach = contactedByCoach;
 	}
 
 	public Integer getCreatedBy() {
@@ -202,22 +185,6 @@ public class HostFamilyCommunity implements Serializable {
 		this.distanceToSchool = distanceToSchool;
 	}
 
-	public Byte getInvolvedInVolunteerService() {
-		return this.involvedInVolunteerService;
-	}
-
-	public void setInvolvedInVolunteerService(Byte involvedInVolunteerService) {
-		this.involvedInVolunteerService = involvedInVolunteerService;
-	}
-
-	public String getInvolvedInVolunteerServiceDetails() {
-		return this.involvedInVolunteerServiceDetails;
-	}
-
-	public void setInvolvedInVolunteerServiceDetails(String involvedInVolunteerServiceDetails) {
-		this.involvedInVolunteerServiceDetails = involvedInVolunteerServiceDetails;
-	}
-
 	public Integer getModifiedBy() {
 		return this.modifiedBy;
 	}
@@ -242,20 +209,20 @@ public class HostFamilyCommunity implements Serializable {
 		this.nearestCity = nearestCity;
 	}
 
+	public String getNearestCityPopulation() {
+		return this.nearestCityPopulation;
+	}
+
+	public void setNearestCityPopulation(String nearestCityPopulation) {
+		this.nearestCityPopulation = nearestCityPopulation;
+	}
+
 	public Byte getParentIsTeacher() {
 		return this.parentIsTeacher;
 	}
 
 	public void setParentIsTeacher(Byte parentIsTeacher) {
 		this.parentIsTeacher = parentIsTeacher;
-	}
-
-	public String getParentIsTeacherDetails() {
-		return this.parentIsTeacherDetails;
-	}
-
-	public void setParentIsTeacherDetails(String parentIsTeacherDetails) {
-		this.parentIsTeacherDetails = parentIsTeacherDetails;
 	}
 
 	public String getPlacesOfInterest() {
@@ -298,12 +265,12 @@ public class HostFamilyCommunity implements Serializable {
 		this.transportationToActivitiesDetails = transportationToActivitiesDetails;
 	}
 
-	public String getUsRegion() {
-		return this.usRegion;
+	public String getUniquenessAboutCommunity() {
+		return this.uniquenessAboutCommunity;
 	}
 
-	public void setUsRegion(String usRegion) {
-		this.usRegion = usRegion;
+	public void setUniquenessAboutCommunity(String uniquenessAboutCommunity) {
+		this.uniquenessAboutCommunity = uniquenessAboutCommunity;
 	}
 
 	public String getVolunteeringOpportunitiesCommunity() {

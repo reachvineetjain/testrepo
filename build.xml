@@ -14,7 +14,9 @@
 		FieldStaffDashboardQuickLinks,FieldStaffDashboardQuickStatsCategory,FieldStaffDashboardQuickStatsTitles,FieldStaffWorkQueueCategory,FieldStaffWorkQueueTypes,PartnerSeasonStatus,
         ERDParticipants,MyFieldStaffLeadershipList,FieldStaffNetworkList,MyPlacements,MyFieldStaffLeadership,AdminERDPlacement,ERDPlacement,FieldStaffNetwork,ERDPlacementParticipants,
         AdminERDParticipant,FieldStaffAdminSeasonDetails,PaymentScheduleList,FieldStaffStatusList,HFApplicationUploadPhotos,HFParticipantSeasonList,ERDMyAccount,FieldStaffList,FieldStaffTypes,
-		FSLCSeasonContacts,FSACSeasonContacts,FSRMSeasonContacts,FSRDSeasonContacts,FSERDSeasons,UpdateLogGeneric,PartnerRecruitmentAdmin" />
+		FSLCSeasonContacts,FSACSeasonContacts,FSRMSeasonContacts,FSRDSeasonContacts,FSERDSeasons,UpdateLogGeneric,PartnerRecruitmentAdmin,WhyHost,HostFamilyReferences,PotentialHostFamily,
+		UserTypes,FieldStaffCategoriesList,HFBackgroundCheck,HFApplicationProgress,HFSubmitApplication,HFProfile,ParticipantFlightInfo,ParticipantEvaluationDetails,ParticipantFebEvaluation,
+		ParticipantOctEvaluation,ParticipantFinalEvaluation,MyPayments,PaymentDetails,UserTypes,FieldStaffCategoriesList,HFBackgroundCheck,HFApplicationProgress,HFSubmitApplication,HFMembers,HostFamilyMembers" />
 
 
 	<!-- Common bean responsible for http header, response and messages will be used by all request and response objects-->
@@ -1576,6 +1578,16 @@
 		</java>
 	</target>
 
+
+
+	<target name="FieldStaffCategoriesList">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/Fieldstaff/FieldStaffCategoriesList.xsd" />
+		</java>
+	</target>
+
 	<target name="UpdateLogGeneric">
 		<java classname="com.sun.tools.internal.xjc.XJCFacade">
 			<arg value="-d" />
@@ -1583,5 +1595,195 @@
 			<arg value="${xsd.dir}/updatelog/UpdateLogGeneric.xsd" />
 		</java>
 	</target>
+	<target name="HostFamilyHome">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/hostfamily/application/HFHomePage.xsd" />
+		</java>
+	</target>
+
+
+
+	<target name="FamilyBasics">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/hostfamily/application/HFApplicationFamilyBasics.xsd" />
+		</java>
+	</target>
+
+	<target name="WhyHost">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/hostfamily/application/WhyHost.xsd" />
+		</java>
+	</target>
+	<target name="FamilyLifeStyle">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/hostfamily/application/HFApplicationFamilyLifeStyle.xsd" />
+		</java>
+	</target>
+	<target name="House Description">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/hostfamily/application/HFHouseDescriptionPage.xsd" />
+		</java>
+	</target>
+
+	<target name="CommunityAndSchool">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/hostfamily/application/HFCoummunityAndSchoolPage.xsd" />
+		</java>
+	</target>
+
+	<target name="HostFamilyReferences">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/hostfamily/application/HostFamilyReferences.xsd" />
+		</java>
+	</target>
+
+	<target name="PotentialHostFamily">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/hostfamily/application/PotentialHostFamily.xsd" />
+		</java>
+	</target>
+
+	<target name="UserTypes">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/UserTypes.xsd" />
+		</java>
+	</target>
+
+	<target name="HFBackgroundCheck">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/hostfamily/application/HFBackgroundCheck.xsd" />
+		</java>
+	</target>
+
+	<target name="HFApplicationProgress">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/hostfamily/application/HFApplicationProgress.xsd" />
+		</java>
+	</target>
+
+	<target name="HFSubmitApplication">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/hostfamily/application/HFSubmitApplication.xsd" />
+		</java>
+	</target>
+
+	<target name="HFMembers">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/hostfamily/application/HFMembers.xsd" />
+		</java>
+	</target>
+
+	<target name="HostFamilyMembers">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/hostfamily/application/HostFamilyMembers.xsd" />
+		</java>
+	</target>
+
+	<target name="HFProfile">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/hostfamily/application/HFProfile.xsd" />
+		</java>
+	</target>
+
+	<target name="ParticipantFlightInfo">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/Participants/details/ParticipantFlightInfo.xsd" />
+		</java>
+	</target>
+
+	<target name="ParticipantEvaluationDetails">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/Participants/details/ParticipantEvaluationDetails.xsd" />
+		</java>
+	</target>
+
+	<target name="ParticipantFebEvaluation">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/Participants/details/ParticipantFebEvaluation.xsd" />
+		</java>
+	</target>
+
+	<target name="ParticipantOctEvaluation">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/Participants/details/ParticipantOctEvaluation.xsd" />
+		</java>
+	</target>
+
+	<target name="ParticipantFinalEvaluation">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/Participants/details/ParticipantFinalEvaluation.xsd" />
+		</java>
+	</target>
+
+	<target name="MyPayments">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/accounting/MyPayments.xsd" />
+		</java>
+	</target>
+
+	<target name="PaymentDetails">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/accounting/PaymentDetails.xsd" />
+		</java>
+	</target>
+	
+	<target name="HfParticipantList">
+			<java classname="com.sun.tools.internal.xjc.XJCFacade">
+				<arg value="-d" />
+				<arg value="${java.dir}" />
+				<arg value="${xsd.dir}/hostfamily/application_part2/ParticipantsLeadList.xsd" />
+			</java>
+	</target>
+	<target name="HfParticipantDetail">
+				<java classname="com.sun.tools.internal.xjc.XJCFacade">
+					<arg value="-d" />
+					<arg value="${java.dir}" />
+					<arg value="${xsd.dir}/hostfamily/application_part2/ParticipantsDetail.xsd" />
+				</java>
+		</target>
 
 </project>

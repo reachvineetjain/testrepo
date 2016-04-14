@@ -10,16 +10,20 @@ import java.util.List;
  * 
  */
 @Entity
+@Table(name="AdminWorkQueueType")
 @NamedQuery(name="AdminWorkQueueType.findAll", query="SELECT a FROM AdminWorkQueueType a")
 public class AdminWorkQueueType implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer adminWQTypeId;
 
+	@Column(length=45)
 	private String adminWQTypeName;
 
+	@Column(length=45)
 	private String roleType;
 
 	//bi-directional many-to-one association to AdminWorkQueue

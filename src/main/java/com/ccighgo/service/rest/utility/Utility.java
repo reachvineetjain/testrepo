@@ -11,7 +11,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 
-import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.utility.UtilityServices;
@@ -19,7 +18,6 @@ import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.partner.beans.partnerseason.PartnerSeasonProgramStatus;
 import com.ccighgo.service.transport.partner.beans.partnerseasondetail.NoteTags;
 import com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatuses;
-import com.ccighgo.service.transport.seasons.beans.seasonslist.SeasonsList;
 import com.ccighgo.service.transport.utility.beans.cciuserlist.CCIUsersList;
 import com.ccighgo.service.transport.utility.beans.country.Countries;
 import com.ccighgo.service.transport.utility.beans.country.Country;
@@ -35,6 +33,7 @@ import com.ccighgo.service.transport.utility.beans.reset.request.ResetRequest;
 import com.ccighgo.service.transport.utility.beans.role.Roles;
 import com.ccighgo.service.transport.utility.beans.state.States;
 import com.ccighgo.service.transport.utility.beans.userdepartment.UserDepartments;
+import com.ccighgo.service.transport.utility.beans.usertypes.UserTypes;
 
 /**
  * <h1>Utility Services</h1> The Utility class is the REST service front of all common drop-down lists in the user
@@ -56,14 +55,14 @@ import com.ccighgo.service.transport.utility.beans.userdepartment.UserDepartment
 @Consumes("application/json")
 public class Utility {
 
-   @Autowired
-   UtilityServices utilityServices;
-   
+   @Autowired UtilityServices utilityServices;
+
    @Context HttpServletRequest request;
 
    /**
-    * The method {@code ping(@PathParam("input") String input)} returns user input string back. The purpose of the
-    * method is to test if utility services are up and running
+    * The method {@code ping(@PathParam("input") String input)} returns user
+    * input string back. The purpose of the method is to test if utility
+    * services are up and running
     * 
     * @param input
     * @return input string back as text
@@ -76,7 +75,8 @@ public class Utility {
    }
 
    /**
-    * RESTful service returns list of countries, their ISO code and id in JSON format
+    * RESTful service returns list of countries, their ISO code and id in JSON
+    * format
     * 
     * @return countries in JSON format.
     */
@@ -86,7 +86,7 @@ public class Utility {
    public Countries getAllCountries() {
       return utilityServices.getAllCountries();
    }
-   
+
    /**
     * RESTful service get country for edit by id
     * 
@@ -97,10 +97,10 @@ public class Utility {
    @Path("country/edit/{countryId}")
    @Produces("application/json")
    public Country editCountry(@PathParam("countryId") int countryId) {
-      
-      return utilityServices.getCountryById(countryId);      
+
+      return utilityServices.getCountryById(countryId);
    }
-   
+
    @POST
    @Path("country/add")
    @Consumes("application/json")
@@ -212,15 +212,14 @@ public class Utility {
    public Genders getGenders() {
       return utilityServices.getGenders();
    }
-   
+
    @GET
    @Path("salutation")
    @Produces("application/json")
    public Salutations getSalutation() {
       return utilityServices.getSalutation();
    }
-   
-   
+
    /**
     * @param req
     */
@@ -228,26 +227,26 @@ public class Utility {
    @Path("forgot/access/request")
    @Consumes("application/json")
    @Produces("application/json")
-   public Response forgotPassword(ForgotRequest req){
+   public Response forgotPassword(ForgotRequest req) {
       return utilityServices.forgotPassword(req, request);
    }
-   
+
    /**
     * @param req
     */
    @POST
    @Path("reset/access/request")
-   public  Response resetPassword(ResetRequest req){
+   public Response resetPassword(ResetRequest req) {
       return utilityServices.resetPassword(req);
    }
-   
+
    /**
     * @param userName
     * @return
     */
    @GET
    @Path("duplicate-username/{userName}")
-   public  boolean checkUserName(@PathParam("userName") String userName){
+   public boolean checkUserName(@PathParam("userName") String userName) {
       return utilityServices.checkUserName(userName);
    }
 
@@ -257,56 +256,63 @@ public class Utility {
     */
    @GET
    @Path("duplicate-email/{email}")
-   public  boolean checkEmail(@PathParam("email") String email){
+   public boolean checkEmail(@PathParam("email") String email) {
       return utilityServices.checkEmail(email);
    }
-  
+
    @GET
    @Path("department/program-options/{id}")
    @Produces("application/json")
    public Programs getProgramOptionsByDepartment(@PathParam("id") String id) {
       return utilityServices.getProgramOptionsByDepartment(id);
-   }  
-   
+   }
+
    @GET
    @Path("program-options")
    @Produces("application/json")
    public com.ccighgo.service.transport.utility.beans.program.ProgramOptions getAllProgramOptions() {
       return utilityServices.getAllProgramOptions();
-   }  
-   
+   }
+
    @GET
    @Path("partner-season-status")
    @Produces("application/json")
    public List<PartnerSeasonProgramStatus> getPartnerSeasonStatus() {
       return utilityServices.getPartnerSeasonStatus();
-   }  
-   
+   }
+
    @GET
    @Path("partner-note-tags")
    @Produces("application/json")
    public List<NoteTags> getAllTags() {
       return utilityServices.getAllTags();
-   }  
-   
+   }
+
    @GET
    @Path("document-type")
    @Produces("application/json")
-   public DocumentTypes getDocumentTypes(){
+   public DocumentTypes getDocumentTypes() {
       return utilityServices.getDocumentTypes();
    }
-   
+
    @GET
    @Path("get/cciusers")
    @Produces("application/json")
-   public CCIUsersList getCCIUsers(){
+   public CCIUsersList getCCIUsers() {
       return utilityServices.getCCIUsers();
    }
-   
+
    @GET
    @Path("partner/status")
    @Produces("application/json")
-   public PartnerStatuses getPartnerStatus(){
+   public PartnerStatuses getPartnerStatus() {
       return utilityServices.getPartnerStatus();
+   }
+
+   @GET
+   @Path("usertypes")
+   @Produces("application/json")
+   public UserTypes getUserTypes() {
+      return utilityServices.getUserTypes();
    }
 }

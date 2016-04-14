@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ccighgo.com/partevalinfo" elementFormDefault="unqualified" attributeFormDefault="unqualified" jaxb:version="2.0"
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:p="http://www.ccighgo.com/partevalinfo" xmlns:Q1="http://www.ccighgo.com"
+   xmlns:common="http://www.ccighgo.com/common">
+   <xsd:annotation>
+      <xsd:appinfo>
+         <jaxb:schemaBindings>
+            <jaxb:package name="com.ccighgo.service.transport.participant.beans.evaluations" />
+         </jaxb:schemaBindings>
+      </xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import schemaLocation="../../Common.xsd" namespace="http://www.ccighgo.com/common" />
+
+   <xsd:element name="ParticipantEvaluationDetails" type="p:ParticipantEvaluationDetails" />
+
+   <xsd:complexType name="ParticipantEvaluationDetails">
+      <xsd:complexContent>
+         <xsd:extension base="common:Response">
+            <xsd:sequence>
+               <xsd:element name="goId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="hfSeasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="participantId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="firstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="lastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="age" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="gender" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="countryName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="countryFlag" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="phone" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="email" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="program" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="programOption" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="season" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="programStartDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="programEndtDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="lcFirstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="lcLastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="acFirstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="acLastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="rmFirstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="rmLastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="rdFirstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="rdLastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="evaluationDetails" type="p:EvaluationDetails" minOccurs="1" maxOccurs="1" />
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+
+   <xsd:complexType name="EvaluationDetails">
+      <xsd:sequence>
+         <xsd:element name="febEvalCompleted" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="febEvalLastActionDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="octEvalCompleted" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="octEvalLastActionDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="finalEvalCompleted" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="finalEvalLastActionDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+
+</xsd:schema>

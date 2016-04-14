@@ -9,14 +9,17 @@ import javax.persistence.*;
  * 
  */
 @Entity
+@Table(name="PartnerReviewStatus")
 @NamedQuery(name="PartnerReviewStatus.findAll", query="SELECT p FROM PartnerReviewStatus p")
 public class PartnerReviewStatus implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer partnerReviewStatusId;
 
+	@Column(length=1000)
 	private String partnerStatusReason;
 
 	//bi-directional many-to-one association to CCIStaffUser

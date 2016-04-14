@@ -28,14 +28,11 @@ public class AdminERDParticipantImp implements AdminERDParticipantInterface {
 
    private static final Logger LOGGER = Logger.getLogger(AdminERDParticipantImp.class);
 
-   @Autowired
-   EntityManager em;
+   @Autowired EntityManager em;
 
-   @Autowired
-   CommonComponentUtils componentUtils;
+   @Autowired CommonComponentUtils componentUtils;
 
-   @Autowired
-   MessageUtils messageUtil;
+   @Autowired MessageUtils messageUtil;
 
    private static final String SP_FS_PARTICIPANT = "CALL SPFieldStaffMonitoringParticipantListing(?,?,?)";
    private static final String SP_FS_PLACEMENT_LIST = "CALL SPFieldStaffParticipantListing(?,?,?)";
@@ -71,7 +68,7 @@ public class AdminERDParticipantImp implements AdminERDParticipantInterface {
                   esp.setCountry(String.valueOf(obj[4]));
                   esp.setProgram(String.valueOf(obj[5]));
                   esp.setGender(String.valueOf(obj[6]));
-                  Date dateformat=(Date)obj[7];                 
+                  Date dateformat = (Date) obj[7];
                   esp.setApprovedDate(DateUtils.getMMddYyyyString(dateformat));
                   esp.setLC(String.valueOf(obj[8]));
                   esp.setRD(String.valueOf(obj[9]));
@@ -86,7 +83,7 @@ public class AdminERDParticipantImp implements AdminERDParticipantInterface {
             erdParticipants.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          } catch (Exception e) {
-            e.printStackTrace();
+
             erdParticipants.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GETTING_FIELDSTAFF_PARTICIPANT.getValue(),
                   messageUtil.getMessage(FieldStaffMessageConstants.ERROR_GETTING_FIELDSTAFF_PARTICIPANT)));
             LOGGER.error(messageUtil.getMessage(FieldStaffMessageConstants.ERROR_GETTING_FIELDSTAFF_PARTICIPANT));
@@ -125,8 +122,8 @@ public class AdminERDParticipantImp implements AdminERDParticipantInterface {
                   fsp.setCountry(String.valueOf(obj[4]));
                   fsp.setProgram(String.valueOf(obj[5]));
                   fsp.setGender(String.valueOf(obj[6]));
-                  Date dateformat=(Date)obj[7];                 
-                  fsp.setApprovedDate(DateUtils.getMMddYyyyString(dateformat));                 
+                  Date dateformat = (Date) obj[7];
+                  fsp.setApprovedDate(DateUtils.getMMddYyyyString(dateformat));
                   fsp.setLC(String.valueOf(obj[8]));
                   fsp.setRD(String.valueOf(obj[9]));
                   fsp.setHS(String.valueOf(obj[10]));
@@ -137,7 +134,7 @@ public class AdminERDParticipantImp implements AdminERDParticipantInterface {
             erdParticipants.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          } catch (Exception e) {
-            e.printStackTrace();
+
             erdParticipants.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GETTING_FIELDSTAFF_PARTICIPANT.getValue(),
                   messageUtil.getMessage(FieldStaffMessageConstants.ERROR_GETTING_FIELDSTAFF_PARTICIPANT)));
             LOGGER.error(messageUtil.getMessage(FieldStaffMessageConstants.ERROR_GETTING_FIELDSTAFF_PARTICIPANT));
@@ -186,7 +183,7 @@ public class AdminERDParticipantImp implements AdminERDParticipantInterface {
          myPlacements.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
-         e.printStackTrace();
+
          myPlacements.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GETTING_FIELDSTAFF_PLACEMENT.getValue(),
                messageUtil.getMessage(FieldStaffMessageConstants.ERROR_GETTING_FIELDSTAFF_PLACEMENT)));
          LOGGER.error(messageUtil.getMessage(FieldStaffMessageConstants.ERROR_GETTING_FIELDSTAFF_PLACEMENT));
@@ -234,7 +231,7 @@ public class AdminERDParticipantImp implements AdminERDParticipantInterface {
          eRDPlacements.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
-         e.printStackTrace();
+
          eRDPlacements.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GETTING_FIELDSTAFF_PLACEMENT.getValue(),
                messageUtil.getMessage(FieldStaffMessageConstants.ERROR_GETTING_FIELDSTAFF_PLACEMENT)));
          LOGGER.error(messageUtil.getMessage(FieldStaffMessageConstants.ERROR_GETTING_FIELDSTAFF_PLACEMENT));

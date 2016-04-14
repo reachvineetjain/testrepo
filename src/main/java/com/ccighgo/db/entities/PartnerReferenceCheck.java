@@ -17,11 +17,13 @@ public class PartnerReferenceCheck implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer partnerReferenceCheckId;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date businessLicenseExpiryDate;
 
+	@Column(length=50)
 	private String referenceApprovedBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -30,6 +32,7 @@ public class PartnerReferenceCheck implements Serializable {
 	@Lob
 	private String referenceCheckNotes;
 
+	@Column(length=50)
 	private String referenceCompletedBy;
 
 	@Temporal(TemporalType.TIMESTAMP)

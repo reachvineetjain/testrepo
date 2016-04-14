@@ -18,7 +18,7 @@ import com.ccighgo.db.entities.CCIStaffUsersCCIStaffRole;
  */
 @Repository
 public interface CCIStaffUserStaffRoleRepository extends JpaRepository<CCIStaffUsersCCIStaffRole, Integer> {
-   
+
    @Query("SELECT c FROM CCIStaffUsersCCIStaffRole c WHERE c.ccistaffUser = ?1")
    public List<CCIStaffUsersCCIStaffRole> findAllStaffRoleByUser(CCIStaffUser ccistaffUser);
 

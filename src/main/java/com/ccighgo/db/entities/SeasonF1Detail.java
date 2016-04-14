@@ -18,6 +18,7 @@ public class SeasonF1Detail implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer seasonF1DetailsId;
 
 	private Byte activeFullYearJanProgram;
@@ -33,8 +34,10 @@ public class SeasonF1Detail implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date augFullYearStartDate;
 
+	@Column(nullable=false)
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -68,10 +71,13 @@ public class SeasonF1Detail implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date janFullYearStartDate;
 
+	@Column(nullable=false)
 	private Integer modifiedBy;
 
+	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
+	@Column(length=45)
 	private String programName;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -115,7 +121,7 @@ public class SeasonF1Detail implements Serializable {
 
 	//bi-directional many-to-one association to Season
 	@ManyToOne
-	@JoinColumn(name="seasonId")
+	@JoinColumn(name="seasonId", nullable=false)
 	private Season season;
 
 	//bi-directional many-to-one association to SeasonStatus

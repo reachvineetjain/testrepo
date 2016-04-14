@@ -17,8 +17,10 @@ public class AdminQuickStatsCategory implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer adminQSCategoryId;
 
+	@Column(length=50)
 	private String adminQSCategoryName;
 
 	//bi-directional many-to-one association to AdminQuickStatsType

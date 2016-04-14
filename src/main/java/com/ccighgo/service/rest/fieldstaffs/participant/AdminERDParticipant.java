@@ -14,6 +14,7 @@ import com.ccighgo.service.component.fieldstaffs.participant.AdminERDParticipant
 import com.ccighgo.service.transport.fieldstaff.beans.adminerdparticipant.AdminERDParticipants;
 import com.ccighgo.service.transport.fieldstaff.beans.placement.adminerdplacement.AdminERDPlacements;
 import com.ccighgo.service.transport.partner.beans.fieldstaff.placement.adminerdmyplacement.AdminMyPlacements;
+
 /**
  * @author sinshaw.demisse
  *
@@ -25,8 +26,7 @@ public class AdminERDParticipant {
 
    private static final Logger LOGGER = LoggerFactory.getLogger(AdminERDParticipant.class);
 
-   @Autowired
-   AdminERDParticipantInterface adminERDParticipantInterface;
+   @Autowired AdminERDParticipantInterface adminERDParticipantInterface;
 
    /**
     * @return FieldStaffParticipants
@@ -34,9 +34,9 @@ public class AdminERDParticipant {
    @GET
    @Path("monitoring/myparticipant/{fsGoId}/{catagories}")
    @Produces("application/json")
-   public AdminERDParticipants getAllParticipant(@PathParam("fsGoId") String fsGoId,@PathParam("catagories") String catagories) {
+   public AdminERDParticipants getAllParticipant(@PathParam("fsGoId") String fsGoId, @PathParam("catagories") String catagories) {
       LOGGER.info("calling fieldStaffParticipantInterface.getAll");
-      return adminERDParticipantInterface.getAll(fsGoId,catagories);
+      return adminERDParticipantInterface.getAll(fsGoId, catagories);
    }
 
    /**
@@ -47,21 +47,20 @@ public class AdminERDParticipant {
    @Produces("application/json")
    public AdminERDParticipants getMyTeam(@PathParam("fsGoId") String fsGoId, @PathParam("catagories") String catagories) {
       LOGGER.info("calling fieldStaffParticipantInterface.getMyTeam");
-      return adminERDParticipantInterface.getMyTeam(fsGoId,catagories);
+      return adminERDParticipantInterface.getMyTeam(fsGoId, catagories);
    }
-   
+
    @GET
    @Path("/placement/myparticipant/{goId}/{catagories}")
    @Produces("application/json")
-   public AdminMyPlacements getERDMyPlacement(@PathParam("goId")String goId, @PathParam("catagories")String catagories)
-   {
+   public AdminMyPlacements getERDMyPlacement(@PathParam("goId") String goId, @PathParam("catagories") String catagories) {
       LOGGER.info("calling adminERDParticipantInterface.getERDMyPlacement");
-     return adminERDParticipantInterface.getERDMyPlacement(goId, catagories);
+      return adminERDParticipantInterface.getERDMyPlacement(goId, catagories);
    }
+
    @GET
    @Path("/placement/myteamparticipant/{goId}/{catagories}")
-   public AdminERDPlacements getERDPlacementMyTeamPlacement(@PathParam("goId")String goId, @PathParam("catagories")String catagories)
-   {
+   public AdminERDPlacements getERDPlacementMyTeamPlacement(@PathParam("goId") String goId, @PathParam("catagories") String catagories) {
       LOGGER.info("calling adminERDParticipantInterface.getERDPlacementMyTeamPlacement");
       return adminERDParticipantInterface.getERDPlacementMyTeamPlacement(goId, catagories);
    }

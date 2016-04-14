@@ -11,34 +11,41 @@ import java.sql.Timestamp;
  * 
  */
 @Entity
+@Table(name="HostFamilyReference")
 @NamedQuery(name="HostFamilyReference.findAll", query="SELECT h FROM HostFamilyReference h")
 public class HostFamilyReference implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer hostFamilyReferenceId;
 
 	private Byte active;
 
 	private Integer additionalSupport;
 
+	@Column(length=100)
 	private String address;
 
-	private Integer allowOwnChildStay;
+	private Byte allowOwnChildStay;
 
+	@Column(length=50)
 	private String city;
 
+	@Column(length=30)
 	private String closeness;
 
 	@Lob
 	private String comments;
 
+	@Column(length=30)
 	private String communityInvolvement;
 
 	@Lob
 	private String communityTies;
 
+	@Column(length=50)
 	private String completionMethod;
 
 	private Integer createdBy;
@@ -48,22 +55,33 @@ public class HostFamilyReference implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateOfReference;
 
+	@Column(length=100)
 	private String firstName;
 
+	@Column(length=30)
 	private String flexibility;
 
+	@Column(length=30)
 	private String interestVariety;
 
+	@Column(length=50)
 	private String internationalAwareness;
 
+	private Byte isThirdReferenceForSingleHost;
+
+	@Column(length=30)
 	private String knownFamilyMethod;
 
+	@Column(length=100)
 	private String lastName;
 
+	@Column(length=100)
 	private String lastVisit;
 
+	@Column(length=50)
 	private String lengthKnown;
 
+	@Column(length=50)
 	private String lengthKnownQuantity;
 
 	private Integer modifiedBy;
@@ -75,19 +93,27 @@ public class HostFamilyReference implements Serializable {
 
 	private Byte personNotRelatedToBlood;
 
+	@Column(length=30)
 	private String phone;
 
+	@Column(length=30)
 	private String positiveExperiences;
 
+	@Column(length=50)
 	private String relationship;
 
+	private Byte secondReferenceRelationtoFirst;
+
+	@Column(length=30)
 	private String stability;
 
 	@Lob
 	private String supportExplanation;
 
+	@Column(length=100)
 	private String visitFrequency;
 
+	@Column(length=30)
 	private String zipCode;
 
 	//bi-directional many-to-one association to HostFamilySeason
@@ -97,7 +123,7 @@ public class HostFamilyReference implements Serializable {
 
 	//bi-directional many-to-one association to LookupUSState
 	@ManyToOne
-	@JoinColumn(name="usStatesId")
+	@JoinColumn(name="usStateId")
 	private LookupUSState lookupUsstate;
 
 	public HostFamilyReference() {
@@ -135,11 +161,11 @@ public class HostFamilyReference implements Serializable {
 		this.address = address;
 	}
 
-	public Integer getAllowOwnChildStay() {
+	public Byte getAllowOwnChildStay() {
 		return this.allowOwnChildStay;
 	}
 
-	public void setAllowOwnChildStay(Integer allowOwnChildStay) {
+	public void setAllowOwnChildStay(Byte allowOwnChildStay) {
 		this.allowOwnChildStay = allowOwnChildStay;
 	}
 
@@ -247,6 +273,14 @@ public class HostFamilyReference implements Serializable {
 		this.internationalAwareness = internationalAwareness;
 	}
 
+	public Byte getIsThirdReferenceForSingleHost() {
+		return this.isThirdReferenceForSingleHost;
+	}
+
+	public void setIsThirdReferenceForSingleHost(Byte isThirdReferenceForSingleHost) {
+		this.isThirdReferenceForSingleHost = isThirdReferenceForSingleHost;
+	}
+
 	public String getKnownFamilyMethod() {
 		return this.knownFamilyMethod;
 	}
@@ -341,6 +375,14 @@ public class HostFamilyReference implements Serializable {
 
 	public void setRelationship(String relationship) {
 		this.relationship = relationship;
+	}
+
+	public Byte getSecondReferenceRelationtoFirst() {
+		return this.secondReferenceRelationtoFirst;
+	}
+
+	public void setSecondReferenceRelationtoFirst(Byte secondReferenceRelationtoFirst) {
+		this.secondReferenceRelationtoFirst = secondReferenceRelationtoFirst;
 	}
 
 	public String getStability() {

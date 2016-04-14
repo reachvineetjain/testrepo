@@ -17,16 +17,22 @@ public class LookupCountry implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer countryId;
 
+	@Column(nullable=false)
 	private Byte active;
 
+	@Column(nullable=false, length=5)
 	private String countryCode;
 
+	@Column(length=300)
 	private String countryFlag;
 
+	@Column(nullable=false, length=50)
 	private String countryName;
 
+	@Column(nullable=false)
 	private Byte isReqFinalSOAonDS;
 
 	//bi-directional many-to-one association to CCIStaffUser
@@ -34,16 +40,12 @@ public class LookupCountry implements Serializable {
 	private List<CCIStaffUser> ccistaffUsers;
 
 	//bi-directional many-to-one association to HostFamily
-	@OneToMany(mappedBy="lookupCountry")
-	private List<HostFamily> hostFamilies;
-
-	//bi-directional many-to-one association to HostFamilyPotentialReference
 	@OneToMany(mappedBy="lookupCountry1")
-	private List<HostFamilyPotentialReference> hostFamilyPotentialReferences1;
+	private List<HostFamily> hostFamilies1;
 
-	//bi-directional many-to-one association to HostFamilyPotentialReference
+	//bi-directional many-to-one association to HostFamily
 	@OneToMany(mappedBy="lookupCountry2")
-	private List<HostFamilyPotentialReference> hostFamilyPotentialReferences2;
+	private List<HostFamily> hostFamilies2;
 
 	//bi-directional many-to-one association to Participant
 	@OneToMany(mappedBy="lookupCountry")
@@ -138,70 +140,48 @@ public class LookupCountry implements Serializable {
 		return ccistaffUser;
 	}
 
-	public List<HostFamily> getHostFamilies() {
-		return this.hostFamilies;
+	public List<HostFamily> getHostFamilies1() {
+		return this.hostFamilies1;
 	}
 
-	public void setHostFamilies(List<HostFamily> hostFamilies) {
-		this.hostFamilies = hostFamilies;
+	public void setHostFamilies1(List<HostFamily> hostFamilies1) {
+		this.hostFamilies1 = hostFamilies1;
 	}
 
-	public HostFamily addHostFamily(HostFamily hostFamily) {
-		getHostFamilies().add(hostFamily);
-		hostFamily.setLookupCountry(this);
+	public HostFamily addHostFamilies1(HostFamily hostFamilies1) {
+		getHostFamilies1().add(hostFamilies1);
+		hostFamilies1.setLookupCountry1(this);
 
-		return hostFamily;
+		return hostFamilies1;
 	}
 
-	public HostFamily removeHostFamily(HostFamily hostFamily) {
-		getHostFamilies().remove(hostFamily);
-		hostFamily.setLookupCountry(null);
+	public HostFamily removeHostFamilies1(HostFamily hostFamilies1) {
+		getHostFamilies1().remove(hostFamilies1);
+		hostFamilies1.setLookupCountry1(null);
 
-		return hostFamily;
+		return hostFamilies1;
 	}
 
-	public List<HostFamilyPotentialReference> getHostFamilyPotentialReferences1() {
-		return this.hostFamilyPotentialReferences1;
+	public List<HostFamily> getHostFamilies2() {
+		return this.hostFamilies2;
 	}
 
-	public void setHostFamilyPotentialReferences1(List<HostFamilyPotentialReference> hostFamilyPotentialReferences1) {
-		this.hostFamilyPotentialReferences1 = hostFamilyPotentialReferences1;
+	public void setHostFamilies2(List<HostFamily> hostFamilies2) {
+		this.hostFamilies2 = hostFamilies2;
 	}
 
-	public HostFamilyPotentialReference addHostFamilyPotentialReferences1(HostFamilyPotentialReference hostFamilyPotentialReferences1) {
-		getHostFamilyPotentialReferences1().add(hostFamilyPotentialReferences1);
-		hostFamilyPotentialReferences1.setLookupCountry1(this);
+	public HostFamily addHostFamilies2(HostFamily hostFamilies2) {
+		getHostFamilies2().add(hostFamilies2);
+		hostFamilies2.setLookupCountry2(this);
 
-		return hostFamilyPotentialReferences1;
+		return hostFamilies2;
 	}
 
-	public HostFamilyPotentialReference removeHostFamilyPotentialReferences1(HostFamilyPotentialReference hostFamilyPotentialReferences1) {
-		getHostFamilyPotentialReferences1().remove(hostFamilyPotentialReferences1);
-		hostFamilyPotentialReferences1.setLookupCountry1(null);
+	public HostFamily removeHostFamilies2(HostFamily hostFamilies2) {
+		getHostFamilies2().remove(hostFamilies2);
+		hostFamilies2.setLookupCountry2(null);
 
-		return hostFamilyPotentialReferences1;
-	}
-
-	public List<HostFamilyPotentialReference> getHostFamilyPotentialReferences2() {
-		return this.hostFamilyPotentialReferences2;
-	}
-
-	public void setHostFamilyPotentialReferences2(List<HostFamilyPotentialReference> hostFamilyPotentialReferences2) {
-		this.hostFamilyPotentialReferences2 = hostFamilyPotentialReferences2;
-	}
-
-	public HostFamilyPotentialReference addHostFamilyPotentialReferences2(HostFamilyPotentialReference hostFamilyPotentialReferences2) {
-		getHostFamilyPotentialReferences2().add(hostFamilyPotentialReferences2);
-		hostFamilyPotentialReferences2.setLookupCountry2(this);
-
-		return hostFamilyPotentialReferences2;
-	}
-
-	public HostFamilyPotentialReference removeHostFamilyPotentialReferences2(HostFamilyPotentialReference hostFamilyPotentialReferences2) {
-		getHostFamilyPotentialReferences2().remove(hostFamilyPotentialReferences2);
-		hostFamilyPotentialReferences2.setLookupCountry2(null);
-
-		return hostFamilyPotentialReferences2;
+		return hostFamilies2;
 	}
 
 	public List<Participant> getParticipants() {

@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 import com.ccighgo.service.transport.integration.thirdparty.beans.adminviewforpartnerinquirydata.PartnerRecruitmentAdmin;
 import com.ccighgo.service.transport.integration.thirdparty.beans.agentViewForPartnerInquiryData.PartnerRecruitmentAgent;
 
-
 /**
  * @author Ahmed
  *
@@ -25,13 +24,13 @@ public class PartnerInquiryServiceImpl implements PartnerInquiryService {
    @Override
    public void updateAgentScreenPartner() {
       // TODO Auto-generated method stub
-      
+
    }
 
    @Override
    public void updateAdminScreenPartner() {
       // TODO Auto-generated method stub
-      
+
    }
 
    @Override
@@ -40,5 +39,4 @@ public class PartnerInquiryServiceImpl implements PartnerInquiryService {
       return null;
    }
 
- 
 }

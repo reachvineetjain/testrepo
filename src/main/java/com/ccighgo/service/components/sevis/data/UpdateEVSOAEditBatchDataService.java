@@ -19,53 +19,47 @@ import gov.ice.xmlschema.sevisbatch.exchangevisitor.SEVISEVBatchType.UpdateEV.Ex
 @Component
 public class UpdateEVSOAEditBatchDataService implements IEVBatchDataService {
 
-	@Autowired
-	ParticipantRepository participantRepository;
+   @Autowired ParticipantRepository participantRepository;
 
-	@Override
-	public SEVISBatchCreateUpdateEV fetchBatchData(BatchParam batchParam) {
-		// get EVs from DB
-		// @formatter:off
-		List<Integer> participantIds = batchParam.getParticipant()
-				.stream()
-				.map(p -> p.getParticipantGoId())
-				.collect(Collectors.toList());
-		// @formatter:on
+   @Override
+   public SEVISBatchCreateUpdateEV fetchBatchData(BatchParam batchParam) {
+      // get EVs from DB
+      // @formatter:off
+      List<Integer> participantIds = batchParam.getParticipant().stream().map(p -> p.getParticipantGoId()).collect(Collectors.toList());
+      // @formatter:on
 
-		List<Participant> participants = participantRepository.findByParticipantGoIdIn(participantIds);
+      List<Participant> participants = participantRepository.findByParticipantGoIdIn(participantIds);
 
-		// @formatter:off
-		List<ExchangeVisitor> evs = participants.stream()
-				.map(p -> intoEV(p, batchParam.getUserId(), "N0000000000", "1"))
-				.collect(Collectors.toList());
-		// @formatter:on
+      // @formatter:off
+      List<ExchangeVisitor> evs = participants.stream().map(p -> intoEV(p, batchParam.getUserId(), "N0000000000", "1")).collect(Collectors.toList());
+      // @formatter:on
 
-		evs.forEach(ev -> ev.setSiteOfActivity(createSOAEdit(true, "Address 1", "60169")));
+      evs.forEach(ev -> ev.setSiteOfActivity(createSOAEdit(true, "Address 1", "60169")));
 
-		String batchId = SevisUtils.createBatchId();
-		SEVISBatchCreateUpdateEV batch = createUpdateEVBatch(batchParam.getUserId(), "P-1-12345", batchId);
-		batch.getUpdateEV().getExchangeVisitor().addAll(evs);
+      String batchId = SevisUtils.createBatchId();
+      SEVISBatchCreateUpdateEV batch = createUpdateEVBatch(batchParam.getUserId(), "P-1-12345", batchId);
+      batch.getUpdateEV().getExchangeVisitor().addAll(evs);
 
-		return batch;
-	}
+      return batch;
+   }
 
-	private ExchangeVisitor intoEV(Participant p, String userId, String sevisId, String requestId) {
-		// p -> EV
-		return createExchangeVisitor(userId, sevisId, requestId);
-	}
+   private ExchangeVisitor intoEV(Participant p, String userId, String sevisId, String requestId) {
+      // p -> EV
+      return createExchangeVisitor(userId, sevisId, requestId);
+   }
 
-	private SiteOfActivity createSOAEdit(boolean printForm, String address1, String postalCode) {
-		SiteOfActivity soa = new SiteOfActivity();
-		soa.setEdit(createEdit(printForm, address1, postalCode));
-		return soa;
-	}
+   private SiteOfActivity createSOAEdit(boolean printForm, String address1, String postalCode) {
+      SiteOfActivity soa = new SiteOfActivity();
+      soa.setEdit(createEdit(printForm, address1, postalCode));
+      return soa;
+   }
 
-	private Edit createEdit(boolean printForm, String address1, String postalCode) {
-		Edit edit = new Edit();
-		edit.setPrintForm(printForm);
-		edit.setAddress1(address1);
-		edit.setPostalCode(postalCode);
-		return edit;
-	}
+   private Edit createEdit(boolean printForm, String address1, String postalCode) {
+      Edit edit = new Edit();
+      edit.setPrintForm(printForm);
+      edit.setAddress1(address1);
+      edit.setPostalCode(postalCode);
+      return edit;
+   }
 
 }

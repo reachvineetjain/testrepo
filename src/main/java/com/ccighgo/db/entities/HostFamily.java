@@ -5,607 +5,852 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
 
-
 /**
  * The persistent class for the HostFamily database table.
  * 
  */
 @Entity
-@NamedQuery(name="HostFamily.findAll", query="SELECT h FROM HostFamily h")
+@Table(name = "HostFamily")
+@NamedQuery(name = "HostFamily.findAll", query = "SELECT h FROM HostFamily h")
 public class HostFamily implements Serializable {
-	private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Integer hostFamilyGoId;
+   @Id @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(unique = true, nullable = false) private Integer hostFamilyGoId;
 
-	private Byte active;
+   private Byte active;
 
-	private String bestContactNumberToReach;
+   private Integer createdBy;
 
-	private String bestWayToReachYou;
+   private Timestamp createdOn;
 
-	private Integer createdBy;
+   @Column(length = 100) private String emergencyContact;
 
-	private Timestamp createdOn;
+   @Column(length = 25) private String emergencyPhone;
 
-	private Integer currentSeasonId;
+   @Column(length = 50) private String firstName;
 
-	private String emergencyContact;
+   private Byte hasHomeBusiness;
 
-	private String emergencyPhone;
+   private Byte haveAHomePhone;
 
-	private String firstName;
+   @Lob private String homeBusinessType;
 
-	private Byte hasHomeBusiness;
+   @Column(length = 25) private String homePhone;
 
-	private Byte haveAHomePhone;
+   private Byte isBlacklisted;
 
-	@Lob
-	private String homeBusinessType;
+   private Byte isDoNotContact;
 
-	private Byte homePhone;
+   private Byte isNotQuilified;
 
-	private Byte isBlacklisted;
+   @Column(length = 50) private String lastName;
 
-	private Byte isDoNotContact;
+   private Byte liveAlone;
 
-	private Byte isNotQuilified;
+   @Column(length = 50) private String mailingAddress;
 
-	private String lastName;
+   private Byte mailingAddressSameAsCurrentAddress;
 
-	private Byte liveAlone;
+   @Column(length = 50) private String mailingCity;
 
-	private String mailingAddress1;
+   @Column(length = 25) private String mailingZipCode;
 
-	private String mailingAddress2;
+   private Integer modifiedBy;
 
-	private Byte mailingAddressSameAsCurrentAddress;
+   private Timestamp modifiedOn;
 
-	private String mailingCity;
+   @Column(length = 30) private String phone;
 
-	private String mailingZipCode;
+   @Column(length = 200) private String photo;
 
-	private Integer modifiedBy;
+   @Column(length = 50) private String physicalAddress;
 
-	private Timestamp modifiedOn;
+   @Column(length = 50) private String physicalCity;
 
-	private String phone;
+   @Column(length = 25) private String physicalZipCode;
 
-	private String physicalAddress1;
+   private Byte preferredContactMethodEmail;
 
-	private String physicalAddress2;
+   private Byte preferredContactMethodPhone;
 
-	private String physicalCity;
+   @Column(length = 50) private String preferredEmail;
 
-	private Integer physicalCountryId;
+   @Column(length = 50) private String preferredPhone;
 
-	private String physicalZipCode;
+   private Byte receiveEmails;
 
-	private Byte receiveEmails;
+   private Byte skipIntroScreen;
 
-	private Byte skipIntroScreen;
+   // bi-directional one-to-one association to GoIdSequence
+   @OneToOne @JoinColumn(name = "hostFamilyGoId", nullable = false) private GoIdSequence goIdSequence;
 
-	//bi-directional one-to-one association to GoIdSequence
-	@OneToOne
-	@JoinColumn(name="hostFamilyGoId", nullable=false, insertable=false, updatable=false)
-	private GoIdSequence goIdSequence;
+   // bi-directional many-to-one association to HostFamilyStatus
+   @ManyToOne @JoinColumn(name = "hostFamilyStatusId") private HostFamilyStatus hostFamilyStatus;
 
-	//bi-directional many-to-one association to HostFamilyStatus
-	@ManyToOne
-	@JoinColumn(name="hostFamilyStatusId")
-	private HostFamilyStatus hostFamilyStatus;
+   // bi-directional many-to-one association to LookupCountry
+   @ManyToOne @JoinColumn(name = "physicalStateId", insertable = false, updatable = false) private LookupCountry lookupCountry1;
 
-	//bi-directional many-to-one association to LookupCountry
-	@ManyToOne
-	@JoinColumn(name="physicalStateId", insertable=false, updatable=false)
-	private LookupCountry lookupCountry;
+   // bi-directional many-to-one association to LookupCountry
+   @ManyToOne @JoinColumn(name = "physicalCountryId") private LookupCountry lookupCountry2;
 
-	//bi-directional many-to-one association to LookupUSState
-	@ManyToOne
-	@JoinColumn(name="mailingStateId")
-	private LookupUSState lookupUsstate1;
+   // bi-directional many-to-one association to LookupUSState
+   @ManyToOne @JoinColumn(name = "mailingStateId") private LookupUSState lookupUsstate1;
 
-	//bi-directional many-to-one association to LookupUSState
-	@ManyToOne
-	@JoinColumn(name="physicalStateId", insertable=false, updatable=false)
-	private LookupUSState lookupUsstate2;
+   // bi-directional many-to-one association to LookupUSState
+   @ManyToOne @JoinColumn(name = "physicalStateId") private LookupUSState lookupUsstate2;
 
-	//bi-directional many-to-one association to HostFamilyAirport
-	@OneToMany(mappedBy="hostFamily")
-	private List<HostFamilyAirport> hostFamilyAirports;
+   // bi-directional many-to-one association to Season
+   @ManyToOne @JoinColumn(name = "currentSeasonId") private Season season;
 
-	//bi-directional many-to-one association to HostFamilyInquiry
-	@OneToMany(mappedBy="hostFamily")
-	private List<HostFamilyInquiry> hostFamilyInquiries;
+   // bi-directional many-to-one association to HostFamilyAirport
+   @OneToMany(mappedBy = "hostFamily") private List<HostFamilyAirport> hostFamilyAirports;
 
-	//bi-directional many-to-one association to HostFamilyNote
-	@OneToMany(mappedBy="hostFamily")
-	private List<HostFamilyNote> hostFamilyNotes;
+   // bi-directional many-to-one association to HostFamilyAnnouncement
+   @OneToMany(mappedBy = "hostFamily") private List<HostFamilyAnnouncement> hostFamilyAnnouncements;
 
-	//bi-directional many-to-one association to HostFamilyParticipantHistory
-	@OneToMany(mappedBy="hostFamily")
-	private List<HostFamilyParticipantHistory> hostFamilyParticipantHistories;
+   // bi-directional many-to-one association to HostFamilyAnnouncementResult
+   @OneToMany(mappedBy = "hostFamily") private List<HostFamilyAnnouncementResult> hostFamilyAnnouncementResults;
 
-	//bi-directional many-to-one association to HostFamilyPermission
-	@OneToMany(mappedBy="hostFamily")
-	private List<HostFamilyPermission> hostFamilyPermissions;
+   // bi-directional many-to-one association to HostFamilyBackground
+   @OneToMany(mappedBy = "hostFamily") private List<HostFamilyBackground> hostFamilyBackgrounds;
 
-	//bi-directional many-to-one association to HostFamilyPotentialReference
-	@OneToMany(mappedBy="hostFamily")
-	private List<HostFamilyPotentialReference> hostFamilyPotentialReferences;
+   // bi-directional many-to-one association to HostFamilyInquiry
+   @OneToMany(mappedBy = "hostFamily") private List<HostFamilyInquiry> hostFamilyInquiries;
 
-	//bi-directional many-to-one association to HostFamilySeason
-	@OneToMany(mappedBy="hostFamily")
-	private List<HostFamilySeason> hostFamilySeasons;
+   // bi-directional many-to-one association to HostFamilyNote
+   @OneToMany(mappedBy = "hostFamily") private List<HostFamilyNote> hostFamilyNotes;
 
-	public HostFamily() {
-	}
+   // bi-directional many-to-one association to HostFamilyNoteTopic
+   @OneToMany(mappedBy = "hostFamily") private List<HostFamilyNoteTopic> hostFamilyNoteTopics;
 
-	public Integer getHostFamilyGoId() {
-		return this.hostFamilyGoId;
-	}
+   // bi-directional many-to-one association to HostFamilyParticipantHistory
+   @OneToMany(mappedBy = "hostFamily") private List<HostFamilyParticipantHistory> hostFamilyParticipantHistories;
 
-	public void setHostFamilyGoId(Integer hostFamilyGoId) {
-		this.hostFamilyGoId = hostFamilyGoId;
-	}
+   // bi-directional many-to-one association to HostFamilyPermission
+   @OneToMany(mappedBy = "hostFamily") private List<HostFamilyPermission> hostFamilyPermissions;
 
-	public Byte getActive() {
-		return this.active;
-	}
+   // bi-directional many-to-one association to HostFamilyPotentialReference
+   @OneToMany(mappedBy = "hostFamily") private List<HostFamilyPotentialReference> hostFamilyPotentialReferences;
 
-	public void setActive(Byte active) {
-		this.active = active;
-	}
+   // bi-directional many-to-one association to
+   // HostFamilyQuickStatsCategoryAggregate
+   @OneToMany(mappedBy = "hostFamily") private List<HostFamilyQuickStatsCategoryAggregate> hostFamilyQuickStatsCategoryAggregates;
 
-	public String getBestContactNumberToReach() {
-		return this.bestContactNumberToReach;
-	}
+   // bi-directional many-to-one association to
+   // HostFamilyQuickStatsTypeAggregate
+   @OneToMany(mappedBy = "hostFamily") private List<HostFamilyQuickStatsTypeAggregate> hostFamilyQuickStatsTypeAggregates;
 
-	public void setBestContactNumberToReach(String bestContactNumberToReach) {
-		this.bestContactNumberToReach = bestContactNumberToReach;
-	}
+   // bi-directional many-to-one association to HostFamilySeason
+   @OneToMany(mappedBy = "hostFamily") private List<HostFamilySeason> hostFamilySeasons;
 
-	public String getBestWayToReachYou() {
-		return this.bestWayToReachYou;
-	}
+   // bi-directional many-to-one association to HostFamilyUpdateLog
+   @OneToMany(mappedBy = "hostFamily") private List<HostFamilyUpdateLog> hostFamilyUpdateLogs;
 
-	public void setBestWayToReachYou(String bestWayToReachYou) {
-		this.bestWayToReachYou = bestWayToReachYou;
-	}
+   // bi-directional many-to-one association to HostFamilyWorkQueue
+   @OneToMany(mappedBy = "hostFamily") private List<HostFamilyWorkQueue> hostFamilyWorkQueues;
 
-	public Integer getCreatedBy() {
-		return this.createdBy;
-	}
+   // bi-directional many-to-one association to
+   // HostFamilyWorkQueueCategoryAggregate
+   @OneToMany(mappedBy = "hostFamily") private List<HostFamilyWorkQueueCategoryAggregate> hostFamilyWorkQueueCategoryAggregates;
 
-	public void setCreatedBy(Integer createdBy) {
-		this.createdBy = createdBy;
-	}
+   // bi-directional many-to-one association to HostFamilyWorkQueueTypeAggregate
+   @OneToMany(mappedBy = "hostFamily") private List<HostFamilyWorkQueueTypeAggregate> hostFamilyWorkQueueTypeAggregates;
 
-	public Timestamp getCreatedOn() {
-		return this.createdOn;
-	}
+   public HostFamily() {
+   }
 
-	public void setCreatedOn(Timestamp createdOn) {
-		this.createdOn = createdOn;
-	}
+   public Integer getHostFamilyGoId() {
+      return this.hostFamilyGoId;
+   }
 
-	public Integer getCurrentSeasonId() {
-		return this.currentSeasonId;
-	}
+   public void setHostFamilyGoId(Integer hostFamilyGoId) {
+      this.hostFamilyGoId = hostFamilyGoId;
+   }
 
-	public void setCurrentSeasonId(Integer currentSeasonId) {
-		this.currentSeasonId = currentSeasonId;
-	}
+   public Byte getActive() {
+      return this.active;
+   }
 
-	public String getEmergencyContact() {
-		return this.emergencyContact;
-	}
+   public void setActive(Byte active) {
+      this.active = active;
+   }
 
-	public void setEmergencyContact(String emergencyContact) {
-		this.emergencyContact = emergencyContact;
-	}
+   public Integer getCreatedBy() {
+      return this.createdBy;
+   }
 
-	public String getEmergencyPhone() {
-		return this.emergencyPhone;
-	}
+   public void setCreatedBy(Integer createdBy) {
+      this.createdBy = createdBy;
+   }
 
-	public void setEmergencyPhone(String emergencyPhone) {
-		this.emergencyPhone = emergencyPhone;
-	}
+   public Timestamp getCreatedOn() {
+      return this.createdOn;
+   }
 
-	public String getFirstName() {
-		return this.firstName;
-	}
+   public void setCreatedOn(Timestamp createdOn) {
+      this.createdOn = createdOn;
+   }
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
+   public String getEmergencyContact() {
+      return this.emergencyContact;
+   }
 
-	public Byte getHasHomeBusiness() {
-		return this.hasHomeBusiness;
-	}
+   public void setEmergencyContact(String emergencyContact) {
+      this.emergencyContact = emergencyContact;
+   }
 
-	public void setHasHomeBusiness(Byte hasHomeBusiness) {
-		this.hasHomeBusiness = hasHomeBusiness;
-	}
+   public String getEmergencyPhone() {
+      return this.emergencyPhone;
+   }
 
-	public Byte getHaveAHomePhone() {
-		return this.haveAHomePhone;
-	}
+   public void setEmergencyPhone(String emergencyPhone) {
+      this.emergencyPhone = emergencyPhone;
+   }
 
-	public void setHaveAHomePhone(Byte haveAHomePhone) {
-		this.haveAHomePhone = haveAHomePhone;
-	}
+   public String getFirstName() {
+      return this.firstName;
+   }
 
-	public String getHomeBusinessType() {
-		return this.homeBusinessType;
-	}
+   public void setFirstName(String firstName) {
+      this.firstName = firstName;
+   }
 
-	public void setHomeBusinessType(String homeBusinessType) {
-		this.homeBusinessType = homeBusinessType;
-	}
+   public Byte getHasHomeBusiness() {
+      return this.hasHomeBusiness;
+   }
 
-	public Byte getHomePhone() {
-		return this.homePhone;
-	}
+   public void setHasHomeBusiness(Byte hasHomeBusiness) {
+      this.hasHomeBusiness = hasHomeBusiness;
+   }
 
-	public void setHomePhone(Byte homePhone) {
-		this.homePhone = homePhone;
-	}
+   public Byte getHaveAHomePhone() {
+      return this.haveAHomePhone;
+   }
 
-	public Byte getIsBlacklisted() {
-		return this.isBlacklisted;
-	}
+   public void setHaveAHomePhone(Byte haveAHomePhone) {
+      this.haveAHomePhone = haveAHomePhone;
+   }
 
-	public void setIsBlacklisted(Byte isBlacklisted) {
-		this.isBlacklisted = isBlacklisted;
-	}
+   public String getHomeBusinessType() {
+      return this.homeBusinessType;
+   }
 
-	public Byte getIsDoNotContact() {
-		return this.isDoNotContact;
-	}
+   public void setHomeBusinessType(String homeBusinessType) {
+      this.homeBusinessType = homeBusinessType;
+   }
 
-	public void setIsDoNotContact(Byte isDoNotContact) {
-		this.isDoNotContact = isDoNotContact;
-	}
+   public String getHomePhone() {
+      return this.homePhone;
+   }
 
-	public Byte getIsNotQuilified() {
-		return this.isNotQuilified;
-	}
+   public void setHomePhone(String homePhone) {
+      this.homePhone = homePhone;
+   }
 
-	public void setIsNotQuilified(Byte isNotQuilified) {
-		this.isNotQuilified = isNotQuilified;
-	}
+   public Byte getIsBlacklisted() {
+      return this.isBlacklisted;
+   }
 
-	public String getLastName() {
-		return this.lastName;
-	}
+   public void setIsBlacklisted(Byte isBlacklisted) {
+      this.isBlacklisted = isBlacklisted;
+   }
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
+   public Byte getIsDoNotContact() {
+      return this.isDoNotContact;
+   }
 
-	public Byte getLiveAlone() {
-		return this.liveAlone;
-	}
+   public void setIsDoNotContact(Byte isDoNotContact) {
+      this.isDoNotContact = isDoNotContact;
+   }
 
-	public void setLiveAlone(Byte liveAlone) {
-		this.liveAlone = liveAlone;
-	}
+   public Byte getIsNotQuilified() {
+      return this.isNotQuilified;
+   }
 
-	public String getMailingAddress1() {
-		return this.mailingAddress1;
-	}
+   public void setIsNotQuilified(Byte isNotQuilified) {
+      this.isNotQuilified = isNotQuilified;
+   }
 
-	public void setMailingAddress1(String mailingAddress1) {
-		this.mailingAddress1 = mailingAddress1;
-	}
+   public String getLastName() {
+      return this.lastName;
+   }
 
-	public String getMailingAddress2() {
-		return this.mailingAddress2;
-	}
+   public void setLastName(String lastName) {
+      this.lastName = lastName;
+   }
 
-	public void setMailingAddress2(String mailingAddress2) {
-		this.mailingAddress2 = mailingAddress2;
-	}
+   public Byte getLiveAlone() {
+      return this.liveAlone;
+   }
 
-	public Byte getMailingAddressSameAsCurrentAddress() {
-		return this.mailingAddressSameAsCurrentAddress;
-	}
+   public void setLiveAlone(Byte liveAlone) {
+      this.liveAlone = liveAlone;
+   }
 
-	public void setMailingAddressSameAsCurrentAddress(Byte mailingAddressSameAsCurrentAddress) {
-		this.mailingAddressSameAsCurrentAddress = mailingAddressSameAsCurrentAddress;
-	}
+   public String getMailingAddress() {
+      return this.mailingAddress;
+   }
 
-	public String getMailingCity() {
-		return this.mailingCity;
-	}
+   public void setMailingAddress(String mailingAddress) {
+      this.mailingAddress = mailingAddress;
+   }
 
-	public void setMailingCity(String mailingCity) {
-		this.mailingCity = mailingCity;
-	}
+   public Byte getMailingAddressSameAsCurrentAddress() {
+      return this.mailingAddressSameAsCurrentAddress;
+   }
 
-	public String getMailingZipCode() {
-		return this.mailingZipCode;
-	}
+   public void setMailingAddressSameAsCurrentAddress(Byte mailingAddressSameAsCurrentAddress) {
+      this.mailingAddressSameAsCurrentAddress = mailingAddressSameAsCurrentAddress;
+   }
 
-	public void setMailingZipCode(String mailingZipCode) {
-		this.mailingZipCode = mailingZipCode;
-	}
+   public String getMailingCity() {
+      return this.mailingCity;
+   }
 
-	public Integer getModifiedBy() {
-		return this.modifiedBy;
-	}
+   public void setMailingCity(String mailingCity) {
+      this.mailingCity = mailingCity;
+   }
 
-	public void setModifiedBy(Integer modifiedBy) {
-		this.modifiedBy = modifiedBy;
-	}
+   public String getMailingZipCode() {
+      return this.mailingZipCode;
+   }
 
-	public Timestamp getModifiedOn() {
-		return this.modifiedOn;
-	}
+   public void setMailingZipCode(String mailingZipCode) {
+      this.mailingZipCode = mailingZipCode;
+   }
 
-	public void setModifiedOn(Timestamp modifiedOn) {
-		this.modifiedOn = modifiedOn;
-	}
+   public Integer getModifiedBy() {
+      return this.modifiedBy;
+   }
 
-	public String getPhone() {
-		return this.phone;
-	}
+   public void setModifiedBy(Integer modifiedBy) {
+      this.modifiedBy = modifiedBy;
+   }
 
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
+   public Timestamp getModifiedOn() {
+      return this.modifiedOn;
+   }
 
-	public String getPhysicalAddress1() {
-		return this.physicalAddress1;
-	}
+   public void setModifiedOn(Timestamp modifiedOn) {
+      this.modifiedOn = modifiedOn;
+   }
 
-	public void setPhysicalAddress1(String physicalAddress1) {
-		this.physicalAddress1 = physicalAddress1;
-	}
+   public String getPhone() {
+      return this.phone;
+   }
 
-	public String getPhysicalAddress2() {
-		return this.physicalAddress2;
-	}
+   public void setPhone(String phone) {
+      this.phone = phone;
+   }
 
-	public void setPhysicalAddress2(String physicalAddress2) {
-		this.physicalAddress2 = physicalAddress2;
-	}
+   public String getPhoto() {
+      return this.photo;
+   }
 
-	public String getPhysicalCity() {
-		return this.physicalCity;
-	}
+   public void setPhoto(String photo) {
+      this.photo = photo;
+   }
 
-	public void setPhysicalCity(String physicalCity) {
-		this.physicalCity = physicalCity;
-	}
+   public String getPhysicalAddress() {
+      return this.physicalAddress;
+   }
 
-	public Integer getPhysicalCountryId() {
-		return this.physicalCountryId;
-	}
+   public void setPhysicalAddress(String physicalAddress) {
+      this.physicalAddress = physicalAddress;
+   }
 
-	public void setPhysicalCountryId(Integer physicalCountryId) {
-		this.physicalCountryId = physicalCountryId;
-	}
+   public String getPhysicalCity() {
+      return this.physicalCity;
+   }
 
-	public String getPhysicalZipCode() {
-		return this.physicalZipCode;
-	}
+   public void setPhysicalCity(String physicalCity) {
+      this.physicalCity = physicalCity;
+   }
 
-	public void setPhysicalZipCode(String physicalZipCode) {
-		this.physicalZipCode = physicalZipCode;
-	}
+   public String getPhysicalZipCode() {
+      return this.physicalZipCode;
+   }
 
-	public Byte getReceiveEmails() {
-		return this.receiveEmails;
-	}
+   public void setPhysicalZipCode(String physicalZipCode) {
+      this.physicalZipCode = physicalZipCode;
+   }
 
-	public void setReceiveEmails(Byte receiveEmails) {
-		this.receiveEmails = receiveEmails;
-	}
+   public Byte getPreferredContactMethodEmail() {
+      return this.preferredContactMethodEmail;
+   }
 
-	public Byte getSkipIntroScreen() {
-		return this.skipIntroScreen;
-	}
+   public void setPreferredContactMethodEmail(Byte preferredContactMethodEmail) {
+      this.preferredContactMethodEmail = preferredContactMethodEmail;
+   }
 
-	public void setSkipIntroScreen(Byte skipIntroScreen) {
-		this.skipIntroScreen = skipIntroScreen;
-	}
+   public Byte getPreferredContactMethodPhone() {
+      return this.preferredContactMethodPhone;
+   }
 
-	public GoIdSequence getGoIdSequence() {
-		return this.goIdSequence;
-	}
+   public void setPreferredContactMethodPhone(Byte preferredContactMethodPhone) {
+      this.preferredContactMethodPhone = preferredContactMethodPhone;
+   }
 
-	public void setGoIdSequence(GoIdSequence goIdSequence) {
-		this.goIdSequence = goIdSequence;
-	}
+   public String getPreferredEmail() {
+      return this.preferredEmail;
+   }
 
-	public HostFamilyStatus getHostFamilyStatus() {
-		return this.hostFamilyStatus;
-	}
+   public void setPreferredEmail(String preferredEmail) {
+      this.preferredEmail = preferredEmail;
+   }
 
-	public void setHostFamilyStatus(HostFamilyStatus hostFamilyStatus) {
-		this.hostFamilyStatus = hostFamilyStatus;
-	}
+   public String getPreferredPhone() {
+      return this.preferredPhone;
+   }
 
-	public LookupCountry getLookupCountry() {
-		return this.lookupCountry;
-	}
+   public void setPreferredPhone(String preferredPhone) {
+      this.preferredPhone = preferredPhone;
+   }
 
-	public void setLookupCountry(LookupCountry lookupCountry) {
-		this.lookupCountry = lookupCountry;
-	}
+   public Byte getReceiveEmails() {
+      return this.receiveEmails;
+   }
 
-	public LookupUSState getLookupUsstate1() {
-		return this.lookupUsstate1;
-	}
+   public void setReceiveEmails(Byte receiveEmails) {
+      this.receiveEmails = receiveEmails;
+   }
 
-	public void setLookupUsstate1(LookupUSState lookupUsstate1) {
-		this.lookupUsstate1 = lookupUsstate1;
-	}
+   public Byte getSkipIntroScreen() {
+      return this.skipIntroScreen;
+   }
 
-	public LookupUSState getLookupUsstate2() {
-		return this.lookupUsstate2;
-	}
+   public void setSkipIntroScreen(Byte skipIntroScreen) {
+      this.skipIntroScreen = skipIntroScreen;
+   }
 
-	public void setLookupUsstate2(LookupUSState lookupUsstate2) {
-		this.lookupUsstate2 = lookupUsstate2;
-	}
+   public GoIdSequence getGoIdSequence() {
+      return this.goIdSequence;
+   }
 
-	public List<HostFamilyAirport> getHostFamilyAirports() {
-		return this.hostFamilyAirports;
-	}
+   public void setGoIdSequence(GoIdSequence goIdSequence) {
+      this.goIdSequence = goIdSequence;
+   }
 
-	public void setHostFamilyAirports(List<HostFamilyAirport> hostFamilyAirports) {
-		this.hostFamilyAirports = hostFamilyAirports;
-	}
+   public HostFamilyStatus getHostFamilyStatus() {
+      return this.hostFamilyStatus;
+   }
 
-	public HostFamilyAirport addHostFamilyAirport(HostFamilyAirport hostFamilyAirport) {
-		getHostFamilyAirports().add(hostFamilyAirport);
-		hostFamilyAirport.setHostFamily(this);
+   public void setHostFamilyStatus(HostFamilyStatus hostFamilyStatus) {
+      this.hostFamilyStatus = hostFamilyStatus;
+   }
 
-		return hostFamilyAirport;
-	}
+   public LookupCountry getLookupCountry1() {
+      return this.lookupCountry1;
+   }
 
-	public HostFamilyAirport removeHostFamilyAirport(HostFamilyAirport hostFamilyAirport) {
-		getHostFamilyAirports().remove(hostFamilyAirport);
-		hostFamilyAirport.setHostFamily(null);
+   public void setLookupCountry1(LookupCountry lookupCountry1) {
+      this.lookupCountry1 = lookupCountry1;
+   }
 
-		return hostFamilyAirport;
-	}
+   public LookupCountry getLookupCountry2() {
+      return this.lookupCountry2;
+   }
 
-	public List<HostFamilyInquiry> getHostFamilyInquiries() {
-		return this.hostFamilyInquiries;
-	}
+   public void setLookupCountry2(LookupCountry lookupCountry2) {
+      this.lookupCountry2 = lookupCountry2;
+   }
 
-	public void setHostFamilyInquiries(List<HostFamilyInquiry> hostFamilyInquiries) {
-		this.hostFamilyInquiries = hostFamilyInquiries;
-	}
+   public LookupUSState getLookupUsstate1() {
+      return this.lookupUsstate1;
+   }
 
-	public HostFamilyInquiry addHostFamilyInquiry(HostFamilyInquiry hostFamilyInquiry) {
-		getHostFamilyInquiries().add(hostFamilyInquiry);
-		hostFamilyInquiry.setHostFamily(this);
+   public void setLookupUsstate1(LookupUSState lookupUsstate1) {
+      this.lookupUsstate1 = lookupUsstate1;
+   }
 
-		return hostFamilyInquiry;
-	}
+   public LookupUSState getLookupUsstate2() {
+      return this.lookupUsstate2;
+   }
 
-	public HostFamilyInquiry removeHostFamilyInquiry(HostFamilyInquiry hostFamilyInquiry) {
-		getHostFamilyInquiries().remove(hostFamilyInquiry);
-		hostFamilyInquiry.setHostFamily(null);
+   public void setLookupUsstate2(LookupUSState lookupUsstate2) {
+      this.lookupUsstate2 = lookupUsstate2;
+   }
 
-		return hostFamilyInquiry;
-	}
+   public Season getSeason() {
+      return this.season;
+   }
 
-	public List<HostFamilyNote> getHostFamilyNotes() {
-		return this.hostFamilyNotes;
-	}
+   public void setSeason(Season season) {
+      this.season = season;
+   }
 
-	public void setHostFamilyNotes(List<HostFamilyNote> hostFamilyNotes) {
-		this.hostFamilyNotes = hostFamilyNotes;
-	}
+   public List<HostFamilyAirport> getHostFamilyAirports() {
+      return this.hostFamilyAirports;
+   }
 
-	public HostFamilyNote addHostFamilyNote(HostFamilyNote hostFamilyNote) {
-		getHostFamilyNotes().add(hostFamilyNote);
-		hostFamilyNote.setHostFamily(this);
+   public void setHostFamilyAirports(List<HostFamilyAirport> hostFamilyAirports) {
+      this.hostFamilyAirports = hostFamilyAirports;
+   }
 
-		return hostFamilyNote;
-	}
+   public HostFamilyAirport addHostFamilyAirport(HostFamilyAirport hostFamilyAirport) {
+      getHostFamilyAirports().add(hostFamilyAirport);
+      hostFamilyAirport.setHostFamily(this);
 
-	public HostFamilyNote removeHostFamilyNote(HostFamilyNote hostFamilyNote) {
-		getHostFamilyNotes().remove(hostFamilyNote);
-		hostFamilyNote.setHostFamily(null);
+      return hostFamilyAirport;
+   }
 
-		return hostFamilyNote;
-	}
+   public HostFamilyAirport removeHostFamilyAirport(HostFamilyAirport hostFamilyAirport) {
+      getHostFamilyAirports().remove(hostFamilyAirport);
+      hostFamilyAirport.setHostFamily(null);
 
-	public List<HostFamilyParticipantHistory> getHostFamilyParticipantHistories() {
-		return this.hostFamilyParticipantHistories;
-	}
+      return hostFamilyAirport;
+   }
 
-	public void setHostFamilyParticipantHistories(List<HostFamilyParticipantHistory> hostFamilyParticipantHistories) {
-		this.hostFamilyParticipantHistories = hostFamilyParticipantHistories;
-	}
+   public List<HostFamilyAnnouncement> getHostFamilyAnnouncements() {
+      return this.hostFamilyAnnouncements;
+   }
 
-	public HostFamilyParticipantHistory addHostFamilyParticipantHistory(HostFamilyParticipantHistory hostFamilyParticipantHistory) {
-		getHostFamilyParticipantHistories().add(hostFamilyParticipantHistory);
-		hostFamilyParticipantHistory.setHostFamily(this);
+   public void setHostFamilyAnnouncements(List<HostFamilyAnnouncement> hostFamilyAnnouncements) {
+      this.hostFamilyAnnouncements = hostFamilyAnnouncements;
+   }
 
-		return hostFamilyParticipantHistory;
-	}
+   public HostFamilyAnnouncement addHostFamilyAnnouncement(HostFamilyAnnouncement hostFamilyAnnouncement) {
+      getHostFamilyAnnouncements().add(hostFamilyAnnouncement);
+      hostFamilyAnnouncement.setHostFamily(this);
 
-	public HostFamilyParticipantHistory removeHostFamilyParticipantHistory(HostFamilyParticipantHistory hostFamilyParticipantHistory) {
-		getHostFamilyParticipantHistories().remove(hostFamilyParticipantHistory);
-		hostFamilyParticipantHistory.setHostFamily(null);
+      return hostFamilyAnnouncement;
+   }
 
-		return hostFamilyParticipantHistory;
-	}
+   public HostFamilyAnnouncement removeHostFamilyAnnouncement(HostFamilyAnnouncement hostFamilyAnnouncement) {
+      getHostFamilyAnnouncements().remove(hostFamilyAnnouncement);
+      hostFamilyAnnouncement.setHostFamily(null);
 
-	public List<HostFamilyPermission> getHostFamilyPermissions() {
-		return this.hostFamilyPermissions;
-	}
+      return hostFamilyAnnouncement;
+   }
 
-	public void setHostFamilyPermissions(List<HostFamilyPermission> hostFamilyPermissions) {
-		this.hostFamilyPermissions = hostFamilyPermissions;
-	}
+   public List<HostFamilyAnnouncementResult> getHostFamilyAnnouncementResults() {
+      return this.hostFamilyAnnouncementResults;
+   }
 
-	public HostFamilyPermission addHostFamilyPermission(HostFamilyPermission hostFamilyPermission) {
-		getHostFamilyPermissions().add(hostFamilyPermission);
-		hostFamilyPermission.setHostFamily(this);
+   public void setHostFamilyAnnouncementResults(List<HostFamilyAnnouncementResult> hostFamilyAnnouncementResults) {
+      this.hostFamilyAnnouncementResults = hostFamilyAnnouncementResults;
+   }
 
-		return hostFamilyPermission;
-	}
+   public HostFamilyAnnouncementResult addHostFamilyAnnouncementResult(HostFamilyAnnouncementResult hostFamilyAnnouncementResult) {
+      getHostFamilyAnnouncementResults().add(hostFamilyAnnouncementResult);
+      hostFamilyAnnouncementResult.setHostFamily(this);
 
-	public HostFamilyPermission removeHostFamilyPermission(HostFamilyPermission hostFamilyPermission) {
-		getHostFamilyPermissions().remove(hostFamilyPermission);
-		hostFamilyPermission.setHostFamily(null);
+      return hostFamilyAnnouncementResult;
+   }
 
-		return hostFamilyPermission;
-	}
+   public HostFamilyAnnouncementResult removeHostFamilyAnnouncementResult(HostFamilyAnnouncementResult hostFamilyAnnouncementResult) {
+      getHostFamilyAnnouncementResults().remove(hostFamilyAnnouncementResult);
+      hostFamilyAnnouncementResult.setHostFamily(null);
 
-	public List<HostFamilyPotentialReference> getHostFamilyPotentialReferences() {
-		return this.hostFamilyPotentialReferences;
-	}
+      return hostFamilyAnnouncementResult;
+   }
 
-	public void setHostFamilyPotentialReferences(List<HostFamilyPotentialReference> hostFamilyPotentialReferences) {
-		this.hostFamilyPotentialReferences = hostFamilyPotentialReferences;
-	}
+   public List<HostFamilyBackground> getHostFamilyBackgrounds() {
+      return this.hostFamilyBackgrounds;
+   }
 
-	public HostFamilyPotentialReference addHostFamilyPotentialReference(HostFamilyPotentialReference hostFamilyPotentialReference) {
-		getHostFamilyPotentialReferences().add(hostFamilyPotentialReference);
-		hostFamilyPotentialReference.setHostFamily(this);
+   public void setHostFamilyBackgrounds(List<HostFamilyBackground> hostFamilyBackgrounds) {
+      this.hostFamilyBackgrounds = hostFamilyBackgrounds;
+   }
 
-		return hostFamilyPotentialReference;
-	}
+   public HostFamilyBackground addHostFamilyBackground(HostFamilyBackground hostFamilyBackground) {
+      getHostFamilyBackgrounds().add(hostFamilyBackground);
+      hostFamilyBackground.setHostFamily(this);
 
-	public HostFamilyPotentialReference removeHostFamilyPotentialReference(HostFamilyPotentialReference hostFamilyPotentialReference) {
-		getHostFamilyPotentialReferences().remove(hostFamilyPotentialReference);
-		hostFamilyPotentialReference.setHostFamily(null);
+      return hostFamilyBackground;
+   }
 
-		return hostFamilyPotentialReference;
-	}
+   public HostFamilyBackground removeHostFamilyBackground(HostFamilyBackground hostFamilyBackground) {
+      getHostFamilyBackgrounds().remove(hostFamilyBackground);
+      hostFamilyBackground.setHostFamily(null);
 
-	public List<HostFamilySeason> getHostFamilySeasons() {
-		return this.hostFamilySeasons;
-	}
+      return hostFamilyBackground;
+   }
 
-	public void setHostFamilySeasons(List<HostFamilySeason> hostFamilySeasons) {
-		this.hostFamilySeasons = hostFamilySeasons;
-	}
+   public List<HostFamilyInquiry> getHostFamilyInquiries() {
+      return this.hostFamilyInquiries;
+   }
 
-	public HostFamilySeason addHostFamilySeason(HostFamilySeason hostFamilySeason) {
-		getHostFamilySeasons().add(hostFamilySeason);
-		hostFamilySeason.setHostFamily(this);
+   public void setHostFamilyInquiries(List<HostFamilyInquiry> hostFamilyInquiries) {
+      this.hostFamilyInquiries = hostFamilyInquiries;
+   }
 
-		return hostFamilySeason;
-	}
+   public HostFamilyInquiry addHostFamilyInquiry(HostFamilyInquiry hostFamilyInquiry) {
+      getHostFamilyInquiries().add(hostFamilyInquiry);
+      hostFamilyInquiry.setHostFamily(this);
 
-	public HostFamilySeason removeHostFamilySeason(HostFamilySeason hostFamilySeason) {
-		getHostFamilySeasons().remove(hostFamilySeason);
-		hostFamilySeason.setHostFamily(null);
+      return hostFamilyInquiry;
+   }
 
-		return hostFamilySeason;
-	}
+   public HostFamilyInquiry removeHostFamilyInquiry(HostFamilyInquiry hostFamilyInquiry) {
+      getHostFamilyInquiries().remove(hostFamilyInquiry);
+      hostFamilyInquiry.setHostFamily(null);
+
+      return hostFamilyInquiry;
+   }
+
+   public List<HostFamilyNote> getHostFamilyNotes() {
+      return this.hostFamilyNotes;
+   }
+
+   public void setHostFamilyNotes(List<HostFamilyNote> hostFamilyNotes) {
+      this.hostFamilyNotes = hostFamilyNotes;
+   }
+
+   public HostFamilyNote addHostFamilyNote(HostFamilyNote hostFamilyNote) {
+      getHostFamilyNotes().add(hostFamilyNote);
+      hostFamilyNote.setHostFamily(this);
+
+      return hostFamilyNote;
+   }
+
+   public HostFamilyNote removeHostFamilyNote(HostFamilyNote hostFamilyNote) {
+      getHostFamilyNotes().remove(hostFamilyNote);
+      hostFamilyNote.setHostFamily(null);
+
+      return hostFamilyNote;
+   }
+
+   public List<HostFamilyNoteTopic> getHostFamilyNoteTopics() {
+      return this.hostFamilyNoteTopics;
+   }
+
+   public void setHostFamilyNoteTopics(List<HostFamilyNoteTopic> hostFamilyNoteTopics) {
+      this.hostFamilyNoteTopics = hostFamilyNoteTopics;
+   }
+
+   public HostFamilyNoteTopic addHostFamilyNoteTopic(HostFamilyNoteTopic hostFamilyNoteTopic) {
+      getHostFamilyNoteTopics().add(hostFamilyNoteTopic);
+      hostFamilyNoteTopic.setHostFamily(this);
+
+      return hostFamilyNoteTopic;
+   }
+
+   public HostFamilyNoteTopic removeHostFamilyNoteTopic(HostFamilyNoteTopic hostFamilyNoteTopic) {
+      getHostFamilyNoteTopics().remove(hostFamilyNoteTopic);
+      hostFamilyNoteTopic.setHostFamily(null);
+
+      return hostFamilyNoteTopic;
+   }
+
+   public List<HostFamilyParticipantHistory> getHostFamilyParticipantHistories() {
+      return this.hostFamilyParticipantHistories;
+   }
+
+   public void setHostFamilyParticipantHistories(List<HostFamilyParticipantHistory> hostFamilyParticipantHistories) {
+      this.hostFamilyParticipantHistories = hostFamilyParticipantHistories;
+   }
+
+   public HostFamilyParticipantHistory addHostFamilyParticipantHistory(HostFamilyParticipantHistory hostFamilyParticipantHistory) {
+      getHostFamilyParticipantHistories().add(hostFamilyParticipantHistory);
+      hostFamilyParticipantHistory.setHostFamily(this);
+
+      return hostFamilyParticipantHistory;
+   }
+
+   public HostFamilyParticipantHistory removeHostFamilyParticipantHistory(HostFamilyParticipantHistory hostFamilyParticipantHistory) {
+      getHostFamilyParticipantHistories().remove(hostFamilyParticipantHistory);
+      hostFamilyParticipantHistory.setHostFamily(null);
+
+      return hostFamilyParticipantHistory;
+   }
+
+   public List<HostFamilyPermission> getHostFamilyPermissions() {
+      return this.hostFamilyPermissions;
+   }
+
+   public void setHostFamilyPermissions(List<HostFamilyPermission> hostFamilyPermissions) {
+      this.hostFamilyPermissions = hostFamilyPermissions;
+   }
+
+   public HostFamilyPermission addHostFamilyPermission(HostFamilyPermission hostFamilyPermission) {
+      getHostFamilyPermissions().add(hostFamilyPermission);
+      hostFamilyPermission.setHostFamily(this);
+
+      return hostFamilyPermission;
+   }
+
+   public HostFamilyPermission removeHostFamilyPermission(HostFamilyPermission hostFamilyPermission) {
+      getHostFamilyPermissions().remove(hostFamilyPermission);
+      hostFamilyPermission.setHostFamily(null);
+
+      return hostFamilyPermission;
+   }
+
+   public List<HostFamilyPotentialReference> getHostFamilyPotentialReferences() {
+      return this.hostFamilyPotentialReferences;
+   }
+
+   public void setHostFamilyPotentialReferences(List<HostFamilyPotentialReference> hostFamilyPotentialReferences) {
+      this.hostFamilyPotentialReferences = hostFamilyPotentialReferences;
+   }
+
+   public HostFamilyPotentialReference addHostFamilyPotentialReference(HostFamilyPotentialReference hostFamilyPotentialReference) {
+      getHostFamilyPotentialReferences().add(hostFamilyPotentialReference);
+      hostFamilyPotentialReference.setHostFamily(this);
+
+      return hostFamilyPotentialReference;
+   }
+
+   public HostFamilyPotentialReference removeHostFamilyPotentialReference(HostFamilyPotentialReference hostFamilyPotentialReference) {
+      getHostFamilyPotentialReferences().remove(hostFamilyPotentialReference);
+      hostFamilyPotentialReference.setHostFamily(null);
+
+      return hostFamilyPotentialReference;
+   }
+
+   public List<HostFamilyQuickStatsCategoryAggregate> getHostFamilyQuickStatsCategoryAggregates() {
+      return this.hostFamilyQuickStatsCategoryAggregates;
+   }
+
+   public void setHostFamilyQuickStatsCategoryAggregates(List<HostFamilyQuickStatsCategoryAggregate> hostFamilyQuickStatsCategoryAggregates) {
+      this.hostFamilyQuickStatsCategoryAggregates = hostFamilyQuickStatsCategoryAggregates;
+   }
+
+   public HostFamilyQuickStatsCategoryAggregate addHostFamilyQuickStatsCategoryAggregate(HostFamilyQuickStatsCategoryAggregate hostFamilyQuickStatsCategoryAggregate) {
+      getHostFamilyQuickStatsCategoryAggregates().add(hostFamilyQuickStatsCategoryAggregate);
+      hostFamilyQuickStatsCategoryAggregate.setHostFamily(this);
+
+      return hostFamilyQuickStatsCategoryAggregate;
+   }
+
+   public HostFamilyQuickStatsCategoryAggregate removeHostFamilyQuickStatsCategoryAggregate(HostFamilyQuickStatsCategoryAggregate hostFamilyQuickStatsCategoryAggregate) {
+      getHostFamilyQuickStatsCategoryAggregates().remove(hostFamilyQuickStatsCategoryAggregate);
+      hostFamilyQuickStatsCategoryAggregate.setHostFamily(null);
+
+      return hostFamilyQuickStatsCategoryAggregate;
+   }
+
+   public List<HostFamilyQuickStatsTypeAggregate> getHostFamilyQuickStatsTypeAggregates() {
+      return this.hostFamilyQuickStatsTypeAggregates;
+   }
+
+   public void setHostFamilyQuickStatsTypeAggregates(List<HostFamilyQuickStatsTypeAggregate> hostFamilyQuickStatsTypeAggregates) {
+      this.hostFamilyQuickStatsTypeAggregates = hostFamilyQuickStatsTypeAggregates;
+   }
+
+   public HostFamilyQuickStatsTypeAggregate addHostFamilyQuickStatsTypeAggregate(HostFamilyQuickStatsTypeAggregate hostFamilyQuickStatsTypeAggregate) {
+      getHostFamilyQuickStatsTypeAggregates().add(hostFamilyQuickStatsTypeAggregate);
+      hostFamilyQuickStatsTypeAggregate.setHostFamily(this);
+
+      return hostFamilyQuickStatsTypeAggregate;
+   }
+
+   public HostFamilyQuickStatsTypeAggregate removeHostFamilyQuickStatsTypeAggregate(HostFamilyQuickStatsTypeAggregate hostFamilyQuickStatsTypeAggregate) {
+      getHostFamilyQuickStatsTypeAggregates().remove(hostFamilyQuickStatsTypeAggregate);
+      hostFamilyQuickStatsTypeAggregate.setHostFamily(null);
+
+      return hostFamilyQuickStatsTypeAggregate;
+   }
+
+   public List<HostFamilySeason> getHostFamilySeasons() {
+      return this.hostFamilySeasons;
+   }
+
+   public void setHostFamilySeasons(List<HostFamilySeason> hostFamilySeasons) {
+      this.hostFamilySeasons = hostFamilySeasons;
+   }
+
+   public HostFamilySeason addHostFamilySeason(HostFamilySeason hostFamilySeason) {
+      getHostFamilySeasons().add(hostFamilySeason);
+      hostFamilySeason.setHostFamily(this);
+
+      return hostFamilySeason;
+   }
+
+   public HostFamilySeason removeHostFamilySeason(HostFamilySeason hostFamilySeason) {
+      getHostFamilySeasons().remove(hostFamilySeason);
+      hostFamilySeason.setHostFamily(null);
+
+      return hostFamilySeason;
+   }
+
+   public List<HostFamilyUpdateLog> getHostFamilyUpdateLogs() {
+      return this.hostFamilyUpdateLogs;
+   }
+
+   public void setHostFamilyUpdateLogs(List<HostFamilyUpdateLog> hostFamilyUpdateLogs) {
+      this.hostFamilyUpdateLogs = hostFamilyUpdateLogs;
+   }
+
+   public HostFamilyUpdateLog addHostFamilyUpdateLog(HostFamilyUpdateLog hostFamilyUpdateLog) {
+      getHostFamilyUpdateLogs().add(hostFamilyUpdateLog);
+      hostFamilyUpdateLog.setHostFamily(this);
+
+      return hostFamilyUpdateLog;
+   }
+
+   public HostFamilyUpdateLog removeHostFamilyUpdateLog(HostFamilyUpdateLog hostFamilyUpdateLog) {
+      getHostFamilyUpdateLogs().remove(hostFamilyUpdateLog);
+      hostFamilyUpdateLog.setHostFamily(null);
+
+      return hostFamilyUpdateLog;
+   }
+
+   public List<HostFamilyWorkQueue> getHostFamilyWorkQueues() {
+      return this.hostFamilyWorkQueues;
+   }
+
+   public void setHostFamilyWorkQueues(List<HostFamilyWorkQueue> hostFamilyWorkQueues) {
+      this.hostFamilyWorkQueues = hostFamilyWorkQueues;
+   }
+
+   public HostFamilyWorkQueue addHostFamilyWorkQueue(HostFamilyWorkQueue hostFamilyWorkQueue) {
+      getHostFamilyWorkQueues().add(hostFamilyWorkQueue);
+      hostFamilyWorkQueue.setHostFamily(this);
+
+      return hostFamilyWorkQueue;
+   }
+
+   public HostFamilyWorkQueue removeHostFamilyWorkQueue(HostFamilyWorkQueue hostFamilyWorkQueue) {
+      getHostFamilyWorkQueues().remove(hostFamilyWorkQueue);
+      hostFamilyWorkQueue.setHostFamily(null);
+
+      return hostFamilyWorkQueue;
+   }
+
+   public List<HostFamilyWorkQueueCategoryAggregate> getHostFamilyWorkQueueCategoryAggregates() {
+      return this.hostFamilyWorkQueueCategoryAggregates;
+   }
+
+   public void setHostFamilyWorkQueueCategoryAggregates(List<HostFamilyWorkQueueCategoryAggregate> hostFamilyWorkQueueCategoryAggregates) {
+      this.hostFamilyWorkQueueCategoryAggregates = hostFamilyWorkQueueCategoryAggregates;
+   }
+
+   public HostFamilyWorkQueueCategoryAggregate addHostFamilyWorkQueueCategoryAggregate(HostFamilyWorkQueueCategoryAggregate hostFamilyWorkQueueCategoryAggregate) {
+      getHostFamilyWorkQueueCategoryAggregates().add(hostFamilyWorkQueueCategoryAggregate);
+      hostFamilyWorkQueueCategoryAggregate.setHostFamily(this);
+
+      return hostFamilyWorkQueueCategoryAggregate;
+   }
+
+   public HostFamilyWorkQueueCategoryAggregate removeHostFamilyWorkQueueCategoryAggregate(HostFamilyWorkQueueCategoryAggregate hostFamilyWorkQueueCategoryAggregate) {
+      getHostFamilyWorkQueueCategoryAggregates().remove(hostFamilyWorkQueueCategoryAggregate);
+      hostFamilyWorkQueueCategoryAggregate.setHostFamily(null);
+
+      return hostFamilyWorkQueueCategoryAggregate;
+   }
+
+   public List<HostFamilyWorkQueueTypeAggregate> getHostFamilyWorkQueueTypeAggregates() {
+      return this.hostFamilyWorkQueueTypeAggregates;
+   }
+
+   public void setHostFamilyWorkQueueTypeAggregates(List<HostFamilyWorkQueueTypeAggregate> hostFamilyWorkQueueTypeAggregates) {
+      this.hostFamilyWorkQueueTypeAggregates = hostFamilyWorkQueueTypeAggregates;
+   }
+
+   public HostFamilyWorkQueueTypeAggregate addHostFamilyWorkQueueTypeAggregate(HostFamilyWorkQueueTypeAggregate hostFamilyWorkQueueTypeAggregate) {
+      getHostFamilyWorkQueueTypeAggregates().add(hostFamilyWorkQueueTypeAggregate);
+      hostFamilyWorkQueueTypeAggregate.setHostFamily(this);
+
+      return hostFamilyWorkQueueTypeAggregate;
+   }
+
+   public HostFamilyWorkQueueTypeAggregate removeHostFamilyWorkQueueTypeAggregate(HostFamilyWorkQueueTypeAggregate hostFamilyWorkQueueTypeAggregate) {
+      getHostFamilyWorkQueueTypeAggregates().remove(hostFamilyWorkQueueTypeAggregate);
+      hostFamilyWorkQueueTypeAggregate.setHostFamily(null);
+
+      return hostFamilyWorkQueueTypeAggregate;
+   }
 
 }

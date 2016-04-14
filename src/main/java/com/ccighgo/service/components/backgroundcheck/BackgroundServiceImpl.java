@@ -1,13 +1,12 @@
 package com.ccighgo.service.components.backgroundcheck;
 
 import java.io.StringWriter;
+import java.util.List;
 
-
-
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
 import javax.xml.bind.Marshaller;
-import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -20,9 +19,18 @@ import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.XML;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.ccighgo.db.entities.HostFamilyBackground;
+import com.ccighgo.exception.ErrorCode;
+import com.ccighgo.jpa.repositories.HostFamilyBackgroundRepository;
+import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
+import com.ccighgo.service.component.serviceutils.MessageUtils;
+import com.ccighgo.service.components.errormessages.constants.PartnerAdminMessageConstants;
+import com.ccighgo.service.components.errormessages.constants.UtilityServiceMessageConstants;
 import com.ccighgo.service.rest.backgroundcheck.BackgroundCheck;
+import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.seasons.beans.backgroundcheck.BackgroundCheck.BackgroundSearchPackage;
 import com.ccighgo.service.transport.seasons.beans.backgroundcheck.BackgroundCheck.BackgroundSearchPackage.PersonalData;
 import com.ccighgo.service.transport.seasons.beans.backgroundcheck.BackgroundCheck.BackgroundSearchPackage.PersonalData.ContactMethod;
@@ -44,22 +52,36 @@ import com.ccighgo.service.transport.seasons.beans.backgroundscreenrequest.Scree
 import com.ccighgo.service.transport.seasons.beans.backgroundscreenresponse.Account;
 import com.ccighgo.service.transport.seasons.beans.backgroundscreenresponse.Applicant;
 import com.ccighgo.service.transport.seasons.beans.backgroundscreenresponse.ScreenResponse;
+import com.ccighgo.utils.CCIConstants;
+import com.ccighgo.utils.DateUtils;
 import com.ccighgo.utils.ExceptionUtil;
 import com.google.gson.Gson;
-import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl;
 
 @Component
 public class BackgroundServiceImpl implements BackgroundServiceInterface {
+   private static final String USE_PERSONAL = "personal";
+   private static final String CREATE_APPLICANT_ACCOUNT = "CreateApplicantAccount";
+   private static final String CREDENTIAL_TYPE = "CCIGreen";
+   private static final String POST_BACK_URL = "http://52.2.191.63:8086/cci_gh_go/services/backgroundcheck/sendReport";
+   private static final String FAILED_STATUS = "300 : Failed";
    private static final Logger LOGGER = Logger.getLogger(BackgroundCheck.class);
+   private static final String SP_BACKGROUND_CHECK_DATA = "CALL SPHostFamilyBackgroundCheckSubmit (?,?)";
+   private static final String ACCOUNT_NO = "11670S";
+   private static final String PACKAGE_NUM = "1";
+
+   @Autowired HostFamilyBackgroundRepository hostFamilyBackgroundRepository;
+   @Autowired CommonComponentUtils componentUtils;
+   @Autowired MessageUtils messageUtil;
+   @Autowired EntityManager em;
+   Gson f = new Gson();
 
    @Override
    public ScreenResponse requestScreen(ScreenRequest screenRequest) {
       try {
-         if(screenRequest!=null)
-         LOGGER.info("partnerInfo: "+screenRequest.getPartnerInfo()+            
-               "account: "+screenRequest.getAccount());
+         if (screenRequest != null)
+            LOGGER.info("partnerInfo: " + screenRequest.getPartnerInfo() + "account: " + screenRequest.getAccount());
       } catch (Exception e) {
-         e.printStackTrace();
+         LOGGER.error(e.getMessage(), e);
       }
       try {
          @SuppressWarnings("deprecation")
@@ -67,7 +89,6 @@ public class BackgroundServiceImpl implements BackgroundServiceInterface {
          HttpPost post = new HttpPost("https://www.rhrtest.com/BatchScreensXML.cfm");
          StringWriter sw = new StringWriter();
          ObjectFactory objectFactory = new ObjectFactory();
-         JAXBElement<ScreenRequest> sRequest = objectFactory.createScreenRequest(screenRequest);
          Marshaller jaxbMarshaller = JAXBContext.newInstance(ScreenRequest.class).createMarshaller();
          jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
          jaxbMarshaller.marshal(objectFactory.createScreenRequest(screenRequest), sw);
@@ -78,7 +99,7 @@ public class BackgroundServiceImpl implements BackgroundServiceInterface {
          post.setEntity(entity);
          HttpResponse response = client.execute(post);
          String responseString = new BasicResponseHandler().handleResponse(response);
-         System.out.println(responseString);
+         LOGGER.info(responseString);
          JSONObject xmlJSONObj = XML.toJSONObject(responseString);
          ScreenResponse screenResponse = new ScreenResponse();
          parseResult(xmlJSONObj, screenResponse);
@@ -91,35 +112,39 @@ public class BackgroundServiceImpl implements BackgroundServiceInterface {
 
    private void parseResult(JSONObject xmlJSONObj, ScreenResponse screenResponse) {
       try {
-         if(screenResponse!=null)
-         LOGGER.info("dateTime: "+screenResponse.getDateTime()+" responseCode: "+screenResponse.getResponseCode()
-               +" account "+screenResponse.getAccount());
+         if (screenResponse != null)
+            LOGGER.info("dateTime: " + screenResponse.getDateTime() + " responseCode: " + screenResponse.getResponseCode() + " account " + screenResponse.getAccount());
       } catch (Exception e) {
-         e.printStackTrace();
+         LOGGER.error(e.getMessage(), e);
       }
       JSONObject screenResObject = xmlJSONObj.getJSONObject("ScreenResponse");
       JSONObject jsonAccountObject = screenResObject.getJSONObject("Account");
       try {
          screenResponse.setDateTime(String.valueOf(screenResObject.get("DateTime")));
       } catch (Exception e) {
+         LOGGER.error(e.getMessage(), e);
       }
 
       try {
          screenResponse.setResponseCode(String.valueOf(screenResObject.get("ResponseCode")));
       } catch (Exception e) {
+         LOGGER.error(e.getMessage(), e);
       }
       Account account = new Account();
       try {
          account.setAcctNbr(String.valueOf(jsonAccountObject.get("AcctNbr")));
       } catch (Exception e) {
+         LOGGER.error(e.getMessage(), e);
       }
       try {
          account.setBatchNo(String.valueOf(jsonAccountObject.get("BatchNo")));
       } catch (Exception e) {
+         LOGGER.error(e.getMessage(), e);
       }
       try {
          account.setResponseCode(String.valueOf(jsonAccountObject.get("ResponseCode")));
       } catch (Exception e) {
+         LOGGER.error(e.getMessage(), e);
       }
       try {
          JSONArray applicants = jsonAccountObject.getJSONArray("Applicant");
@@ -132,29 +157,36 @@ public class BackgroundServiceImpl implements BackgroundServiceInterface {
                   try {
                      applicant.setApplicantID(String.valueOf(applicantJsonObject.get("ApplicantID")));
                   } catch (Exception e) {
+                     LOGGER.error(e.getMessage(), e);
                   }
                   try {
                      applicant.setErrorMessage(String.valueOf(applicantJsonObject.get("ErrorMessage")));
                   } catch (Exception e) {
+                     LOGGER.error(e.getMessage(), e);
                   }
                   try {
                      applicant.setFileNo(String.valueOf(applicantJsonObject.get("FileNo")));
                   } catch (Exception e) {
+                     LOGGER.error(e.getMessage(), e);
                   }
                   try {
                      applicant.setFileURL(String.valueOf(applicantJsonObject.get("FileURL")));
                   } catch (Exception e) {
+                     LOGGER.error(e.getMessage(), e);
                   }
                   try {
                      applicant.setResponseCode(String.valueOf(applicantJsonObject.get("ResponseCode")));
                   } catch (Exception e) {
+                     LOGGER.error(e.getMessage(), e);
                   }
                   account.getApplicant().add(applicant);
                }
             } catch (Exception e) {
+               LOGGER.error(e.getMessage(), e);
             }
          }
       } catch (Exception e) {
+         LOGGER.error(e.getMessage(), e);
       }
 
       screenResponse.setAccount(account);
@@ -171,8 +203,52 @@ public class BackgroundServiceImpl implements BackgroundServiceInterface {
       // jsonString = gson.toJson(el); //
       ScreenResponse result = gson.fromJson(x, ScreenResponse.class);
 
-      // System.out.println(jsonString);
-      System.out.println(result.getDateTime());
+      LOGGER.info(result.getDateTime());
+
+   }
+
+   @Override
+   public com.ccighgo.service.transport.seasons.beans.backgroundcheck.BackgroundCheck applyNow(int hostFamilyId, int hostFamilyMemberId) {
+      com.ccighgo.service.transport.seasons.beans.backgroundcheck.BackgroundCheck backgroundCheck = new com.ccighgo.service.transport.seasons.beans.backgroundcheck.BackgroundCheck();
+
+      backgroundCheck.setAccount(ACCOUNT_NO);
+      backgroundCheck.setPackageNbr(PACKAGE_NUM);
+      Query query = em.createNativeQuery(SP_BACKGROUND_CHECK_DATA);
+      query.setParameter(1, hostFamilyId);
+      query.setParameter(2, hostFamilyMemberId);
+      @SuppressWarnings("unchecked")
+      List<Object[]> result = query.getResultList();
+      if (result != null && !result.isEmpty()) {
+         for (Object[] obj : result) {
+            PostBackURL postBackURL = new PostBackURL();
+            postBackURL.setCredentialType(CREDENTIAL_TYPE);
+            postBackURL.setValue(POST_BACK_URL);
+            backgroundCheck.setPostBackURL(postBackURL);
+
+            BackgroundSearchPackage backgroundSearchPackage = new BackgroundSearchPackage();
+            backgroundSearchPackage.setAction(CREATE_APPLICANT_ACCOUNT);
+            PersonalData personalData = new PersonalData();
+            DemographicDetail demographicDetail = new DemographicDetail();
+            demographicDetail.setDateOfBirth(DateUtils.getDateForBackgroundCheck(String.valueOf(obj[4])));
+            personalData.setDemographicDetail(demographicDetail);
+
+            PersonName personName1 = new PersonName();
+            personName1.setGivenName(String.valueOf(obj[2]));
+            personName1.setFamilyName(String.valueOf(obj[3]));
+            personalData.getPersonName().add(personName1);
+
+            ContactMethod contackMethod1 = new ContactMethod();
+            contackMethod1.setInternetEmailAddress("");
+            Telephone telephone = new Telephone();
+            telephone.setFormattedNumber(String.valueOf(obj[5]));
+            contackMethod1.setTelephone(telephone);
+            contackMethod1.setUse(USE_PERSONAL);
+            personalData.getContactMethod().add(contackMethod1);
+            backgroundSearchPackage.setPersonalData(personalData);
+            backgroundCheck.setBackgroundSearchPackage(backgroundSearchPackage);
+         }
+      }
+      return backgroundCheck;
 
    }
 
@@ -183,12 +259,12 @@ public class BackgroundServiceImpl implements BackgroundServiceInterface {
          backgroundCheck.setAccount("0300S");
          backgroundCheck.setPackageNbr("1");
          PostBackURL postBackURL = new PostBackURL();
-         postBackURL.setCredentialType("CCIGreen");
-         postBackURL.setValue("http://52.2.191.63:8086/cci_gh_go/services/backgroundcheck/sendReport");
+         postBackURL.setCredentialType(CREDENTIAL_TYPE);
+         postBackURL.setValue(POST_BACK_URL);
          backgroundCheck.setPostBackURL(postBackURL);
 
          BackgroundSearchPackage backgroundSearchPackage = new BackgroundSearchPackage();
-         backgroundSearchPackage.setAction("CreateApplicantAccount");
+         backgroundSearchPackage.setAction(CREATE_APPLICANT_ACCOUNT);
          ReferenceId referenceId = new ReferenceId();
          IdValue idValue = new IdValue();
          idValue.setName("AssignmentID");
@@ -247,7 +323,7 @@ public class BackgroundServiceImpl implements BackgroundServiceInterface {
          Telephone telephone = new Telephone();
          telephone.setFormattedNumber("4192242462");
          contackMethod1.setTelephone(telephone);
-         contackMethod1.setUse("personal");
+         contackMethod1.setUse(USE_PERSONAL);
          personalData.getContactMethod().add(contackMethod1);
 
          ContactMethod contackMethod2 = new ContactMethod();
@@ -255,7 +331,7 @@ public class BackgroundServiceImpl implements BackgroundServiceInterface {
          Telephone telephone1 = new Telephone();
          telephone1.setFormattedNumber("4192242462");
          contackMethod2.setTelephone(telephone1);
-         contackMethod2.setUse("personal");
+         contackMethod2.setUse(USE_PERSONAL);
          personalData.getContactMethod().add(contackMethod2);
 
          backgroundSearchPackage.setPersonalData(personalData);
@@ -274,23 +350,54 @@ public class BackgroundServiceImpl implements BackgroundServiceInterface {
 
    @Override
    public String sendReport(BackgroundReports backgroundReports) {
+      Response response = new Response();
       try {
+         HostFamilyBackground background = new HostFamilyBackground();
+         if (backgroundReports != null) {
+            if (background.getAccount() != null)
+               background.setAccount(background.getAccount());
 
-         System.out.println("--------------- Background Report -----------------");
-         if (backgroundReports.getUserId() != null) {
-            System.out.println(" User ID : " + backgroundReports.getUserId());
-            System.out.println(" Account Name :" + backgroundReports.getAccount());
-            if (backgroundReports.getBackgroundReportPackage() != null) {
-               System.out.println(" Type : " + backgroundReports.getBackgroundReportPackage().getType());
-               if (backgroundReports.getBackgroundReportPackage().getScreeningStatus() != null)
-                  System.out.println("Order Status : " + backgroundReports.getBackgroundReportPackage().getScreeningStatus().getOrderStatus());
+            background.setUserId(background.getUserId());
+            background.setPassword(background.getPassword());
+            // TODO remove this field from DB
+            background.setStatus(CCIConstants.TRUE_BYTE);
+            background.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+            if (backgroundReports != null && backgroundReports.getBackgroundReportPackage() != null && backgroundReports.getBackgroundReportPackage().getScreeningStatus() != null)
+               for (com.ccighgo.service.transport.seasons.beans.backgroundcheckstatus.BackgroundReports.BackgroundReportPackage.ScreeningStatus.AdditionalItems item : backgroundReports
+                     .getBackgroundReportPackage().getScreeningStatus().getAdditionalItems()) {
+                  if (item.getQualifier().equalsIgnoreCase("DateOrderClosed"))
+                     background.setDateOrderClosed(DateUtils.getDateFromString_bg_check(item.getText()));
+                  else if (item.getQualifier().equalsIgnoreCase("ResultStatus"))
+                     background.setResultStatus(item.getText());
+                  else if (item.getQualifier().equalsIgnoreCase("ResultsURL"))
+                     background.setResultURL(item.getText());
+               }
+            if (backgroundReports != null && backgroundReports.getBackgroundReportPackage() != null
+                  && backgroundReports.getBackgroundReportPackage().getScreeningsSummary() != null) {
+               com.ccighgo.service.transport.seasons.beans.backgroundcheckstatus.BackgroundReports.BackgroundReportPackage.ScreeningsSummary.AdditionalItems item = backgroundReports
+                     .getBackgroundReportPackage().getScreeningsSummary().getAdditionalItems();
+
+               if (item.getQualifier().equalsIgnoreCase("ResultsURL"))
+                  background.setResultURL(item.getText());
             }
+            background.setDateOrderReceived(DateUtils.getDateFromString_bg_check(backgroundReports.getBackgroundReportPackage().getScreeningStatus().getDateOrderReceived()));
+
+            // background.setHostFamilyBackgroundId();
+            // background.setHostFamilySeason();
+            // background.setLastName(lastName);
+            // background.setRelationshipToHostParent(relationshipToHostParent);
+            // background.setStatus(status);
+
+            hostFamilyBackgroundRepository.saveAndFlush(background);
+            response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.INSERTING_BACKGROUND_DATA_SUCCCESSFULLY.getValue(),
+                  messageUtil.getMessage(UtilityServiceMessageConstants.INSERTING_BACKGROUND_DATA_SUCCCESSFULLY)));
          }
-         System.out.println("---------------------End Of Background Report----------------------------");
-         return "200 : Received !";
       } catch (Exception e) {
+         response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_INSERTING_BACKGROUND_DATA.getValue(),
+               messageUtil.getMessage(UtilityServiceMessageConstants.ERROR_INSERTING_BACKGROUND_DATA)));
          ExceptionUtil.logException(e, LOGGER);
-         return "300 : Failed";
       }
+      return f.toJson(response);
+
    }
 }

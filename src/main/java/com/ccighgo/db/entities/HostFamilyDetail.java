@@ -10,24 +10,26 @@ import java.sql.Timestamp;
  * 
  */
 @Entity
+@Table(name="HostFamilyDetail")
 @NamedQuery(name="HostFamilyDetail.findAll", query="SELECT h FROM HostFamilyDetail h")
 public class HostFamilyDetail implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer hostFamilyDetailsId;
 
 	private Byte active;
 
-	@Lob
+	@Column(length=1000)
 	private String adaptCircumtances;
 
 	private Byte agreeToServeMeals;
 
 	private Byte childServicesContact;
 
-	@Lob
+	@Column(length=1000)
 	private String childServicesContactDetails;
 
 	private Byte comfortableHostingDiet;
@@ -38,64 +40,81 @@ public class HostFamilyDetail implements Serializable {
 
 	private Byte crimeConviction;
 
-	@Lob
+	@Column(length=1000)
 	private String crimeConvictionDetails;
 
+	@Column(length=100)
 	private String descPaxDietaryRestrictions;
 
+	@Column(length=100)
 	private String describeDietaryRestrictions;
 
-	private Integer dietaryRestrictions;
+	private Byte dietaryRestrictions;
 
 	private Byte disability;
 
-	@Lob
+	@Column(length=1000)
 	private String disabilityDetails;
 
+	@Column(length=50)
 	private String drinkAlcohol;
 
-	@Lob
-	private String familyMembers;
+	@Column(length=1000)
+	private String familyMemberDescription;
 
-	private String familySmoker;
+	private Byte familySmoker;
 
-	@Lob
-	private String governmentAssistanceMembers;
+	@Column(length=50)
+	private String familySmokingPlace;
 
+	@Column(length=1000)
+	private String favouriteWeekend;
+
+	@Column(length=50)
 	private String hasAutoInsurance;
+
+	@Column(length=25)
+	private String houseHoldType;
 
 	private Byte illness;
 
-	@Lob
+	@Column(length=1000)
 	private String illnessDetails;
 
+	@Column(length=30)
 	private String incomeRange;
+
+	private Byte inviteStudentForReligiousExperience;
 
 	private Integer modifiedBy;
 
 	private Timestamp modifiedOn;
 
+	@Column(length=100)
 	private String otherReligiousDetails;
 
 	private Byte participantFollowDiet;
 
+	@Column(length=30)
 	private String preferStudentJoins;
 
-	private Integer problemWithReligiousDifference;
+	private Byte problemWithReligiousDifference;
 
-	private Byte receiveGovernmentAssistance;
+	@Column(length=1000)
+	private String publicAssistanceExplanation;
 
+	private Byte receivePublicAssistance;
+
+	@Column(length=30)
 	private String religiousAffiliation;
 
+	@Column(length=30)
 	private String religiousAttendance;
 
-	@Lob
-	private String specialWeekend;
-
-	@Lob
+	@Column(length=1000)
 	private String typicalWeekday;
 
-	@Lob
+	@Column(length=1000)
 	private String typicalWeekend;
 
 	//bi-directional many-to-one association to HostFamilySeason
@@ -210,11 +229,11 @@ public class HostFamilyDetail implements Serializable {
 		this.describeDietaryRestrictions = describeDietaryRestrictions;
 	}
 
-	public Integer getDietaryRestrictions() {
+	public Byte getDietaryRestrictions() {
 		return this.dietaryRestrictions;
 	}
 
-	public void setDietaryRestrictions(Integer dietaryRestrictions) {
+	public void setDietaryRestrictions(Byte dietaryRestrictions) {
 		this.dietaryRestrictions = dietaryRestrictions;
 	}
 
@@ -242,28 +261,36 @@ public class HostFamilyDetail implements Serializable {
 		this.drinkAlcohol = drinkAlcohol;
 	}
 
-	public String getFamilyMembers() {
-		return this.familyMembers;
+	public String getFamilyMemberDescription() {
+		return this.familyMemberDescription;
 	}
 
-	public void setFamilyMembers(String familyMembers) {
-		this.familyMembers = familyMembers;
+	public void setFamilyMemberDescription(String familyMemberDescription) {
+		this.familyMemberDescription = familyMemberDescription;
 	}
 
-	public String getFamilySmoker() {
+	public Byte getFamilySmoker() {
 		return this.familySmoker;
 	}
 
-	public void setFamilySmoker(String familySmoker) {
+	public void setFamilySmoker(Byte familySmoker) {
 		this.familySmoker = familySmoker;
 	}
 
-	public String getGovernmentAssistanceMembers() {
-		return this.governmentAssistanceMembers;
+	public String getFamilySmokingPlace() {
+		return this.familySmokingPlace;
 	}
 
-	public void setGovernmentAssistanceMembers(String governmentAssistanceMembers) {
-		this.governmentAssistanceMembers = governmentAssistanceMembers;
+	public void setFamilySmokingPlace(String familySmokingPlace) {
+		this.familySmokingPlace = familySmokingPlace;
+	}
+
+	public String getFavouriteWeekend() {
+		return this.favouriteWeekend;
+	}
+
+	public void setFavouriteWeekend(String favouriteWeekend) {
+		this.favouriteWeekend = favouriteWeekend;
 	}
 
 	public String getHasAutoInsurance() {
@@ -272,6 +299,14 @@ public class HostFamilyDetail implements Serializable {
 
 	public void setHasAutoInsurance(String hasAutoInsurance) {
 		this.hasAutoInsurance = hasAutoInsurance;
+	}
+
+	public String getHouseHoldType() {
+		return this.houseHoldType;
+	}
+
+	public void setHouseHoldType(String houseHoldType) {
+		this.houseHoldType = houseHoldType;
 	}
 
 	public Byte getIllness() {
@@ -296,6 +331,14 @@ public class HostFamilyDetail implements Serializable {
 
 	public void setIncomeRange(String incomeRange) {
 		this.incomeRange = incomeRange;
+	}
+
+	public Byte getInviteStudentForReligiousExperience() {
+		return this.inviteStudentForReligiousExperience;
+	}
+
+	public void setInviteStudentForReligiousExperience(Byte inviteStudentForReligiousExperience) {
+		this.inviteStudentForReligiousExperience = inviteStudentForReligiousExperience;
 	}
 
 	public Integer getModifiedBy() {
@@ -338,20 +381,28 @@ public class HostFamilyDetail implements Serializable {
 		this.preferStudentJoins = preferStudentJoins;
 	}
 
-	public Integer getProblemWithReligiousDifference() {
+	public Byte getProblemWithReligiousDifference() {
 		return this.problemWithReligiousDifference;
 	}
 
-	public void setProblemWithReligiousDifference(Integer problemWithReligiousDifference) {
+	public void setProblemWithReligiousDifference(Byte problemWithReligiousDifference) {
 		this.problemWithReligiousDifference = problemWithReligiousDifference;
 	}
 
-	public Byte getReceiveGovernmentAssistance() {
-		return this.receiveGovernmentAssistance;
+	public String getPublicAssistanceExplanation() {
+		return this.publicAssistanceExplanation;
 	}
 
-	public void setReceiveGovernmentAssistance(Byte receiveGovernmentAssistance) {
-		this.receiveGovernmentAssistance = receiveGovernmentAssistance;
+	public void setPublicAssistanceExplanation(String publicAssistanceExplanation) {
+		this.publicAssistanceExplanation = publicAssistanceExplanation;
+	}
+
+	public Byte getReceivePublicAssistance() {
+		return this.receivePublicAssistance;
+	}
+
+	public void setReceivePublicAssistance(Byte receivePublicAssistance) {
+		this.receivePublicAssistance = receivePublicAssistance;
 	}
 
 	public String getReligiousAffiliation() {
@@ -368,14 +419,6 @@ public class HostFamilyDetail implements Serializable {
 
 	public void setReligiousAttendance(String religiousAttendance) {
 		this.religiousAttendance = religiousAttendance;
-	}
-
-	public String getSpecialWeekend() {
-		return this.specialWeekend;
-	}
-
-	public void setSpecialWeekend(String specialWeekend) {
-		this.specialWeekend = specialWeekend;
 	}
 
 	public String getTypicalWeekday() {

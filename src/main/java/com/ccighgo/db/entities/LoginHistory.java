@@ -10,21 +10,25 @@ import java.sql.Timestamp;
  * 
  */
 @Entity
+@Table(name="LoginHistory")
 @NamedQuery(name="LoginHistory.findAll", query="SELECT l FROM LoginHistory l")
 public class LoginHistory implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer loginHistoryId;
 
+	@Column(length=20)
 	private String ipAddress;
 
+	@Column(nullable=false)
 	private Timestamp loggedOn;
 
 	//bi-directional many-to-one association to Login
 	@ManyToOne
-	@JoinColumn(name="loginId")
+	@JoinColumn(name="loginId", nullable=false)
 	private Login login;
 
 	public LoginHistory() {

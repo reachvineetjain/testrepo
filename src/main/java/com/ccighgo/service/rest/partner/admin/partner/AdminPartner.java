@@ -12,8 +12,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.partner.admin.PartnerAdminService;
@@ -33,8 +31,6 @@ import com.ccighgo.service.transport.partner.beans.partner.season.application.Pa
 @Produces("application/json")
 @Consumes("application/json")
 public class AdminPartner {
-
-   private static final Logger LOGGER = LoggerFactory.getLogger(AdminPartner.class);
 
    @Context HttpServletRequest request;
 
@@ -56,7 +52,6 @@ public class AdminPartner {
     */
    @GET
    @Path("added/partner/list/")
-   @Consumes("application/json")
    @Produces("application/json")
    public AddedPartners getAddedPartnerList() {
       return adminPartnerInterface.getAddedPartnerList();
@@ -111,7 +106,6 @@ public class AdminPartner {
     */
    @GET
    @Path("lead/partner/list/")
-   @Consumes("application/json")
    @Produces("application/json")
    public LeadPartners getLeadPartnerList() {
       return adminPartnerInterface.getLeadPartnerList();
@@ -159,6 +153,6 @@ public class AdminPartner {
    @Path("sendlogin/{partnerGoId}/{loginVal}/{loginId}")
    @Produces("application/json")
    public Response partnerLeadSendLogin(@PathParam("partnerGoId") String partnerGoId, @PathParam("loginVal") String loginVal, @PathParam("loginId") String loginId) {
-      return adminPartnerInterface.partnerLeadSendLogin(partnerGoId, loginVal,loginId, request);
+      return adminPartnerInterface.partnerLeadSendLogin(partnerGoId, loginVal, loginId, request);
    }
 }

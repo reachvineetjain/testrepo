@@ -44,7 +44,7 @@ public interface FieldStaffsInterface {
     * @return FieldStaffStatuses
     */
    public Response updateFieldStaffDetail(FieldStaffDetails fieldStaffDetail);
-   
+
    Response updateFieldStaffStatus(String fsgoId, String loginId, String statusId);
 
    public List<FieldStaffStatus> getAllFieldStaffStatuses();
@@ -66,7 +66,7 @@ public interface FieldStaffsInterface {
 
    public FSAddedSchool getAddedSchools(int fieldStaffId);
 
-public WSDefaultResponse changePartnerApplicationStatus(int parseInt, String newStatus, String note);
+   public WSDefaultResponse changePartnerApplicationStatus(int parseInt, String newStatus, String note);
 
-public WSDefaultResponse updateFieldStaffApplicationFollowUpDate(int parseInt, String followUpdate);
+   public WSDefaultResponse updateFieldStaffApplicationFollowUpDate(int parseInt, String followUpdate);
 }

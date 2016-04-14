@@ -18,32 +18,36 @@ public class CCIStaffRolesDefaultResourcePermission implements Serializable {
 	@EmbeddedId
 	private CCIStaffRolesDefaultResourcePermissionPK id;
 
+	@Column(nullable=false)
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
+	@Column(nullable=false)
 	private Integer modifiedBy;
 
+	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
 	//bi-directional many-to-one association to CCIStaffRolesDepartment
 	@ManyToOne
-	@JoinColumn(name="cciStaffRolesDepartmentId",nullable=false,insertable=false,updatable=false)
+	@JoinColumn(name="cciStaffRolesDepartmentId", nullable=false, insertable=false, updatable=false)
 	private CCIStaffRolesDepartment ccistaffRolesDepartment;
 
 	//bi-directional many-to-one association to DepartmentResourceGroup
 	@ManyToOne
-	@JoinColumn(name="departmentResourceGroupId")
+	@JoinColumn(name="departmentResourceGroupId", nullable=false)
 	private DepartmentResourceGroup departmentResourceGroup;
 
 	//bi-directional many-to-one association to ResourceAction
 	@ManyToOne
-	@JoinColumn(name="resourceActionId")
+	@JoinColumn(name="resourceActionId", nullable=false)
 	private ResourceAction resourceAction;
 
 	//bi-directional many-to-one association to ResourcePermission
 	@ManyToOne
-	@JoinColumn(name="resourcePermissionId",nullable=false,insertable=false,updatable=false)
+	@JoinColumn(name="resourcePermissionId", nullable=false, insertable=false, updatable=false)
 	private ResourcePermission resourcePermission;
 
 	public CCIStaffRolesDefaultResourcePermission() {

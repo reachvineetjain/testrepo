@@ -18,6 +18,7 @@ import com.ccighgo.db.entities.Season;
 import com.ccighgo.db.entities.SeasonGeographyConfiguration;
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.ErrorCode;
+import com.ccighgo.jpa.repositories.FieldStaffLeadershipSeasonRepository;
 import com.ccighgo.jpa.repositories.RegionRepository;
 import com.ccighgo.jpa.repositories.SeasonGeographyConfigurationRepository;
 import com.ccighgo.jpa.repositories.SeasonRepository;
@@ -54,6 +55,7 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
    @Autowired CommonComponentUtils componentUtils;
    @Autowired MessageUtils messageUtil;
    @Autowired StateRepository stateRepository;
+   @Autowired FieldStaffLeadershipSeasonRepository fieldStaffLeadershipSeasonRepository;
 
    @Override
    @Transactional(readOnly = true)
@@ -186,12 +188,32 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
          return sRegion;
       }
       try {
+         // Check whether Super Region already exists
          com.ccighgo.db.entities.SuperRegion sReg = superRegionRepository.findByName(superRegion.getSuperRegionName());
          if (sReg != null) {
-            sRegion.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.SUP_REG_ALREADY_EXIST.getValue(),
-                  messageUtil.getMessage(RegionManagementMessageConstants.SUP_REG_NAME_DUPLICATE)));
-            LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.SUP_REG_NAME_DUPLICATE));
-            return sRegion;
+            sRegion.setSuperRegionId(sReg.getSuperRegionId());
+            sRegion.setSuperRegionName(sReg.getSuperRegionName());
+
+            // Check if Super region associated to current season.
+            SeasonGeographyConfiguration configuration = seasonGeographyConfigurationRepository.findSuperRegionRowBySuperRegionIdSeasonId(sReg.getSuperRegionId(),
+                  Integer.valueOf(seasonId));
+            if (configuration != null) {
+               sRegion.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.SUP_REG_ALREADY_EXIST_SAME_SEASON.getValue(),
+                     messageUtil.getMessage(RegionManagementMessageConstants.SUP_REG_NAME_DUPLICATE_SAME_SEASON)));
+               LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.SUP_REG_NAME_DUPLICATE_SAME_SEASON));
+               return sRegion;
+            }
+            // Check if the Super region associated to other seasons
+            List<SeasonGeographyConfiguration> configurations = seasonGeographyConfigurationRepository.checkSuperRegionsAssociatedToOtherSeasons(sReg.getSuperRegionId(),
+                  Integer.valueOf(seasonId));
+            int count = configurations.size();
+            if (count != 0 || count > 0) {
+               sRegion.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.SUP_REG_ALREADY_EXIST.getValue(),
+                     messageUtil.getMessage(RegionManagementMessageConstants.SUP_REG_NAME_DUPLICATE)));
+               LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.SUP_REG_NAME_DUPLICATE));
+               return sRegion;
+            }
+
          } else {
             com.ccighgo.db.entities.SuperRegion supRegion = new com.ccighgo.db.entities.SuperRegion();
             supRegion.setSuperRegionName(superRegion.getSuperRegionName());
@@ -216,6 +238,55 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
             LOGGER.info("SeasonGeographyConfiguration added with id: " + seasonGeographyConfiguration.getSeasonGeographyConfigurationId() + " and super region id: "
                   + seasonGeographyConfiguration.getSuperRegion().getSuperRegionId() + " for season :" + season.getSeasonFullName() + " and season id: " + season.getSeasonId());
             sRegion = getSuperRegion(String.valueOf(supRegion.getSuperRegionId()));
+         }
+      } catch (CcighgoException e) {
+         sRegion.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_SUP_REG_ADD.getValue(),
+               messageUtil.getMessage(RegionManagementMessageConstants.SUP_REG_ADD_ERROR)));
+         LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.SUP_REG_ADD_ERROR));
+      }
+      return sRegion;
+   }
+
+   @Override
+   @Transactional
+   public SuperRegion addExistingSuperRegionToSeason(String seasonId, SuperRegion superRegion) {
+      SuperRegion sRegion = new SuperRegion();
+      if (seasonId != null && (Integer.valueOf(seasonId) == 0 || Integer.valueOf(seasonId) < 0)) {
+         sRegion.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_SEASON_ID.getValue(),
+               messageUtil.getMessage(CCIConstants.SEASON_ID_INVALID)));
+         LOGGER.error(messageUtil.getMessage(CCIConstants.SEASON_ID_INVALID));
+         return superRegion;
+      }
+      if (superRegion == null) {
+         sRegion.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.SUP_REG_NULL.getValue(),
+               messageUtil.getMessage(RegionManagementMessageConstants.SUP_REG_NULL)));
+         LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.SUP_REG_NULL));
+         return sRegion;
+      }
+      if (superRegion.getSuperRegionName() == null || superRegion.getSuperRegionName().isEmpty()) {
+         sRegion.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.SUP_REG_NAME_NULL.getValue(),
+               messageUtil.getMessage(RegionManagementMessageConstants.SUP_REG_NAME_NULL)));
+         LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.SUP_REG_NAME_NULL));
+         return sRegion;
+      }
+      try {
+         com.ccighgo.db.entities.SuperRegion sReg = superRegionRepository.findByName(superRegion.getSuperRegionName());
+         if (sReg != null) {
+            SeasonGeographyConfiguration seasonGeographyConfiguration = new SeasonGeographyConfiguration();
+            seasonGeographyConfiguration.setSuperRegion(sReg);
+            Season season = seasonRepository.findOne(Integer.valueOf(seasonId));
+            seasonGeographyConfiguration.setSeason(season);
+            seasonGeographyConfiguration.setCreatedBy(1);
+            seasonGeographyConfiguration.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+            seasonGeographyConfiguration.setModifiedBy(1);
+            seasonGeographyConfiguration.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+            seasonGeographyConfiguration = seasonGeographyConfigurationRepository.saveAndFlush(seasonGeographyConfiguration);
+
+            sRegion.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+            LOGGER.info("SeasonGeographyConfiguration added with id: " + seasonGeographyConfiguration.getSeasonGeographyConfigurationId() + " and super region id: "
+                  + seasonGeographyConfiguration.getSuperRegion().getSuperRegionId() + " for season :" + season.getSeasonFullName() + " and season id: " + season.getSeasonId());
+            sRegion = getSuperRegion(String.valueOf(superRegion.getSuperRegionId()));
          }
       } catch (CcighgoException e) {
          sRegion.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_SUP_REG_ADD.getValue(),
@@ -274,21 +345,27 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
          return request;
       }
       try {
+         List<Integer> seasonGeographyConfigurationIds = seasonGeographyConfigurationRepository.findByIdSuperRegionIdAndSeasonId(Integer.valueOf(superRegionId),
+               Integer.valueOf(seasonId));
+         for (Integer seasonGeographyConfigurationId : seasonGeographyConfigurationIds) {
+            fieldStaffLeadershipSeasonRepository.deleteRowBySeasonGeographyConfigurationId(seasonGeographyConfigurationId);
+         }
          seasonGeographyConfigurationRepository.deleteSuperRegionByIdAndSeasonId(Integer.valueOf(superRegionId), Integer.valueOf(seasonId));
          seasonGeographyConfigurationRepository.flush();
-         // Bugzilla 341: change request: If a Super Region is deleted from a season and that Super Region is not
-         // associated to any other season; then it should be removed from the SR lookup table.
+         // Bugzilla 341: change request: If a Super Region is deleted from a
+         // season and that Super Region is not
+         // associated to any other season; then it should be removed from the
+         // SR lookup table.
          boolean superRegionAssociated = false;
-         List<Integer> distinctIds = seasonGeographyConfigurationRepository.findDistinctSeasons();
-         if(distinctIds!=null){
-            for(int id:distinctIds){
-               SeasonGeographyConfiguration config = seasonGeographyConfigurationRepository.findOne(id);
-               if(config.getSeason()!=null){
-                  superRegionAssociated = true;
-               }
-            }
+         // Check that whether given Super region is not associated with other
+         // seasons
+         List<SeasonGeographyConfiguration> list = seasonGeographyConfigurationRepository.checkSuperRegionsAssociatedToOtherSeasons(Integer.valueOf(superRegionId),
+               Integer.valueOf(seasonId));
+         int count = list.size();
+         if (count == 0 || count < 0) {
+            superRegionAssociated = true;
          }
-         if(!superRegionAssociated){
+         if (superRegionAssociated) {
             superRegionRepository.delete(Integer.valueOf(superRegionId));
          }
          request.setObjectName(RegionManagementMessageConstants.SUPER_REGION);
@@ -361,10 +438,28 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
       try {
          com.ccighgo.db.entities.Region regionExist = regionRepository.findByRegionName(region.getRegionName());
          if (regionExist != null) {
-            rgn.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.REG_ALREADY_EXIST.getValue(),
-                  messageUtil.getMessage(RegionManagementMessageConstants.REG_NAME_DUPLICATE)));
-            LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.REG_NAME_DUPLICATE));
-            return rgn;
+            rgn.setRegionId(regionExist.getRegionId());
+            rgn.setRegionName(regionExist.getRegionName());
+
+            // Check if Region associated to current season.
+            SeasonGeographyConfiguration configuration = seasonGeographyConfigurationRepository.findRegionRowBySuperRegionIdRegionIdSeasonId(Integer.valueOf(superRegionId),
+                  regionExist.getRegionId(), Integer.valueOf(seasonId));
+            if (configuration != null) {
+               rgn.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.REG_ALREADY_EXIST_SAME_SEASON.getValue(),
+                     messageUtil.getMessage(RegionManagementMessageConstants.REG_NAME_DUP_SAME_SEASON)));
+               LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.REG_NAME_DUP_SAME_SEASON));
+               return rgn;
+            }
+            // Check if the Region associated to other seasons
+            List<SeasonGeographyConfiguration> configurations = seasonGeographyConfigurationRepository.checkRegionsAssociatedToOtherSeasons(regionExist.getRegionId(),
+                  Integer.valueOf(seasonId));
+            int count = configurations.size();
+            if (count != 0 || count > 0) {
+               rgn.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.REG_ALREADY_EXIST.getValue(),
+                     messageUtil.getMessage(RegionManagementMessageConstants.REG_NAME_DUPLICATE)));
+               LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.REG_NAME_DUPLICATE));
+               return rgn;
+            }
          } else {
             com.ccighgo.db.entities.Region regn = new com.ccighgo.db.entities.Region();
             regn.setActive(CCIConstants.ACTIVE);
@@ -374,6 +469,7 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
             regn.setModifiedBy(1);
             regn.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
             regn = regionRepository.saveAndFlush(regn);
+
             SeasonGeographyConfiguration seasonGeographyConfiguration = new SeasonGeographyConfiguration();
             seasonGeographyConfiguration.setSuperRegion(superRegionRepository.findOne(Integer.valueOf(superRegionId)));
             seasonGeographyConfiguration.setRegion(regn);
@@ -384,7 +480,61 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
             seasonGeographyConfiguration.setModifiedBy(1);
             seasonGeographyConfiguration.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
             seasonGeographyConfiguration = seasonGeographyConfigurationRepository.saveAndFlush(seasonGeographyConfiguration);
+
             rgn = getRegion(String.valueOf(regn.getRegionId()));
+            rgn.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         }
+      } catch (CcighgoException e) {
+         rgn.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_ADD_REGION.getValue(),
+               messageUtil.getMessage(RegionManagementMessageConstants.REG_ADD_ERROR)));
+         LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.REG_ADD_ERROR) + ":" + e);
+      }
+      return rgn;
+   }
+
+   @Override
+   public Region addExistingRegion(String superRegionId, String seasonId, Region region) {
+      Region rgn = new Region();
+      if (seasonId != null && (Integer.valueOf(seasonId) == 0 || Integer.valueOf(seasonId) < 0)) {
+         rgn.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_SEASON_ID.getValue(),
+               messageUtil.getMessage(CCIConstants.SEASON_ID_INVALID)));
+         LOGGER.error(messageUtil.getMessage(CCIConstants.SEASON_ID_INVALID));
+         return rgn;
+      }
+      if (superRegionId != null && (Integer.valueOf(superRegionId) == 0 || Integer.valueOf(superRegionId) < 0)) {
+         rgn.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_REQUEST.getValue(),
+               messageUtil.getMessage(RegionManagementMessageConstants.SUP_REG_ID_ZERO_OR_NEG)));
+         LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.SUP_REG_ID_ZERO_OR_NEG));
+         return rgn;
+      }
+      if (region == null) {
+         rgn.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_REQUEST.getValue(),
+               messageUtil.getMessage(RegionManagementMessageConstants.REG_NULL)));
+         LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.REG_NULL));
+         return region;
+      }
+      if (region.getRegionName() == null || region.getRegionName().isEmpty()) {
+         rgn.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.REG_NAME_NULL.getValue(),
+               messageUtil.getMessage(RegionManagementMessageConstants.REG_NAME_NULL)));
+         LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.REG_NAME_NULL));
+         return rgn;
+      }
+      try {
+         com.ccighgo.db.entities.Region regionExist = regionRepository.findByRegionName(region.getRegionName());
+         if (regionExist != null) {
+            SeasonGeographyConfiguration seasonGeographyConfiguration = new SeasonGeographyConfiguration();
+            seasonGeographyConfiguration.setSuperRegion(superRegionRepository.findOne(Integer.valueOf(superRegionId)));
+            seasonGeographyConfiguration.setRegion(regionExist);
+            Season season = seasonRepository.findOne(Integer.valueOf(seasonId));
+            seasonGeographyConfiguration.setSeason(season);
+            seasonGeographyConfiguration.setCreatedBy(1);
+            seasonGeographyConfiguration.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+            seasonGeographyConfiguration.setModifiedBy(1);
+            seasonGeographyConfiguration.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+            seasonGeographyConfiguration = seasonGeographyConfigurationRepository.saveAndFlush(seasonGeographyConfiguration);
+
+            rgn = getRegion(String.valueOf(regionExist.getRegionId()));
             rgn.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          }
@@ -456,8 +606,31 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
          return request;
       }
       try {
+         List<Integer> seasonGeographyConfigurationIds = seasonGeographyConfigurationRepository.findRegionByIdSuperRegionRegionAndSeasonId(Integer.valueOf(superRegionId),
+               Integer.valueOf(regionId), Integer.valueOf(seasonId));
+         for (Integer seasonGeographyConfigurationId : seasonGeographyConfigurationIds) {
+            fieldStaffLeadershipSeasonRepository.deleteRowBySeasonGeographyConfigurationId(seasonGeographyConfigurationId);
+         }
          seasonGeographyConfigurationRepository.deleteRegionByIdSeasonIdAndSupRegId(Integer.valueOf(superRegionId), Integer.valueOf(seasonId), Integer.valueOf(regionId));
          seasonGeographyConfigurationRepository.flush();
+
+         /*
+          * If Region is deleted from a season and Region is not associated to
+          * any other season; then it should be removed from the Region lookup
+          * table.
+          */
+         boolean regionAssociated = false;
+         // Check that whether given Super region is not associated with other
+         // seasons
+         List<SeasonGeographyConfiguration> list = seasonGeographyConfigurationRepository
+               .checkRegionsAssociatedToOtherSeasons(Integer.valueOf(regionId), Integer.valueOf(seasonId));
+         int count = list.size();
+         if (count == 0 || count < 0) {
+            regionAssociated = true;
+         }
+         if (regionAssociated) {
+            regionRepository.delete(Integer.valueOf(regionId));
+         }
          request.setObjectName(RegionManagementMessageConstants.REGION);
          request.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
@@ -711,6 +884,11 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
          return request;
       }
       try {
+         List<Integer> seasonGeographyConfigurationIds = seasonGeographyConfigurationRepository.findStateRowByIdSuperRegionIdRegionIdStateIdSeasonId(
+               Integer.valueOf(superRegionId), Integer.valueOf(regionId), Integer.valueOf(stateId), Integer.valueOf(seasonId));
+         for (Integer seasonGeographyConfigurationId : seasonGeographyConfigurationIds) {
+            fieldStaffLeadershipSeasonRepository.deleteRowBySeasonGeographyConfigurationId(seasonGeographyConfigurationId);
+         }
          seasonGeographyConfigurationRepository.deleteRegionByIdSeasonIdAndSupRegIdAndStateId(Integer.valueOf(seasonId), Integer.valueOf(superRegionId), Integer.valueOf(regionId),
                Integer.valueOf(stateId));
          seasonGeographyConfigurationRepository.flush();

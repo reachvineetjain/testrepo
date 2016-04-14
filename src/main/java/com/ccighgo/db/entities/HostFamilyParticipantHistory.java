@@ -10,12 +10,14 @@ import java.util.Date;
  * 
  */
 @Entity
+@Table(name="HostFamilyParticipantHistory")
 @NamedQuery(name="HostFamilyParticipantHistory.findAll", query="SELECT h FROM HostFamilyParticipantHistory h")
 public class HostFamilyParticipantHistory implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer hostFamilyParticipantHistoryId;
 
 	private Byte active;
@@ -31,8 +33,10 @@ public class HostFamilyParticipantHistory implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date endDate;
 
+	@Column(length=50)
 	private String hostFamilyName;
 
+	@Column(length=50)
 	private String localCoordinatorName;
 
 	private Integer modifiedBy;

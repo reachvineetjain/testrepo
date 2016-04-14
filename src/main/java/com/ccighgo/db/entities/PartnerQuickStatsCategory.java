@@ -17,8 +17,10 @@ public class PartnerQuickStatsCategory implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer partnerQSCategoryId;
 
+	@Column(length=50)
 	private String partnerQSCategoryName;
 
 	//bi-directional many-to-one association to PartnerQuickStatsType

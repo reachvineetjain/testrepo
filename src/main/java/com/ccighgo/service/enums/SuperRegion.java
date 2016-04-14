@@ -10,9 +10,7 @@ import java.io.Serializable;
  *
  */
 public enum SuperRegion implements Serializable {
-   WEST(1, "West"),
-   CENTRAL(2, "Central"),
-   EAST(3, "East");
+   WEST(1, "West"), CENTRAL(2, "Central"), EAST(3, "East");
 
    private int superRegionId;
    private String superRegionName;

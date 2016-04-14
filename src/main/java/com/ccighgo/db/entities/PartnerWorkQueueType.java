@@ -10,16 +10,20 @@ import java.util.List;
  * 
  */
 @Entity
+@Table(name="PartnerWorkQueueType")
 @NamedQuery(name="PartnerWorkQueueType.findAll", query="SELECT p FROM PartnerWorkQueueType p")
 public class PartnerWorkQueueType implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer partnerWQTypeId;
 
+	@Column(length=50)
 	private String displayWQTypeName;
 
+	@Column(length=50)
 	private String partnerWQTypeName;
 
 	//bi-directional many-to-one association to PartnerWorkQueue

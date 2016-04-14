@@ -64,6 +64,7 @@ import com.ccighgo.jpa.repositories.AdminWorkQueueCategoryAggregateRepository;
 import com.ccighgo.jpa.repositories.AdminWorkQueueCategoryRepository;
 import com.ccighgo.jpa.repositories.AdminWorkQueueTypeRepository;
 import com.ccighgo.jpa.repositories.CCIStaffUsersCCIStaffRolesRepository;
+import com.ccighgo.jpa.repositories.CCIStaffUsersRepository;
 import com.ccighgo.jpa.repositories.CountryRepository;
 import com.ccighgo.jpa.repositories.DepartmentProgramRepository;
 import com.ccighgo.jpa.repositories.DocumentInformationRepository;
@@ -116,7 +117,6 @@ import com.ccighgo.service.transport.integration.thirdparty.beans.partnerAdminOv
 import com.ccighgo.service.transport.integration.thirdparty.beans.partnerAdminOverviewOffices.PartnerAdminOverviewOfficesDetails;
 import com.ccighgo.service.transport.integration.thirdparty.beans.partnerAdminOverviewReferenceCheck.PartnerAdminOverviewReferenceCheck;
 import com.ccighgo.service.transport.integration.thirdparty.beans.partnerAdminOverviewReferenceCheck.PartnerAdminOverviewReferenceCheckDetails;
-import com.ccighgo.service.transport.participant.beans.availableseasonsforparticipant.SeasonsForParticipantDetails;
 import com.ccighgo.service.transport.partner.beans.availableseasonsforpartner.SeasonsForPartners;
 import com.ccighgo.service.transport.partner.beans.availableseasonsforpartner.SeasonsForPartnersDetails;
 import com.ccighgo.service.transport.partner.beans.partneradmindashboard.benchmarks.PartnerAdminDashboardBenchmarks;
@@ -149,7 +149,6 @@ import com.ccighgo.utils.PasscodeGenerator;
 import com.ccighgo.utils.PasswordUtil;
 import com.ccighgo.utils.UuidUtils;
 import com.ccighgo.utils.WSDefaultResponse;
-import com.google.gson.Gson;
 
 /**
  * @author Ahmed Abdelmaaboud
@@ -202,9 +201,11 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
    @Autowired DepartmentProgramRepository departmentProgramRepository;
    @Autowired UserTypeRepository userTypeRepository;
    @Autowired LoginUserTypeRepository loginUserTypeRepository;
+   @Autowired CCIStaffUsersRepository cciStaffUsersRepository;
 
    @Override
    public PartnerRecruitmentAdminLead getPartnerInquiryLeadData(int goId) {
+      logger.info("Go Id : " + goId);
       PartnerRecruitmentAdminLead pwt = new PartnerRecruitmentAdminLead();
       try {
          pwt.setGoId(goId);
@@ -213,14 +214,12 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
             pwt.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_WOEKQUEUE_PARTNER_INQUIRY_LEAD_DETAIL.getValue(),
                   messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_PARTNER_INQUIRY_LEAD_DETAIL)));
             logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_PARTNER_INQUIRY_LEAD_DETAIL));
-            logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_PARTNER_INQUIRY_LEAD_DETAIL));
             return pwt;
          }
          try {
             PartnerReviewStatus partnerReviewStatus = partnerReviewStatusRepository.findStatusByPartnerId(goId);
-            if (partnerReviewStatus != null) {
-               if (partnerReviewStatus.getPartnerStatus2() != null)
-                  pwt.setLeadStatus(partnerReviewStatus.getPartnerStatus2().getPartnerStatusName());
+            if (partnerReviewStatus != null && partnerReviewStatus.getPartnerStatus2() != null) {
+               pwt.setLeadStatus(partnerReviewStatus.getPartnerStatus2().getPartnerStatusName());
             }
          } catch (Exception e) {
             ExceptionUtil.logException(e, logger);
@@ -315,14 +314,16 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
       return pwt;
    }
 
+   @Transactional
    @Override
    public PartnerRecruitmentAdminLead updatePartnerInquiryLeadData(PartnerRecruitmentAdminLead pwt) {
       try {
+         if (pwt != null)
+            logger.info("updatePartnerInquiryLeadData :  GOID " + pwt.getGoId());
          PartnerAgentInquiry partnerAgentInquiry = partnerAgentInquiryRepository.findPartnerByGoId(pwt.getGoId());
          if (partnerAgentInquiry == null) {
             pwt.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_UPDATING__WOEKQUEUE_PARTNER_INQUIRY_LEAD.getValue(),
                   messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_PARTNER_INQUIRY_LEAD_UPDATE)));
-            logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_PARTNER_INQUIRY_LEAD_UPDATE));
             logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_PARTNER_INQUIRY_LEAD_UPDATE));
             return pwt;
          }
@@ -438,6 +439,21 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
             }
             if (partnerLogin != null && detail.getUsername() != null)
                partnerLogin.setLoginName(detail.getUsername());
+
+            List<AdminPartnerProgramsElgibilityAndCCIContact> cciContacts = pwt.getProgramEligibilityAndCCIContact();
+            List<PartnerProgram> partnerProgramsList = new ArrayList<PartnerProgram>();
+            for (AdminPartnerProgramsElgibilityAndCCIContact contact : cciContacts) {
+               PartnerProgram program = new PartnerProgram();
+               program.setPartnerProgramId(contact.getProgramId());
+               program.setCcistaffUser(cciStaffUsersRepository.findOne(contact.getCciContact().getCciUserId()));
+               program.setLookupDepartmentProgram(lookupDepartmentProgramRepository.findDepartmentProgramByProgramName(contact.getCciContactProgramName()));
+               program.setPartner(partner);
+               program.setHasApplied(CCIConstants.ACTIVE);
+               program.setIsEligible(contact.isMarked() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+               partnerProgramsList.add(program);
+            }
+            partnerProgramRepository.save(partnerProgramsList);
+
          } catch (Exception e) {
             ExceptionUtil.logException(e, logger);
          }
@@ -469,6 +485,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 
    @Override
    public PartnerRecruitmentAdmin getPartnerInquiryOverviewData(int goId) {
+      logger.info("GOID : " + goId);
       PartnerRecruitmentAdmin pwt = new PartnerRecruitmentAdmin();
       try {
          pwt.setGoId(goId);
@@ -478,7 +495,6 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          if (partner == null) {
             pwt.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_WOEKQUEUE_PARTNER_INQUIRY_OVERVIEW_DETAIL.getValue(),
                   messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_PARTNER_INQUIRY_OVERVIEW_DETAIL)));
-            logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_PARTNER_INQUIRY_OVERVIEW_DETAIL));
             logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_PARTNER_INQUIRY_OVERVIEW_DETAIL));
             return pwt;
          }
@@ -495,12 +511,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
             pwt.setActive(partnerLogin.getActive() != null && partnerLogin.getActive().equals(CCIConstants.ACTIVE));
          try {
             PartnerReviewStatus partnerReviewStatus = partnerReviewStatusRepository.findStatusByPartnerId(goId);
-            if (partnerReviewStatus != null) {
-               // if (partnerReviewStatus.getPartnerStatus1() != null)
-               // pwt.setActive(partnerReviewStatus.getPartnerStatus1().getPartnerStatusName().equalsIgnoreCase("Valid"));
-               if (partnerReviewStatus.getPartnerStatus2() != null)
-                  pwt.setLeadStatus(partnerReviewStatus.getPartnerStatus2().getPartnerStatusName());
-            }
+            if (partnerReviewStatus != null && partnerReviewStatus.getPartnerStatus2() != null)
+               pwt.setLeadStatus(partnerReviewStatus.getPartnerStatus2().getPartnerStatusName());
          } catch (Exception e) {
             ExceptionUtil.logException(e, logger);
          }
@@ -544,20 +556,22 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          }
 
          try {
-        	 if (partnerPrograms != null) {
-                 for (PartnerProgram partnerProgram : partnerPrograms) {
-                    AdminPartnerProgramsElgibilityAndCCIContact contact = new AdminPartnerProgramsElgibilityAndCCIContact();
-                    contact.setCciContactProgramName(partnerProgram.getLookupDepartmentProgram().getProgramName());
-                    contact.setMarked(partnerProgram.getIsEligible() == CCIConstants.ACTIVE ? true : false);
-                    contact.setProgramId(String.valueOf(partnerProgram.getPartnerProgramId()));
-                    if (partnerProgram.getCcistaffUser() != null) {
-                       CCIInquiryFormPerson cciContact = new CCIInquiryFormPerson();
-                       cciContact.setCciUserId(String.valueOf(partnerProgram.getCcistaffUser().getCciStaffUserId()));                                         
-                       contact.setCciContact(cciContact);
-                       pwt.getProgramEligibilityAndCCIContact().add(contact);
-                    }
-                 }
-              }
+            if (partnerPrograms != null) {
+               for (PartnerProgram partnerProgram : partnerPrograms) {
+                  AdminPartnerProgramsElgibilityAndCCIContact contact = new AdminPartnerProgramsElgibilityAndCCIContact();
+                  contact.setCciContactProgramName(partnerProgram.getLookupDepartmentProgram().getProgramName());
+                  contact.setMarked(partnerProgram.getIsEligible() == CCIConstants.ACTIVE ? true : false);
+                  contact.setProgramId((partnerProgram.getPartnerProgramId()));
+                  CCIInquiryFormPerson cciContact = new CCIInquiryFormPerson();
+                  if (partnerProgram.getCcistaffUser() == null) {
+                     cciContact.setCciUserId(CCIConstants.INACTIVE);
+                  } else {
+                     cciContact.setCciUserId((partnerProgram.getCcistaffUser().getCciStaffUserId()));
+                  }
+                  contact.setCciContact(cciContact);
+                  pwt.getProgramEligibilityAndCCIContact().add(contact);
+               }
+            }
          } catch (Exception e) {
             ExceptionUtil.logException(e, logger);
          }
@@ -613,7 +627,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                   contact.setFax(partnerContact.getFax());
                   contact.setFirstName(partnerContact.getFirstName());
                   contact.setLastName(partnerContact.getLastName());
-                  contact.setPhone(partnerContact.getPhone());                 
+                  contact.setPhone(partnerContact.getPhone());
                   if (partnerContact.getSalutation() != null)
                      contact.setSalutation(partnerContact.getSalutation().getSalutationName());
                   contact.setSkypeId(partnerContact.getSkypeId());
@@ -657,6 +671,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 
    @Override
    public AdminPartnerWorkQueueType getWorkQueueType(String roleType) {
+      logger.info("Role Type : " + roleType);
       AdminPartnerWorkQueueType pwt = new AdminPartnerWorkQueueType();
       try {
          List<AdminWorkQueueType> types = adminWorkQueueTypeRepository.findTypesByPartnerRole(roleType);
@@ -681,6 +696,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 
    @Override
    public AdminPartnerWorkQueueCategory getWorkQueueCategory(int adminWorkQueueTypeId, int userId) {
+      logger.info("Admin WorkQueueTypeID : " + adminWorkQueueTypeId + "  UserId : " + userId);
       AdminPartnerWorkQueueCategory pwqc = new AdminPartnerWorkQueueCategory();
       try {
          List<AdminWorkQueueCategory> categories = adminWorkQueueCategoryRepository.findAllCategoriesByTypeId(adminWorkQueueTypeId);
@@ -722,6 +738,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 
    @Override
    public AdminPartnerWorkQueueSubmittedApplications getWorkQueueSubmittedApplications(int typeId, int categoryId, int staffUserId, String roleType) {
+      logger.info("Type Id : " + typeId + "  CategoryId :" + categoryId + "  StaffUserId : " + staffUserId + "  RoleType : " + roleType);
       AdminPartnerWorkQueueSubmittedApplications pwqa = new AdminPartnerWorkQueueSubmittedApplications();
       try {
          // Admin work queue partner Search
@@ -777,6 +794,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 
    @Override
    public AdminPartnerWorkQueueDeadlineRequests getWorkQueueDeadlineRequests(int typeId, int categoryId, int staffUserId, String roleType) {
+      logger.info("Type Id : " + typeId + "  CategoryId :" + categoryId + "  StaffUserId : " + staffUserId + "  RoleType : " + roleType);
       AdminPartnerWorkQueueDeadlineRequests adr = new AdminPartnerWorkQueueDeadlineRequests();
       try {
 
@@ -841,7 +859,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 
    @Override
    public AdminPartnerWorkQueueRequestChangeInAllocation getWorkQueueChangeInAllocationRequests(int typeId, int categoryId, int staffUserId, String roleType) {
-
+      logger.info("Type Id : " + typeId + "  CategoryId :" + categoryId + "  StaffUserId : " + staffUserId + "  RoleType : " + roleType);
       AdminPartnerWorkQueueRequestChangeInAllocation rca = new AdminPartnerWorkQueueRequestChangeInAllocation();
       try {
          @SuppressWarnings("unchecked")
@@ -905,7 +923,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
    @Override
    @Transactional
    public AdminPartnerWorkQueueNotesReview getWorkQueuePartnerNoteReview(int typeId, int categoryId, int staffUserId, String roleType) {
-
+      logger.info("Type Id : " + typeId + "  CategoryId :" + categoryId + "  StaffUserId : " + staffUserId + "  RoleType : " + roleType);
       AdminPartnerWorkQueueNotesReview nr = new AdminPartnerWorkQueueNotesReview();
       try {
          @SuppressWarnings("unchecked")
@@ -940,9 +958,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                   nrd.setNoteTopicCreatedOn(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(String.valueOf(dr[13]))));
                nrd.setNoteTopicRoll(String.valueOf(dr[14]));
                nrd.setNoteRoll(String.valueOf(dr[15]));
-               System.out.println(dr[10]);
                nrd.setFollowUpDate(DateUtils.getTimestamp(DateUtils.getMysqlDateFromString(String.valueOf(dr[10]))));
-               System.out.println(DateUtils.getMysqlDateFromString(String.valueOf(dr[10])));
                nr.getNotesReview().add(nrd);
             }
             nr.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.WOEKQUEUE_SUBMITTED_NOTE_REVIEW.getValue(),
@@ -963,10 +979,11 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 
    @Override
    public WSDefaultResponse updatePartnerApplicationFollowUpDate(int goId, String newFollowUpDate) {
+      logger.info("GoId : " + goId + " FollowUpdate : " + newFollowUpDate);
       WSDefaultResponse wsDefaultResponse = new WSDefaultResponse();
       try {
          PartnerAgentInquiry partnerAgentInquiry = partnerAgentInquiryRepository.findPartnerByGoId(goId);
-         partnerAgentInquiry.setFollowUpDate(DateUtils.getDateFromString_followUpdate(newFollowUpDate));
+         partnerAgentInquiry.setFollowUpDate(DateUtils.getDateFromStringFollowUpdate(newFollowUpDate));
          partnerAgentInquiryRepository.saveAndFlush(partnerAgentInquiry);
          wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FOLLOW_UP_DATE_UPDATED.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
@@ -981,6 +998,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 
    @Override
    public WSDefaultResponse changePartnerApplicationStatus(int goId, String newStatus) {
+      logger.info("GOID :" + goId + "  NewStatus : " + newStatus);
       WSDefaultResponse wsDefaultResponse = new WSDefaultResponse();
       try {
          PartnerReviewStatus partnerReviewStatus = partnerReviewStatusRepository.findApplicationStatusByGoId(goId);
@@ -1001,13 +1019,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
    @Override
    public WSDefaultResponse addNoteToPartnerApplication(int goId, String noteValue) {
       WSDefaultResponse wsDefaultResponse = new WSDefaultResponse();
-      try {
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
-         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CANT_UPDATE_PARTNER_APPLICATION_STATUS.getValue(),
-               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_PARTNER_APPLICATION_STATUS)));
-         logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_PARTNER_APPLICATION_STATUS));
-      }
+      // TODO check the functionality of this Service
       return wsDefaultResponse;
    }
 
@@ -1126,7 +1138,9 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
       return null;
    }
 
-   /****************************** Partner Inquiry Overview *****************************/
+   /******************************
+    * Partner Inquiry Overview
+    *****************************/
 
    @Transactional
    @Override
@@ -1763,9 +1777,9 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
       try {
          PartnerSeason partnerSeason = partnerSeasonsRepository.findPartnerSeasonBySeasonIdProgramIdPartnerGoId(SeasonId, ProgramId, PartnerGoId);
          if (partnerSeason.getAppSecSemDeadlineFollowupDate() != null)
-            partnerSeason.setAppSecSemDeadlineFollowupDate(DateUtils.getDateFromString_followUpdate(followUpdate));
+            partnerSeason.setAppSecSemDeadlineFollowupDate(DateUtils.getDateFromStringFollowUpdate(followUpdate));
          else
-            partnerSeason.setAppDeadlineFollowupDate(DateUtils.getDateFromString_followUpdate(followUpdate));
+            partnerSeason.setAppDeadlineFollowupDate(DateUtils.getDateFromStringFollowUpdate(followUpdate));
          partnerSeasonsRepository.saveAndFlush(partnerSeason);
          wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FOLLOW_UP_DATE_UPDATED.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
@@ -1785,7 +1799,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
       try {
 
          PartnerSeasonAllocation partnerSeasonAllocation = partnerSeasonAllocationRepository.findOne(partnerSeasonAllocationId);
-         partnerSeasonAllocation.setFollowupDate(DateUtils.getDateFromString_followUpdate(followUpdate));
+         partnerSeasonAllocation.setFollowupDate(DateUtils.getDateFromStringFollowUpdate(followUpdate));
          partnerSeasonAllocationRepository.saveAndFlush(partnerSeasonAllocation);
          wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FOLLOW_UP_DATE_UPDATED.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
@@ -1803,7 +1817,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
       WSDefaultResponse wsDefaultResponse = new WSDefaultResponse();
       try {
          PartnerNote partnerNote = partnerNoteRepository.findOne(partnerNotesId);
-         partnerNote.setFollowupDate(DateUtils.getDateFromString_followUpdate(followUpdate));
+         partnerNote.setFollowupDate(DateUtils.getDateFromStringFollowUpdate(followUpdate));
          partnerNoteRepository.saveAndFlush(partnerNote);
          wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FOLLOW_UP_DATE_UPDATED.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
@@ -2115,7 +2129,11 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                ps.setPartner(p);
                ps.setDepartmentProgram(departmentProgram2);
 
-               ps.setPartnerStatus1(partnerStatusRepository.findOne(4));
+               ps.setPartnerSeasonStartDate(DateUtils.getDateFromString((data.getStartDate())));
+               ps.setPartnerSeasonAppDeadlineDate(DateUtils.getDateFromString(data.getAppDeadlineDate()));
+               ps.setPartnerSeasonEndDate(DateUtils.getDateFromString((data.getEndDate())));
+
+               ps.setPartnerStatus1(partnerStatusRepository.findOne(CCIConstants.APPROVED_STATUS));
                ps.setInsuranceProvidedByCCI(CCIConstants.INACTIVE);
                ps.setSevisFeesPaidByCCI(CCIConstants.INACTIVE);
                ps.setQuestionaireRequired(CCIConstants.INACTIVE);
@@ -2143,20 +2161,6 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
       return wsDefaultResponse;
    }
 
-   public static void main(String[] args) {
-      Gson gson = new Gson();
-      AssignSeasonToSubPartner a = new AssignSeasonToSubPartner();
-      a.setLoginId(333);
-      a.setSubPartner(333);
-      List<AssignedSeasonData> ll = new ArrayList<AssignedSeasonData>();
-      ll.add(new AssignedSeasonData(33, 44));
-      ll.add(new AssignedSeasonData(33, 44));
-      ll.add(new AssignedSeasonData(33, 44));
-      ll.add(new AssignedSeasonData(33, 44));
-      a.setAssignedSeasonData(ll);
-      System.out.println(gson.toJson(a));
-   }
-
    @Override
    public SeasonsForPartners getAllAvailableSeasons2(String partnerId) {
       SeasonsForPartners seasons = new SeasonsForPartners();
@@ -2172,6 +2176,13 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                   seasonsForPartnersDetails.setSeasonId(Integer.valueOf(String.valueOf(dt[0])));
                if (dt[2] != null)
                   seasonsForPartnersDetails.setDepartmentProgramId(Integer.valueOf(String.valueOf(dt[2])));
+               java.util.Date startDate = (java.util.Date) dt[3];
+               java.util.Date appDeadlineDate = (java.util.Date) dt[4];
+               java.util.Date endDate = (java.util.Date) dt[5];
+               seasonsForPartnersDetails.setStartDate(DateUtils.getMMddYyyyString(startDate));
+               seasonsForPartnersDetails.setAppDeadlineDate(DateUtils.getMMddYyyyString(appDeadlineDate));
+               seasonsForPartnersDetails.setEndDate(DateUtils.getMMddYyyyString(endDate));
+
                seasons.getDetails().add(seasonsForPartnersDetails);
             }
          }

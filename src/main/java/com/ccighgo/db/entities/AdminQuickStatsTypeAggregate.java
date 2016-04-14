@@ -10,18 +10,22 @@ import java.sql.Timestamp;
  * 
  */
 @Entity
+@Table(name="AdminQuickStatsTypeAggregate")
 @NamedQuery(name="AdminQuickStatsTypeAggregate.findAll", query="SELECT a FROM AdminQuickStatsTypeAggregate a")
 public class AdminQuickStatsTypeAggregate implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer adminQSTypeAggregateId;
 
 	private Integer adminQSTypeAggregate;
 
+	@Column(length=50)
 	private String adminQSTypeName;
 
+	@Column(nullable=false)
 	private Timestamp modifiedDate;
 
 	//bi-directional many-to-one association to AdminQuickStatsType

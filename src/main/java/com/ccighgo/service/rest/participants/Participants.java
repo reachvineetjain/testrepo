@@ -35,38 +35,39 @@ public class Participants {
    private static final Logger LOGGER = LoggerFactory.getLogger(Participants.class);
 
    @Autowired ParticipantsInterface participantsInterface;
-   
+
    @Context HttpServletRequest request;
-   
+
    @GET
    @Path("active/list/{partnerId}")
    @Produces("application/json")
-   public ParticipantsActiveList getActiveParticipantsList(@PathParam("partnerId") String partnerId){
-      LOGGER.info("calling Participants.getActiveParticipantsList for partner id {}",partnerId);
+   public ParticipantsActiveList getActiveParticipantsList(@PathParam("partnerId") String partnerId) {
+      LOGGER.info("calling Participants.getActiveParticipantsList for partner id {}", partnerId);
       return participantsInterface.getActiveParticipantsList(partnerId);
-      
+
    }
+
    @GET
    @Path("list/AddedParticipant/{partnerId}")
    @Produces("application/json")
-   public AddedParticipantsList getAddedParticipant(@PathParam("partnerId") String partnerId){
-      LOGGER.info("calling Participants.getAddedParticipant for partner id {}",partnerId);
+   public AddedParticipantsList getAddedParticipant(@PathParam("partnerId") String partnerId) {
+      LOGGER.info("calling Participants.getAddedParticipant for partner id {}", partnerId);
       return participantsInterface.getAddedParticipant(partnerId);
-      
+
    }
-   
+
    @GET
    @Path("lead/list/{partnerId}")
    @Produces("application/json")
-   public ParticipantsLeadList getLeadParticipantsList(@PathParam("partnerId") String partnerId){
-      LOGGER.info("calling Participants.getLeadParticipantsList for partner id {}",partnerId);
+   public ParticipantsLeadList getLeadParticipantsList(@PathParam("partnerId") String partnerId) {
+      LOGGER.info("calling Participants.getLeadParticipantsList for partner id {}", partnerId);
       return participantsInterface.getLeadParticipantsList(partnerId);
    }
-   
+
    @POST
    @Path("create/participant")
    @Produces("application/json")
-   public NewManualParticipant addNewParticipant(NewManualParticipant newParticipant){
+   public NewManualParticipant addNewParticipant(NewManualParticipant newParticipant) {
       LOGGER.info("calling Participants.addNewParticipant ");
       return participantsInterface.addNewParticipant(newParticipant);
    }
@@ -74,15 +75,15 @@ public class Participants {
    @GET
    @Path("view/participants/{seasonId}/{programOptionId}")
    @Produces("application/json")
-   public NewManualParticipant viewParticipant(@PathParam("seasonId") String seasonId,@PathParam("programOptionId") String programOptionId){
+   public NewManualParticipant viewParticipant(@PathParam("seasonId") String seasonId, @PathParam("programOptionId") String programOptionId) {
       LOGGER.info("calling Participants.editNewParticipant ");
-      return null; //participantsInterface.editNewParticipant(Integer.parseInt(participantId));
+      return null; // participantsInterface.editNewParticipant(Integer.parseInt(participantId));
    }
-   
+
    @POST
    @Path("update/participant")
    @Produces("application/json")
-   public NewManualParticipant updateParticipant(NewManualParticipant participant){
+   public NewManualParticipant updateParticipant(NewManualParticipant participant) {
       LOGGER.info("calling Participants.updateParticipant");
       return participantsInterface.updateParticipant(participant);
    }
@@ -90,73 +91,77 @@ public class Participants {
    @GET
    @Path("allSeasons")
    @Produces("application/json")
-   public SeasonsForParticipants getAllAvailableSeasons(){
+   public SeasonsForParticipants getAllAvailableSeasons() {
       LOGGER.info("calling Participants.getAllAvailableSeasons ");
       return participantsInterface.getAllAvailableSeasons();
    }
+
    @GET
    @Path("allSeasons/{partnerId}")
    @Produces("application/json")
-   public SeasonsForParticipants getAllAvailableSeasons(@PathParam("partnerId")  String partnerId){
+   public SeasonsForParticipants getAllAvailableSeasons(@PathParam("partnerId") String partnerId) {
       LOGGER.info("calling Participants.getAllAvailableSeasons ");
       return participantsInterface.getAllAvailableSeasons2(partnerId);
    }
-   
+
    @GET
    @Path("allProgramOptions/{partnerId}/{seasonId}/{departmentProgramId}")
    @Produces("application/json")
-   public ProgramOptionsForParticipants getAllAvailableProgramOptions2(@PathParam("partnerId")  String partnerId, @PathParam("seasonId") String seasonId,@PathParam("departmentProgramId")String departmentProgramId){
+   public ProgramOptionsForParticipants getAllAvailableProgramOptions2(@PathParam("partnerId") String partnerId, @PathParam("seasonId") String seasonId,
+         @PathParam("departmentProgramId") String departmentProgramId) {
       LOGGER.info("calling Participants.getAllAvailableProgramOptions ");
-      return participantsInterface.getAllAvailableProgramOptions(Integer.parseInt(partnerId),Integer.parseInt(seasonId),Integer.parseInt(departmentProgramId));
+      return participantsInterface.getAllAvailableProgramOptions(Integer.parseInt(partnerId), Integer.parseInt(seasonId), Integer.parseInt(departmentProgramId));
    }
-   
+
    @GET
    @Path("allProgramOptions/{partnerId}/{seasonId}")
    @Produces("application/json")
-   public ProgramOptionsForParticipants getAllAvailableProgramOptions(@PathParam("partnerId")  String partnerId, @PathParam("seasonId") String seasonId){
+   public ProgramOptionsForParticipants getAllAvailableProgramOptions(@PathParam("partnerId") String partnerId, @PathParam("seasonId") String seasonId) {
       LOGGER.info("calling Participants.getAllAvailableProgramOptions ");
-      return participantsInterface.getAllAvailableProgramOptions(Integer.parseInt(partnerId),Integer.parseInt(seasonId));
+      return participantsInterface.getAllAvailableProgramOptions(Integer.parseInt(partnerId), Integer.parseInt(seasonId));
    }
-   
+
    @GET
    @Path("allSubPartners/{partnerId}")
    @Produces("application/json")
-   public SubPartnersForParticipants getAllAvailableSubPartners(@PathParam("partnerId")  String partnerId){
+   public SubPartnersForParticipants getAllAvailableSubPartners(@PathParam("partnerId") String partnerId) {
       LOGGER.info("calling Participants.getAllAvailableSubPartners ");
       return participantsInterface.getAllAvailableSubPartners(Integer.parseInt(partnerId));
    }
-   
+
    @GET
    @Path("assignSeason/{seasonId}/{participantId}/{departmentProgramId}")
    @Produces("application/json")
-   public WSDefaultResponse assignSeasonToParticipant(@PathParam("seasonId") String seasonId,@PathParam("participantId")String participantId,@PathParam("departmentProgramId")String departmentProgramId){
+   public WSDefaultResponse assignSeasonToParticipant(@PathParam("seasonId") String seasonId, @PathParam("participantId") String participantId,
+         @PathParam("departmentProgramId") String departmentProgramId) {
       LOGGER.info("calling Participants.assignSeasonToParticipant ");
-      return participantsInterface.assignSeasonToParticipant(seasonId,participantId, departmentProgramId);
+      return participantsInterface.assignSeasonToParticipant(seasonId, participantId, departmentProgramId);
    }
+
    @GET
    @Path("assignSubPartner/{subpartnerId}/{participantId}")
    @Produces("application/json")
-   public WSDefaultResponse assignSubpartnerToParticipant(@PathParam("subpartnerId") String subpartnerId,@PathParam("participantId")String participantId){
+   public WSDefaultResponse assignSubpartnerToParticipant(@PathParam("subpartnerId") String subpartnerId, @PathParam("participantId") String participantId) {
       LOGGER.info("calling Participants.assignSubpartnerToParticipant ");
-      return participantsInterface.assignSubpartnerToParticipant(subpartnerId,participantId);
+      return participantsInterface.assignSubpartnerToParticipant(subpartnerId, participantId);
    }
-   
+
    @GET
    @Path("assignEmailToParticipant/{participantId}/{email}")
    @Produces("application/json")
-   public WSDefaultResponse assignEmailToParticipant(@PathParam("participantId") String participantId,@PathParam("email")String email){
+   public WSDefaultResponse assignEmailToParticipant(@PathParam("participantId") String participantId, @PathParam("email") String email) {
       LOGGER.info("calling Participants.assignEmailToParticipant ");
-      return participantsInterface.assignEmailToParticipant(participantId,email);
+      return participantsInterface.assignEmailToParticipant(participantId, email);
    }
-   
+
    @GET
    @Path("changeParticipantStatus/{participantId}/{status}")
    @Produces("application/json")
-   public WSDefaultResponse changeParticipantStatus(@PathParam("participantId") String participantId,@PathParam("status")String status){
+   public WSDefaultResponse changeParticipantStatus(@PathParam("participantId") String participantId, @PathParam("status") String status) {
       LOGGER.info("calling Participants.changeParticipantStatus ");
-      return participantsInterface.changeParticipantStatus(participantId,status);
+      return participantsInterface.changeParticipantStatus(participantId, status);
    }
-   
+
    /**
     * @param participantGoId
     * @return
@@ -165,14 +170,15 @@ public class Participants {
    @Path("reset/access/{participantGoId}")
    @Produces("application/json")
    public Response resetParticipantPassword(@PathParam("participantGoId") String participantGoId) {
+      LOGGER.info("calling Participants.resetParticipantPassword ");
       return participantsInterface.resetParticipantPassword(participantGoId, request);
    }
-   
+
    @GET
    @Path("sendLogin/{participantGoId}")
    @Produces("application/json")
    public Response sendLogin(@PathParam("participantGoId") String participantGoId) {
+      LOGGER.info("calling Participants.sendLogin ");
       return participantsInterface.sendLogin(participantGoId, request);
    }
-
 }

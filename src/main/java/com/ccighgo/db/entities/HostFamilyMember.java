@@ -3,6 +3,7 @@ package com.ccighgo.db.entities;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -10,24 +11,17 @@ import java.util.Date;
  * 
  */
 @Entity
+@Table(name="HostFamilyMember")
 @NamedQuery(name="HostFamilyMember.findAll", query="SELECT h FROM HostFamilyMember h")
 public class HostFamilyMember implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer hostFamilyMemberId;
 
 	private Byte active;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date backGroundCheckDate;
-
-	private Byte backGroundCheckPassed;
-
-	private String backGroundCheckReportUrl;
-
-	private Byte backGroundCheckSubmitted;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date birthDate;
@@ -35,44 +29,87 @@ public class HostFamilyMember implements Serializable {
 	@Lob
 	private String communityInvolvement;
 
-	private String contactName;
+	@Column(length=100)
+	private String contactName1;
+
+	@Column(length=50)
+	private String contactName2;
 
 	private Integer createdBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdOn;
 
+	@Column(length=50)
 	private String educationLevel;
 
-	private Byte employed;
+	@Column(length=50)
+	private String employed;
 
+	@Column(length=50)
+	private String employer1;
+
+	@Column(length=50)
+	private String employer2;
+
+	private Byte employmentType;
+
+	@Column(length=50)
 	private String firstName;
+
+	private Byte haveAnotherJob;
 
 	@Lob
 	private String interests;
 
 	private Byte isFamilyChild;
 
-	private String isHostParent;
+	private Byte isHostParent;
 
 	private Byte isSingleAdult;
 
-	private String jobTitle;
+	@Column(length=100)
+	private String jobTitle1;
 
+	@Column(length=50)
+	private String jobTitle2;
+
+	@Column(length=50)
 	private String lastName;
 
 	private Byte livingAtHome;
+
+	@Column(length=100)
+	private String livingAtHomeExplanation;
+
+	@Column(length=50)
+	private String memberEmail;
+
+	@Column(length=25)
+	private String memberPhone;
 
 	private Integer modifiedBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date modifiedOn;
 
-	private String phone;
+	@Column(length=100)
+	private String phone1;
+
+	@Column(length=50)
+	private String phone2;
 
 	private Byte reasonForRejection;
 
+	@Column(length=50)
+	private String relationship;
+
+	@Column(length=20)
 	private String residencyTime;
+
+	//bi-directional many-to-one association to HostFamilyBackground
+	@OneToMany(mappedBy="hostFamilyMember")
+	private List<HostFamilyBackground> hostFamilyBackgrounds;
 
 	//bi-directional many-to-one association to HostFamilySeason
 	@ManyToOne
@@ -83,11 +120,6 @@ public class HostFamilyMember implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="genderId")
 	private LookupGender lookupGender;
-
-	//bi-directional many-to-one association to Relationship
-	@ManyToOne
-	@JoinColumn(name="relationshipId")
-	private Relationship relationship;
 
 	public HostFamilyMember() {
 	}
@@ -108,38 +140,6 @@ public class HostFamilyMember implements Serializable {
 		this.active = active;
 	}
 
-	public Date getBackGroundCheckDate() {
-		return this.backGroundCheckDate;
-	}
-
-	public void setBackGroundCheckDate(Date backGroundCheckDate) {
-		this.backGroundCheckDate = backGroundCheckDate;
-	}
-
-	public Byte getBackGroundCheckPassed() {
-		return this.backGroundCheckPassed;
-	}
-
-	public void setBackGroundCheckPassed(Byte backGroundCheckPassed) {
-		this.backGroundCheckPassed = backGroundCheckPassed;
-	}
-
-	public String getBackGroundCheckReportUrl() {
-		return this.backGroundCheckReportUrl;
-	}
-
-	public void setBackGroundCheckReportUrl(String backGroundCheckReportUrl) {
-		this.backGroundCheckReportUrl = backGroundCheckReportUrl;
-	}
-
-	public Byte getBackGroundCheckSubmitted() {
-		return this.backGroundCheckSubmitted;
-	}
-
-	public void setBackGroundCheckSubmitted(Byte backGroundCheckSubmitted) {
-		this.backGroundCheckSubmitted = backGroundCheckSubmitted;
-	}
-
 	public Date getBirthDate() {
 		return this.birthDate;
 	}
@@ -156,12 +156,20 @@ public class HostFamilyMember implements Serializable {
 		this.communityInvolvement = communityInvolvement;
 	}
 
-	public String getContactName() {
-		return this.contactName;
+	public String getContactName1() {
+		return this.contactName1;
 	}
 
-	public void setContactName(String contactName) {
-		this.contactName = contactName;
+	public void setContactName1(String contactName1) {
+		this.contactName1 = contactName1;
+	}
+
+	public String getContactName2() {
+		return this.contactName2;
+	}
+
+	public void setContactName2(String contactName2) {
+		this.contactName2 = contactName2;
 	}
 
 	public Integer getCreatedBy() {
@@ -188,12 +196,36 @@ public class HostFamilyMember implements Serializable {
 		this.educationLevel = educationLevel;
 	}
 
-	public Byte getEmployed() {
+	public String getEmployed() {
 		return this.employed;
 	}
 
-	public void setEmployed(Byte employed) {
+	public void setEmployed(String employed) {
 		this.employed = employed;
+	}
+
+	public String getEmployer1() {
+		return this.employer1;
+	}
+
+	public void setEmployer1(String employer1) {
+		this.employer1 = employer1;
+	}
+
+	public String getEmployer2() {
+		return this.employer2;
+	}
+
+	public void setEmployer2(String employer2) {
+		this.employer2 = employer2;
+	}
+
+	public Byte getEmploymentType() {
+		return this.employmentType;
+	}
+
+	public void setEmploymentType(Byte employmentType) {
+		this.employmentType = employmentType;
 	}
 
 	public String getFirstName() {
@@ -202,6 +234,14 @@ public class HostFamilyMember implements Serializable {
 
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
+	}
+
+	public Byte getHaveAnotherJob() {
+		return this.haveAnotherJob;
+	}
+
+	public void setHaveAnotherJob(Byte haveAnotherJob) {
+		this.haveAnotherJob = haveAnotherJob;
 	}
 
 	public String getInterests() {
@@ -220,11 +260,11 @@ public class HostFamilyMember implements Serializable {
 		this.isFamilyChild = isFamilyChild;
 	}
 
-	public String getIsHostParent() {
+	public Byte getIsHostParent() {
 		return this.isHostParent;
 	}
 
-	public void setIsHostParent(String isHostParent) {
+	public void setIsHostParent(Byte isHostParent) {
 		this.isHostParent = isHostParent;
 	}
 
@@ -236,12 +276,20 @@ public class HostFamilyMember implements Serializable {
 		this.isSingleAdult = isSingleAdult;
 	}
 
-	public String getJobTitle() {
-		return this.jobTitle;
+	public String getJobTitle1() {
+		return this.jobTitle1;
 	}
 
-	public void setJobTitle(String jobTitle) {
-		this.jobTitle = jobTitle;
+	public void setJobTitle1(String jobTitle1) {
+		this.jobTitle1 = jobTitle1;
+	}
+
+	public String getJobTitle2() {
+		return this.jobTitle2;
+	}
+
+	public void setJobTitle2(String jobTitle2) {
+		this.jobTitle2 = jobTitle2;
 	}
 
 	public String getLastName() {
@@ -260,6 +308,30 @@ public class HostFamilyMember implements Serializable {
 		this.livingAtHome = livingAtHome;
 	}
 
+	public String getLivingAtHomeExplanation() {
+		return this.livingAtHomeExplanation;
+	}
+
+	public void setLivingAtHomeExplanation(String livingAtHomeExplanation) {
+		this.livingAtHomeExplanation = livingAtHomeExplanation;
+	}
+
+	public String getMemberEmail() {
+		return this.memberEmail;
+	}
+
+	public void setMemberEmail(String memberEmail) {
+		this.memberEmail = memberEmail;
+	}
+
+	public String getMemberPhone() {
+		return this.memberPhone;
+	}
+
+	public void setMemberPhone(String memberPhone) {
+		this.memberPhone = memberPhone;
+	}
+
 	public Integer getModifiedBy() {
 		return this.modifiedBy;
 	}
@@ -276,12 +348,20 @@ public class HostFamilyMember implements Serializable {
 		this.modifiedOn = modifiedOn;
 	}
 
-	public String getPhone() {
-		return this.phone;
+	public String getPhone1() {
+		return this.phone1;
 	}
 
-	public void setPhone(String phone) {
-		this.phone = phone;
+	public void setPhone1(String phone1) {
+		this.phone1 = phone1;
+	}
+
+	public String getPhone2() {
+		return this.phone2;
+	}
+
+	public void setPhone2(String phone2) {
+		this.phone2 = phone2;
 	}
 
 	public Byte getReasonForRejection() {
@@ -292,12 +372,42 @@ public class HostFamilyMember implements Serializable {
 		this.reasonForRejection = reasonForRejection;
 	}
 
+	public String getRelationship() {
+		return this.relationship;
+	}
+
+	public void setRelationship(String relationship) {
+		this.relationship = relationship;
+	}
+
 	public String getResidencyTime() {
 		return this.residencyTime;
 	}
 
 	public void setResidencyTime(String residencyTime) {
 		this.residencyTime = residencyTime;
+	}
+
+	public List<HostFamilyBackground> getHostFamilyBackgrounds() {
+		return this.hostFamilyBackgrounds;
+	}
+
+	public void setHostFamilyBackgrounds(List<HostFamilyBackground> hostFamilyBackgrounds) {
+		this.hostFamilyBackgrounds = hostFamilyBackgrounds;
+	}
+
+	public HostFamilyBackground addHostFamilyBackground(HostFamilyBackground hostFamilyBackground) {
+		getHostFamilyBackgrounds().add(hostFamilyBackground);
+		hostFamilyBackground.setHostFamilyMember(this);
+
+		return hostFamilyBackground;
+	}
+
+	public HostFamilyBackground removeHostFamilyBackground(HostFamilyBackground hostFamilyBackground) {
+		getHostFamilyBackgrounds().remove(hostFamilyBackground);
+		hostFamilyBackground.setHostFamilyMember(null);
+
+		return hostFamilyBackground;
 	}
 
 	public HostFamilySeason getHostFamilySeason() {
@@ -314,14 +424,6 @@ public class HostFamilyMember implements Serializable {
 
 	public void setLookupGender(LookupGender lookupGender) {
 		this.lookupGender = lookupGender;
-	}
-
-	public Relationship getRelationship() {
-		return this.relationship;
-	}
-
-	public void setRelationship(Relationship relationship) {
-		this.relationship = relationship;
 	}
 
 }

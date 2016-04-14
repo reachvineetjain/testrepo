@@ -1,57 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema targetNamespace="http://www.ccighgo.com/assignedregion" elementFormDefault="unqualified" attributeFormDefault="unqualified"
-   xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:assignedregion="http://www.ccighgo.com/assignedregion" xmlns:Q1="http://www.ccighgo.com" xmlns:common="http://www.ccighgo.com/common"
-   xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" jaxb:version="2.0">
+<xsd:schema targetNamespace="http://www.ccighgo.com/assignedregion"
+	elementFormDefault="unqualified" attributeFormDefault="unqualified"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:assignedregion="http://www.ccighgo.com/assignedregion"
+	xmlns:Q1="http://www.ccighgo.com" xmlns:common="http://www.ccighgo.com/common"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" jaxb:version="2.0">
 
-   <xsd:annotation>
-      <xsd:appinfo>
-         <jaxb:schemaBindings>
-            <jaxb:package name="com.ccighgo.service.transport.season.beans.assignedregion" />
-         </jaxb:schemaBindings>
-      </xsd:appinfo>
-      <xsd:documentation></xsd:documentation>
-   </xsd:annotation>
-   <xsd:import schemaLocation="../Common.xsd" namespace="http://www.ccighgo.com/common"></xsd:import>
+	<xsd:annotation>
+		<xsd:appinfo>
+			<jaxb:schemaBindings>
+				<jaxb:package
+					name="com.ccighgo.service.transport.season.beans.assignedregion" />
+			</jaxb:schemaBindings>
+		</xsd:appinfo>
+		<xsd:documentation></xsd:documentation>
+	</xsd:annotation>
+	<xsd:import schemaLocation="../Common.xsd" namespace="http://www.ccighgo.com/common"></xsd:import>
 
-   <xsd:element name="AssignedRegion" type="assignedregion:AssignedRegion"></xsd:element>
+	<xsd:element name="AssignedRegion" type="assignedregion:AssignedRegion"></xsd:element>
 
-   <xsd:complexType name="AssignedRegion">
-      <xsd:complexContent>
-         <xsd:extension  base="common:Response">
-            <xsd:sequence>
-               <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="superRegionId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="regionDetail" type="assignedregion:RegionDetail" minOccurs="1" maxOccurs="unbounded" />
-            </xsd:sequence>
-         </xsd:extension>
-      </xsd:complexContent>
-   </xsd:complexType>
+	<xsd:complexType name="AssignedRegion">
+		<xsd:complexContent>
+			<xsd:extension base="common:Response">
+				<xsd:sequence>
+					<xsd:element name="seasonId" type="xsd:int" minOccurs="1"
+						maxOccurs="1" />
+					<xsd:element name="superRegionId" type="xsd:int"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="regionDetail" type="assignedregion:RegionDetail"
+						minOccurs="1" maxOccurs="unbounded" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
 
-   <xsd:complexType name="RegionDetail">
-            <xsd:sequence>
-               <xsd:element name="regionId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="regionName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="assignedRDStaff" type="assignedregion:AssignedRDStaff" minOccurs="0" maxOccurs="unbounded" />
-            </xsd:sequence>
-   </xsd:complexType>
+	<xsd:complexType name="RegionDetail">
+		<xsd:sequence>
+			<xsd:element name="regionId" type="xsd:int" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="regionName" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="seasonGeographyConfigurationId" type="xsd:int"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="assignedRDStaff" type="assignedregion:AssignedRDStaff"
+				minOccurs="0" maxOccurs="unbounded" />
+		</xsd:sequence>
+	</xsd:complexType>
 
-   <xsd:complexType name="AssignedRDStaff">
-            <xsd:sequence>
-               <xsd:element name="staffId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="assignedArea" type="assignedregion:RegionAssignedArea" minOccurs="1" maxOccurs="unbounded" />
-               <xsd:element name="firstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="lastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="photo" type="xsd:string" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="seasonGeographyConfigurationId" type="xsd:int" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="fieldStaffLeadershipSeasonId" type="xsd:int" minOccurs="1" maxOccurs="1"/>
-            </xsd:sequence>
-   </xsd:complexType>
-   
-   <xsd:complexType name="RegionAssignedArea">
-            <xsd:sequence>
-               <xsd:element name="stateCode" type="xsd:string" minOccurs="1" maxOccurs="1" />
-               <xsd:element name="regionArea" type="xsd:string" minOccurs="1" maxOccurs="1" />
-            </xsd:sequence>
-   </xsd:complexType>
+	<xsd:complexType name="AssignedRDStaff">
+		<xsd:sequence>
+			<xsd:element name="staffId" type="xsd:int" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="assignedArea" type="assignedregion:RegionAssignedArea"
+				minOccurs="1" maxOccurs="unbounded" />
+			<xsd:element name="firstName" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="lastName" type="xsd:string" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="photo" type="xsd:string" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="seasonGeographyConfigurationId" type="xsd:int"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="fieldStaffLeadershipSeasonId" type="xsd:int"
+				minOccurs="1" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="RegionAssignedArea">
+		<xsd:sequence>
+			<xsd:element name="stateCode" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="regionArea" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
 
 </xsd:schema>

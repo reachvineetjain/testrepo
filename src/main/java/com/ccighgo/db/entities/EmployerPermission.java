@@ -16,6 +16,7 @@ public class EmployerPermission implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer empolyerPermissionsId;
 
 	//bi-directional many-to-one association to Employer

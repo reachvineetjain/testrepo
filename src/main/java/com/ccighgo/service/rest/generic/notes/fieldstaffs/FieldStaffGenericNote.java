@@ -25,8 +25,7 @@ import com.ccighgo.service.transport.generic.beans.fieldstaffs.notetopic.FieldSt
 @Consumes("application/json")
 public class FieldStaffGenericNote {
 
-   @Autowired
-   FieldStaffGenericNoteInterface fieldStaffGenericNoteInterface;
+   @Autowired FieldStaffGenericNoteInterface fieldStaffGenericNoteInterface;
 
    /**
     * @param note
@@ -62,6 +61,7 @@ public class FieldStaffGenericNote {
    public FieldStaffTopics viewTopics(@PathParam("fieldStaffGoId") String fieldStaffGoId) {
       return fieldStaffGenericNoteInterface.viewTopics(Integer.valueOf(fieldStaffGoId));
    }
+
    /**
     * @param noteId
     * @return
@@ -69,17 +69,15 @@ public class FieldStaffGenericNote {
    @GET
    @Path("remove/{noteId}")
    @Produces("application/json")
-   public Response removeNote(@PathParam("noteId")String noteId)
-   {
+   public Response removeNote(@PathParam("noteId") String noteId) {
       return fieldStaffGenericNoteInterface.removeNote(Integer.valueOf(noteId));
    }
-   
+
    @POST
    @Path("addtopic")
    @Produces("application/json")
    @Consumes("application/json")
-   public Response addNewTopic(FieldStaffTopic fieldStaffTopic)
-   {
+   public Response addNewTopic(FieldStaffTopic fieldStaffTopic) {
       return fieldStaffGenericNoteInterface.addNewTopic(fieldStaffTopic);
    }
 }

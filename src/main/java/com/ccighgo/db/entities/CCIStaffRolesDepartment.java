@@ -18,14 +18,19 @@ public class CCIStaffRolesDepartment implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer cciStaffRolesDepartmentId;
 
+	@Column(nullable=false)
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
+	@Column(nullable=false)
 	private Integer modifiedBy;
 
+	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
 	//bi-directional many-to-one association to CCIStaffRolesDefaultResourcePermission
@@ -34,12 +39,12 @@ public class CCIStaffRolesDepartment implements Serializable {
 
 	//bi-directional many-to-one association to CCIStaffRole
 	@ManyToOne
-	@JoinColumn(name="cciStaffRoleId")
+	@JoinColumn(name="cciStaffRoleId", nullable=false)
 	private CCIStaffRole ccistaffRole;
 
 	//bi-directional many-to-one association to LookupDepartment
 	@ManyToOne
-	@JoinColumn(name="departmentId")
+	@JoinColumn(name="departmentId", nullable=false)
 	private LookupDepartment lookupDepartment;
 
 	public CCIStaffRolesDepartment() {

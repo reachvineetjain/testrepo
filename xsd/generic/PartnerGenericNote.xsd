@@ -7,7 +7,8 @@
 	<xsd:annotation>
 		<xsd:appinfo>
 			<jaxb:schemaBindings>
-				<jaxb:package name="com.ccighgo.service.transport.partner.beans.generic.notes" />
+				<jaxb:package
+					name="com.ccighgo.service.transport.partner.beans.generic.notes" />
 			</jaxb:schemaBindings>
 		</xsd:appinfo>
 	</xsd:annotation>
@@ -27,8 +28,8 @@
 						minOccurs="0" maxOccurs="1" />
 					<xsd:element name="createdOn" type="xsd:string"
 						minOccurs="0" maxOccurs="1" />
-					<xsd:element name="loginId" type="xsd:int"
-						minOccurs="0" maxOccurs="1" />
+					<xsd:element name="loginId" type="xsd:int" minOccurs="0"
+						maxOccurs="1" />
 					<xsd:element name="topicId" type="xsd:int" minOccurs="0"
 						maxOccurs="1" />
 					<xsd:element name="partnerId" type="xsd:int" minOccurs="0"
@@ -37,5 +38,5 @@
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	
+
 </xsd:schema>

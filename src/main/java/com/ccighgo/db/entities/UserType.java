@@ -11,29 +11,32 @@ import java.util.List;
  * 
  */
 @Entity
+@Table(name="UserType")
 @NamedQuery(name="UserType.findAll", query="SELECT u FROM UserType u")
 public class UserType implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer userTypeId;
 
+	@Column(nullable=false)
 	private Integer createdBy;
 
 	private Timestamp createdOn;
 
+	@Column(nullable=false)
 	private Integer modifiedBy;
 
+	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
+	@Column(nullable=false, length=20)
 	private String userTypeCode;
 
+	@Column(nullable=false, length=50)
 	private String userTypeName;
-
-	//bi-directional many-to-one association to HostFamilyPotentialReference
-	@OneToMany(mappedBy="userType")
-	private List<HostFamilyPotentialReference> hostFamilyPotentialReferences;
 
 	//bi-directional many-to-one association to LoginUserType
 	@OneToMany(mappedBy="userType")
@@ -96,28 +99,6 @@ public class UserType implements Serializable {
 
 	public void setUserTypeName(String userTypeName) {
 		this.userTypeName = userTypeName;
-	}
-
-	public List<HostFamilyPotentialReference> getHostFamilyPotentialReferences() {
-		return this.hostFamilyPotentialReferences;
-	}
-
-	public void setHostFamilyPotentialReferences(List<HostFamilyPotentialReference> hostFamilyPotentialReferences) {
-		this.hostFamilyPotentialReferences = hostFamilyPotentialReferences;
-	}
-
-	public HostFamilyPotentialReference addHostFamilyPotentialReference(HostFamilyPotentialReference hostFamilyPotentialReference) {
-		getHostFamilyPotentialReferences().add(hostFamilyPotentialReference);
-		hostFamilyPotentialReference.setUserType(this);
-
-		return hostFamilyPotentialReference;
-	}
-
-	public HostFamilyPotentialReference removeHostFamilyPotentialReference(HostFamilyPotentialReference hostFamilyPotentialReference) {
-		getHostFamilyPotentialReferences().remove(hostFamilyPotentialReference);
-		hostFamilyPotentialReference.setUserType(null);
-
-		return hostFamilyPotentialReference;
 	}
 
 	public List<LoginUserType> getLoginUserTypes() {

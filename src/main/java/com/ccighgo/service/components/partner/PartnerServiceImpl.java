@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.ccighgo.service.components.partner;
 
 import java.util.ArrayList;
@@ -122,6 +119,7 @@ public class PartnerServiceImpl implements PartnerService {
 
    @Override
    public PartnerDashboard getPartnerDashboard(String partnerGoId) {
+      LOGGER.info("Partner GoId : " + partnerGoId);
       PartnerDashboard partnerDashboard = new PartnerDashboard();
       if (partnerGoId == null || Integer.valueOf(partnerGoId) == 0 || Integer.valueOf(partnerGoId) < 0) {
          partnerDashboard.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_PARTNER_ID.getValue(),
@@ -137,8 +135,8 @@ public class PartnerServiceImpl implements PartnerService {
                partnerDashboard.setPartnerCompany(partner.getCompanyName());
                partnerDashboard.setPartnerCompanyLogo(partner.getPartnerLogo());
                partnerDashboard.setIsSubpartner(partner.getIsSubPartner().equals(CCIConstants.ACTIVE) ? true : false);
-               if(partner.getCanHaveSubPartner()!=null){
-                  partnerDashboard.setCanHaveSubpartners(partner.getCanHaveSubPartner().equals(CCIConstants.ACTIVE)?true : false);
+               if (partner.getCanHaveSubPartner() != null) {
+                  partnerDashboard.setCanHaveSubpartners(partner.getCanHaveSubPartner().equals(CCIConstants.ACTIVE) ? true : false);
                }
                List<PartnerUser> partnerUsers = partner.getPartnerUsers();
                for (PartnerUser pu : partnerUsers) {
@@ -278,8 +276,10 @@ public class PartnerServiceImpl implements PartnerService {
                   partnerDashboard.getUserProgramsAndPermissions().addAll(userProgramsAndPermissions);
 
                } else {
-                  // no programs found for this partner
+                  LOGGER.info("NO Partner Seasons Exist! ");
                }
+               partnerDashboard.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.PARTNER_DASHBOARD.getValue(),
+                     messageUtil.getMessage(PartnerDashboardMessageConstants.FETCH_DATA_SUCCESSFULLY)));
             } else {
                // no partner found with the goid provided
                partnerDashboard.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_PROGRAM_DETAILS_FOUND.getValue(),
@@ -287,7 +287,6 @@ public class PartnerServiceImpl implements PartnerService {
                LOGGER.error(messageUtil.getMessage(PartnerDashboardMessageConstants.NO_PROGRAM_DETAILS_FOUND));
             }
          } catch (CcighgoException e) {
-            // error getting partner details
             partnerDashboard.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_PROGRAM_DETAILS_FOUND.getValue(),
                   messageUtil.getMessage(PartnerDashboardMessageConstants.NO_PROGRAM_DETAILS_FOUND)));
             LOGGER.error(messageUtil.getMessage(PartnerDashboardMessageConstants.NO_PROGRAM_DETAILS_FOUND));
@@ -298,6 +297,7 @@ public class PartnerServiceImpl implements PartnerService {
 
    @Override
    public PartnerJ1HSDashboard getJ1HSDashboard(String partnerGoId) {
+      LOGGER.info("Partner GoId : " + partnerGoId);
       PartnerJ1HSDashboard j1hsDashboard = new PartnerJ1HSDashboard();
       if (partnerGoId == null || Integer.valueOf(partnerGoId) == 0 || Integer.valueOf(partnerGoId) < 0) {
          j1hsDashboard.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_PARTNER_ID.getValue(),
@@ -333,8 +333,10 @@ public class PartnerServiceImpl implements PartnerService {
                   cciContact = new PartnerJ1HSCCIContact();
                   cciContact.setPartnerCCIContactName(partnerCCIJ1Contact.getCcistaffUser().getFirstName() + " " + partnerCCIJ1Contact.getCcistaffUser().getLastName());
                   cciContact.setPartnerProgramName(CCIConstants.HSP_J1_HS + " Contact");
-                   if(partnerCCIJ1Contact.getCcistaffUser().getCcistaffUsersCcistaffRoles()!=null && partnerCCIJ1Contact.getCcistaffUser().getCcistaffUsersCcistaffRoles().size()>0){
-                     cciContact.setPartnerCCIContactDesignation(partnerCCIJ1Contact.getCcistaffUser().getCcistaffUsersCcistaffRoles().get(0).getCcistaffRole().getCciStaffRoleName());
+                  if (partnerCCIJ1Contact.getCcistaffUser().getCcistaffUsersCcistaffRoles() != null
+                        && partnerCCIJ1Contact.getCcistaffUser().getCcistaffUsersCcistaffRoles().size() > 0) {
+                     cciContact.setPartnerCCIContactDesignation(partnerCCIJ1Contact.getCcistaffUser().getCcistaffUsersCcistaffRoles().get(0).getCcistaffRole()
+                           .getCciStaffRoleName());
                   }
                   cciContact.setPartnerCCIContactImageUrl(partnerCCIJ1Contact.getCcistaffUser().getPhoto());
                   cciContact.setPartnerCCIContactPhone(partnerCCIJ1Contact.getCcistaffUser().getPrimaryPhone());
@@ -418,8 +420,8 @@ public class PartnerServiceImpl implements PartnerService {
                      if (partSeason.getDepartmentProgram().getDepartmentProgramId() == CCIConstants.HSP_J1_HS_ID) {
                         PartnerJ1HSProgram prg = new PartnerJ1HSProgram();
                         prg.setProgramName(partSeason.getSeason().getSeasonJ1details().get(0).getProgramName());
-                        prg.setApplicationDeadlineDate(DateUtils.getTimestamp(partSeason.getPartnerSeasonAppDeadlineDate()));
-                        prg.setSecondSemDeadlineDate(DateUtils.getTimestamp(partSeason.getPartnerSeasonExtAppDeadlineDate()));
+                        prg.setApplicationDeadlineDate(DateUtils.getDateAndTime(partSeason.getPartnerSeasonAppDeadlineDate()));
+                        prg.setSecondSemDeadlineDate(DateUtils.getDateAndTime((partSeason.getPartnerSeasonExtAppDeadlineDate())));
                         prg.setSeasonStatus(partSeason.getSeason().getSeasonJ1details().get(0).getSeasonStatus().getStatus());
                         List<PartnerSeasonAllocation> j1Allocations = partSeason.getPartnerSeasonAllocations();
                         if (j1Allocations != null) {
@@ -438,34 +440,34 @@ public class PartnerServiceImpl implements PartnerService {
                            int augStartGuarnteedParticipantsDenominator = 0;
                            int janStartGuarnteedParticipantsDenominator = 0;
                            for (PartnerSeasonAllocation psa : j1Allocations) {
-                              if (psa.getDepartmentProgramOption() != null) {
-                                 if (psa.getDepartmentProgramOption().getDepartmentProgram().getDepartmentProgramId() == CCIConstants.HSP_J1_HS_ID) {
-                                    if (psa.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.AUGUST_FY_J1)) {
-                                       augStartUnGuarnteedParticipantsNumerator = participantRepository.getUnGurantJ1AugParticipantCount(partner.getPartnerGoId(), partSeason
-                                             .getSeason().getSeasonId());
-                                       totalUnGuarantNumerator += augStartUnGuarnteedParticipantsNumerator;
-                                       augStartUnGuarnteedParticipantsDenominator = psa.getMaxPax() > 0 ? psa.getMaxPax() : 0;
-                                       totalUnGuarantDenominator += augStartUnGuarnteedParticipantsDenominator > 0 ? augStartUnGuarnteedParticipantsDenominator : 0;
-                                       augStartGuarnteedParticipantsNumerator = participantRepository.getGurantJ1AugParticipantCount(partner.getPartnerGoId(), partSeason
-                                             .getSeason().getSeasonId());
-                                       totalGurantNumerator += augStartGuarnteedParticipantsNumerator;
-                                       augStartGuarnteedParticipantsDenominator = psa.getMaxGuaranteedPax() > 0 ? psa.getMaxGuaranteedPax() : 0;
-                                       totalGurantDenominator += augStartGuarnteedParticipantsDenominator > 0 ? augStartGuarnteedParticipantsDenominator : 0;
-                                    }
-                                    if (psa.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.JANUARY_FY_J1)) {
-                                       janStartUnGuarnteedParticipantsNumerator = participantRepository.getUnGurantJ1JanParticipantCount(partner.getPartnerGoId(), partSeason
-                                             .getSeason().getSeasonId());
-                                       totalUnGuarantNumerator += janStartUnGuarnteedParticipantsNumerator;
-                                       janStartUnGuarnteedParticipantsDenominator = psa.getMaxPax() > 0 ? psa.getMaxPax() : 0;
-                                       totalUnGuarantDenominator += janStartUnGuarnteedParticipantsDenominator > 0 ? janStartUnGuarnteedParticipantsDenominator : 0;
-                                       janStartGuarnteedParticipantsNumerator = participantRepository.getGurantJ1JanParticipantCount(partner.getPartnerGoId(), partSeason
-                                             .getSeason().getSeasonId());
-                                       totalGurantNumerator += janStartGuarnteedParticipantsNumerator;
-                                       janStartGuarnteedParticipantsDenominator = psa.getMaxGuaranteedPax() > 0 ? psa.getMaxGuaranteedPax() : 0;
-                                       totalGurantDenominator += janStartGuarnteedParticipantsDenominator > 0 ? janStartGuarnteedParticipantsDenominator : 0;
-                                    }
+                              if (psa.getDepartmentProgramOption() != null
+                                    && psa.getDepartmentProgramOption().getDepartmentProgram().getDepartmentProgramId() == CCIConstants.HSP_J1_HS_ID) {
+                                 if (psa.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.AUGUST_FY_J1)) {
+                                    augStartUnGuarnteedParticipantsNumerator = participantRepository.getUnGurantJ1AugParticipantCount(partner.getPartnerGoId(), partSeason
+                                          .getSeason().getSeasonId());
+                                    totalUnGuarantNumerator += augStartUnGuarnteedParticipantsNumerator;
+                                    augStartUnGuarnteedParticipantsDenominator = psa.getMaxPax() > 0 ? psa.getMaxPax() : 0;
+                                    totalUnGuarantDenominator += augStartUnGuarnteedParticipantsDenominator > 0 ? augStartUnGuarnteedParticipantsDenominator : 0;
+                                    augStartGuarnteedParticipantsNumerator = participantRepository.getGurantJ1AugParticipantCount(partner.getPartnerGoId(), partSeason.getSeason()
+                                          .getSeasonId());
+                                    totalGurantNumerator += augStartGuarnteedParticipantsNumerator;
+                                    augStartGuarnteedParticipantsDenominator = psa.getMaxGuaranteedPax() > 0 ? psa.getMaxGuaranteedPax() : 0;
+                                    totalGurantDenominator += augStartGuarnteedParticipantsDenominator > 0 ? augStartGuarnteedParticipantsDenominator : 0;
+                                 }
+                                 if (psa.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.JANUARY_FY_J1)) {
+                                    janStartUnGuarnteedParticipantsNumerator = participantRepository.getUnGurantJ1JanParticipantCount(partner.getPartnerGoId(), partSeason
+                                          .getSeason().getSeasonId());
+                                    totalUnGuarantNumerator += janStartUnGuarnteedParticipantsNumerator;
+                                    janStartUnGuarnteedParticipantsDenominator = psa.getMaxPax() > 0 ? psa.getMaxPax() : 0;
+                                    totalUnGuarantDenominator += janStartUnGuarnteedParticipantsDenominator > 0 ? janStartUnGuarnteedParticipantsDenominator : 0;
+                                    janStartGuarnteedParticipantsNumerator = participantRepository.getGurantJ1JanParticipantCount(partner.getPartnerGoId(), partSeason.getSeason()
+                                          .getSeasonId());
+                                    totalGurantNumerator += janStartGuarnteedParticipantsNumerator;
+                                    janStartGuarnteedParticipantsDenominator = psa.getMaxGuaranteedPax() > 0 ? psa.getMaxGuaranteedPax() : 0;
+                                    totalGurantDenominator += janStartGuarnteedParticipantsDenominator > 0 ? janStartGuarnteedParticipantsDenominator : 0;
                                  }
                               }
+
                            }
                            allocation.setAugStartUnguaranteedNumerator(augStartUnGuarnteedParticipantsNumerator);
                            allocation.setJanStartUnguaranteedNumerator(janStartUnGuarnteedParticipantsNumerator);
@@ -487,6 +489,8 @@ public class PartnerServiceImpl implements PartnerService {
                   }
                }
                j1hsDashboard.getPartnerJ1HSPrograms().addAll(partnerJ1HSProgramsList);
+               j1hsDashboard.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FETCH_DATA_SUCCESSFULLY.getValue(),
+                     messageUtil.getMessage(PartnerDashboardMessageConstants.FETCH_DATA_SUCCESSFULLY)));
             } else {
                j1hsDashboard.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_PROGRAM_DETAILS_FOUND.getValue(),
                      messageUtil.getMessage(PartnerDashboardMessageConstants.NO_PROGRAM_DETAILS_FOUND)));
@@ -504,6 +508,7 @@ public class PartnerServiceImpl implements PartnerService {
 
    @Override
    public PartnerF1Dashboard getF1Dashboard(String partnerGoId) {
+      LOGGER.info("Partner GoId : " + partnerGoId);
       PartnerF1Dashboard f1Dashboard = new PartnerF1Dashboard();
       if (partnerGoId == null || Integer.valueOf(partnerGoId) == 0 || Integer.valueOf(partnerGoId) < 0) {
          f1Dashboard.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_PARTNER_ID.getValue(),
@@ -519,7 +524,7 @@ public class PartnerServiceImpl implements PartnerService {
                f1Dashboard.setPartnerLogo(partner.getPartnerLogo());
 
                // announcements
-                List<PartnerF1Announcement> partnerF1Announcements = new ArrayList<PartnerF1Announcement>();
+               List<PartnerF1Announcement> partnerF1Announcements = new ArrayList<PartnerF1Announcement>();
                if (partner.getPartnerAnnouncements() != null && !(partner.getPartnerAnnouncements().isEmpty())) {
                   for (PartnerAnnouncement ann : partner.getPartnerAnnouncements()) {
                      if (ann.getDepartmentProgram().getDepartmentProgramId() == CCIConstants.HSP_F1_ID) {
@@ -539,8 +544,10 @@ public class PartnerServiceImpl implements PartnerService {
                   cciContact = new PartnerF1CCIContact();
                   cciContact.setPartnerCCIContactName(partnerCCIF1Contact.getCcistaffUser().getFirstName() + " " + partnerCCIF1Contact.getCcistaffUser().getLastName());
                   cciContact.setPartnerProgramName(CCIConstants.HSP_F1 + " Contact");
-                  if(partnerCCIF1Contact.getCcistaffUser().getCcistaffUsersCcistaffRoles()!=null && partnerCCIF1Contact.getCcistaffUser().getCcistaffUsersCcistaffRoles().size()>0){
-                     cciContact.setPartnerCCIContactDesignation(partnerCCIF1Contact.getCcistaffUser().getCcistaffUsersCcistaffRoles().get(0).getCcistaffRole().getCciStaffRoleName());
+                  if (partnerCCIF1Contact.getCcistaffUser().getCcistaffUsersCcistaffRoles() != null
+                        && partnerCCIF1Contact.getCcistaffUser().getCcistaffUsersCcistaffRoles().size() > 0) {
+                     cciContact.setPartnerCCIContactDesignation(partnerCCIF1Contact.getCcistaffUser().getCcistaffUsersCcistaffRoles().get(0).getCcistaffRole()
+                           .getCciStaffRoleName());
                   }
                   cciContact.setPartnerCCIContactImageUrl(partnerCCIF1Contact.getCcistaffUser().getPhoto());
                   cciContact.setPartnerCCIContactPhone(partnerCCIF1Contact.getCcistaffUser().getPrimaryPhone());
@@ -624,8 +631,8 @@ public class PartnerServiceImpl implements PartnerService {
                      if (partSeason.getDepartmentProgram().getDepartmentProgramId() == CCIConstants.HSP_F1_ID) {
                         PartnerF1Program prg = new PartnerF1Program();
                         prg.setProgramName(partSeason.getSeason().getSeasonF1details().get(0).getProgramName());
-                        prg.setApplicationDeadlineDate(DateUtils.getTimestamp(partSeason.getPartnerSeasonAppDeadlineDate()));
-                        prg.setSecondSemDeadlineDate(DateUtils.getTimestamp(partSeason.getPartnerSeasonExtAppDeadlineDate()));
+                        prg.setApplicationDeadlineDate(DateUtils.getDateAndTime(partSeason.getPartnerSeasonAppDeadlineDate()));
+                        prg.setSecondSemDeadlineDate(DateUtils.getDateAndTime(partSeason.getPartnerSeasonExtAppDeadlineDate()));
                         prg.setSeasonStatus(partSeason.getSeason().getSeasonF1details().get(0).getSeasonStatus().getStatus());
                         List<PartnerSeasonAllocation> f1Allocations = partSeason.getPartnerSeasonAllocations();
                         if (f1Allocations != null) {
@@ -637,25 +644,25 @@ public class PartnerServiceImpl implements PartnerService {
                            int augStartGuarnteedParticipantsDenominator = 0;
                            int janStartGuarnteedParticipantsDenominator = 0;
                            for (PartnerSeasonAllocation psa : f1Allocations) {
-                              if (psa.getDepartmentProgramOption() != null) {
-                                 if (psa.getDepartmentProgramOption().getDepartmentProgram().getDepartmentProgramId() == CCIConstants.HSP_F1_ID) {
-                                    if (psa.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.AUGUST_FY_F1)) {
-                                       augStartGuarnteedParticipantsNumerator = participantRepository.getGurantF1AugParticipantCount(partner.getPartnerGoId(), partSeason
-                                             .getSeason().getSeasonId());
-                                       totalGurantNumerator += augStartGuarnteedParticipantsNumerator;
-                                       augStartGuarnteedParticipantsDenominator = psa.getMaxGuaranteedPax() > 0 ? psa.getMaxGuaranteedPax() : 0;
-                                       totalGurantDenominator += augStartGuarnteedParticipantsDenominator > 0 ? augStartGuarnteedParticipantsDenominator : 0;
+                              if (psa.getDepartmentProgramOption() != null
+                                    && psa.getDepartmentProgramOption().getDepartmentProgram().getDepartmentProgramId() == CCIConstants.HSP_F1_ID) {
+                                 if (psa.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.AUGUST_FY_F1)) {
+                                    augStartGuarnteedParticipantsNumerator = participantRepository.getGurantF1AugParticipantCount(partner.getPartnerGoId(), partSeason.getSeason()
+                                          .getSeasonId());
+                                    totalGurantNumerator += augStartGuarnteedParticipantsNumerator;
+                                    augStartGuarnteedParticipantsDenominator = psa.getMaxGuaranteedPax() > 0 ? psa.getMaxGuaranteedPax() : 0;
+                                    totalGurantDenominator += augStartGuarnteedParticipantsDenominator > 0 ? augStartGuarnteedParticipantsDenominator : 0;
 
-                                    }
-                                    if (psa.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.JANUARY_FY_F1)) {
-                                       janStartGuarnteedParticipantsNumerator = participantRepository.getGurantF1JanParticipantCount(partner.getPartnerGoId(), partSeason
-                                             .getSeason().getSeasonId());
-                                       totalGurantNumerator += janStartGuarnteedParticipantsNumerator;
-                                       janStartGuarnteedParticipantsDenominator = psa.getMaxGuaranteedPax() > 0 ? psa.getMaxGuaranteedPax() : 0;
-                                       totalGurantDenominator += janStartGuarnteedParticipantsDenominator > 0 ? janStartGuarnteedParticipantsDenominator : 0;
-                                    }
+                                 }
+                                 if (psa.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.JANUARY_FY_F1)) {
+                                    janStartGuarnteedParticipantsNumerator = participantRepository.getGurantF1JanParticipantCount(partner.getPartnerGoId(), partSeason.getSeason()
+                                          .getSeasonId());
+                                    totalGurantNumerator += janStartGuarnteedParticipantsNumerator;
+                                    janStartGuarnteedParticipantsDenominator = psa.getMaxGuaranteedPax() > 0 ? psa.getMaxGuaranteedPax() : 0;
+                                    totalGurantDenominator += janStartGuarnteedParticipantsDenominator > 0 ? janStartGuarnteedParticipantsDenominator : 0;
                                  }
                               }
+
                            }
                            allocation.setAugStartGuaranteedNumerator(augStartGuarnteedParticipantsNumerator);
                            allocation.setJanStartGuaranteedNumerator(janStartGuarnteedParticipantsNumerator);
@@ -670,6 +677,8 @@ public class PartnerServiceImpl implements PartnerService {
                   }
                }
                f1Dashboard.getPartnerF1Programs().addAll(partnerF1ProgramsList);
+               f1Dashboard.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FETCH_DATA_SUCCESSFULLY.getValue(),
+                     messageUtil.getMessage(PartnerDashboardMessageConstants.FETCH_DATA_SUCCESSFULLY)));
             } else {
                f1Dashboard.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_PROGRAM_DETAILS_FOUND.getValue(),
                      messageUtil.getMessage(PartnerDashboardMessageConstants.NO_PROGRAM_DETAILS_FOUND)));
@@ -687,6 +696,7 @@ public class PartnerServiceImpl implements PartnerService {
 
    @Override
    public PartnerIHPDashboard getIHPDashboard(String partnerGoId) {
+      LOGGER.info("partner goId : " + partnerGoId);
       PartnerIHPDashboard ihpDashboard = new PartnerIHPDashboard();
       if (partnerGoId == null || Integer.valueOf(partnerGoId) == 0 || Integer.valueOf(partnerGoId) < 0) {
          ihpDashboard.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_PARTNER_ID.getValue(),
@@ -721,8 +731,10 @@ public class PartnerServiceImpl implements PartnerService {
                   cciContact = new PartnerIHPCCIContact();
                   cciContact.setPartnerCCIContactName(partnerCCIIHPContact.getCcistaffUser().getFirstName() + " " + partnerCCIIHPContact.getCcistaffUser().getLastName());
                   cciContact.setPartnerProgramName(CCIConstants.HSP_STP_IHP + " Contact");
-                  if(partnerCCIIHPContact.getCcistaffUser().getCcistaffUsersCcistaffRoles()!=null && partnerCCIIHPContact.getCcistaffUser().getCcistaffUsersCcistaffRoles().size()>0){
-                     cciContact.setPartnerCCIContactDesignation(partnerCCIIHPContact.getCcistaffUser().getCcistaffUsersCcistaffRoles().get(0).getCcistaffRole().getCciStaffRoleName());
+                  if (partnerCCIIHPContact.getCcistaffUser().getCcistaffUsersCcistaffRoles() != null
+                        && partnerCCIIHPContact.getCcistaffUser().getCcistaffUsersCcistaffRoles().size() > 0) {
+                     cciContact.setPartnerCCIContactDesignation(partnerCCIIHPContact.getCcistaffUser().getCcistaffUsersCcistaffRoles().get(0).getCcistaffRole()
+                           .getCciStaffRoleName());
                   }
                   cciContact.setPartnerCCIContactImageUrl(partnerCCIIHPContact.getCcistaffUser().getPhoto());
                   cciContact.setPartnerCCIContactPhone(partnerCCIIHPContact.getCcistaffUser().getPrimaryPhone());
@@ -805,12 +817,15 @@ public class PartnerServiceImpl implements PartnerService {
                      if (partSeason.getDepartmentProgram().getDepartmentProgramId() == CCIConstants.HSP_STP_IHP_ID) {
                         PartnerIHPProgram prg = new PartnerIHPProgram();
                         prg.setProgramName(partSeason.getSeason().getSeasonIhpdetails().get(0).getProgramName());
+                        prg.setApplicationDeadlineDate(DateUtils.getMMddyyDate((partSeason.getPartnerSeasonAppDeadlineDate())));
                         prg.setSeasonStatus(partSeason.getSeason().getSeasonStatus().getStatus());
                         partnerIHPProgramsList.add(prg);
                      }
                   }
                   ihpDashboard.getPartnerIHPPrograms().addAll(partnerIHPProgramsList);
                }
+               ihpDashboard.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FETCH_DATA_SUCCESSFULLY.getValue(),
+                     messageUtil.getMessage(PartnerDashboardMessageConstants.FETCH_DATA_SUCCESSFULLY)));
             } else {
                ihpDashboard.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_PROGRAM_DETAILS_FOUND.getValue(),
                      messageUtil.getMessage(PartnerDashboardMessageConstants.NO_PROGRAM_DETAILS_FOUND)));
@@ -826,8 +841,10 @@ public class PartnerServiceImpl implements PartnerService {
       return ihpDashboard;
    }
 
+   // TODO
    @Override
    public PartnerCAPDashboard getWnTDashboard(String partnerGoId) {
+      LOGGER.info("partner goId : " + partnerGoId);
       PartnerCAPDashboard wntDashboard = new PartnerCAPDashboard();
       if (partnerGoId == null || Integer.valueOf(partnerGoId) == 0 || Integer.valueOf(partnerGoId) < 0) {
          wntDashboard.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_PARTNER_ID.getValue(),
@@ -840,6 +857,7 @@ public class PartnerServiceImpl implements PartnerService {
       return wntDashboard;
    }
 
+   // TODO
    @Override
    public PartnerWnTDashboard getCAPDashboard(String partnerGoId) {
       PartnerWnTDashboard capDashboard = new PartnerWnTDashboard();
@@ -856,6 +874,7 @@ public class PartnerServiceImpl implements PartnerService {
 
    @Override
    public PartnerRecruitmentLead getPartnerInquiryLeadData(int goId) {
+      LOGGER.info("GOID: " + goId);
       PartnerRecruitmentLead pwt = new PartnerRecruitmentLead();
       try {
          pwt.setGoId(goId);
@@ -868,10 +887,9 @@ public class PartnerServiceImpl implements PartnerService {
          }
          try {
             PartnerReviewStatus partnerReviewStatus = partnerReviewStatusRepository.findStatusByPartnerId(goId);
-            if (partnerReviewStatus != null) {
-               if (partnerReviewStatus.getPartnerStatus1() != null)
-                  pwt.setLeadStatus(partnerReviewStatus.getPartnerStatus1().getPartnerStatusName());
-            }
+            if (partnerReviewStatus != null && partnerReviewStatus.getPartnerStatus1() != null)
+               pwt.setLeadStatus(partnerReviewStatus.getPartnerStatus1().getPartnerStatusName());
+
          } catch (Exception e) {
             ExceptionUtil.logException(e, LOGGER);
          }

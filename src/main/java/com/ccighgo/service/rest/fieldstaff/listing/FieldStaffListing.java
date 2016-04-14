@@ -30,66 +30,65 @@ import com.ccighgo.service.transport.fieldstaff.beans.rm.season.contacts.FSRMSea
 @Produces("application/json")
 @Consumes("application/json")
 public class FieldStaffListing {
-   
+
    private static final Logger LOGGER = LoggerFactory.getLogger(FieldStaffListing.class);
-   
+
    @Autowired FieldStaffListingInterface fieldStaffListingInterface;
-   
+
    @GET
    @Path("{typeId}/page")
    @Produces("application/json")
-   public FieldStaffList getFieldStaffList(@PathParam("typeId") String typeId){
+   public FieldStaffList getFieldStaffList(@PathParam("typeId") String typeId) {
       LOGGER.info("calling FieldStaffListing.getFieldStaffList ");
       return fieldStaffListingInterface.getFieldStaffList(typeId);
    }
-   
+
    @GET
    @Path("types")
    @Produces("application/json")
-   public FieldStaffTypes getFieldStaffTypes(){
+   public FieldStaffTypes getFieldStaffTypes() {
       LOGGER.info("calling FieldStaffListing.getFieldStaffTypes ");
       return fieldStaffListingInterface.getFieldStaffTypes();
    }
-   
+
    @GET
    @Path("lc/{goId}")
    @Produces("application/json")
-   public FSLCSeasonContacts getFSLCSeasonContacts(@PathParam("goId") String goId){
+   public FSLCSeasonContacts getFSLCSeasonContacts(@PathParam("goId") String goId) {
       LOGGER.info("calling FieldStaffListing.getFSLCSeasonContacts ");
       return fieldStaffListingInterface.getFSLCSeasonContacts(goId);
    }
-   
+
    @GET
    @Path("ac/{goId}")
    @Produces("application/json")
-   public FSACSeasonContacts getFSACSeasonContacts(@PathParam("goId") String goId){
+   public FSACSeasonContacts getFSACSeasonContacts(@PathParam("goId") String goId) {
       LOGGER.info("calling FieldStaffListing.getFSACSeasonContacts ");
       return fieldStaffListingInterface.getFSACSeasonContacts(goId);
    }
-   
+
    @GET
    @Path("rd/{goId}")
    @Produces("application/json")
-   public FSRDSeasonContacts getFSRDSeasonContacts(@PathParam("goId") String goId){
+   public FSRDSeasonContacts getFSRDSeasonContacts(@PathParam("goId") String goId) {
       LOGGER.info("calling FieldStaffListing.getFSRDSeasonContacts ");
       return fieldStaffListingInterface.getFSRDSeasonContacts(goId);
    }
-   
+
    @GET
    @Path("rm/{goId}")
    @Produces("application/json")
-   public FSRMSeasonContacts getFSRMSeasonContacts(@PathParam("goId") String goId){
+   public FSRMSeasonContacts getFSRMSeasonContacts(@PathParam("goId") String goId) {
       LOGGER.info("calling FieldStaffListing.getFSRMSeasonContacts ");
       return fieldStaffListingInterface.getFSRMSeasonContacts(goId);
    }
-   
+
    @GET
    @Path("erd/{goId}")
    @Produces("application/json")
-   public FSERDSeasons getERDSeasons(@PathParam("goId") String goId){
+   public FSERDSeasons getERDSeasons(@PathParam("goId") String goId) {
       LOGGER.info("calling FieldStaffListing.getFSRMSeasonContacts ");
       return fieldStaffListingInterface.getERDSeasons(goId);
    }
-   
 
 }

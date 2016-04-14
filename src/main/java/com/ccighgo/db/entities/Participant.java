@@ -17,20 +17,23 @@ public class Participant implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer participantGoId;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date endDate;
 
+	@Column(length=50)
 	private String firstName;
 
 	private Byte guaranteed;
 
 	private Byte isLead;
 
+	@Column(length=50)
 	private String lastName;
 
+	@Column(length=300)
 	private String photo;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -42,6 +45,14 @@ public class Participant implements Serializable {
 	@OneToMany(mappedBy="participant")
 	private List<FieldStaffParticipant> fieldStaffParticipants;
 
+	//bi-directional many-to-one association to HostFamilyEvaluation
+	@OneToMany(mappedBy="participant")
+	private List<HostFamilyEvaluation> hostFamilyEvaluations;
+
+	//bi-directional many-to-one association to HostFamilyFinalEvaluation
+	@OneToMany(mappedBy="participant")
+	private List<HostFamilyFinalEvaluation> hostFamilyFinalEvaluations;
+
 	//bi-directional many-to-one association to HostFamilyParticipant
 	@OneToMany(mappedBy="participant")
 	private List<HostFamilyParticipant> hostFamilyParticipants;
@@ -49,6 +60,10 @@ public class Participant implements Serializable {
 	//bi-directional many-to-one association to HostFamilyParticipantHistory
 	@OneToMany(mappedBy="participant")
 	private List<HostFamilyParticipantHistory> hostFamilyParticipantHistories;
+
+	//bi-directional many-to-one association to ParticipantAnnouncementResult
+	@OneToMany(mappedBy="participant")
+	private List<ParticipantAnnouncementResult> participantAnnouncementResults;
 
 	//bi-directional many-to-one association to ParticipantPermission
 	@OneToMany(mappedBy="participant")
@@ -186,6 +201,50 @@ public class Participant implements Serializable {
 		return fieldStaffParticipant;
 	}
 
+	public List<HostFamilyEvaluation> getHostFamilyEvaluations() {
+		return this.hostFamilyEvaluations;
+	}
+
+	public void setHostFamilyEvaluations(List<HostFamilyEvaluation> hostFamilyEvaluations) {
+		this.hostFamilyEvaluations = hostFamilyEvaluations;
+	}
+
+	public HostFamilyEvaluation addHostFamilyEvaluation(HostFamilyEvaluation hostFamilyEvaluation) {
+		getHostFamilyEvaluations().add(hostFamilyEvaluation);
+		hostFamilyEvaluation.setParticipant(this);
+
+		return hostFamilyEvaluation;
+	}
+
+	public HostFamilyEvaluation removeHostFamilyEvaluation(HostFamilyEvaluation hostFamilyEvaluation) {
+		getHostFamilyEvaluations().remove(hostFamilyEvaluation);
+		hostFamilyEvaluation.setParticipant(null);
+
+		return hostFamilyEvaluation;
+	}
+
+	public List<HostFamilyFinalEvaluation> getHostFamilyFinalEvaluations() {
+		return this.hostFamilyFinalEvaluations;
+	}
+
+	public void setHostFamilyFinalEvaluations(List<HostFamilyFinalEvaluation> hostFamilyFinalEvaluations) {
+		this.hostFamilyFinalEvaluations = hostFamilyFinalEvaluations;
+	}
+
+	public HostFamilyFinalEvaluation addHostFamilyFinalEvaluation(HostFamilyFinalEvaluation hostFamilyFinalEvaluation) {
+		getHostFamilyFinalEvaluations().add(hostFamilyFinalEvaluation);
+		hostFamilyFinalEvaluation.setParticipant(this);
+
+		return hostFamilyFinalEvaluation;
+	}
+
+	public HostFamilyFinalEvaluation removeHostFamilyFinalEvaluation(HostFamilyFinalEvaluation hostFamilyFinalEvaluation) {
+		getHostFamilyFinalEvaluations().remove(hostFamilyFinalEvaluation);
+		hostFamilyFinalEvaluation.setParticipant(null);
+
+		return hostFamilyFinalEvaluation;
+	}
+
 	public List<HostFamilyParticipant> getHostFamilyParticipants() {
 		return this.hostFamilyParticipants;
 	}
@@ -228,6 +287,28 @@ public class Participant implements Serializable {
 		hostFamilyParticipantHistory.setParticipant(null);
 
 		return hostFamilyParticipantHistory;
+	}
+
+	public List<ParticipantAnnouncementResult> getParticipantAnnouncementResults() {
+		return this.participantAnnouncementResults;
+	}
+
+	public void setParticipantAnnouncementResults(List<ParticipantAnnouncementResult> participantAnnouncementResults) {
+		this.participantAnnouncementResults = participantAnnouncementResults;
+	}
+
+	public ParticipantAnnouncementResult addParticipantAnnouncementResult(ParticipantAnnouncementResult participantAnnouncementResult) {
+		getParticipantAnnouncementResults().add(participantAnnouncementResult);
+		participantAnnouncementResult.setParticipant(this);
+
+		return participantAnnouncementResult;
+	}
+
+	public ParticipantAnnouncementResult removeParticipantAnnouncementResult(ParticipantAnnouncementResult participantAnnouncementResult) {
+		getParticipantAnnouncementResults().remove(participantAnnouncementResult);
+		participantAnnouncementResult.setParticipant(null);
+
+		return participantAnnouncementResult;
 	}
 
 	public List<ParticipantPermission> getParticipantPermissions() {

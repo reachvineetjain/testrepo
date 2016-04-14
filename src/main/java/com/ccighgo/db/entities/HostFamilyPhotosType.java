@@ -10,15 +10,20 @@ import java.util.List;
  * 
  */
 @Entity
+@Table(name="HostFamilyPhotosType")
 @NamedQuery(name="HostFamilyPhotosType.findAll", query="SELECT h FROM HostFamilyPhotosType h")
 public class HostFamilyPhotosType implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer hostFamilyPhotoTypeId;
 
+	@Column(length=50)
 	private String hostFamilyPhotoTypeName;
+
+	private Byte isOptional;
 
 	//bi-directional many-to-one association to HostFamilyPhoto
 	@OneToMany(mappedBy="hostFamilyPhotosType")
@@ -41,6 +46,14 @@ public class HostFamilyPhotosType implements Serializable {
 
 	public void setHostFamilyPhotoTypeName(String hostFamilyPhotoTypeName) {
 		this.hostFamilyPhotoTypeName = hostFamilyPhotoTypeName;
+	}
+
+	public Byte getIsOptional() {
+		return this.isOptional;
+	}
+
+	public void setIsOptional(Byte isOptional) {
+		this.isOptional = isOptional;
 	}
 
 	public List<HostFamilyPhoto> getHostFamilyPhotos() {

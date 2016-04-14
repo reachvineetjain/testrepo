@@ -6,33 +6,50 @@
 	<xsd:annotation>
 		<xsd:appinfo>
 			<jaxb:schemaBindings>
-				<jaxb:package name="com.ccighgo.service.transport.seasons.beans.insurancestates" />
+				<jaxb:package
+					name="com.ccighgo.service.transport.seasons.beans.insurancestates" />
 			</jaxb:schemaBindings>
 		</xsd:appinfo>
 		<xsd:documentation></xsd:documentation>
 	</xsd:annotation>
 
 	<xsd:element name="InsuranceStates" type="insurancestates:InsuranceStates"></xsd:element>
-	
+
 	<xsd:complexType name="InsuranceStates">
 		<xsd:sequence>
-		 <xsd:element name="CountryId" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
-		 <xsd:element name="Country" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
-		 <xsd:element name="FIPS104" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
-		 <xsd:element name="ISO2" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
-		 <xsd:element name="ISO3" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
-		 <xsd:element name="ISON" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
-		 <xsd:element name="Internet" type="xsd:int" minOccurs="0" maxOccurs="1"></xsd:element>
-		 <xsd:element name="Capital" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
-		 <xsd:element name="MapReference" type="xsd:int" minOccurs="0" maxOccurs="1"></xsd:element>
-		 <xsd:element name="NationalitySingular" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
-		 <xsd:element name="NationalityPlural" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
-		 <xsd:element name="Currency" type="xsd:int" minOccurs="0" maxOccurs="1"></xsd:element>
-		 <xsd:element name="CurrencyCode" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
-		 <xsd:element name="Population" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
-		 <xsd:element name="Title" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
-		 <xsd:element name="Comment" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
+			<xsd:element name="CountryId" type="xsd:string"
+				minOccurs="0" maxOccurs="1"></xsd:element>
+			<xsd:element name="Country" type="xsd:string" minOccurs="0"
+				maxOccurs="1"></xsd:element>
+			<xsd:element name="FIPS104" type="xsd:string" minOccurs="0"
+				maxOccurs="1"></xsd:element>
+			<xsd:element name="ISO2" type="xsd:string" minOccurs="0"
+				maxOccurs="1"></xsd:element>
+			<xsd:element name="ISO3" type="xsd:string" minOccurs="0"
+				maxOccurs="1"></xsd:element>
+			<xsd:element name="ISON" type="xsd:string" minOccurs="0"
+				maxOccurs="1"></xsd:element>
+			<xsd:element name="Internet" type="xsd:int" minOccurs="0"
+				maxOccurs="1"></xsd:element>
+			<xsd:element name="Capital" type="xsd:string" minOccurs="0"
+				maxOccurs="1"></xsd:element>
+			<xsd:element name="MapReference" type="xsd:int"
+				minOccurs="0" maxOccurs="1"></xsd:element>
+			<xsd:element name="NationalitySingular" type="xsd:string"
+				minOccurs="0" maxOccurs="1"></xsd:element>
+			<xsd:element name="NationalityPlural" type="xsd:string"
+				minOccurs="0" maxOccurs="1"></xsd:element>
+			<xsd:element name="Currency" type="xsd:int" minOccurs="0"
+				maxOccurs="1"></xsd:element>
+			<xsd:element name="CurrencyCode" type="xsd:string"
+				minOccurs="0" maxOccurs="1"></xsd:element>
+			<xsd:element name="Population" type="xsd:string"
+				minOccurs="0" maxOccurs="1"></xsd:element>
+			<xsd:element name="Title" type="xsd:string" minOccurs="0"
+				maxOccurs="1"></xsd:element>
+			<xsd:element name="Comment" type="xsd:string" minOccurs="0"
+				maxOccurs="1"></xsd:element>
 		</xsd:sequence>
 	</xsd:complexType>
-  
+
 </xsd:schema>

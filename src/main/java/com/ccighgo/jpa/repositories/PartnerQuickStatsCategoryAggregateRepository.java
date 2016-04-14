@@ -17,7 +17,7 @@ import com.ccighgo.db.entities.PartnerQuickStatsCategoryAggregate;
  */
 @Repository
 public interface PartnerQuickStatsCategoryAggregateRepository extends JpaRepository<PartnerQuickStatsCategoryAggregate, Integer> {
-   
+
    @Query("SELECT p FROM PartnerQuickStatsCategoryAggregate p WHERE p.partnerQuickStatsType.partnerQSTypeId = ?1 AND p.partner.partnerGoId = ?2 AND p.lookupDepartmentProgram.lookupDepartmentProgramId = ?3")
    List<PartnerQuickStatsCategoryAggregate> getStats(Integer partnerQSTypeId, Integer partnerGoId, Integer lookupDepartmentProgramId);
 

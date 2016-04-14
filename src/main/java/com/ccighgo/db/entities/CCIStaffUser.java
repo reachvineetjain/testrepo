@@ -22,41 +22,57 @@ public class CCIStaffUser implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer cciStaffUserId;
 
+	@Column(nullable=false, length=64)
 	private String cciAdminGuid;
 
+	@Column(length=50)
 	private String city;
 
+	@Column(nullable=false)
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
+	@Column(length=15)
 	private String emergencyPhone;
 
+	@Column(nullable=false, length=30)
 	private String firstName;
 
+	@Column(length=100)
 	private String homeAddressLineOne;
 
+	@Column(length=100)
 	private String homeAddressLineTwo;
 
+	@Column(nullable=false, length=30)
 	private String lastName;
 
+	@Column(nullable=false)
 	private Integer modifiedBy;
 
+	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
+	@Column(length=10)
 	private String phoneExtension;
 
+	@Column(length=300)
 	private String photo;
 
+	@Column(length=15)
 	private String primaryPhone;
 
+	@Column(length=20)
 	private String sevisId;
 
 	private Integer supervisorId;
 
+	@Column(length=50)
 	private String zip;
 
 	//bi-directional many-to-one association to AdminQuickStatsTypeAggregate

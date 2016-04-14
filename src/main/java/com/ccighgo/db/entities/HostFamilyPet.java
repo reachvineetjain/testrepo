@@ -9,21 +9,29 @@ import javax.persistence.*;
  * 
  */
 @Entity
+@Table(name="HostFamilyPet")
 @NamedQuery(name="HostFamilyPet.findAll", query="SELECT h FROM HostFamilyPet h")
 public class HostFamilyPet implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer hostFamilyPetId;
 
+	@Column(length=50)
 	private String additionalInformation;
-
-	private String animalType;
 
 	private Byte isIndoor;
 
+	private Byte isOutdoor;
+
 	private Integer number;
+
+	//bi-directional many-to-one association to HostFamilyPetType
+	@ManyToOne
+	@JoinColumn(name="animalTypeId")
+	private HostFamilyPetType hostFamilyPetType;
 
 	//bi-directional many-to-one association to HostFamilySeason
 	@ManyToOne
@@ -49,14 +57,6 @@ public class HostFamilyPet implements Serializable {
 		this.additionalInformation = additionalInformation;
 	}
 
-	public String getAnimalType() {
-		return this.animalType;
-	}
-
-	public void setAnimalType(String animalType) {
-		this.animalType = animalType;
-	}
-
 	public Byte getIsIndoor() {
 		return this.isIndoor;
 	}
@@ -65,12 +65,28 @@ public class HostFamilyPet implements Serializable {
 		this.isIndoor = isIndoor;
 	}
 
+	public Byte getIsOutdoor() {
+		return this.isOutdoor;
+	}
+
+	public void setIsOutdoor(Byte isOutdoor) {
+		this.isOutdoor = isOutdoor;
+	}
+
 	public Integer getNumber() {
 		return this.number;
 	}
 
 	public void setNumber(Integer number) {
 		this.number = number;
+	}
+
+	public HostFamilyPetType getHostFamilyPetType() {
+		return this.hostFamilyPetType;
+	}
+
+	public void setHostFamilyPetType(HostFamilyPetType hostFamilyPetType) {
+		this.hostFamilyPetType = hostFamilyPetType;
 	}
 
 	public HostFamilySeason getHostFamilySeason() {

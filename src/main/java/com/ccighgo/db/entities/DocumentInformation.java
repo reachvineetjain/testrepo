@@ -11,28 +11,37 @@ import java.util.List;
  * 
  */
 @Entity
+@Table(name="DocumentInformation")
 @NamedQuery(name="DocumentInformation.findAll", query="SELECT d FROM DocumentInformation d")
 public class DocumentInformation implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
 	private Integer documentInformationId;
 
 	private Byte active;
 
+	@Column(nullable=false)
 	private Integer createdBy;
 
+	@Column(nullable=false)
 	private Timestamp createdOn;
 
+	@Column(length=50)
 	private String documentName;
 
+	@Column(length=50)
 	private String fileName;
 
+	@Column(nullable=false)
 	private Integer modifiedBy;
 
+	@Column(nullable=false)
 	private Timestamp modifiedOn;
 
+	@Column(length=1000)
 	private String url;
 
 	//bi-directional many-to-one association to AddendumDocumentInformation
@@ -41,7 +50,7 @@ public class DocumentInformation implements Serializable {
 
 	//bi-directional many-to-one association to DocumentTypeDocumentCategoryProcess
 	@ManyToOne
-	@JoinColumn(name="documentTypeDocumentCategoryProcessId")
+	@JoinColumn(name="documentTypeDocumentCategoryProcessId", nullable=false)
 	private DocumentTypeDocumentCategoryProcess documentTypeDocumentCategoryProcess;
 
 	//bi-directional many-to-one association to FieldStaffDocument

@@ -1,27 +1,21 @@
 package com.ccighgo.service.components.sevis.data;
 
+import gov.ice.xmlschema.sevisbatch.exchangevisitor.SEVISBatchCreateUpdateEV;
+
 import org.springframework.stereotype.Component;
 
 import com.ccighgo.service.transport.sevis.BatchParam;
 
-import gov.ice.xmlschema.sevisbatch.exchangevisitor.SEVISBatchCreateUpdateEV;
-import gov.ice.xmlschema.sevisbatch.exchangevisitor.SEVISEVBatchType.UpdateEV.ExchangeVisitor.TIPP;
-
 @Component
 public class UpdateEVTIPPBatchDataService implements IEVBatchDataService {
 
-	@Override
-	public SEVISBatchCreateUpdateEV fetchBatchData(BatchParam batchParam) {
-		// TODO Auto-generated method stub
-		
-		// choices
-		// which one?
-		return null;
-	}
+   @Override
+   public SEVISBatchCreateUpdateEV fetchBatchData(BatchParam batchParam) {
+      // TODO Auto-generated method stub
 
-	private TIPP createTIPP() {
-		TIPP tipp = new TIPP();
-		return tipp;
-	}
+      // choices
+      // which one?
+      return null;
+   }
 
 }

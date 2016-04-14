@@ -19,7 +19,7 @@ import com.ccighgo.service.transport.partner.beans.partnerwntdetails.PartnerWnTD
  */
 @Service
 public interface PartnerService {
-   
+
    /**
     * Service to load partner dashboard
     * 
@@ -27,31 +27,31 @@ public interface PartnerService {
     * @return
     */
    public PartnerDashboard getPartnerDashboard(String partnerGoId);
-   
+
    /**
     * @param partnerGoId
     * @return
     */
    public PartnerJ1HSDashboard getJ1HSDashboard(String partnerGoId);
-   
+
    /**
     * @param partnerGoId
     * @return
     */
    public PartnerF1Dashboard getF1Dashboard(String partnerGoId);
-   
+
    /**
     * @param partnerGoId
     * @return
     */
    public PartnerIHPDashboard getIHPDashboard(String partnerGoId);
-   
+
    /**
     * @param partnerGoId
     * @return
     */
    public PartnerCAPDashboard getWnTDashboard(String partnerGoId);
-   
+
    /**
     * @param partnerGoId
     * @return
@@ -59,5 +59,5 @@ public interface PartnerService {
    public PartnerWnTDashboard getCAPDashboard(String partnerGoId);
 
    public PartnerRecruitmentLead getPartnerInquiryLeadData(int parseInt);
-   
+
 }
