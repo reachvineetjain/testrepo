@@ -155,8 +155,6 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
 
                         if (staffExist.get(Integer.valueOf(fieldStaff[1].toString())) == null) {
                            staffExist.put(Integer.valueOf(fieldStaff[1].toString()), true);
-                           if (superRegionId != null && superRegionId.equals(superRegion.getSuperRegionId()))
-                              continue;
                            superRegionsERDs.getAssignedERDStaffs().add(assignedERDStaff);
                         } else {
                            if (superRegionId != null && superRegionId.equals(superRegion.getSuperRegionId()))
