@@ -16,9 +16,7 @@ import org.apache.http.util.EntityUtils;
 import org.springframework.stereotype.Component;
 
 import com.ccighgo.service.components.greenheartclub.GHClubmpl;
-import com.ccighgo.service.components.greenheartclub.utils.GHC_Response;
 import com.ccighgo.service.rest.greenheartclub.GciApiUser;
-import com.google.gson.Gson;
 
 import oauth.signpost.OAuthConsumer;
 import oauth.signpost.commonshttp.CommonsHttpOAuthConsumer;
