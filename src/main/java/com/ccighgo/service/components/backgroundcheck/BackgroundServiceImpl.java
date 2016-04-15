@@ -27,7 +27,6 @@ import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.jpa.repositories.HostFamilyBackgroundRepository;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
-import com.ccighgo.service.components.errormessages.constants.PartnerAdminMessageConstants;
 import com.ccighgo.service.components.errormessages.constants.UtilityServiceMessageConstants;
 import com.ccighgo.service.rest.backgroundcheck.BackgroundCheck;
 import com.ccighgo.service.transport.common.response.beans.Response;
