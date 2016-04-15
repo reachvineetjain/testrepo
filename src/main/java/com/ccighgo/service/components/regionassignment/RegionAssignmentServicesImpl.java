@@ -380,7 +380,8 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
                         state.getUsStatesId(), seasonId);
                   sInfo.setSeasonGeographyConfigurationId(configurations.getSeasonGeographyConfigurationId());
 
-                  List<FieldStaffLeadershipSeason> assignedUsers = fieldStaffLeadershipSeasonRepository.findStateFieldStaffBySeasonId(seasonId);
+                  List<FieldStaffLeadershipSeason> assignedUsers = fieldStaffLeadershipSeasonRepository.findStateFieldStaffBySeasonIdSuperRegionIdRegionIdAndStateId(seasonId,
+                        superRegionId, regionId, state.getUsStatesId());
                   if (assignedUsers != null) {
                      for (FieldStaffLeadershipSeason fieldStaff : assignedUsers) {
                         AssignedStateStaff assignedStateStaff = new AssignedStateStaff();
@@ -488,8 +489,8 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
       try {
          for (RDFieldStaff staffId : assignedRDsToRegion.getRDFieldStaff()) {
             SeasonGeographyConfiguration seasonGeographicConfigRow = seasonGeographyConfigurationRepository.findOne(staffId.getSeasonGeographyConfigurationId());
-            Season season = seasonRepository.findOne(assignedRDsToRegion.getSeasonId());
 
+            Season season = seasonRepository.findOne(assignedRDsToRegion.getSeasonId());
             FieldStaffLeadershipSeason fieldStaffLeadershipSeason = new FieldStaffLeadershipSeason();
             fieldStaffLeadershipSeason.setCreatedBy(1);
             fieldStaffLeadershipSeason.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
@@ -548,8 +549,8 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
    public WSDefaultResponse deleteMember(DeleteRegionMember deleteRegionMember) {
       WSDefaultResponse wsDefaultResponse = new WSDefaultResponse();
       try {
-        // fieldStaffLeadershipSeasonRepository.delete(deleteRegionMember.getFieldStaffLeadershipSeasonId());
-          seasonGeographyConfigurationRepository.delete(deleteRegionMember.getSeasonGeographyConfigurationId());
+         // fieldStaffLeadershipSeasonRepository.delete(deleteRegionMember.getFieldStaffLeadershipSeasonId());
+         seasonGeographyConfigurationRepository.delete(deleteRegionMember.getSeasonGeographyConfigurationId());
          wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
