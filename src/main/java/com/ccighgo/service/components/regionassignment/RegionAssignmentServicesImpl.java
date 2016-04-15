@@ -148,7 +148,7 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
                   if (assignedUsers != null) {
                      for (Object[] fieldStaff : assignedUsers) {
                         AssignedERDStaff assignedERDStaff = new AssignedERDStaff();
-                        assignedERDStaff.setAssignedSuperRegion(fieldStaff[4] != null ? fieldStaff[1].toString() : NOT_ASSIGNED);
+                        assignedERDStaff.setAssignedSuperRegion(fieldStaff[4] != null ? fieldStaff[4].toString() : NOT_ASSIGNED);
                         assignedERDStaff.setFirstName(fieldStaff[2].toString());
                         assignedERDStaff.setLastName(fieldStaff[3].toString());
                         assignedERDStaff.setStaffId(Integer.valueOf(fieldStaff[1].toString()));
