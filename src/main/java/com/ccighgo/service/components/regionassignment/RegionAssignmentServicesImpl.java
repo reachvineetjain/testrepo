@@ -333,8 +333,8 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
                            regionAssignedArea.setStateCode(CCIConstants.EMPTY);
                         } else {
                            regionAssignedArea.setRegionArea(region.getRegionName());
-                           if(sgc.getLookupUsstate()!= null)
-                           regionAssignedArea.setStateCode(sgc.getLookupUsstate().getStateCode());
+                           if (sgc.getLookupUsstate() != null)
+                              regionAssignedArea.setStateCode(sgc.getLookupUsstate().getStateCode());
                         }
                         assignedRDStaff.getAssignedArea().add(regionAssignedArea);
 
@@ -627,7 +627,8 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
    public WSDefaultResponse deleteMember(DeleteRegionMember deleteRegionMember) {
       WSDefaultResponse wsDefaultResponse = new WSDefaultResponse();
       try {
-         fieldStaffLeadershipSeasonRepository.delete(deleteRegionMember.getFieldStaffLeadershipSeasonId());
+         seasonGeographyConfigurationRepository.delete(deleteRegionMember.getSeasonGeographyConfigurationId());
+         // fieldStaffLeadershipSeasonRepository.delete(deleteRegionMember.getFieldStaffLeadershipSeasonId());
          wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
