@@ -1,7 +1,12 @@
 package com.ccighgo.service.components.gciapi;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import oauth.signpost.OAuthConsumer;
+import oauth.signpost.commonshttp.CommonsHttpOAuthConsumer;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -17,9 +22,7 @@ import org.springframework.stereotype.Component;
 
 import com.ccighgo.service.components.greenheartclub.GHClubmpl;
 import com.ccighgo.service.rest.greenheartclub.GciApiUser;
-
-import oauth.signpost.OAuthConsumer;
-import oauth.signpost.commonshttp.CommonsHttpOAuthConsumer;
+import com.google.gson.Gson;
 
 @Component
 public class GCIWithOAuth {
@@ -140,9 +143,18 @@ public class GCIWithOAuth {
       /**
        * 
        */
-      System.out.println(d.getAllHoursByParticipant(GHClubmpl.FETCH_HOURS_BY_PARTICIPANT, "333"));
+      // System.out.println(d.getAllHoursByParticipant(GHClubmpl.FETCH_HOURS_BY_PARTICIPANT,
+      // "333"));
 
-      System.out.println(d.getHoursByProgram(GHClubmpl.FETCH_HOURS_BY_PROGRAM, "333", "05/08/2012", "05/08/2016"));
+      // System.out.println(d.getHoursByProgram(GHClubmpl.FETCH_HOURS_BY_PROGRAM,
+      // "333", "05/08/2012", "05/08/2016"));
+      Map<String, String> programs = new HashMap<String, String>();
+      programs.put("39_2", "Programs One*");
+      programs.put("20_39", "Example Two*");
+      Gson gson = new Gson();
+      String json = gson.toJson(programs);
+      System.out.println(json);
+      System.out.println(d.updatePrograms(GHClubmpl.UPDATE_PROGRAMS, json));
 
    }
 
@@ -474,4 +486,21 @@ public class GCIWithOAuth {
       }
    }
 
+   public String updatePrograms(String updatePrograms, String programs) {
+      try {
+         OAuthConsumer consumer = new CommonsHttpOAuthConsumer(CONSUMER_KEY, CONSUMER_SECRET);
+         consumer.setTokenWithSecret(TOKEN, TOKEN_SECRET);
+         HttpPost request = new HttpPost(updatePrograms);
+         List<NameValuePair> params = new ArrayList<NameValuePair>(2);
+         params.add(new BasicNameValuePair("programs", programs));
+         request.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
+         consumer.sign(request);
+         HttpClient httpClient = new DefaultHttpClient();
+         HttpResponse response = httpClient.execute(request);
+         return EntityUtils.toString(response.getEntity());
+      } catch (Exception e) {
+         e.printStackTrace();
+         return "";
+      }
+   }
 }

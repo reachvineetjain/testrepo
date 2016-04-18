@@ -35,6 +35,8 @@ public class GHClubmpl implements GHClub {
    public static final String FETCH_HOURS_BY_PARTICIPANT = "https://gcidev.wpengine.com/api/v2/hours/get/id";
    public static final String FETCH_HOURS_BY_PROGRAM = "https://gcidev.wpengine.com/api/v2/hours/get/program";
 
+   public static final String UPDATE_PROGRAMS = "https://gcidev.wpengine.com/api/v2/program/set";
+
    @Autowired GCIWithOAuth gciWithOAuth;
 
    @Override
@@ -181,6 +183,16 @@ public class GHClubmpl implements GHClub {
    public GHC_Response getUser(String goId) {
       try {
          return GCIAPI_Util.parseGHCAPIResult(gciWithOAuth.getUser(FETCH_USER, goId));
+      } catch (Exception e) {
+         LOGGER.error(e.getMessage(), e);
+      }
+      return null;
+   }
+
+   @Override
+   public GHC_Response updatePrograms(String programs) {
+      try {
+         return GCIAPI_Util.parseGHCAPIResult(gciWithOAuth.updatePrograms(UPDATE_PROGRAMS, programs));
       } catch (Exception e) {
          LOGGER.error(e.getMessage(), e);
       }
