@@ -18,22 +18,22 @@ import com.ccighgo.service.transport.seasons.beans.soapservice.ParticipantsInfo;
 public interface IWordPressForms {
 
    @WebMethod
-   String InquiryPartner(@WebParam(name = "data") InternationalPartners InternationalPartners);
+   String inquiryPartner(@WebParam(name = "data") InternationalPartners InternationalPartners);
 
    @WebMethod
-   String GenerateNewHostFamily(@WebParam(name = "data") HostFamilyData HostFamilyData);
+   String generateNewHostFamily(@WebParam(name = "data") HostFamilyData HostFamilyData);
 
    @WebMethod
-   String GenerateNewAreaRepresentative(@WebParam(name = "data") AreaRepresentativeData AreaRepresentativeData);
+   String generateNewAreaRepresentative(@WebParam(name = "data") AreaRepresentativeData AreaRepresentativeData);
 
    @WebMethod
-   Boolean IsEmailExist(@WebParam(name = "data") String Email);
+   Boolean isEmailExist(@WebParam(name = "data") String Email);
 
    @WebMethod
-   Boolean IsLegalNameExist(@WebParam(name = "data") String LegalName);
+   Boolean isLegalNameExist(@WebParam(name = "data") String LegalName);
 
    @WebMethod
-   Boolean IsWebSiteExist(@WebParam(name = "data") String WebSite);
+   Boolean isWebSiteExist(@WebParam(name = "data") String WebSite);
 
    @WebMethod
    List<ParticipantsInfo> participantList();
