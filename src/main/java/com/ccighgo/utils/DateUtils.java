@@ -243,7 +243,7 @@ public class DateUtils {
       return date;
    }
 
-   public static Date getDateFromString_bg_check(String dateOrderReceived) {
+   public static Date getDateFromStringBgCheck(String dateOrderReceived) {
       DateFormat format = new SimpleDateFormat(CCIConstants.MM_dd_yyy_T_H_M_S, Locale.US);
       Date date = null;
       if (dateOrderReceived != null && !dateOrderReceived.trim().isEmpty())
