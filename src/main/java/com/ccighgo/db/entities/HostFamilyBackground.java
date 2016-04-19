@@ -44,7 +44,7 @@ public class HostFamilyBackground implements Serializable {
 	@Column(length=50)
 	private String lastName;
 
-	private short password;
+	private String password;
 
 	@Column(length=50)
 	private String relationshipToHostParent;
@@ -150,11 +150,11 @@ public class HostFamilyBackground implements Serializable {
 		this.lastName = lastName;
 	}
 
-	public short getPassword() {
+	public String getPassword() {
 		return this.password;
 	}
 
-	public void setPassword(short password) {
+	public void setPassword(String password) {
 		this.password = password;
 	}
 

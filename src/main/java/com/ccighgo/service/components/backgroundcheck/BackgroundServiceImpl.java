@@ -1,7 +1,10 @@
 package com.ccighgo.service.components.backgroundcheck;
 
 import java.io.StringWriter;
+import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 
@@ -24,7 +27,6 @@ import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.jpa.repositories.HostFamilyBackgroundRepository;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
-import com.ccighgo.service.components.errormessages.constants.PartnerAdminMessageConstants;
 import com.ccighgo.service.components.errormessages.constants.UtilityServiceMessageConstants;
 import com.ccighgo.service.rest.backgroundcheck.BackgroundCheck;
 import com.ccighgo.service.transport.common.response.beans.Response;
@@ -56,12 +58,20 @@ import com.google.gson.Gson;
 
 @Component
 public class BackgroundServiceImpl implements BackgroundServiceInterface {
+   private static final String USE_PERSONAL = "personal";
+   private static final String CREATE_APPLICANT_ACCOUNT = "CreateApplicantAccount";
+   private static final String CREDENTIAL_TYPE = "CCIGreen";
+   private static final String POST_BACK_URL = "http://52.2.191.63:8086/cci_gh_go/services/backgroundcheck/sendReport";
    private static final String FAILED_STATUS = "300 : Failed";
    private static final Logger LOGGER = Logger.getLogger(BackgroundCheck.class);
+   private static final String SP_BACKGROUND_CHECK_DATA = "CALL SPHostFamilyBackgroundCheckSubmit (?,?)";
+   private static final String ACCOUNT_NO = "11670S";
+   private static final String PACKAGE_NUM = "1";
 
    @Autowired HostFamilyBackgroundRepository hostFamilyBackgroundRepository;
    @Autowired CommonComponentUtils componentUtils;
    @Autowired MessageUtils messageUtil;
+   @Autowired EntityManager em;
    Gson f = new Gson();
 
    @Override
@@ -81,7 +91,6 @@ public class BackgroundServiceImpl implements BackgroundServiceInterface {
          Marshaller jaxbMarshaller = JAXBContext.newInstance(ScreenRequest.class).createMarshaller();
          jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
          jaxbMarshaller.marshal(objectFactory.createScreenRequest(screenRequest), sw);
-         // jaxbMarshaller.marshal(sRequest.getValue(), sw);
          String xmlString = sw.toString();
 
          HttpEntity entity = new ByteArrayEntity(xmlString.getBytes("UTF-8"));
@@ -197,18 +206,63 @@ public class BackgroundServiceImpl implements BackgroundServiceInterface {
    }
 
    @Override
+   public com.ccighgo.service.transport.seasons.beans.backgroundcheck.BackgroundCheck applyNow(int hostFamilyId, int hostFamilyMemberId) {
+      com.ccighgo.service.transport.seasons.beans.backgroundcheck.BackgroundCheck backgroundCheck = new com.ccighgo.service.transport.seasons.beans.backgroundcheck.BackgroundCheck();
+
+      backgroundCheck.setAccount(ACCOUNT_NO);
+      backgroundCheck.setPackageNbr(PACKAGE_NUM);
+      Query query = em.createNativeQuery(SP_BACKGROUND_CHECK_DATA);
+      query.setParameter(1, hostFamilyId);
+      query.setParameter(2, hostFamilyMemberId);
+      @SuppressWarnings("unchecked")
+      List<Object[]> result = query.getResultList();
+      if (result != null && !result.isEmpty()) {
+         for (Object[] obj : result) {
+            PostBackURL postBackURL = new PostBackURL();
+            postBackURL.setCredentialType(CREDENTIAL_TYPE);
+            postBackURL.setValue(POST_BACK_URL);
+            backgroundCheck.setPostBackURL(postBackURL);
+
+            BackgroundSearchPackage backgroundSearchPackage = new BackgroundSearchPackage();
+            backgroundSearchPackage.setAction(CREATE_APPLICANT_ACCOUNT);
+            PersonalData personalData = new PersonalData();
+            DemographicDetail demographicDetail = new DemographicDetail();
+            demographicDetail.setDateOfBirth(DateUtils.getDateForBackgroundCheck(String.valueOf(obj[4])));
+            personalData.setDemographicDetail(demographicDetail);
+
+            PersonName personName1 = new PersonName();
+            personName1.setGivenName(String.valueOf(obj[2]));
+            personName1.setFamilyName(String.valueOf(obj[3]));
+            personalData.getPersonName().add(personName1);
+
+            ContactMethod contackMethod1 = new ContactMethod();
+            contackMethod1.setInternetEmailAddress("");
+            Telephone telephone = new Telephone();
+            telephone.setFormattedNumber(String.valueOf(obj[5]));
+            contackMethod1.setTelephone(telephone);
+            contackMethod1.setUse(USE_PERSONAL);
+            personalData.getContactMethod().add(contackMethod1);
+            backgroundSearchPackage.setPersonalData(personalData);
+            backgroundCheck.setBackgroundSearchPackage(backgroundSearchPackage);
+         }
+      }
+      return backgroundCheck;
+
+   }
+
+   @Override
    public com.ccighgo.service.transport.seasons.beans.backgroundcheck.BackgroundCheck applyNow() {
       com.ccighgo.service.transport.seasons.beans.backgroundcheck.BackgroundCheck backgroundCheck = new com.ccighgo.service.transport.seasons.beans.backgroundcheck.BackgroundCheck();
       try {
          backgroundCheck.setAccount("0300S");
          backgroundCheck.setPackageNbr("1");
          PostBackURL postBackURL = new PostBackURL();
-         postBackURL.setCredentialType("CCIGreen");
-         postBackURL.setValue("http://52.2.191.63:8086/cci_gh_go/services/backgroundcheck/sendReport");
+         postBackURL.setCredentialType(CREDENTIAL_TYPE);
+         postBackURL.setValue(POST_BACK_URL);
          backgroundCheck.setPostBackURL(postBackURL);
 
          BackgroundSearchPackage backgroundSearchPackage = new BackgroundSearchPackage();
-         backgroundSearchPackage.setAction("CreateApplicantAccount");
+         backgroundSearchPackage.setAction(CREATE_APPLICANT_ACCOUNT);
          ReferenceId referenceId = new ReferenceId();
          IdValue idValue = new IdValue();
          idValue.setName("AssignmentID");
@@ -267,7 +321,7 @@ public class BackgroundServiceImpl implements BackgroundServiceInterface {
          Telephone telephone = new Telephone();
          telephone.setFormattedNumber("4192242462");
          contackMethod1.setTelephone(telephone);
-         contackMethod1.setUse("personal");
+         contackMethod1.setUse(USE_PERSONAL);
          personalData.getContactMethod().add(contackMethod1);
 
          ContactMethod contackMethod2 = new ContactMethod();
@@ -275,7 +329,7 @@ public class BackgroundServiceImpl implements BackgroundServiceInterface {
          Telephone telephone1 = new Telephone();
          telephone1.setFormattedNumber("4192242462");
          contackMethod2.setTelephone(telephone1);
-         contackMethod2.setUse("personal");
+         contackMethod2.setUse(USE_PERSONAL);
          personalData.getContactMethod().add(contackMethod2);
 
          backgroundSearchPackage.setPersonalData(personalData);
@@ -310,7 +364,7 @@ public class BackgroundServiceImpl implements BackgroundServiceInterface {
                for (com.ccighgo.service.transport.seasons.beans.backgroundcheckstatus.BackgroundReports.BackgroundReportPackage.ScreeningStatus.AdditionalItems item : backgroundReports
                      .getBackgroundReportPackage().getScreeningStatus().getAdditionalItems()) {
                   if (item.getQualifier().equalsIgnoreCase("DateOrderClosed"))
-                     background.setDateOrderClosed(DateUtils.getDateFromString_bg_check(item.getText()));
+                     background.setDateOrderClosed(DateUtils.getDateFromStringBgCheck(item.getText()));
                   else if (item.getQualifier().equalsIgnoreCase("ResultStatus"))
                      background.setResultStatus(item.getText());
                   else if (item.getQualifier().equalsIgnoreCase("ResultsURL"))
@@ -324,13 +378,7 @@ public class BackgroundServiceImpl implements BackgroundServiceInterface {
                if (item.getQualifier().equalsIgnoreCase("ResultsURL"))
                   background.setResultURL(item.getText());
             }
-            background.setDateOrderReceived(DateUtils.getDateFromString_bg_check(backgroundReports.getBackgroundReportPackage().getScreeningStatus().getDateOrderReceived()));
-
-            // background.setHostFamilyBackgroundId();
-            // background.setHostFamilySeason();
-            // background.setLastName(lastName);
-            // background.setRelationshipToHostParent(relationshipToHostParent);
-            // background.setStatus(status);
+            background.setDateOrderReceived(DateUtils.getDateFromStringBgCheck(backgroundReports.getBackgroundReportPackage().getScreeningStatus().getDateOrderReceived()));
 
             hostFamilyBackgroundRepository.saveAndFlush(background);
             response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.INSERTING_BACKGROUND_DATA_SUCCCESSFULLY.getValue(),

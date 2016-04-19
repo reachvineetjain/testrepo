@@ -57,11 +57,14 @@ public interface SeasonGeographyConfigurationRepository extends JpaRepository<Se
    @Query("SELECT s FROM SeasonGeographyConfiguration s WHERE s.superRegion.superRegionId = ?1 AND s.season.seasonId = ?2")
    public List<SeasonGeographyConfiguration> findBySuperRegionIdAndSeasonId(Integer superRegionId, Integer seasonId);
 
-   @Query("SELECT s FROM SeasonGeographyConfiguration s WHERE s.superRegion.superRegionId = ?1 AND s.season.seasonId != ?2")
+   @Query("SELECT s FROM SeasonGeographyConfiguration s WHERE s.superRegion.superRegionId = ?1 AND s.season.seasonId != ?2 AND s.region.regionId IS NULL AND s.lookupUsstate.usStatesId IS NULL")
    public List<SeasonGeographyConfiguration> checkSuperRegionsAssociatedToOtherSeasons(Integer superRegionId, Integer seasonId);
-   
-   @Query("SELECT s FROM SeasonGeographyConfiguration s WHERE s.region.regionId = ?1 AND s.season.seasonId != ?2")
-   public List<SeasonGeographyConfiguration> checkRegionsAssociatedToOtherSeasons(Integer superRegionId, Integer seasonId);
+
+   @Query("SELECT s FROM SeasonGeographyConfiguration s WHERE s.region.regionId = ?1 AND s.season.seasonId != ?2 AND s.lookupUsstate.usStatesId IS NULL")
+   public List<SeasonGeographyConfiguration> checkRegionsAssociatedToOtherSeasons(Integer regionId, Integer seasonId);
+
+   @Query("SELECT s FROM SeasonGeographyConfiguration s WHERE s.region.regionId = ?1 AND s.season.seasonId = ?2 AND s.superRegion.superRegionId !=?3 AND s.lookupUsstate.usStatesId IS NULL")
+   public List<SeasonGeographyConfiguration> checkRegionsAssociatedToOtherSuperRegionInSeason(Integer regionId, Integer seasonId, Integer superRegionId);
 
    @Query("SELECT s.seasonGeographyConfigurationId FROM SeasonGeographyConfiguration s WHERE s.superRegion.superRegionId = ?1 AND s.season.seasonId = ?2")
    public List<Integer> findByIdSuperRegionIdAndSeasonId(Integer superRegionId, Integer seasonId);
