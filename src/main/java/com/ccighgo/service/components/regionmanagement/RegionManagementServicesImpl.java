@@ -347,11 +347,37 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
       try {
          List<Integer> seasonGeographyConfigurationIds = seasonGeographyConfigurationRepository.findByIdSuperRegionIdAndSeasonId(Integer.valueOf(superRegionId),
                Integer.valueOf(seasonId));
+         // fetch all the associated Regions for given Super Region
+         List<Integer> associatedRegionsIds = seasonGeographyConfigurationRepository.findDistinctRegionsBySuperRegionId(Integer.valueOf(superRegionId), Integer.valueOf(seasonId));
+
          for (Integer seasonGeographyConfigurationId : seasonGeographyConfigurationIds) {
             fieldStaffLeadershipSeasonRepository.deleteRowBySeasonGeographyConfigurationId(seasonGeographyConfigurationId);
          }
          seasonGeographyConfigurationRepository.deleteSuperRegionByIdAndSeasonId(Integer.valueOf(superRegionId), Integer.valueOf(seasonId));
-         seasonGeographyConfigurationRepository.flush();
+
+         for (Integer regionId : associatedRegionsIds) {
+            boolean regionAssociatedOtherSeasons = false;
+            // Check that whether given Region is not associated with other
+            // seasons
+            List<SeasonGeographyConfiguration> list = seasonGeographyConfigurationRepository.checkRegionsAssociatedToOtherSeasons(Integer.valueOf(regionId),
+                  Integer.valueOf(seasonId));
+            int count = list.size();
+            if (count == 0 || count < 0) {
+               regionAssociatedOtherSeasons = true;
+            }
+            // Check that whether given Region is not associated with other
+            // Super Region
+            boolean regionAssociatedOtherSuperR = false;
+            List<SeasonGeographyConfiguration> regionSuperRList = seasonGeographyConfigurationRepository.checkRegionsAssociatedToOtherSuperRegionInSeason(
+                  Integer.valueOf(regionId), Integer.valueOf(seasonId), Integer.valueOf(superRegionId));
+            int regionSuperRListCnt = regionSuperRList.size();
+            if (regionSuperRListCnt == 0 || regionSuperRListCnt < 0) {
+               regionAssociatedOtherSuperR = true;
+            }
+            if (regionAssociatedOtherSeasons == true && regionAssociatedOtherSuperR) {
+               regionRepository.delete(regionId);
+            }
+         }
          // Bugzilla 341: change request: If a Super Region is deleted from a
          // season and that Super Region is not
          // associated to any other season; then it should be removed from the
@@ -368,6 +394,7 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
          if (superRegionAssociated) {
             superRegionRepository.delete(Integer.valueOf(superRegionId));
          }
+         seasonGeographyConfigurationRepository.flush();
          request.setObjectName(RegionManagementMessageConstants.SUPER_REGION);
          request.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
@@ -620,7 +647,7 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
           * table.
           */
          boolean regionAssociated = false;
-         // Check that whether given Super region is not associated with other
+         // Check that whether given Region is not associated with other
          // seasons
          List<SeasonGeographyConfiguration> list = seasonGeographyConfigurationRepository
                .checkRegionsAssociatedToOtherSeasons(Integer.valueOf(regionId), Integer.valueOf(seasonId));
@@ -628,7 +655,16 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
          if (count == 0 || count < 0) {
             regionAssociated = true;
          }
-         if (regionAssociated) {
+         // Check that whether given Region is not associated with other
+         // Super Region
+         boolean regionAssociatedOtherSuperR = false;
+         List<SeasonGeographyConfiguration> regionSuperRList = seasonGeographyConfigurationRepository.checkRegionsAssociatedToOtherSuperRegionInSeason(Integer.valueOf(regionId),
+               Integer.valueOf(seasonId), Integer.valueOf(superRegionId));
+         int regionSuperRListCnt = regionSuperRList.size();
+         if (regionSuperRListCnt == 0 || regionSuperRListCnt < 0) {
+            regionAssociatedOtherSuperR = true;
+         }
+         if (regionAssociated == true && regionAssociatedOtherSuperR == true) {
             regionRepository.delete(Integer.valueOf(regionId));
          }
          request.setObjectName(RegionManagementMessageConstants.REGION);
