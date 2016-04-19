@@ -640,12 +640,6 @@ public interface SeasonServiceInterface {
    public SeasonWPDetails getWPWinterDetails(String seasonProgramId);
 
    /**
-    * @param seasonProgramId
-    * @return
-    */
-   public SeasonWPDetails editWPWinterDetails(String seasonProgramId);
-
-   /**
     * @param seasonWPDetails
     * @return
     */
@@ -656,12 +650,6 @@ public interface SeasonServiceInterface {
     * @return
     */
    public WPBasicDetail getWPWinterBaseDetails(String seasonProgramId);
-
-   /**
-    * @param seasonProgramId
-    * @return
-    */
-   public WPBasicDetail editWPWinterBaseDetails(String seasonProgramId);
 
    /**
     * @param wpBasicDetail
@@ -676,12 +664,6 @@ public interface SeasonServiceInterface {
    public WPSectionOne getWPWinterSectionOneDetails(String seasonProgramId);
 
    /**
-    * @param seasonProgramId
-    * @return
-    */
-   public WPSectionOne editWPWinterSectionOneDetails(String seasonProgramId);
-
-   /**
     * @param wpSectionOne
     * @return
     */
@@ -692,12 +674,6 @@ public interface SeasonServiceInterface {
     * @return
     */
    public WPProgramAllocations getWPWinterAllocationDetails(String seasonProgramId);
-
-   /**
-    * @param seasonProgramId
-    * @return
-    */
-   public WPProgramAllocations editWPWinterAllocationDetails(String seasonProgramId);
 
    /**
     * @param wpSectionOne
