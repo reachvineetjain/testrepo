@@ -650,29 +650,6 @@ public class SeasonServiceImplUtil {
       }
    }
 
-   public SeasonStatuses getSeasonStatus() {
-      SeasonStatuses seasonStatuses = null;
-      try {
-         Sort sort = new Sort(Sort.Direction.ASC, "status");
-         List<SeasonStatus> seasonStatusDBList = seasonStatusRepository.findAll(sort);
-         if (seasonStatusDBList != null) {
-            seasonStatuses = new SeasonStatuses();
-            List<com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatus> seasonStatusList = new ArrayList<com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatus>();
-            for (SeasonStatus ss : seasonStatusDBList) {
-               com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatus status = new com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatus();
-               status.setSeasonStatusId(ss.getSeasonStatusId());
-               status.setSeasonStatus(ss.getStatus());
-               status.setActive(ss.getActive() == CCIConstants.ACTIVE ? true : false);
-               seasonStatusList.add(status);
-            }
-            seasonStatuses.getSeasonStatuses().addAll(seasonStatusList);
-         }
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
-      }
-      return seasonStatuses;
-   }
-
    public HSPF1BasicDetails getHSPF1NameAndStatus(SeasonF1Detail allF1Details) {
       HSPF1BasicDetails hspf1BasicDetails = null;
       try {

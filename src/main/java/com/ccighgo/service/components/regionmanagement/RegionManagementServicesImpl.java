@@ -62,7 +62,7 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
    public RegionManagementDetails getCompleteRegionDetails(String seasonId) {
       RegionManagementDetails regionManagementDetails = new RegionManagementDetails();
       if (Integer.valueOf(seasonId) == 0 || Integer.valueOf(seasonId) < 0) {
-         regionManagementDetails.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_SEASON_ID.getValue(),
+         regionManagementDetails.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_SUP_REG_LIST.getValue(),
                messageUtil.getMessage(CCIConstants.SEASON_ID_INVALID)));
          LOGGER.error(messageUtil.getMessage(CCIConstants.SEASON_ID_INVALID));
          return regionManagementDetails;
@@ -170,7 +170,7 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
    public SuperRegion addSuperRegionToSeason(String seasonId, SuperRegion superRegion) {
       SuperRegion sRegion = new SuperRegion();
       if (seasonId != null && (Integer.valueOf(seasonId) == 0 || Integer.valueOf(seasonId) < 0)) {
-         sRegion.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_SEASON_ID.getValue(),
+         sRegion.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_SUP_REG_ADD.getValue(),
                messageUtil.getMessage(CCIConstants.SEASON_ID_INVALID)));
          LOGGER.error(messageUtil.getMessage(CCIConstants.SEASON_ID_INVALID));
          return superRegion;
@@ -252,7 +252,7 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
    public SuperRegion addExistingSuperRegionToSeason(String seasonId, SuperRegion superRegion) {
       SuperRegion sRegion = new SuperRegion();
       if (seasonId != null && (Integer.valueOf(seasonId) == 0 || Integer.valueOf(seasonId) < 0)) {
-         sRegion.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_SEASON_ID.getValue(),
+         sRegion.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_SUP_REG_ADD.getValue(),
                messageUtil.getMessage(CCIConstants.SEASON_ID_INVALID)));
          LOGGER.error(messageUtil.getMessage(CCIConstants.SEASON_ID_INVALID));
          return superRegion;
@@ -347,11 +347,37 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
       try {
          List<Integer> seasonGeographyConfigurationIds = seasonGeographyConfigurationRepository.findByIdSuperRegionIdAndSeasonId(Integer.valueOf(superRegionId),
                Integer.valueOf(seasonId));
+         // fetch all the associated Regions for given Super Region
+         List<Integer> associatedRegionsIds = seasonGeographyConfigurationRepository.findDistinctRegionsBySuperRegionId(Integer.valueOf(superRegionId), Integer.valueOf(seasonId));
+
          for (Integer seasonGeographyConfigurationId : seasonGeographyConfigurationIds) {
             fieldStaffLeadershipSeasonRepository.deleteRowBySeasonGeographyConfigurationId(seasonGeographyConfigurationId);
          }
          seasonGeographyConfigurationRepository.deleteSuperRegionByIdAndSeasonId(Integer.valueOf(superRegionId), Integer.valueOf(seasonId));
-         seasonGeographyConfigurationRepository.flush();
+
+         for (Integer regionId : associatedRegionsIds) {
+            boolean regionAssociatedOtherSeasons = false;
+            // Check that whether given Region is not associated with other
+            // seasons
+            List<SeasonGeographyConfiguration> list = seasonGeographyConfigurationRepository.checkRegionsAssociatedToOtherSeasons(Integer.valueOf(regionId),
+                  Integer.valueOf(seasonId));
+            int count = list.size();
+            if (count == 0 || count < 0) {
+               regionAssociatedOtherSeasons = true;
+            }
+            // Check that whether given Region is not associated with other
+            // Super Region
+            boolean regionAssociatedOtherSuperR = false;
+            List<SeasonGeographyConfiguration> regionSuperRList = seasonGeographyConfigurationRepository.checkRegionsAssociatedToOtherSuperRegionInSeason(
+                  Integer.valueOf(regionId), Integer.valueOf(seasonId), Integer.valueOf(superRegionId));
+            int regionSuperRListCnt = regionSuperRList.size();
+            if (regionSuperRListCnt == 0 || regionSuperRListCnt < 0) {
+               regionAssociatedOtherSuperR = true;
+            }
+            if (regionAssociatedOtherSeasons == true && regionAssociatedOtherSuperR) {
+               regionRepository.delete(regionId);
+            }
+         }
          // Bugzilla 341: change request: If a Super Region is deleted from a
          // season and that Super Region is not
          // associated to any other season; then it should be removed from the
@@ -368,6 +394,7 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
          if (superRegionAssociated) {
             superRegionRepository.delete(Integer.valueOf(superRegionId));
          }
+         seasonGeographyConfigurationRepository.flush();
          request.setObjectName(RegionManagementMessageConstants.SUPER_REGION);
          request.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
@@ -412,7 +439,7 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
    public Region addRegion(String superRegionId, String seasonId, Region region) {
       Region rgn = new Region();
       if (seasonId != null && (Integer.valueOf(seasonId) == 0 || Integer.valueOf(seasonId) < 0)) {
-         rgn.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_SEASON_ID.getValue(),
+         rgn.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_ADD_REGION.getValue(),
                messageUtil.getMessage(CCIConstants.SEASON_ID_INVALID)));
          LOGGER.error(messageUtil.getMessage(CCIConstants.SEASON_ID_INVALID));
          return rgn;
@@ -497,7 +524,7 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
    public Region addExistingRegion(String superRegionId, String seasonId, Region region) {
       Region rgn = new Region();
       if (seasonId != null && (Integer.valueOf(seasonId) == 0 || Integer.valueOf(seasonId) < 0)) {
-         rgn.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_SEASON_ID.getValue(),
+         rgn.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_ADD_REGION.getValue(),
                messageUtil.getMessage(CCIConstants.SEASON_ID_INVALID)));
          LOGGER.error(messageUtil.getMessage(CCIConstants.SEASON_ID_INVALID));
          return rgn;
@@ -588,19 +615,19 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
    public DeleteRequest deleteRegion(String regionId, String superRegionId, String seasonId) {
       DeleteRequest request = new DeleteRequest();
       if (regionId != null && (Integer.valueOf(regionId) == 0 || Integer.valueOf(regionId) < 0)) {
-         request.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_REG_ID.getValue(),
+         request.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_DELETE_REGION.getValue(),
                messageUtil.getMessage(RegionManagementMessageConstants.REG_ID_ZERO_OR_NEG)));
          LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.REG_ID_ZERO_OR_NEG));
          return request;
       }
       if (superRegionId != null && (Integer.valueOf(superRegionId) == 0 || Integer.valueOf(superRegionId) < 0)) {
-         request.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_REQUEST.getValue(),
+         request.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_DELETE_REGION.getValue(),
                messageUtil.getMessage(RegionManagementMessageConstants.SUP_REG_ID_ZERO_OR_NEG)));
          LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.SUP_REG_ID_ZERO_OR_NEG));
          return request;
       }
       if (seasonId != null && (Integer.valueOf(seasonId) == 0 || Integer.valueOf(seasonId) < 0)) {
-         request.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_SEASON_ID.getValue(),
+         request.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_DELETE_REGION.getValue(),
                messageUtil.getMessage(CCIConstants.SEASON_ID_INVALID)));
          LOGGER.error(messageUtil.getMessage(CCIConstants.SEASON_ID_INVALID));
          return request;
@@ -620,7 +647,7 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
           * table.
           */
          boolean regionAssociated = false;
-         // Check that whether given Super region is not associated with other
+         // Check that whether given Region is not associated with other
          // seasons
          List<SeasonGeographyConfiguration> list = seasonGeographyConfigurationRepository
                .checkRegionsAssociatedToOtherSeasons(Integer.valueOf(regionId), Integer.valueOf(seasonId));
@@ -628,7 +655,16 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
          if (count == 0 || count < 0) {
             regionAssociated = true;
          }
-         if (regionAssociated) {
+         // Check that whether given Region is not associated with other
+         // Super Region
+         boolean regionAssociatedOtherSuperR = false;
+         List<SeasonGeographyConfiguration> regionSuperRList = seasonGeographyConfigurationRepository.checkRegionsAssociatedToOtherSuperRegionInSeason(Integer.valueOf(regionId),
+               Integer.valueOf(seasonId), Integer.valueOf(superRegionId));
+         int regionSuperRListCnt = regionSuperRList.size();
+         if (regionSuperRListCnt == 0 || regionSuperRListCnt < 0) {
+            regionAssociatedOtherSuperR = true;
+         }
+         if (regionAssociated == true && regionAssociatedOtherSuperR == true) {
             regionRepository.delete(Integer.valueOf(regionId));
          }
          request.setObjectName(RegionManagementMessageConstants.REGION);
@@ -647,13 +683,13 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
    public StateRegions getStateRegions(String superRegionId, String seasonId) {
       StateRegions stateRegions = new StateRegions();
       if (superRegionId != null && (Integer.valueOf(superRegionId) == 0 || Integer.valueOf(superRegionId) < 0)) {
-         stateRegions.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_REQUEST.getValue(),
+         stateRegions.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.STATE_REGION_LIST.getValue(),
                messageUtil.getMessage(RegionManagementMessageConstants.SUP_REG_ID_ZERO_OR_NEG)));
          LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.SUP_REG_ID_ZERO_OR_NEG));
          return stateRegions;
       }
       if (Integer.valueOf(seasonId) == 0 || Integer.valueOf(seasonId) < 0) {
-         stateRegions.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_SEASON_ID.getValue(),
+         stateRegions.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.STATE_REGION_LIST.getValue(),
                messageUtil.getMessage(CCIConstants.SEASON_ID_INVALID)));
          LOGGER.error(messageUtil.getMessage(CCIConstants.SEASON_ID_INVALID));
          return stateRegions;
@@ -702,19 +738,19 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
    public StateRegions updateStateRegions(StateRegions stateRegions) {
       StateRegions stRegions = new StateRegions();
       if (stateRegions == null || stateRegions.getStateRegions() == null || stateRegions.getStateRegions().isEmpty()) {
-         stRegions.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.STATE_REG_NULL.getValue(),
+         stRegions.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.STATE_REGION_LIST.getValue(),
                messageUtil.getMessage(RegionManagementMessageConstants.STATE_REGION_NULL)));
          LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.STATE_REGION_NULL));
          return stRegions;
       }
       if (stateRegions.getSuperRegionId() == 0 || stateRegions.getSuperRegionId() < 0) {
-         stRegions.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_REQUEST.getValue(),
+         stRegions.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.STATE_REGION_LIST.getValue(),
                messageUtil.getMessage(RegionManagementMessageConstants.SUP_REG_ID_ZERO_OR_NEG)));
          LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.SUP_REG_ID_ZERO_OR_NEG));
          return stRegions;
       }
       if (stateRegions.getSeasonId() == 0 || stateRegions.getSeasonId() < 0) {
-         stRegions.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_SEASON_ID.getValue(),
+         stRegions.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.STATE_REGION_LIST.getValue(),
                messageUtil.getMessage(CCIConstants.SEASON_ID_INVALID)));
          LOGGER.error(messageUtil.getMessage(CCIConstants.SEASON_ID_INVALID));
          return stRegions;
@@ -762,19 +798,19 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
    public Region addStateRegions(String superRegionId, String seasonId, Region region) {
       Region rgn = new Region();
       if (region == null || region.getRegionStates() == null || region.getRegionStates().isEmpty()) {
-         rgn.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.REG_NULL.getValue(),
+         rgn.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_ADD_STATES_REG.getValue(),
                messageUtil.getMessage(RegionManagementMessageConstants.STATE_LIST_NULL)));
          LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.STATE_LIST_NULL));
          return rgn;
       }
       if (superRegionId != null && (Integer.valueOf(superRegionId) == 0 || Integer.valueOf(superRegionId) < 0)) {
-         rgn.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_REQUEST.getValue(),
+         rgn.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_ADD_STATES_REG.getValue(),
                messageUtil.getMessage(RegionManagementMessageConstants.SUP_REG_ID_ZERO_OR_NEG)));
          LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.SUP_REG_ID_ZERO_OR_NEG));
          return rgn;
       }
       if (seasonId != null && (Integer.valueOf(seasonId) == 0 || Integer.valueOf(seasonId) < 0)) {
-         rgn.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_SEASON_ID.getValue(),
+         rgn.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_ADD_STATES_REG.getValue(),
                messageUtil.getMessage(CCIConstants.SEASON_ID_INVALID)));
          LOGGER.error(messageUtil.getMessage(CCIConstants.SEASON_ID_INVALID));
          return rgn;
@@ -828,13 +864,13 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
    public RegionManagementDetails moveRegions(MoveRegions mvRegions) {
       RegionManagementDetails rMgDet = new RegionManagementDetails();
       if (mvRegions.getSeasonId() == 0 || mvRegions.getSeasonId() < 0) {
-         rMgDet.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_SEASON_ID.getValue(),
+         rMgDet.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_SUP_REG_LIST.getValue(),
                messageUtil.getMessage(CCIConstants.SEASON_ID_INVALID)));
          LOGGER.error(messageUtil.getMessage(CCIConstants.SEASON_ID_INVALID));
          return rMgDet;
       }
       if (mvRegions.getMoveRegions() == null || mvRegions.getMoveRegions().isEmpty()) {
-         rMgDet.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_SEASON_ID.getValue(),
+         rMgDet.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_SUP_REG_LIST.getValue(),
                messageUtil.getMessage(CCIConstants.SEASON_ID_INVALID)));
          LOGGER.error(messageUtil.getMessage(CCIConstants.SEASON_ID_INVALID));
          return rMgDet;
@@ -866,19 +902,19 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
    public DeleteRequest deleteState(String seasonId, String superRegionId, String regionId, String stateId) {
       DeleteRequest request = new DeleteRequest();
       if (regionId != null && (Integer.valueOf(regionId) == 0 || Integer.valueOf(regionId) < 0)) {
-         request.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_REG_ID.getValue(),
+         request.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_DELETE_REGION.getValue(),
                messageUtil.getMessage(RegionManagementMessageConstants.REG_ID_ZERO_OR_NEG)));
          LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.REG_ID_ZERO_OR_NEG));
          return request;
       }
       if (superRegionId != null && (Integer.valueOf(superRegionId) == 0 || Integer.valueOf(superRegionId) < 0)) {
-         request.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_REQUEST.getValue(),
+         request.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_DELETE_REGION.getValue(),
                messageUtil.getMessage(RegionManagementMessageConstants.SUP_REG_ID_ZERO_OR_NEG)));
          LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.SUP_REG_ID_ZERO_OR_NEG));
          return request;
       }
       if (seasonId != null && (Integer.valueOf(seasonId) == 0 || Integer.valueOf(seasonId) < 0)) {
-         request.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_SEASON_ID.getValue(),
+         request.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_DELETE_REGION.getValue(),
                messageUtil.getMessage(CCIConstants.SEASON_ID_INVALID)));
          LOGGER.error(messageUtil.getMessage(CCIConstants.SEASON_ID_INVALID));
          return request;
