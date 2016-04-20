@@ -63,6 +63,8 @@ import javax.xml.bind.annotation.XmlType;
     "participantPicUrl",
     "participantSeasonId",
     "participantSeasonName",
+    "participantProgramOptionId",
+    "participantProgramOption",
     "participantProgramName",
     "participantEmail",
     "participantStartDate",
@@ -94,6 +96,9 @@ public class AddedParticipantsDetails {
     protected int participantSeasonId;
     @XmlElement(required = true)
     protected String participantSeasonName;
+    protected int participantProgramOptionId;
+    @XmlElement(required = true)
+    protected String participantProgramOption;
     @XmlElement(required = true)
     protected String participantProgramName;
     @XmlElement(required = true)
@@ -276,6 +281,47 @@ public class AddedParticipantsDetails {
      */
     public void setParticipantSeasonName(String value) {
         this.participantSeasonName = value;
+    }
+    
+    /**
+     * Gets the value of the participantProgramOptionId property.
+     * 
+     */
+    public int getParticipantProgramOptionId() {
+        return participantProgramOptionId;
+    }
+
+    /**
+     * Sets the value of the participantProgramOptionId property.
+     * 
+     */
+    public void setParticipantProgramOptionId(int value) {
+        this.participantProgramOptionId = value;
+    }
+    
+    
+    /**
+     * Gets the value of the participantProgramOption property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getParticipantProgramOption() {
+        return participantProgramOption;
+    }
+
+    /**
+     * Sets the value of the participantProgramOption property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setParticipantProgramOption(String value) {
+        this.participantProgramOption = value;
     }
 
     /**
