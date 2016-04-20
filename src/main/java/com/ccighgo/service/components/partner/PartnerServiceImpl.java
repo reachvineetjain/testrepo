@@ -145,6 +145,7 @@ public class PartnerServiceImpl implements PartnerService {
                      partnerDashboard.setFirstName(partnerUser.getFirstName());
                      partnerDashboard.setLastName(partnerUser.getLastName());
                      partnerDashboard.setUsername(partnerUser.getLogin().getLoginName());
+                     partnerDashboard.setPartnerEmail(partnerUser.getLogin().getEmail());
                      partnerDashboard.setPhotoPath(partnerUser.getPhoto());
                      break;
                   }
