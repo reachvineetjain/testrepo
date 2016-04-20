@@ -683,8 +683,8 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
       return wsDefaultResponse;
    }
 
-  @Override
-  @Transactional
+ @Override
+   @Transactional
    public WSDefaultResponse assignEmailToParticipant(String participantId, String email2) {
       WSDefaultResponse wsDefaultResponse = new WSDefaultResponse();
       try {
@@ -692,7 +692,7 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
             Login exists= loginRepository.findByEmail(email2);
             if(exists!=null){
                wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CHANGE_PARTICIPANT_EMAIL.getValue(),
-                     messageUtil.getMessage("User with same email already exists, try using different email.")));
+                     "User with same email already exists, try using different email."));
                return wsDefaultResponse;
             }else{
                if(participantId!=null){
