@@ -517,6 +517,7 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                   Login p = loginRepository.findByGoId(goIdSequence);
                   if (p != null)
                      details.setActive(p.getActive() != null && p.getActive() == 1);
+                     details.setParticipantEmail(p.getEmail());
                } catch (Exception e) {
                   ExceptionUtil.logException(e, logger);
                }
