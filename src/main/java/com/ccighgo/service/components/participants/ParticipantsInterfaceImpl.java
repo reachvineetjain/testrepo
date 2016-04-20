@@ -517,6 +517,7 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                   Login p = loginRepository.findByGoId(goIdSequence);
                   if (p != null)
                      details.setActive(p.getActive() != null && p.getActive() == 1);
+                     details.setParticipantEmail(p.getEmail());
                } catch (Exception e) {
                   ExceptionUtil.logException(e, logger);
                }
@@ -682,15 +683,31 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
       return wsDefaultResponse;
    }
 
-   @Override
+ @Override
+   @Transactional
    public WSDefaultResponse assignEmailToParticipant(String participantId, String email2) {
       WSDefaultResponse wsDefaultResponse = new WSDefaultResponse();
       try {
-         Participant p = participantRepository.findOne(Integer.parseInt(participantId));
-         // p.setEmail(email2);
-         participantRepository.saveAndFlush(p);
-         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.CHANGE_PARTICIPANT_EMAIL.getValue(),
-               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         if(email2!=null){
+            Login exists= loginRepository.findByEmail(email2);
+            if(exists!=null){
+               wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CHANGE_PARTICIPANT_EMAIL.getValue(),
+                     "User with same email already exists, try using different email."));
+               return wsDefaultResponse;
+            }else{
+               if(participantId!=null){
+                  Login pLogin = loginRepository.findByCCIGoId(Integer.valueOf(participantId));
+                  pLogin.setEmail(email2);
+                  loginRepository.saveAndFlush(pLogin);
+                  wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.CHANGE_PARTICIPANT_EMAIL.getValue(),
+                        messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+               }else{
+                  wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.CHANGE_PARTICIPANT_EMAIL.getValue(),
+                        messageUtil.getMessage(CCIConstants.NO_RECORD)));
+                  return wsDefaultResponse;
+               }
+            }
+         }
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
          wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CANT_CHANGE_PARTICIPANT_EMAIL.getValue(),
