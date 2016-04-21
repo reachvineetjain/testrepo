@@ -40,4 +40,6 @@ public interface LoginRepository extends JpaRepository<Login, Integer> {
    @Query("SELECT l FROM Login l where l.goIdSequence = ?1")
    public List<Login> findAllByGoId(GoIdSequence goIdSequence);
 
+   @Query("SELECT l FROM Login l where l.goIdSequence.goId = ?1")
+   public List<Login> findAllByGoId(Integer goId);
 }
