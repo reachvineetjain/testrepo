@@ -343,6 +343,7 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
          if (partnerLogin != null && !partnerLogin.isEmpty()) {
             for (Login user : partnerLogin) {
                user.setActive(activeStatus);
+               user.setModifiedBy(Integer.parseInt(loggedinUserLoginId));
                logins.add(user);
             }
             loginRepository.save(logins);
@@ -355,6 +356,7 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
                partnerLogin = loginRepository.findAllByGoId(partner.getGoIdSequence().getGoId());
                for (Login user : partnerLogin) {
                   user.setActive(activeStatus);
+                  user.setModifiedBy(Integer.parseInt(loggedinUserLoginId));
                   logins.add(user);
                }
                loginRepository.save(logins);
