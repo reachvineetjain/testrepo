@@ -295,6 +295,9 @@ public class CCIConstants {
    public static final int SUCCESS_CODE = 200;
 
    public static final int NO_DATA_CODE = 201;
+   public static final int WRONG_PARAM = 212;
 
    public static final String NO_RECORD_IN_DB = "NO DATA FOUND IN DB!";
+
+   public static final int NULL_PARAM = 213;
 }
