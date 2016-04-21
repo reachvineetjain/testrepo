@@ -50,7 +50,7 @@
 						minOccurs="1" maxOccurs="1" />
 					<xsd:element name="refereeLastName" type="xsd:string"
 						minOccurs="1" maxOccurs="1" />
-					<xsd:element name="refereeUserType" type="xsd:int"
+					<xsd:element name="refereeUserType" type="xsd:string"
 						minOccurs="1" maxOccurs="1" />
 					<xsd:element name="refereeEmail" type="xsd:string"
 						minOccurs="1" maxOccurs="1" />

@@ -11,7 +11,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.backgroundcheck.BackgroundServiceInterface;
-import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.seasons.beans.backgroundcheckstatus.BackgroundReports;
 import com.ccighgo.service.transport.seasons.beans.backgroundscreenrequest.ScreenRequest;
 import com.ccighgo.service.transport.seasons.beans.backgroundscreenresponse.ScreenResponse;

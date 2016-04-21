@@ -34,6 +34,8 @@ import com.ccighgo.jpa.repositories.SeasonProgramDocumentRepository;
 import com.ccighgo.jpa.repositories.SeasonProgramNotesRepository;
 import com.ccighgo.jpa.repositories.SeasonRepository;
 import com.ccighgo.jpa.repositories.SeasonStatusRepository;
+import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
+import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.transport.season.beans.seasonhspihpdetails.IHPApplicationByRegion;
 import com.ccighgo.service.transport.season.beans.seasonhspihpdetails.IHPDates;
 import com.ccighgo.service.transport.season.beans.seasonhspihpdetails.IHPDocuments;
@@ -46,7 +48,8 @@ import com.ccighgo.utils.DateUtils;
 import com.ccighgo.utils.ExceptionUtil;
 
 /**
- * Helper class for Season High School Programs short term independent home stay program(HSP STP-IHP).
+ * Helper class for Season High School Programs short term independent home stay
+ * program(HSP STP-IHP).
  * 
  * @see
  * 
@@ -58,57 +61,22 @@ public class SeasonIHPProgramHelper {
 
    private static final Logger LOGGER = LoggerFactory.getLogger(SeasonIHPProgramHelper.class);
 
-   @Autowired
-   SeasonIHPDetailRepository ihpDetailRepository;
-   @Autowired
-   SeasonProgramDocumentRepository seasonProgramDocumentRepository;
-   @Autowired
-   LoginRepository loginRepository;
-   @Autowired
-   SeasonProgramNotesRepository seasonProgramNotesRepository;
-   @Autowired
-   SeasonStatusRepository seasonStatusRepository;
-   @Autowired
-   SeasonIHPDetailRepository seasonIHPDetailRepository;
-   @Autowired
-   DocumentTypeDocumentCategoryProcessRepository documentTypeDocumentCategoryProcessRepository;
-   @Autowired
-   DocumentInformationRepository documentInformationRepository;
-   @Autowired
-   DepartmentProgramRepository departmentProgramRepository;
-   @Autowired
-   GenderRepository genderRepository;
-   @Autowired
-   SeasonIHPDetailsRegionApplicationRepository seasonIHPDetailsRegionApplicationRepository;
-   @Autowired
-   IHPRegionsRepository ihpRegionsRepository;
-   @Autowired
-   SeasonRepository seasonRepository;
+   @Autowired SeasonIHPDetailRepository ihpDetailRepository;
+   @Autowired SeasonProgramDocumentRepository seasonProgramDocumentRepository;
+   @Autowired LoginRepository loginRepository;
+   @Autowired SeasonProgramNotesRepository seasonProgramNotesRepository;
+   @Autowired SeasonStatusRepository seasonStatusRepository;
+   @Autowired SeasonIHPDetailRepository seasonIHPDetailRepository;
+   @Autowired DocumentTypeDocumentCategoryProcessRepository documentTypeDocumentCategoryProcessRepository;
+   @Autowired DocumentInformationRepository documentInformationRepository;
+   @Autowired DepartmentProgramRepository departmentProgramRepository;
+   @Autowired GenderRepository genderRepository;
+   @Autowired SeasonIHPDetailsRegionApplicationRepository seasonIHPDetailsRegionApplicationRepository;
+   @Autowired IHPRegionsRepository ihpRegionsRepository;
+   @Autowired SeasonRepository seasonRepository;
+   @Autowired CommonComponentUtils componentUtils;
+   @Autowired MessageUtils messageUtil;
 
-   /**
-    * @param seasonProgramId
-    * @return
-    */
-   public SeasonHspStpIhpDetails getIHPDetails(Integer seasonProgramId) {
-      SeasonHspStpIhpDetails hspStpIhpDetails = null;
-      try {
-         SeasonIHPDetail seasonIHPDetail = ihpDetailRepository.findOne(seasonProgramId);
-         if (seasonIHPDetail != null) {
-            hspStpIhpDetails = new SeasonHspStpIhpDetails();
-            hspStpIhpDetails.setSeasonId(seasonIHPDetail.getSeason().getSeasonId());
-            hspStpIhpDetails.setSeasonProgramId(seasonIHPDetail.getSeasonIHPDetailsId());
-            hspStpIhpDetails.setDepartmentProgramId(CCIConstants.HSP_STP_IHP_ID);
-            hspStpIhpDetails.setIhpNameAndStatus(getIHPNameAndStatus(seasonProgramId));
-            hspStpIhpDetails.setIhpDates(getIHPDates(seasonProgramId));
-            hspStpIhpDetails.setIhpProgramConfiguration(getIHPConfiguration(seasonProgramId));
-            hspStpIhpDetails.getIhpDocuments().addAll(getIHPDocs(seasonIHPDetail.getSeason().getSeasonId(), seasonIHPDetail.getSeasonIHPDetailsId()));
-            hspStpIhpDetails.getIhpNotes().addAll(getIHPNotes(seasonIHPDetail.getSeason().getSeasonId(), seasonIHPDetail.getSeasonIHPDetailsId()));
-         }
-      } catch (CcighgoException e) {
-         ExceptionUtil.logException(e, LOGGER);
-      }
-      return hspStpIhpDetails;
-   }
 
    /**
     * @param seasonProgramId
@@ -177,7 +145,7 @@ public class SeasonIHPProgramHelper {
             ihpProgramConfiguration.setStopAcceptingHolidayHomeStayApplications(seasonIHPDetail.getStopAcceptingAppsHolidayHomestay() == CCIConstants.ACTIVE ? true : false);
             ihpProgramConfiguration.setStopAcceptingHighSchoolApplications(seasonIHPDetail.getStopAcceptingAppsHighSchoolVisits() == CCIConstants.ACTIVE ? true : false);
             ihpProgramConfiguration.setStopAcceptingApplicationByGender(seasonIHPDetail.getStopAcceptingAppsByGender() == CCIConstants.ACTIVE ? true : false);
-            if (seasonIHPDetail.getApplicationDeadLineWeeks()!=null && seasonIHPDetail.getApplicationDeadLineWeeks() > 0) {
+            if (seasonIHPDetail.getApplicationDeadLineWeeks() != null && seasonIHPDetail.getApplicationDeadLineWeeks() > 0) {
                ihpProgramConfiguration.setApplicationCutOffPriorToProgStart(String.valueOf(seasonIHPDetail.getApplicationDeadLineWeeks()));
             }
             if (seasonIHPDetail.getLcHoldTime() != null && seasonIHPDetail.getLcHoldTime() > 0) {
@@ -246,7 +214,7 @@ public class SeasonIHPProgramHelper {
     * @param seasonProgramId
     * @return
     */
-   private List<IHPDocuments> getIHPDocs(Integer seasonId, Integer seasonProgramId) {
+   public List<IHPDocuments> getIHPDocs(Integer seasonId, Integer seasonProgramId) {
       List<IHPDocuments> ihpDocuments = null;
       List<SeasonProgramDocument> seasonProgramDocuments = seasonProgramDocumentRepository.findAllProgramDocumentsBySeasonIdAndDepartmentProgramId(seasonId,
             CCIConstants.HSP_STP_IHP_ID);
@@ -268,7 +236,8 @@ public class SeasonIHPProgramHelper {
                documents.setDocUrl(programDocument.getDocumentInformation().getUrl());
                documents.setUploadDate(DateUtils.getMMddyyDate(programDocument.getDocumentInformation().getModifiedOn()));
                documents.setActive(programDocument.getActive() == CCIConstants.ACTIVE ? true : false);
-               Login login = loginRepository.findOne(1);// TODO find user from session
+               Login login = loginRepository.findOne(1);// TODO find user from
+                                                        // session
                if (login != null) {
                   documents.setUploadedBy(login.getLoginName());
                }
@@ -284,7 +253,7 @@ public class SeasonIHPProgramHelper {
     * @param seasonProgramId
     * @return
     */
-   private List<IHPNotes> getIHPNotes(Integer seasonId, Integer seasonProgramId) {
+   public List<IHPNotes> getIHPNotes(Integer seasonId, Integer seasonProgramId) {
       List<IHPNotes> ihpNotes = null;
       List<SeasonProgramNote> programNotes = seasonProgramNotesRepository.findAllProgramNotesBySeasonIdAndDepartmentProgramId(seasonId, CCIConstants.HSP_STP_IHP_ID);
       if (programNotes != null) {
@@ -297,7 +266,8 @@ public class SeasonIHPProgramHelper {
                note.setDepartmentProgramId(CCIConstants.HSP_STP_IHP_ID);
                note.setNoteValue(prgNote.getProgramNote());
                note.setCreatedOn(DateUtils.getTimestamp(prgNote.getCreatedOn()));
-               Login login = loginRepository.findOne(1);// TODO find user from session
+               Login login = loginRepository.findOne(1);// TODO find user from
+                                                        // session
                if (login != null) {
                   note.setCreatedBy(login.getLoginName());
                }
@@ -411,10 +381,12 @@ public class SeasonIHPProgramHelper {
          SeasonIHPDetail seasonIHPDetail = ihpDetailRepository.findOne(ihpProgramConfiguration.getSeasonProgramId());
          if (seasonIHPDetail != null) {
             seasonIHPDetail.setMaxParticipants(ihpProgramConfiguration.getMaxNoOfParticipants());
-            seasonIHPDetail.setApplicationDeadLineWeeks(Integer.valueOf(ihpProgramConfiguration.getApplicationCutOffPriorToProgStart()!=null?ihpProgramConfiguration.getApplicationCutOffPriorToProgStart():"0"));
+            seasonIHPDetail.setApplicationDeadLineWeeks(Integer.valueOf(ihpProgramConfiguration.getApplicationCutOffPriorToProgStart() != null ? ihpProgramConfiguration
+                  .getApplicationCutOffPriorToProgStart() : "0"));
             seasonIHPDetail.setLcHoldTime(ihpProgramConfiguration.getLcHoldTimeDays());
             seasonIHPDetail.setNumberOfLCToRequestHold(ihpProgramConfiguration.getNoOfLcCanRequestHold());
-            seasonIHPDetail.setSplitPlacementPending(Integer.valueOf(ihpProgramConfiguration.getSplitPlacementInPending()!=null?ihpProgramConfiguration.getSplitPlacementInPending():"0"));
+            seasonIHPDetail.setSplitPlacementPending(Integer.valueOf(ihpProgramConfiguration.getSplitPlacementInPending() != null ? ihpProgramConfiguration
+                  .getSplitPlacementInPending() : "0"));
             seasonIHPDetail.setStopAcceptingApps(ihpProgramConfiguration.isStopAcceptingApplications() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
             seasonIHPDetail.setStopAcceptingAppsStandardIHP(ihpProgramConfiguration.isStopAcceptingIhpStandardSettings() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
             seasonIHPDetail.setStopAcceptingAppsVolunteerHomestay(ihpProgramConfiguration.isStopAcceptingVolunteerHomeStayApplications() ? CCIConstants.ACTIVE
@@ -423,11 +395,16 @@ public class SeasonIHPProgramHelper {
             seasonIHPDetail.setStopAcceptingAppsHolidayHomestay(ihpProgramConfiguration.isStopAcceptingHolidayHomeStayApplications() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
             seasonIHPDetail.setStopAcceptingAppsHighSchoolVisits(ihpProgramConfiguration.isStopAcceptingHighSchoolApplications() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
             seasonIHPDetail.setStopAcceptingAppsByGender(ihpProgramConfiguration.isStopAcceptingApplicationByGender() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-            if (ihpProgramConfiguration.getGenderId() > 0 && (ihpProgramConfiguration.getGenderId() == CCIConstants.MALE || ihpProgramConfiguration.getGenderId() == CCIConstants.FEMALE)) {
+            if (ihpProgramConfiguration.getGenderId() > 0
+                  && (ihpProgramConfiguration.getGenderId() == CCIConstants.MALE || ihpProgramConfiguration.getGenderId() == CCIConstants.FEMALE)) {
                LookupGender gender = genderRepository.findOne(ihpProgramConfiguration.getGenderId());
                seasonIHPDetail.setLookupGender(gender);
             } else {
-               LookupGender gender = genderRepository.findOne(CCIConstants.GENDER_UNDEFINED);// gender id 3 is undefined
+               LookupGender gender = genderRepository.findOne(CCIConstants.GENDER_UNDEFINED);// gender
+                                                                                             // id
+                                                                                             // 3
+                                                                                             // is
+                                                                                             // undefined
                seasonIHPDetail.setLookupGender(gender);
             }
             if (ihpProgramConfiguration.getStopAcceptingApplicationByRegion() != null) {

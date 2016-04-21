@@ -62,21 +62,20 @@ public class WordPressFormsImpl implements IWordPressForms {
 
    @Transactional
    @Override
-   public String InquiryPartner(InternationalPartners InternationalPartners) {
+   public String inquiryPartner(InternationalPartners InternationalPartners) {
       try {
          LOGGER.info("Inquiry partner Is Called !!d!");
-         System.out.println("Inquiry partner Is Called !!!");
          if (InternationalPartners != null) {
             Login user = loginRepository.findByEmail(InternationalPartners.getEmail());
             PartnerAgentInquiry pa = partnerAgentInquiryRepository.findByEmail(InternationalPartners.getEmail());
             if (user != null) {
                String message = "400:Duplicate Row (User Already Exist ):400:Duplicate Row (User Already Exist) [Login Table ]";
-               System.out.println(message);
+               LOGGER.info(message);
                return message;
             }
             if (pa != null) {
                String message = "400:Duplicate Row (User Already Exist ):400:Duplicate Row (User Already Exist) [PartnerAgentInquiry Table ]";
-               System.out.println(message);
+               LOGGER.info(message);
                return message;
             }
             String secondFormatOfWebSite = "";
@@ -88,7 +87,7 @@ public class WordPressFormsImpl implements IWordPressForms {
                PartnerAgentInquiry webSiteDuplicate = partnerAgentInquiryRepository.findByWebSite(InternationalPartners.getWebsite(), secondFormatOfWebSite);
                if (webSiteDuplicate != null) {
                   String message = "400:Duplicate Row (WebSite Already Exist):400:Duplicate Row (WebSite Already Exist)";
-                  System.out.println(message);
+                  LOGGER.info(message);
                   return message;
                }
             }
@@ -96,7 +95,7 @@ public class WordPressFormsImpl implements IWordPressForms {
             PartnerAgentInquiry legalNameDuplicate = partnerAgentInquiryRepository.findByLegalName(InternationalPartners.getLegalBusinessName());
             if (legalNameDuplicate != null) {
                String message = "400:Duplicate Row (LegalName is Already Exist):400:Duplicate Row (LegalName Already Exist)";
-               System.out.println(message);
+               LOGGER.info(message);
                return message;
             }
             print(InternationalPartners);
@@ -108,18 +107,6 @@ public class WordPressFormsImpl implements IWordPressForms {
             partnerAgentInquiry.setCity(InternationalPartners.getCity());
             partnerAgentInquiry.setEmail(InternationalPartners.getEmail());
             partnerAgentInquiry.setFirstName(InternationalPartners.getFirstName());
-            // if(InternationalPartners.getHearedAboutUs()!=null){
-            // String [] val =
-            // InternationalPartners.getHearedAboutUs().split("\\|");
-            // if(val!=null && val.length >1){
-            // partnerAgentInquiry.setHowDidYouHearAboutCCI(val[0]);
-            // partnerAgentInquiry.setAmbassadorScholershipParticipants(val[1].equalsIgnoreCase("yes")?CCIConstants.ACTIVE
-            // : CCIConstants.INACTIVE);
-            // }
-            // else{
-            // partnerAgentInquiry.setHowDidYouHearAboutCCI(val[0]);
-            // }
-            // }
             partnerAgentInquiry.setHowDidYouHearAboutCCI(InternationalPartners.getHearedAboutUs());
             partnerAgentInquiry.setLastName(InternationalPartners.getLastName());
             partnerAgentInquiry.setState(InternationalPartners.getStateOrProvince());
@@ -270,7 +257,7 @@ public class WordPressFormsImpl implements IWordPressForms {
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
          String string = "700:Internal Error:700:" + e.getMessage();
-         System.out.println(string);
+         LOGGER.info(string);
          return string;
       }
    }
@@ -282,7 +269,7 @@ public class WordPressFormsImpl implements IWordPressForms {
          query.executeUpdate();
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
-         System.out.println("Error Executing the Stored Procedure !!");
+         LOGGER.info("Error Executing the Stored Procedure !!");
       }
 
    }
@@ -318,7 +305,7 @@ public class WordPressFormsImpl implements IWordPressForms {
    }
 
    @Override
-   public String GenerateNewHostFamily(HostFamilyData HostFamilyData) {
+   public String generateNewHostFamily(HostFamilyData HostFamilyData) {
       try {
          printDataCommingFromService(HostFamilyData);
          LOGGER.info("Inquiry HostFamily Is Called !!d!");
@@ -354,24 +341,13 @@ public class WordPressFormsImpl implements IWordPressForms {
             System.out.println("GoID : " + goIdSequence.getGoId());
             pa.setHostFamilyInquiryId(goIdSequence.getGoId());
             hostFamilyInquiryRepository.saveAndFlush(pa);
-            // if (HostFamilyData.getStudents() != null &&
-            // HostFamilyData.getStudents().length() > 0) {
-            // String ids[] = HostFamilyData.getStudents().split(",");
-            // for (String id : ids) {
-            // HostFamilyParticipant h = new HostFamilyParticipant();
-            // Participant p =
-            // participantRepository.findOne(Integer.valueOf(id));
-            // h.setParticipant(p);
-            // // h.sethostfa
-            // }
-            // }
 
          }
          return "200:Success:200:Success";
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
          String string = "700:Internal Error:700:" + e.getMessage();
-         System.out.println(string);
+         LOGGER.info(string);
          return string;
       }
    }
@@ -398,7 +374,7 @@ public class WordPressFormsImpl implements IWordPressForms {
    }
 
    @Override
-   public String GenerateNewAreaRepresentative(AreaRepresentativeData AreaRepresentativeData) {
+   public String generateNewAreaRepresentative(AreaRepresentativeData AreaRepresentativeData) {
       try {
          LOGGER.info("Generate New Area Representative");
          System.out.println("Generate New Area Representative");
@@ -447,7 +423,7 @@ public class WordPressFormsImpl implements IWordPressForms {
    }
 
    @Override
-   public Boolean IsEmailExist(String Email) {
+   public Boolean isEmailExist(String Email) {
       try {
          System.out.println("IsEmailExist is Called !!! ");
          System.out.println("Email : " + Email);
@@ -464,7 +440,7 @@ public class WordPressFormsImpl implements IWordPressForms {
    }
 
    @Override
-   public Boolean IsLegalNameExist(String LegalName) {
+   public Boolean isLegalNameExist(String LegalName) {
       try {
          System.out.println("IsLegalNameExist is Called !!! ");
          System.out.println("Legal Name:" + LegalName);
@@ -483,7 +459,7 @@ public class WordPressFormsImpl implements IWordPressForms {
    }
 
    @Override
-   public Boolean IsWebSiteExist(String WebSite) {
+   public Boolean isWebSiteExist(String WebSite) {
       try {
          System.out.println("IsWebSiteExist is Called !!! ");
          WebSite = WebSite.replaceAll("http://|https://|/$", "");

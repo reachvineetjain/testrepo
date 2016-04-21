@@ -517,6 +517,7 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                   Login p = loginRepository.findByGoId(goIdSequence);
                   if (p != null)
                      details.setActive(p.getActive() != null && p.getActive() == 1);
+                  details.setParticipantEmail(p.getEmail());
                } catch (Exception e) {
                   ExceptionUtil.logException(e, logger);
                }
@@ -537,17 +538,24 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                   details.setParticipantCountry(participant.getLookupCountry().getCountryName());
                   details.setParticipantCountryId(participant.getLookupCountry().getCountryId());
                }
-               // details.setParticipantEmail(participant.getEmail());
-               if (participant.getEndDate() != null)
+               if (participant.getEndDate() != null) {
                   details.setParticipantEndDate(DateUtils.getDateAndTime(participant.getEndDate()));
-               details.setParticipantFirstName(participant.getFirstName());
-               if (participant.getGuaranteed() != null)
+                  details.setParticipantFirstName(participant.getFirstName());
+               }
+               if (participant.getGuaranteed() != null) {
                   details.setParticipantGuranteed(participant.getGuaranteed() == 1);
+               }
                details.setParticipantlastName(participant.getLastName());
-               if (participant.getPhoto() != null)
+               if (participant.getPhoto() != null) {
                   details.setParticipantPicUrl(participant.getPhoto());
+               }
                if (participant.getDepartmentProgram() != null) {
                   details.setParticipantProgramName(participant.getDepartmentProgram().getProgramName());
+               }
+               //BUG 1173 point 1. As per discussion we need to show both program option as well as available programs
+               if (participant.getDepartmentProgramOption() != null) {
+                  details.setParticipantProgramOptionId(participant.getDepartmentProgramOption().getDepartmentProgramOptionId());
+                  details.setParticipantProgramOption(participant.getDepartmentProgramOption().getProgramOptionName());
                }
                details.setParticipantSeasonId(participant.getSeason().getSeasonId());
                String programName = participant.getDepartmentProgram().getProgramName();
@@ -610,6 +618,9 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
             }
             addedParticipants.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         } else {
+            addedParticipants.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+                  messageUtil.getMessage(CCIConstants.NO_RECORD)));
          }
       } catch (Exception e) {
          addedParticipants.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(),
@@ -683,14 +694,30 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
    }
 
    @Override
+   @Transactional
    public WSDefaultResponse assignEmailToParticipant(String participantId, String email2) {
       WSDefaultResponse wsDefaultResponse = new WSDefaultResponse();
       try {
-         Participant p = participantRepository.findOne(Integer.parseInt(participantId));
-         // p.setEmail(email2);
-         participantRepository.saveAndFlush(p);
-         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.CHANGE_PARTICIPANT_EMAIL.getValue(),
-               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         if (email2 != null) {
+            Login exists = loginRepository.findByEmail(email2);
+            if (exists != null) {
+               wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CHANGE_PARTICIPANT_EMAIL.getValue(),
+                     "User with same email already exists, try using different email."));
+               return wsDefaultResponse;
+            } else {
+               if (participantId != null) {
+                  Login pLogin = loginRepository.findByCCIGoId(Integer.valueOf(participantId));
+                  pLogin.setEmail(email2);
+                  loginRepository.saveAndFlush(pLogin);
+                  wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.CHANGE_PARTICIPANT_EMAIL.getValue(),
+                        messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+               } else {
+                  wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.CHANGE_PARTICIPANT_EMAIL.getValue(),
+                        messageUtil.getMessage(CCIConstants.NO_RECORD)));
+                  return wsDefaultResponse;
+               }
+            }
+         }
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
          wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CANT_CHANGE_PARTICIPANT_EMAIL.getValue(),

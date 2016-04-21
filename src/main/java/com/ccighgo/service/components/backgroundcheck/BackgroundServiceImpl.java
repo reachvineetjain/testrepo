@@ -27,7 +27,6 @@ import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.jpa.repositories.HostFamilyBackgroundRepository;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
-import com.ccighgo.service.components.errormessages.constants.PartnerAdminMessageConstants;
 import com.ccighgo.service.components.errormessages.constants.UtilityServiceMessageConstants;
 import com.ccighgo.service.rest.backgroundcheck.BackgroundCheck;
 import com.ccighgo.service.transport.common.response.beans.Response;
@@ -92,7 +91,6 @@ public class BackgroundServiceImpl implements BackgroundServiceInterface {
          Marshaller jaxbMarshaller = JAXBContext.newInstance(ScreenRequest.class).createMarshaller();
          jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
          jaxbMarshaller.marshal(objectFactory.createScreenRequest(screenRequest), sw);
-         // jaxbMarshaller.marshal(sRequest.getValue(), sw);
          String xmlString = sw.toString();
 
          HttpEntity entity = new ByteArrayEntity(xmlString.getBytes("UTF-8"));
@@ -366,7 +364,7 @@ public class BackgroundServiceImpl implements BackgroundServiceInterface {
                for (com.ccighgo.service.transport.seasons.beans.backgroundcheckstatus.BackgroundReports.BackgroundReportPackage.ScreeningStatus.AdditionalItems item : backgroundReports
                      .getBackgroundReportPackage().getScreeningStatus().getAdditionalItems()) {
                   if (item.getQualifier().equalsIgnoreCase("DateOrderClosed"))
-                     background.setDateOrderClosed(DateUtils.getDateFromString_bg_check(item.getText()));
+                     background.setDateOrderClosed(DateUtils.getDateFromStringBgCheck(item.getText()));
                   else if (item.getQualifier().equalsIgnoreCase("ResultStatus"))
                      background.setResultStatus(item.getText());
                   else if (item.getQualifier().equalsIgnoreCase("ResultsURL"))
@@ -380,13 +378,7 @@ public class BackgroundServiceImpl implements BackgroundServiceInterface {
                if (item.getQualifier().equalsIgnoreCase("ResultsURL"))
                   background.setResultURL(item.getText());
             }
-            background.setDateOrderReceived(DateUtils.getDateFromString_bg_check(backgroundReports.getBackgroundReportPackage().getScreeningStatus().getDateOrderReceived()));
-
-            // background.setHostFamilyBackgroundId();
-            // background.setHostFamilySeason();
-            // background.setLastName(lastName);
-            // background.setRelationshipToHostParent(relationshipToHostParent);
-            // background.setStatus(status);
+            background.setDateOrderReceived(DateUtils.getDateFromStringBgCheck(backgroundReports.getBackgroundReportPackage().getScreeningStatus().getDateOrderReceived()));
 
             hostFamilyBackgroundRepository.saveAndFlush(background);
             response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.INSERTING_BACKGROUND_DATA_SUCCCESSFULLY.getValue(),
