@@ -315,7 +315,7 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
 
    @Override
    @Transactional
-   public Response toggleActiveStatus(String statusVal, String loggedinUserLoginId, String partnerLoginId) {
+   public Response toggleActiveStatus(String statusVal, String loggedinUserLoginId, String goId) {
       Response resp = new Response();
       try {
          if (!(Integer.valueOf(statusVal) == 0) && !(Integer.valueOf(statusVal) == 1)) {
@@ -324,10 +324,10 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
          if (loggedinUserLoginId == null || Integer.valueOf(loggedinUserLoginId) == 0 || Integer.valueOf(loggedinUserLoginId) < 0) {
             throw new CcighgoException("logged in user info is required to update the record");
          }
-         if (partnerLoginId == null || Integer.valueOf(partnerLoginId) == 0 || Integer.valueOf(partnerLoginId) < 0) {
+         if (goId == null || Integer.valueOf(goId) == 0 || Integer.valueOf(goId) < 0) {
             throw new CcighgoException("login info of partner is required update the record");
          }
-         Login partnerLogin = loginRepository.findOne(Integer.valueOf(partnerLoginId));
+         List<Login> partnerLogin = loginRepository.findAllByGoId(Integer.valueOf(goId));
          if (partnerLogin == null) {
             throw new CcighgoException("no record found to update status with the login info provided, please check request url");
          }
@@ -338,8 +338,29 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
          if (Integer.valueOf(statusVal) == 0) {
             activeStatus = CCIConstants.INACTIVE;
          }
-         partnerLogin.setActive(activeStatus);
-         loginRepository.saveAndFlush(partnerLogin);
+
+         List<Login> logins = new ArrayList<Login>();
+         if (partnerLogin != null && !partnerLogin.isEmpty()) {
+            for (Login user : partnerLogin) {
+               user.setActive(activeStatus);
+               logins.add(user);
+            }
+            loginRepository.save(logins);
+         }
+
+         List<Partner> subPartners = partnerRepository.findByIsSubPartnerAndParentId(Integer.valueOf(goId));
+         if (subPartners != null && !subPartners.isEmpty()) {
+            logins = new ArrayList<Login>();
+            for (Partner partner : subPartners) {
+               partnerLogin = loginRepository.findAllByGoId(partner.getGoIdSequence().getGoId());
+               for (Login user : partnerLogin) {
+                  user.setActive(activeStatus);
+                  logins.add(user);
+               }
+               loginRepository.save(logins);
+            }
+         }
+
          resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE, messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (CcighgoException e) {
          resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_TOGGLE_ACTIVE_STATUS.getValue(), e.getMessage()));
