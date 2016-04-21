@@ -22,7 +22,6 @@ import com.ccighgo.db.entities.SeasonProgramDocument;
 import com.ccighgo.db.entities.SeasonProgramNote;
 import com.ccighgo.db.entities.SeasonStatus;
 import com.ccighgo.exception.CcighgoException;
-import com.ccighgo.exception.SeasonCodes;
 import com.ccighgo.jpa.repositories.DepartmentProgramRepository;
 import com.ccighgo.jpa.repositories.DocumentInformationRepository;
 import com.ccighgo.jpa.repositories.DocumentTypeDocumentCategoryProcessRepository;
