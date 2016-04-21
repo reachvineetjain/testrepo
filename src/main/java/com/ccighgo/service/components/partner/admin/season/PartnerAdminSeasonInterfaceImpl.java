@@ -737,7 +737,7 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
          partnerSeasonDocumentRepository.delete(Integer.valueOf(partnerSeasonDocumentId));
          resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE, messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (CcighgoException e) {
-         resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(),
+         resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.EXCPTION_WHEN_DELETE_ADMIN_SEASON_DOCUMENT.getValue(),
                "error occured while deleting document"));
          LOGGER.error("error occured while deleting document");
       }
