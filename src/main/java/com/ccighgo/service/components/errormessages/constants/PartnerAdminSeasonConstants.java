@@ -23,5 +23,6 @@ public class PartnerAdminSeasonConstants {
    public static final String ERROR_UPDATE_PARTNER_ADMIN_SEASON_ACTIVE_STATUS = "error.update.partner.admin.season.active.status";
    public static final String ERROR_UPDATE_PARTNER_ADMIN_SEASON_STATUS = "error.partner.admin.season.status";
    public static final String PARTNER_ADMIN_SEASON_INVALID_STATUS_VALUE = "partner.admin.season.invalid.status.value";
+   public static final String INVALID_PARTNER_ADMIN_PARTNER_GO_ID = "invalid.partner.goid";
 
 }
