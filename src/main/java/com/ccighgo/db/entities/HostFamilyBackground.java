@@ -32,7 +32,7 @@ public class HostFamilyBackground implements Serializable {
 
    @Column(length = 50) private String lastName;
 
-   private String password;
+   @Column(length = 200) private String password;
 
    @Column(length = 50) private String relationshipToHostParent;
 
