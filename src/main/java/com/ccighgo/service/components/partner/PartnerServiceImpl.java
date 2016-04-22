@@ -201,75 +201,120 @@ public class PartnerServiceImpl implements PartnerService {
                      Programs j1Program = new Programs();
                      j1Program.setProgramName("J1HS");
                      Permissions j1Permissions = new Permissions();
-                     j1Permissions.setAccounting(partnerPermission.getJ1AccountingInsurance() == CCIConstants.ACTIVE ? true : false);
-                     j1Permissions.setAdmin(partnerPermission.getJ1Admin() == CCIConstants.ACTIVE ? true : false);
-                     j1Permissions.setApplications(partnerPermission.getJ1Applications() == CCIConstants.ACTIVE ? true : false);
-                     j1Permissions.setContracting(partnerPermission.getJ1Contracting() == CCIConstants.ACTIVE ? true : false);
-                     j1Permissions.setFlights(partnerPermission.getJ1Flights() == CCIConstants.ACTIVE ? true : false);
-                     j1Permissions.setInsurance(partnerPermission.getJ1Insurance() == CCIConstants.ACTIVE ? true : false);
-                     j1Permissions.setMonitoring(partnerPermission.getJ1Monitoring() == CCIConstants.ACTIVE ? true : false);
-                     j1Permissions.setPlacementInfo(partnerPermission.getJ1PlacementInfo() == CCIConstants.ACTIVE ? true : false);
-                     j1Permissions.setStudentsPreProgram(partnerPermission.getJ1StudentsPreProgram() == CCIConstants.ACTIVE ? true : false);
+                     // j1Permissions.setAccounting(partnerPermission.getJ1AccountingInsurance()
+                     // == CCIConstants.ACTIVE ? true : false);
+                     // j1Permissions.setAdmin(partnerPermission.getJ1Admin() ==
+                     // CCIConstants.ACTIVE ? true : false);
+                     // j1Permissions.setApplications(partnerPermission.getJ1Applications()
+                     // == CCIConstants.ACTIVE ? true : false);
+                     // j1Permissions.setContracting(partnerPermission.getJ1Contracting()
+                     // == CCIConstants.ACTIVE ? true : false);
+                     // j1Permissions.setFlights(partnerPermission.getJ1Flights()
+                     // == CCIConstants.ACTIVE ? true : false);
+                     // j1Permissions.setInsurance(partnerPermission.getJ1Insurance()
+                     // == CCIConstants.ACTIVE ? true : false);
+                     // j1Permissions.setMonitoring(partnerPermission.getJ1Monitoring()
+                     // == CCIConstants.ACTIVE ? true : false);
+                     // j1Permissions.setPlacementInfo(partnerPermission.getJ1PlacementInfo()
+                     // == CCIConstants.ACTIVE ? true : false);
+                     // j1Permissions.setStudentsPreProgram(partnerPermission.getJ1StudentsPreProgram()
+                     // == CCIConstants.ACTIVE ? true : false);
                      j1Program.setPermissions(j1Permissions);
                      userProgramsAndPermissions.add(j1Program);
 
                      Programs f1Program = new Programs();
                      f1Program.setProgramName(CCIConstants.HSP_F1);
                      Permissions f1Permissions = new Permissions();
-                     f1Permissions.setAccounting(partnerPermission.getF1AccountingInsurance() == CCIConstants.ACTIVE ? true : false);
-                     f1Permissions.setAdmin(partnerPermission.getF1Admin() == CCIConstants.ACTIVE ? true : false);
-                     f1Permissions.setApplications(partnerPermission.getF1Applications() == CCIConstants.ACTIVE ? true : false);
-                     f1Permissions.setContracting(partnerPermission.getF1Contracting() == CCIConstants.ACTIVE ? true : false);
-                     f1Permissions.setFlights(partnerPermission.getF1Flights() == CCIConstants.ACTIVE ? true : false);
-                     f1Permissions.setInsurance(partnerPermission.getF1Insurance() == CCIConstants.ACTIVE ? true : false);
-                     f1Permissions.setMonitoring(partnerPermission.getF1Monitoring() == CCIConstants.ACTIVE ? true : false);
-                     f1Permissions.setPlacementInfo(partnerPermission.getF1PlacementInfo() == CCIConstants.ACTIVE ? true : false);
-                     f1Permissions.setStudentsPreProgram(partnerPermission.getF1StudentsPreProgram() == CCIConstants.ACTIVE ? true : false);
+                     // f1Permissions.setAccounting(partnerPermission.getF1AccountingInsurance()
+                     // == CCIConstants.ACTIVE ? true : false);
+                     // f1Permissions.setAdmin(partnerPermission.getF1Admin() ==
+                     // CCIConstants.ACTIVE ? true : false);
+                     // f1Permissions.setApplications(partnerPermission.getF1Applications()
+                     // == CCIConstants.ACTIVE ? true : false);
+                     // f1Permissions.setContracting(partnerPermission.getF1Contracting()
+                     // == CCIConstants.ACTIVE ? true : false);
+                     // f1Permissions.setFlights(partnerPermission.getF1Flights()
+                     // == CCIConstants.ACTIVE ? true : false);
+                     // f1Permissions.setInsurance(partnerPermission.getF1Insurance()
+                     // == CCIConstants.ACTIVE ? true : false);
+                     // f1Permissions.setMonitoring(partnerPermission.getF1Monitoring()
+                     // == CCIConstants.ACTIVE ? true : false);
+                     // f1Permissions.setPlacementInfo(partnerPermission.getF1PlacementInfo()
+                     // == CCIConstants.ACTIVE ? true : false);
+                     // f1Permissions.setStudentsPreProgram(partnerPermission.getF1StudentsPreProgram()
+                     // == CCIConstants.ACTIVE ? true : false);
                      f1Program.setPermissions(f1Permissions);
                      userProgramsAndPermissions.add(f1Program);
 
                      Programs ihpProgram = new Programs();
                      ihpProgram.setProgramName("IHP");
                      Permissions ihpPermissions = new Permissions();
-                     ihpPermissions.setAccounting(partnerPermission.getIhpAccountingInsurance() == CCIConstants.ACTIVE ? true : false);
-                     ihpPermissions.setAdmin(partnerPermission.getIhpAdmin() == CCIConstants.ACTIVE ? true : false);
-                     ihpPermissions.setApplications(partnerPermission.getIhpApplications() == CCIConstants.ACTIVE ? true : false);
-                     ihpPermissions.setContracting(partnerPermission.getIhpContracting() == CCIConstants.ACTIVE ? true : false);
-                     ihpPermissions.setFlights(partnerPermission.getIhpFlights() == CCIConstants.ACTIVE ? true : false);
-                     ihpPermissions.setInsurance(partnerPermission.getIhpInsurance() == CCIConstants.ACTIVE ? true : false);
-                     ihpPermissions.setMonitoring(partnerPermission.getIhpMonitoring() == CCIConstants.ACTIVE ? true : false);
-                     ihpPermissions.setPlacementInfo(partnerPermission.getIhpPlacementInfo() == CCIConstants.ACTIVE ? true : false);
-                     ihpPermissions.setStudentsPreProgram(partnerPermission.getIhpStudentsPreProgram() == CCIConstants.ACTIVE ? true : false);
+                     // ihpPermissions.setAccounting(partnerPermission.getIhpAccountingInsurance()
+                     // == CCIConstants.ACTIVE ? true : false);
+                     // ihpPermissions.setAdmin(partnerPermission.getIhpAdmin()
+                     // == CCIConstants.ACTIVE ? true : false);
+                     // ihpPermissions.setApplications(partnerPermission.getIhpApplications()
+                     // == CCIConstants.ACTIVE ? true : false);
+                     // ihpPermissions.setContracting(partnerPermission.getIhpContracting()
+                     // == CCIConstants.ACTIVE ? true : false);
+                     // ihpPermissions.setFlights(partnerPermission.getIhpFlights()
+                     // == CCIConstants.ACTIVE ? true : false);
+                     // ihpPermissions.setInsurance(partnerPermission.getIhpInsurance()
+                     // == CCIConstants.ACTIVE ? true : false);
+                     // ihpPermissions.setMonitoring(partnerPermission.getIhpMonitoring()
+                     // == CCIConstants.ACTIVE ? true : false);
+                     // ihpPermissions.setPlacementInfo(partnerPermission.getIhpPlacementInfo()
+                     // == CCIConstants.ACTIVE ? true : false);
+                     // ihpPermissions.setStudentsPreProgram(partnerPermission.getIhpStudentsPreProgram()
+                     // == CCIConstants.ACTIVE ? true : false);
                      ihpProgram.setPermissions(ihpPermissions);
                      userProgramsAndPermissions.add(ihpProgram);
 
                      Programs wntProgram = new Programs();
                      wntProgram.setProgramName("W&T");
                      Permissions wntPermissions = new Permissions();
-                     wntPermissions.setAccounting(partnerPermission.getWtAccountingInsurance() == CCIConstants.ACTIVE ? true : false);
-                     wntPermissions.setAdmin(partnerPermission.getWtAdmin() == CCIConstants.ACTIVE ? true : false);
-                     wntPermissions.setApplications(partnerPermission.getWtApplications() == CCIConstants.ACTIVE ? true : false);
-                     wntPermissions.setContracting(partnerPermission.getWtContracting() == CCIConstants.ACTIVE ? true : false);
-                     wntPermissions.setFlights(partnerPermission.getWtFlights() == CCIConstants.ACTIVE ? true : false);
-                     wntPermissions.setInsurance(partnerPermission.getWtInsurance() == CCIConstants.ACTIVE ? true : false);
-                     wntPermissions.setMonitoring(partnerPermission.getWtMonitoring() == CCIConstants.ACTIVE ? true : false);
-                     wntPermissions.setPlacementInfo(partnerPermission.getWtPlacementInfo() == CCIConstants.ACTIVE ? true : false);
-                     wntPermissions.setStudentsPreProgram(partnerPermission.getWtStudentsPreProgram() == CCIConstants.ACTIVE ? true : false);
+                     // wntPermissions.setAccounting(partnerPermission.getWtAccountingInsurance()
+                     // == CCIConstants.ACTIVE ? true : false);
+                     // wntPermissions.setAdmin(partnerPermission.getWtAdmin()
+                     // == CCIConstants.ACTIVE ? true : false);
+                     // wntPermissions.setApplications(partnerPermission.getWtApplications()
+                     // == CCIConstants.ACTIVE ? true : false);
+                     // wntPermissions.setContracting(partnerPermission.getWtContracting()
+                     // == CCIConstants.ACTIVE ? true : false);
+                     // wntPermissions.setFlights(partnerPermission.getWtFlights()
+                     // == CCIConstants.ACTIVE ? true : false);
+                     // wntPermissions.setInsurance(partnerPermission.getWtInsurance()
+                     // == CCIConstants.ACTIVE ? true : false);
+                     // wntPermissions.setMonitoring(partnerPermission.getWtMonitoring()
+                     // == CCIConstants.ACTIVE ? true : false);
+                     // wntPermissions.setPlacementInfo(partnerPermission.getWtPlacementInfo()
+                     // == CCIConstants.ACTIVE ? true : false);
+                     // wntPermissions.setStudentsPreProgram(partnerPermission.getWtStudentsPreProgram()
+                     // == CCIConstants.ACTIVE ? true : false);
                      wntProgram.setPermissions(wntPermissions);
                      userProgramsAndPermissions.add(wntProgram);
 
                      Programs capProgram = new Programs();
                      capProgram.setProgramName(CCIConstants.WP_WT_CAP);
                      Permissions capPermissions = new Permissions();
-                     capPermissions.setAccounting(partnerPermission.getCapAccountingInsurance() == CCIConstants.ACTIVE ? true : false);
-                     capPermissions.setAdmin(partnerPermission.getCapAdmin() == CCIConstants.ACTIVE ? true : false);
-                     capPermissions.setApplications(partnerPermission.getCapApplications() == CCIConstants.ACTIVE ? true : false);
-                     capPermissions.setContracting(partnerPermission.getCapContracting() == CCIConstants.ACTIVE ? true : false);
-                     capPermissions.setFlights(partnerPermission.getCapFlights() == CCIConstants.ACTIVE ? true : false);
-                     capPermissions.setInsurance(partnerPermission.getCapInsurance() == CCIConstants.ACTIVE ? true : false);
-                     capPermissions.setMonitoring(partnerPermission.getCapMonitoring() == CCIConstants.ACTIVE ? true : false);
-                     capPermissions.setPlacementInfo(partnerPermission.getCapPlacementInfo() == CCIConstants.ACTIVE ? true : false);
-                     capPermissions.setStudentsPreProgram(partnerPermission.getCapStudentsPreProgram() == CCIConstants.ACTIVE ? true : false);
+                     // capPermissions.setAccounting(partnerPermission.getCapAccountingInsurance()
+                     // == CCIConstants.ACTIVE ? true : false);
+                     // capPermissions.setAdmin(partnerPermission.getCapAdmin()
+                     // == CCIConstants.ACTIVE ? true : false);
+                     // capPermissions.setApplications(partnerPermission.getCapApplications()
+                     // == CCIConstants.ACTIVE ? true : false);
+                     // capPermissions.setContracting(partnerPermission.getCapContracting()
+                     // == CCIConstants.ACTIVE ? true : false);
+                     // capPermissions.setFlights(partnerPermission.getCapFlights()
+                     // == CCIConstants.ACTIVE ? true : false);
+                     // capPermissions.setInsurance(partnerPermission.getCapInsurance()
+                     // == CCIConstants.ACTIVE ? true : false);
+                     // capPermissions.setMonitoring(partnerPermission.getCapMonitoring()
+                     // == CCIConstants.ACTIVE ? true : false);
+                     // capPermissions.setPlacementInfo(partnerPermission.getCapPlacementInfo()
+                     // == CCIConstants.ACTIVE ? true : false);
+                     // capPermissions.setStudentsPreProgram(partnerPermission.getCapStudentsPreProgram()
+                     // == CCIConstants.ACTIVE ? true : false);
                      capProgram.setPermissions(capPermissions);
                      userProgramsAndPermissions.add(capProgram);
                   }
