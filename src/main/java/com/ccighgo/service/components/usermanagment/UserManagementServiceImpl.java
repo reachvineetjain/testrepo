@@ -517,7 +517,7 @@ public class UserManagementServiceImpl implements UserManagementService {
          Login loginEmail = loginRepository.findByEmail(usr.getEmail());
          String body = "<p>This email was sent automatically by CCI Greenheart Online system to inform you that you an online account has been created for you.  </p></br>"
                + "<p>Please go to the following page and follow the instructions to login to the system. </p> " + "<p>"
-               + CCIUtils.formResetURL(request).concat(loginEmail.getKeyValue()) + "</p></br>" + "<p>Thank you,</p><p>GO System Support.</p>";
+               + CCIUtils.formResetURL(request).concat(loginEmail.getKeyValue()) + "</p></br>" + "<p>Thank you,</p><p>GO System Support</p>";
          email.send(loginEmail.getEmail(), CCIConstants.CREATE_CCI_USER_SUBJECT, body, true);
          usr = setUserStatus(usr, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.USER_MANAGEMENT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
          return usr;
