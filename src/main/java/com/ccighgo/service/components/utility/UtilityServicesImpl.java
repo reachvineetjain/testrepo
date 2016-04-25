@@ -650,7 +650,7 @@ public class UtilityServicesImpl implements UtilityServices {
             String body = "<p>Ciao! </p>" + "<p>This email was sent automatically by Greenheart Online (GO) in response to your request for a new password. </p>" + "<p>"
                   + "Your username is : " + loginUser.getLoginName() + "</p>" + "<p>Please click on the link below to create a new password:</p> " + "<p>"
                   + formResetURL(request).concat(loginUser.getKeyValue()) + "</p>" + "<p>If you didn't request a new password, please let us know.</p>" + "<p>Thank you,</p>"
-                  + "<p>CCI Greenheart.</p>";
+                  + "<p>CCI Greenheart</p>";
             email.send(loginUser.getEmail(), CCIConstants.RESET_PASSWORD_SUBJECT, body, true);
             response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
                   messageUtil.getMessage((CCIConstants.SERVICE_SUCCESS))));
