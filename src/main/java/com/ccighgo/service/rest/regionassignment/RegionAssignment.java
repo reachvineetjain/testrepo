@@ -1,6 +1,9 @@
-
-/**
- * 
+/*
+ * Copyright (c) 2015, 2016, Creospan Solutions Pvt Ltd. All rights reserved.
+ * CREOSPAN PROPRIETARY/CONFIDENTIAL.
+ *
+ *
+ *
  */
 package com.ccighgo.service.rest.regionassignment;
 
@@ -28,10 +31,14 @@ import com.ccighgo.service.transport.season.beans.deleteregionmember.DeleteRegio
 import com.ccighgo.utils.WSDefaultResponse;
 
 /**
+ * This class contains all the methods used to assign the different types of
+ * Field Staffs(i.e ERD,RD,AC,LC,RM etc) to the Super Region ,Regions and States
+ * It's methods are exposed as RESTful services
  * 
  * @author Ahmed Abdelmaaboud
  *
  */
+
 @Path("/regionAssignment/")
 @Produces("application/json")
 @Consumes("application/json")
@@ -49,6 +56,12 @@ public class RegionAssignment {
       return input;
    }
 
+   /**
+    * @param seasonId
+    *           .The number used to uniquely identify the season
+    * @return the element AssignedSuperRegion. It contains the details of all
+    *         the Super Regions associated with given season.
+    */
    @GET
    @Path("list/assigned/superRegions/{seasonId}")
    @Produces("application/json")
@@ -57,6 +70,14 @@ public class RegionAssignment {
       return regionAssignmentServices.getAssignedSuperRegionDetails(Integer.parseInt(seasonId));
    }
 
+   /**
+    * @param seasonId
+    *           . The number used to uniquely identify the season
+    * @param superRegionId
+    *           . The number used to uniquely identify the Super Region
+    * @return the element SuperRegionsERDs. It is the list of all the ERDs
+    *         associated with given Super Region in the given season.
+    */
    @GET
    @Path("list/assigned/superRegionsERDs/{seasonId}/{superRegionId}")
    @Produces("application/json")
@@ -64,6 +85,16 @@ public class RegionAssignment {
       LOGGER.debug("fun: getAllERDsForSuperRegion");
       return regionAssignmentServices.getAllERDsForSuperRegion(Integer.parseInt(seasonId), Integer.parseInt(superRegionId));
    }
+
+   /**
+    * 
+    * @param superRegionId
+    *           . The number used to uniquely identify the Super Region
+    * @param seasonId
+    *           . The number used to uniquely identify the season
+    * @return the element AssignedRegion. It contains the details of all the
+    *         Regions present in the given Super Region.
+    */
 
    @GET
    @Path("list/assigned/regions/{superRegionId}/{seasonId}")
@@ -73,6 +104,17 @@ public class RegionAssignment {
       return regionAssignmentServices.getAssignedRegions(Integer.parseInt(superRegionId), Integer.parseInt(seasonId));
    }
 
+   /**
+    * 
+    * @param superRegionId
+    *           . The number used to uniquely identify the Super Region
+    * @param seasonId
+    *           . The number used to uniquely identify the season
+    * @param regionId
+    *           . The number used to uniquely identify the Region
+    * @return the element RegionRDs. It is the list of all the RDs associated
+    *         with given Region.
+    */
    @GET
    @Path("list/assigned/regionsRDs/{superRegionId}/{seasonId}/{regionId}")
    @Produces("application/json")
@@ -81,6 +123,17 @@ public class RegionAssignment {
       return regionAssignmentServices.getAllRDsForRegion(Integer.parseInt(superRegionId), Integer.parseInt(seasonId), Integer.parseInt(regionId));
    }
 
+   /**
+    * 
+    * @param superRegionId
+    *           . The number used to uniquely identify the Super Region
+    * @param regionId
+    *           . The number used to uniquely identify the Region
+    * @param seasonId
+    *           . The number used to uniquely identify the season
+    * @return the element AssignedStateInfo. It contains the details of all the
+    *         States associated with given Region and it's Super Region.
+    */
    @GET
    @Path("list/assigned/states/{superRegionId}/{regionId}/{seasonId}")
    @Produces("application/json")
@@ -89,6 +142,20 @@ public class RegionAssignment {
       return regionAssignmentServices.getAssignedStates(Integer.parseInt(superRegionId), Integer.parseInt(regionId), Integer.parseInt(seasonId));
    }
 
+   /**
+    * 
+    * @param superRegionId
+    *           . The number used to uniquely identify the Super Region
+    * @param regionId
+    *           . The number used to uniquely identify the Region
+    * @param seasonId
+    *           . The number used to uniquely identify the Season
+    * @param stateId
+    *           . The number used to uniquely identify the State
+    * @return the element StatesStaff. It is the list of all the RDs,ACs,and RMs
+    *         associated with the State which is present under given Super
+    *         Region and Region.
+    */
    @GET
    @Path("list/assigned/state/staff/{superRegionId}/{regionId}/{seasonId}/{stateId}")
    @Produces("application/json")
@@ -98,6 +165,16 @@ public class RegionAssignment {
       return regionAssignmentServices.getAssignedStateStaff(Integer.parseInt(superRegionId), Integer.parseInt(regionId), Integer.parseInt(seasonId), Integer.parseInt(stateId));
    }
 
+   /**
+    * 
+    * @param assignedERDToSuperRegion
+    *           .The object containing the information about the ERD and Super
+    *           Region to which it has to be assigned.
+    * @return the response.The generic service response object having the header
+    *         and status.The status shows whether the service has success or
+    *         failure along with proper id.
+    * 
+    */
    @POST
    @Path("assign/erdFieldStaff")
    @Produces("application/json")
@@ -106,6 +183,16 @@ public class RegionAssignment {
       return regionAssignmentServices.assignERDFieldStaffToSuperRegion(assignedERDToSuperRegion);
    }
 
+   /**
+    * 
+    * @param assignedRDsToRegion
+    *           .The object containing the information about the RD and the
+    *           Region to which it has to be assigned.
+    * @return the response.The generic service response object having the header
+    *         and status.The status shows whether the service has success or
+    *         failure along with proper id.
+    * 
+    */
    @POST
    @Path("assign/rdFieldStaff")
    @Produces("application/json")
@@ -114,6 +201,17 @@ public class RegionAssignment {
       return regionAssignmentServices.assignRDFieldStaffToRegion(assignedRDsToRegion);
    }
 
+   /**
+    * 
+    * @param assignedStaffToState
+    *           .The object containing the information about the Field
+    *           Staffs(i.e RDs,ACs and RMs) and State to which it has to be
+    *           assigned.
+    * @return the response.The generic service response object having the header
+    *         and status.The status shows whether the service has success or
+    *         failure along with proper id.
+    * 
+    */
    @POST
    @Path("assign/fieldStaffToState")
    @Produces("application/json")
@@ -122,6 +220,17 @@ public class RegionAssignment {
       return regionAssignmentServices.assignFieldStaffToState(assignedStaffToState);
    }
 
+   /**
+    * 
+    * @param deleteRegionMember
+    *           .The object containing the details of the Field Staff whose
+    *           assignments need to be removed from respective Super Region
+    *           ,Region or States
+    * @return the response.The generic service response object having the header
+    *         and status.The status shows whether the service has success or
+    *         failure along with proper id.
+    * 
+    */
    @POST
    @Path("delete/member")
    @Produces("application/json")
