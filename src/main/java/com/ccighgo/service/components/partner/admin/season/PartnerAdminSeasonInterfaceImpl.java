@@ -750,17 +750,15 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
    public Response deleteAdminSeasonAgreement(String partnerSeasonContractId) {
       Response resp = new Response();
       if (partnerSeasonContractId == null) {
-         resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(),
-               "partnerSeasonContractId is required"));
+         resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, CCIConstants.NULL_PARAM, "partnerSeasonContractId is required"));
          LOGGER.error("cannot delete document without partnerSeasonContractId");
          return resp;
       }
       try {
          partnerSeasonDocumentRepository.delete(Integer.valueOf(partnerSeasonContractId));
-         resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
-               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE, messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (CcighgoException e) {
-         resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(),
+         resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.EXCEPTION_WHEN_DELETEING_ADMIN_SEASON_AGREEMENT.getValue(),
                "error occured while deleting document"));
          LOGGER.error("error occured while deleting document");
       }
@@ -881,11 +879,11 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
                partnerSeasonStatuses.add(s);
             }
             seasonStatusList.getPartnerSeasonStatuses().addAll(partnerSeasonStatuses);
-            seasonStatusList.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
+            seasonStatusList.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE,
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          }
       } catch (CcighgoException e) {
-         seasonStatusList.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(),
+         seasonStatusList.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.EXCEPTION_FETCHING_PARTNER_SEASON_STATUSES.getValue(),
                "error occured while getting status list"));
       }
       return seasonStatusList;
