@@ -113,7 +113,7 @@ public class PartnerAdminSeasonDetailsHelper {
                   && allocation.getDepartmentProgramOption().getDepartmentProgram().getDepartmentProgramId() == CCIConstants.HSP_J1_HS_ID) {
                if (allocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.AUGUST_FY_J1)) {
                   augStartUnGuarnteedParticipants = allocation.getMaxPax() > 0 ? allocation.getMaxPax() : 0;
-                  departmentProgramOptionJANFYId = CCIConstants.AUGUST_FY_J1_ID;
+                  departmentProgramOptionAUGFYId = CCIConstants.AUGUST_FY_J1_ID;
                   totalUnGuarant += augStartUnGuarnteedParticipants > 0 ? augStartUnGuarnteedParticipants : 0;
                   augStartGuarnteedParticipants = allocation.getMaxGuaranteedPax() > 0 ? allocation.getMaxGuaranteedPax() : 0;
                   totalGurant += augStartGuarnteedParticipants > 0 ? augStartGuarnteedParticipants : 0;
@@ -121,7 +121,7 @@ public class PartnerAdminSeasonDetailsHelper {
                }
                if (allocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.JANUARY_FY_J1)) {
                   janStartUnGuarnteedParticipants = allocation.getMaxPax() > 0 ? allocation.getMaxPax() : 0;
-                  departmentProgramOptionAUGFYId = CCIConstants.JANUARY_FY_J1_ID;
+                  departmentProgramOptionJANFYId = CCIConstants.JANUARY_FY_J1_ID;
                   totalUnGuarant += janStartUnGuarnteedParticipants > 0 ? janStartUnGuarnteedParticipants : 0;
                   janStartGuarnteedParticipants = allocation.getMaxGuaranteedPax() > 0 ? allocation.getMaxGuaranteedPax() : 0;
                   totalGurant += janStartGuarnteedParticipants > 0 ? janStartGuarnteedParticipants : 0;
@@ -368,7 +368,7 @@ public class PartnerAdminSeasonDetailsHelper {
                   && allocation.getDepartmentProgramOption().getDepartmentProgram().getDepartmentProgramId() == CCIConstants.HSP_F1_ID) {
                if (allocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.AUGUST_FY_F1)) {
                   augStartUnGuarnteedParticipants = allocation.getMaxPax() > 0 ? allocation.getMaxPax() : 0;
-                  departmentProgramOptionJANFYId = CCIConstants.AUGUST_FY_F1_ID;
+                  departmentProgramOptionAUGFYId = CCIConstants.AUGUST_FY_F1_ID;
                   totalUnGuarant += augStartUnGuarnteedParticipants > 0 ? augStartUnGuarnteedParticipants : 0;
                   augStartGuarnteedParticipants = allocation.getMaxGuaranteedPax() > 0 ? allocation.getMaxGuaranteedPax() : 0;
                   totalGurant += augStartGuarnteedParticipants > 0 ? augStartGuarnteedParticipants : 0;
@@ -376,7 +376,7 @@ public class PartnerAdminSeasonDetailsHelper {
                }
                if (allocation.getDepartmentProgramOption().getProgramOptionCode().equals(CCIConstants.JANUARY_FY_F1)) {
                   janStartUnGuarnteedParticipants = allocation.getMaxPax() > 0 ? allocation.getMaxPax() : 0;
-                  departmentProgramOptionAUGFYId = CCIConstants.JANUARY_FY_F1_ID;
+                  departmentProgramOptionJANFYId = CCIConstants.JANUARY_FY_F1_ID;
                   totalUnGuarant += janStartUnGuarnteedParticipants > 0 ? janStartUnGuarnteedParticipants : 0;
                   janStartGuarnteedParticipants = allocation.getMaxGuaranteedPax() > 0 ? allocation.getMaxGuaranteedPax() : 0;
                   totalGurant += janStartGuarnteedParticipants > 0 ? janStartGuarnteedParticipants : 0;
