@@ -542,8 +542,8 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
                      PartnerSeasonAllocation allocation = partnerSeasonAllocationRepository.findByPartnerSeasonAndDepartmetProgramOptionId(partnerSeason.getPartnerSeasonId(),
                            partnerAdminJ1SeasonDetails.getProgramAllocations().getDepartmentProgramOptionJANFYId());
                      if (allocation != null) {
-                        allocation.setMaxPax(partnerAdminJ1SeasonDetails.getProgramAllocations().getAugStartMaxUnguaranteedPax());
-                        allocation.setMaxGuaranteedPax(partnerAdminJ1SeasonDetails.getProgramAllocations().getAugStartMaxGuaranteedPax());
+                        allocation.setMaxPax(partnerAdminJ1SeasonDetails.getProgramAllocations().getJanStartMaxUnguaranteedPax());
+                        allocation.setMaxGuaranteedPax(partnerAdminJ1SeasonDetails.getProgramAllocations().getJanStartMaxGuaranteedPax());
                         partnerSeasonAllocationRepository.saveAndFlush(allocation);
                      }
                   }
@@ -607,7 +607,7 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
                      PartnerSeasonAllocation allocation = partnerSeasonAllocationRepository.findByPartnerSeasonAndDepartmetProgramOptionId(partnerSeason.getPartnerSeasonId(),
                            partnerAdminF1SeasonDetails.getProgramAllocations().getDepartmentProgramOptionJANFYId());
                      if (allocation != null) {
-                        allocation.setMaxGuaranteedPax(partnerAdminF1SeasonDetails.getProgramAllocations().getAugStartMaxGuaranteedPax());
+                        allocation.setMaxGuaranteedPax(partnerAdminF1SeasonDetails.getProgramAllocations().getJanStartMaxGuaranteedPax());
                         partnerSeasonAllocationRepository.saveAndFlush(allocation);
                      }
                   }
