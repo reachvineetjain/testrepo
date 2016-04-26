@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2015, 2016, Creospan Solutions Pvt Ltd. All rights reserved.
+ * CREOSPAN PROPRIETARY/CONFIDENTIAL.
+ *
+ *
+ *
+ */
 package com.ccighgo.service.components.regionassignment;
 
 import java.util.HashMap;
@@ -47,6 +54,14 @@ import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.ExceptionUtil;
 import com.ccighgo.utils.WSDefaultResponse;
 
+/**
+ * This class contains the implementations for all the business methods used to
+ * assign the different types of Field Staffs(i.e ERD,RD,AC,LC,RM etc) to Super
+ * Regions ,Regions and States
+ * 
+ * @author vijay
+ *
+ */
 @Component
 public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
 
@@ -72,6 +87,8 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
    public AssignedSuperRegion getAssignedSuperRegionDetails(Integer seasonId) {
       AssignedSuperRegion assignedSuperRegion = new AssignedSuperRegion();
       try {
+         // Fetch the list of all the Super Regions associated with given
+         // season.
          List<SuperRegion> list = seasonGeographyConfigurationRepository.findDistinctSuperRegionObjectBySeasonId(seasonId);
          if (list == null) {
             assignedSuperRegion.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
@@ -89,6 +106,7 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
                   SeasonGeographyConfiguration configurations = seasonGeographyConfigurationRepository.findSuperRegionRowBySuperRegionIdSeasonId(superRegion.getSuperRegionId(),
                         seasonId);
                   sr.setSeasonGeographyConfigurationId(configurations.getSeasonGeographyConfigurationId());
+                  // Find the list of all the ERDs assigned to the Super Regions
                   List<FieldStaffLeadershipSeason> assignedUsers = fieldStaffLeadershipSeasonRepository.findAllFieldStaffBySeasonIdAndSuperRegionIdAndFieldStaffType(seasonId,
                         superRegion.getSuperRegionId(), CCIConstants.FieldStaffTypeCode_ERD);
                   if (assignedUsers != null) {
@@ -127,6 +145,8 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
       HashMap<Integer, Boolean> staffExist = new HashMap<Integer, Boolean>();
       SuperRegionsERDs superRegionsERDs = new SuperRegionsERDs();
       try {
+         // Fetch the list of all the Super Regions associated with given
+         // season.
          List<SuperRegion> list = seasonGeographyConfigurationRepository.findDistinctSuperRegionObjectBySeasonId(seasonId);
          if (list == null) {
             superRegionsERDs.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
@@ -139,7 +159,8 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
                if (superRegion != null) {
                   sr.setSuperRegionId(superRegion.getSuperRegionId());
                   sr.setSuperRegionName(superRegion.getSuperRegionName());
-
+                  // call the procedure to get the list of all the ERDs mappings
+                  // for given season
                   Query query = em.createNativeQuery(SP_FIELD_STAFF_REGION_ASSIGN);
                   query.setParameter(1, seasonId);
                   query.setParameter(2, ASSIGN_FS_SUPER_REGION_FLAG);
@@ -547,8 +568,7 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
    public WSDefaultResponse deleteMember(DeleteRegionMember deleteRegionMember) {
       WSDefaultResponse wsDefaultResponse = new WSDefaultResponse();
       try {
-          fieldStaffLeadershipSeasonRepository.delete(deleteRegionMember.getFieldStaffLeadershipSeasonId());
-        // seasonGeographyConfigurationRepository.delete(deleteRegionMember.getSeasonGeographyConfigurationId());
+         fieldStaffLeadershipSeasonRepository.delete(deleteRegionMember.getFieldStaffLeadershipSeasonId());
          wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
