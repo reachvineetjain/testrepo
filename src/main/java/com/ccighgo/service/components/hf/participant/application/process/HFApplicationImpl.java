@@ -1032,7 +1032,7 @@ public class HFApplicationImpl implements HFApplication {
          if (communityAndSchoolPage.getSeasonId() <= 0) {
             throw new CcighgoException("NO Season ID");
          }
-         HostFamilySeasonCategory hostFamilySeasonCategory = hostFamilySeasonCategoryRepository.getHFSeasonCategoryBySeasonIdAndCategoryId(communityAndSchoolPage.getSeasonId(),
+         HostFamilySeasonCategory hostFamilySeasonCategory = hostFamilySeasonCategoryRepository.getHFSeasonCategoryBySeasonIdAndCategoryId(communityAndSchoolPage.getHostFamilySeasonId(),
                Integer.valueOf(applicationCategoryId));
          if (hostFamilySeasonCategory != null) {
             hostFamilySeasonCategory.setFilledMandatoryFields(communityAndSchoolPage.getFieldsFilled());
@@ -1076,6 +1076,8 @@ public class HFApplicationImpl implements HFApplication {
          descriptionPageParam.setHostFamilyId(communityAndSchoolPage.getHostFamilyId());
          descriptionPageParam.setLoginId(communityAndSchoolPage.getLoginId());
          descriptionPageParam.setSeasonId(communityAndSchoolPage.getSeasonId());
+         descriptionPageParam.setHostFamilySeasnId(communityAndSchoolPage.getHostFamilySeasonId());
+         descriptionPageParam.setApplicationCategoryId(Integer.valueOf(applicationCategoryId));
          // hp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS,
          // CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
          // messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
@@ -1092,9 +1094,12 @@ public class HFApplicationImpl implements HFApplication {
       HFCommunityAndSchoolPage hfbs = new HFCommunityAndSchoolPage();
       try {
          HostFamilySeasonCategory hostFamilySeasonCategory = hostFamilySeasonCategoryRepository.getHFSeasonCategoryBySeasonIdAndCategoryId(
-               Integer.valueOf(descriptionPageParam.getSeasonId()), descriptionPageParam.getApplicationCategoryId());
-         if (hostFamilySeasonCategory != null)
+               Integer.valueOf(descriptionPageParam.getHostFamilySeasnId()), descriptionPageParam.getApplicationCategoryId());
+         if (hostFamilySeasonCategory != null) {
             hfbs.setPercentUpdate(CCIUtils.getFormFilledPercentage(hostFamilySeasonCategory.getTotalMandatoryFields(), hostFamilySeasonCategory.getFilledMandatoryFields()));
+            hfbs.setFieldsFilled(hostFamilySeasonCategory.getFilledMandatoryFields());
+         }
+            
 
          Query query = em.createNativeQuery(SP_HF_COMMUNITY);
          query.setParameter(1, descriptionPageParam.getHostFamilyId() == 0 ? null : descriptionPageParam.getHostFamilyId());
