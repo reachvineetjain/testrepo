@@ -27,6 +27,7 @@ import com.ccighgo.utils.WSDefaultResponse;
  * @author ravi
  *
  */
+@Deprecated
 @Path("/subpartner/")
 @Produces("application/json")
 @Consumes("application/json")

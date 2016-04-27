@@ -22,6 +22,7 @@ import com.ccighgo.db.entities.PartnerPermission;
 import com.ccighgo.db.entities.PartnerUser;
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.ErrorCode;
+import com.ccighgo.exception.PartnerCodes;
 import com.ccighgo.jpa.repositories.GenderRepository;
 import com.ccighgo.jpa.repositories.GoIdSequenceRepository;
 import com.ccighgo.jpa.repositories.LoginRepository;
@@ -81,7 +82,7 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
    public PartnerUsers getAllPartnerUsers(String partnerId) {
       PartnerUsers partnerUsers = new PartnerUsers();
       if (partnerId == null || Integer.valueOf(partnerId) < 0 || Integer.valueOf(partnerId) == 0) {
-         partnerUsers.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, CCIConstants.NULL_PARTNER_ID,
+         partnerUsers.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.NULL_PARTNER_ID.getValue(),
                messageUtil.getMessage(PartnerUserMessageConstants.INVALID_PARTNER_USER_ID)));
       } else {
          try {
@@ -112,7 +113,7 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
                LOGGER.error(messageUtil.getMessage(CCIConstants.NO_RECORD));
             }
          } catch (CcighgoException e) {
-            partnerUsers.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.EXCEPTION_IN_FETCHING_PARTNER_USER_LIST.getValue(),
+            partnerUsers.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.EXCEPTION_IN_FETCHING_PARTNER_USER_LIST.getValue(),
                   messageUtil.getMessage(PartnerUserMessageConstants.FAILED_GET_PARTNER_USER_LIST)));
             LOGGER.error(e);
          }
@@ -130,7 +131,7 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
          return response;
       }
       if (statusVal == null || !(Integer.valueOf(statusVal) == 0 || Integer.valueOf(statusVal) == 1)) {
-         response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.PARTNER_USER_STATUS_NULL.getValue(),
+         response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.PARTNER_USER_STATUS_NULL.getValue(),
                messageUtil.getMessage(PartnerUserMessageConstants.FAILED_UPDATE_PARTNER_USER_STATUS)));
          return response;
       } else {
@@ -150,7 +151,7 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
             response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE,
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          } catch (CcighgoException e) {
-            response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_UPDATE_PARTNER_USER_STATUS.getValue(),
+            response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.ERROR_UPDATE_PARTNER_USER_STATUS.getValue(),
                   messageUtil.getMessage(PartnerUserMessageConstants.EXCEPTION_UPDATING_PARTNER_USER_STATUS)));
             LOGGER.error(e);
          }
@@ -184,7 +185,7 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
                LOGGER.error(messageUtil.getMessage(CCIConstants.NO_RECORD));
             }
          } catch (CcighgoException e) {
-            response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_RESETING_PARTNER_USER_PASSWORD.getValue(),
+            response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.ERROR_RESETING_PARTNER_USER_PASSWORD.getValue(),
                   messageUtil.getMessage(PartnerUserMessageConstants.ERROR_RESETTING_PARTNER_USER_PASSWORD)));
             LOGGER.error(messageUtil.getMessage(PartnerUserMessageConstants.ERROR_RESETTING_PARTNER_USER_PASSWORD));
          }
@@ -393,7 +394,7 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
             partnerUserDetails.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE,
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          } catch (CcighgoException e) {
-            partnerUserDetails.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_VIEWING_PARTNER_USER_DATA.getValue(),
+            partnerUserDetails.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.ERROR_VIEWING_PARTNER_USER_DATA.getValue(),
                   messageUtil.getMessage(PartnerUserMessageConstants.ERROR_VIEWING_PARTNER_USER_DATA)));
             LOGGER.error(messageUtil.getMessage(PartnerUserMessageConstants.ERROR_VIEWING_PARTNER_USER_DATA));
          }
@@ -459,7 +460,7 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
                throw new CcighgoException("no partner user found");
             }
          } catch (CcighgoException e) {
-            partnerUserOffices.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_FETCHING_PARTNER_USER_OFFICE.getValue(),
+            partnerUserOffices.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.ERROR_FETCHING_PARTNER_USER_OFFICE.getValue(),
                   e.getMessage()));
             LOGGER.error(e.getMessage());
          }
@@ -472,6 +473,8 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
    public PartnerUserDetails addPartnerUser(PartnerUserDetails partnerUserDetails, HttpServletRequest request) {
       PartnerUserDetails newUser = new PartnerUserDetails();
       if (partnerUserDetails == null) {
+         newUser.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, CCIConstants.NULL_PARAM,
+               messageUtil.getMessage(PartnerUserMessageConstants.ERROR_ADDING_PARTNERUSER)));
       } else {
          try {
             String access = PasscodeGenerator.generateRandomPasscode(8, 8, 1, 1, 1).toString();
@@ -664,18 +667,18 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
                      messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
             } else {
                if (checkLoginNameExists != null) {
-                  newUser.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_USER_WITH_THE_SAME_LOGINNAME_EXIST.getValue(),
+                  newUser.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.ERROR_USER_WITH_THE_SAME_LOGINNAME_EXIST.getValue(),
                         messageUtil.getMessage(PartnerUserMessageConstants.ERROR_USERNAME_DUPLICATE)));
                   LOGGER.error(messageUtil.getMessage(PartnerUserMessageConstants.ERROR_USERNAME_DUPLICATE));
                }
                if (checkEmailExists != null) {
-                  newUser.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_USER_WITH_THE_SAME_EMAIL_EXIST.getValue(),
+                  newUser.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.ERROR_USER_WITH_THE_SAME_EMAIL_EXIST.getValue(),
                         messageUtil.getMessage(PartnerUserMessageConstants.ERROR_PARTNER_USER_EMAIL_DUPLICATE)));
                   LOGGER.error(messageUtil.getMessage(PartnerUserMessageConstants.ERROR_PARTNER_USER_EMAIL_DUPLICATE));
                }
             }
          } catch (CcighgoException e) {
-            newUser.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_ADDING_PARTNERUSER.getValue(),
+            newUser.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.ERROR_ADDING_PARTNERUSER.getValue(),
                   messageUtil.getMessage(PartnerUserMessageConstants.ERROR_ADDING_PARTNERUSER)));
             LOGGER.error(messageUtil.getMessage(PartnerUserMessageConstants.ERROR_ADDING_PARTNERUSER));
          }
@@ -863,7 +866,7 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
             updatedUser.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE,
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          } catch (CcighgoException e) {
-            updatedUser.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_UPDATING_PARTNERUSER_DATA.getValue(), e.getMessage()));
+            updatedUser.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.ERROR_UPDATING_PARTNERUSER_DATA.getValue(), e.getMessage()));
             LOGGER.error(messageUtil.getMessage(PartnerUserMessageConstants.ERROR_UPDATING_PARTNERUSER_DATA));
          }
       }

@@ -15,6 +15,7 @@ import com.ccighgo.db.entities.PartnerSeasonAllocation;
 import com.ccighgo.db.entities.Season;
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.ErrorCode;
+import com.ccighgo.exception.PartnerCodes;
 import com.ccighgo.jpa.repositories.DepartmentProgramRepository;
 import com.ccighgo.jpa.repositories.DocumentTypeRepository;
 import com.ccighgo.jpa.repositories.PartnerRepository;
@@ -66,7 +67,7 @@ public class PartnerAgentInterfaceImpl implements PartnerAgentInterface {
       PartnerAgentAddedSeasons partnerAgentAddedSeasons = new PartnerAgentAddedSeasons();
       if (partnerGoId == null) {
          partnerAgentAddedSeasons = setPartnerAgentAddedSeasonsStatus(partnerAgentAddedSeasons, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR,
-               ErrorCode.INVALID_PARTNER_ID.getValue(), messageUtil.getMessage(PartnerAgentMessageConstants.INVALID_PARTNER_ID));
+               CCIConstants.NULL_PARTNER_ID, messageUtil.getMessage(PartnerAgentMessageConstants.INVALID_PARTNER_ID));
          LOGGER.error(messageUtil.getMessage(PartnerAgentMessageConstants.INVALID_PARTNER_ID));
          return partnerAgentAddedSeasons;
       }
@@ -124,15 +125,15 @@ public class PartnerAgentInterfaceImpl implements PartnerAgentInterface {
             partnerAgentAddedSeasons.setCount(count);
             partnerAgentAddedSeasons.getPartnerAgentAddedSeasons().addAll(partnerSeasonsUIList);
             partnerAgentAddedSeasons = setPartnerAgentAddedSeasonsStatus(partnerAgentAddedSeasons, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO,
-                  ErrorCode.PARTNER_AGENT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
+                  CCIConstants.SUCCESS_CODE, messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
          } else {
-            partnerAgentAddedSeasons = setPartnerAgentAddedSeasonsStatus(partnerAgentAddedSeasons, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR,
-                  ErrorCode.FAILED_GET_ADDED_SEASONS.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD));
+            partnerAgentAddedSeasons = setPartnerAgentAddedSeasonsStatus(partnerAgentAddedSeasons, CCIConstants.NO_RECORD_IN_DB, CCIConstants.TYPE_INFO,
+                  CCIConstants.NO_DATA_CODE, messageUtil.getMessage(CCIConstants.NO_RECORD));
             LOGGER.error(messageUtil.getMessage(CCIConstants.NO_RECORD));
          }
       } catch (CcighgoException e) {
          partnerAgentAddedSeasons = setPartnerAgentAddedSeasonsStatus(partnerAgentAddedSeasons, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR,
-               ErrorCode.FAILED_GET_ADDED_SEASONS.getValue(), messageUtil.getMessage(PartnerAgentMessageConstants.FAILED_GET_ADDED_SEASONS));
+               PartnerCodes.FAILED_GET_ADDED_SEASONS.getValue(), messageUtil.getMessage(PartnerAgentMessageConstants.FAILED_GET_ADDED_SEASONS));
          LOGGER.error(messageUtil.getMessage(PartnerAgentMessageConstants.FAILED_GET_ADDED_SEASONS));
       }
       return partnerAgentAddedSeasons;
@@ -153,15 +154,15 @@ public class PartnerAgentInterfaceImpl implements PartnerAgentInterface {
                partnerAgentSeasonList.add(partnerAgentSeason);
             }
             partnerAgentSeasons.getPartnerAgentSeasons().addAll(partnerAgentSeasonList);
-            partnerAgentSeasons = setPartnerAgentSeasonsStatus(partnerAgentSeasons, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.PARTNER_AGENT_CODE.getValue(),
+            partnerAgentSeasons = setPartnerAgentSeasonsStatus(partnerAgentSeasons, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO,CCIConstants.SUCCESS_CODE,
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
          } else {
-            partnerAgentSeasons = setPartnerAgentSeasonsStatus(partnerAgentSeasons, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_SEASONS.getValue(),
+            partnerAgentSeasons = setPartnerAgentSeasonsStatus(partnerAgentSeasons, CCIConstants.NO_RECORD_IN_DB, CCIConstants.TYPE_INFO, CCIConstants.NO_DATA_CODE,
                   messageUtil.getMessage(CCIConstants.NO_RECORD));
             LOGGER.error(messageUtil.getMessage(CCIConstants.NO_RECORD));
          }
       } catch (CcighgoException e) {
-         partnerAgentSeasons = setPartnerAgentSeasonsStatus(partnerAgentSeasons, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_SEASONS.getValue(),
+         partnerAgentSeasons = setPartnerAgentSeasonsStatus(partnerAgentSeasons, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.FAILED_GET_SEASONS.getValue(),
                messageUtil.getMessage(PartnerAgentMessageConstants.FAILED_GET_SEASONS));
          LOGGER.error(messageUtil.getMessage(PartnerAgentMessageConstants.FAILED_GET_SEASONS));
       }
@@ -174,14 +175,14 @@ public class PartnerAgentInterfaceImpl implements PartnerAgentInterface {
       PartnerAgentSeasons partnerAgentSeasons = new PartnerAgentSeasons();
       try {
          if (partnerSeasonApplicationList == null) {
-            partnerAgentSeasons = setPartnerAgentSeasonsStatus(partnerAgentSeasons, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.PARTNER_SEASON_NULL.getValue(),
+            partnerAgentSeasons = setPartnerAgentSeasonsStatus(partnerAgentSeasons, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.PARTNER_SEASON_NULL.getValue(),
                   messageUtil.getMessage(PartnerAgentMessageConstants.PARTNER_SEASON_NULL));
             LOGGER.error(messageUtil.getMessage(PartnerAgentMessageConstants.PARTNER_SEASON_NULL));
             return partnerAgentSeasons;
          }
          Partner partner = partnerRepository.findOne(partnerSeasonApplicationList.getPartnerId());
          if (partner == null) {
-            partnerAgentSeasons = setPartnerAgentSeasonsStatus(partnerAgentSeasons, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_PARTNER_ID.getValue(),
+            partnerAgentSeasons = setPartnerAgentSeasonsStatus(partnerAgentSeasons, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, CCIConstants.NULL_PARTNER_ID,
                   messageUtil.getMessage(PartnerAgentMessageConstants.INVALID_PARTNER_ID));
             LOGGER.error(messageUtil.getMessage(PartnerAgentMessageConstants.INVALID_PARTNER_ID));
             return partnerAgentSeasons;
@@ -209,16 +210,16 @@ public class PartnerAgentInterfaceImpl implements PartnerAgentInterface {
                   partnerAgentSeason.setSeasonFullName(partnerSeason.getSeason().getSeasonFullName());
                }
                partnerAgentSeasons.getPartnerAgentSeasons().add(partnerAgentSeason);
-               partnerAgentSeasons = setPartnerAgentSeasonsStatus(partnerAgentSeasons, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.PARTNER_AGENT_CODE.getValue(),
+               partnerAgentSeasons = setPartnerAgentSeasonsStatus(partnerAgentSeasons, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE,
                      messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
             }
          } else {
-            partnerAgentSeasons = setPartnerAgentSeasonsStatus(partnerAgentSeasons, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_SEASONS.getValue(),
+            partnerAgentSeasons = setPartnerAgentSeasonsStatus(partnerAgentSeasons, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.FAILED_ADD_SEASONS.getValue(),
                   messageUtil.getMessage(PartnerAgentMessageConstants.FAILED_GET_SEASONS));
             LOGGER.error(messageUtil.getMessage(PartnerAgentMessageConstants.FAILED_GET_SEASONS));
          }
       } catch (CcighgoException e) {
-         partnerAgentSeasons = setPartnerAgentSeasonsStatus(partnerAgentSeasons, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_SEASONS.getValue(),
+         partnerAgentSeasons = setPartnerAgentSeasonsStatus(partnerAgentSeasons, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.FAILED_ADD_SEASONS.getValue(),
                messageUtil.getMessage(PartnerAgentMessageConstants.FAILED_GET_SEASONS));
          LOGGER.error(messageUtil.getMessage(PartnerAgentMessageConstants.FAILED_GET_SEASONS));
       }

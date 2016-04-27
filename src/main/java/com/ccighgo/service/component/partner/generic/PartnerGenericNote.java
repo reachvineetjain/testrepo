@@ -11,6 +11,7 @@ import com.ccighgo.db.entities.Partner;
 import com.ccighgo.db.entities.PartnerNote;
 import com.ccighgo.db.entities.PartnerNoteTopic;
 import com.ccighgo.exception.ErrorCode;
+import com.ccighgo.exception.PartnerCodes;
 import com.ccighgo.jpa.repositories.LoginRepository;
 import com.ccighgo.jpa.repositories.PartnerNoteRepository;
 import com.ccighgo.jpa.repositories.PartnerNoteTopicRepository;
@@ -90,13 +91,13 @@ public class PartnerGenericNote implements PartnerGenericNoteInterface {
             wsDefaultResponse.setCreatedBy(noteCreator);
          }
 
-         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NOTE_CREATED.getValue(),
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE,
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
 
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
 
-         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_TO_CREATE_NOTE.getValue(),
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.FAILED_TO_CREATE_NOTE.getValue(),
                messageUtil.getMessage(GenericMessageConstants.FAILED_TO_CREATE_GENERIC_NOTE)));
          LOGGER.error(messageUtil.getMessage(GenericMessageConstants.FAILED_TO_CREATE_GENERIC_NOTE));
       }
@@ -114,14 +115,14 @@ public class PartnerGenericNote implements PartnerGenericNoteInterface {
       WSDefaultResponse responce = new WSDefaultResponse();
       try {
          partnerNoteRepository.delete(deleteNote.getNoteId());
-         responce.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NOTE_DELETED.getValue(),
+         responce.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE,
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
 
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
-         responce.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_TO_CREATE_NOTE.getValue(),
-               messageUtil.getMessage(GenericMessageConstants.FAILED_TO_VIEW_GENERIC_NOTE)));
-         LOGGER.error(messageUtil.getMessage(GenericMessageConstants.FAILED_TO_VIEW_GENERIC_NOTE));
+         responce.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.FAILED_TO_DELETE_NOTE.getValue(),
+               messageUtil.getMessage(GenericMessageConstants.FAILED_TO_DELETE_GENERIC_NOTE)));
+         LOGGER.error(messageUtil.getMessage(GenericMessageConstants.FAILED_TO_DELETE_GENERIC_NOTE));
       }
       return responce;
    }
@@ -137,7 +138,7 @@ public class PartnerGenericNote implements PartnerGenericNoteInterface {
       try {
          List<PartnerNoteTopic> partnerTopics = partnerNoteTopicRepository.findAllPartnerNoteTopicByPartnerId(Integer.valueOf(partnerId));
          if (partnerTopics == null) {
-            topicsList.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_TO_VIEW_NOTE.getValue(),
+            topicsList.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.FAILED_TO_VIEW_NOTE.getValue(),
                   messageUtil.getMessage(GenericMessageConstants.FAILED_TO_VIEW_GENERIC_NOTE)));
             LOGGER.error(messageUtil.getMessage(GenericMessageConstants.FAILED_TO_VIEW_GENERIC_NOTE));
             return topicsList;
@@ -259,12 +260,12 @@ public class PartnerGenericNote implements PartnerGenericNoteInterface {
          }
 
          partnerNoteTopicRepository.saveAndFlush(topicData);
-         responce.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UPDATE_TOPIC_TAG.getValue(),
+         responce.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE,
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
 
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
-         responce.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.UPDATE_TOPIC_TAG.getValue(),
+         responce.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.UPDATE_TOPIC_TAG.getValue(),
                messageUtil.getMessage(GenericMessageConstants.FAILED_UPDATE_TOPIC_TAG)));
          LOGGER.error(messageUtil.getMessage(GenericMessageConstants.FAILED_UPDATE_TOPIC_TAG));
       }
@@ -334,12 +335,12 @@ public class PartnerGenericNote implements PartnerGenericNoteInterface {
 
          PartnerNoteTopic result = partnerNoteTopicRepository.saveAndFlush(topicData);
          responce.setTopicOfNotesId(result.getPartnerNoteTopicId());
-         responce.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.CREATE_TOPIC.getValue(),
+         responce.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE,
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
 
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
-         responce.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CREATE_TOPIC.getValue(),
+         responce.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.ERROR_CREATE_TOPIC.getValue(),
                messageUtil.getMessage(GenericMessageConstants.FAILED_CREATE_TOPIC)));
          LOGGER.error(messageUtil.getMessage(GenericMessageConstants.FAILED_CREATE_TOPIC));
       }
