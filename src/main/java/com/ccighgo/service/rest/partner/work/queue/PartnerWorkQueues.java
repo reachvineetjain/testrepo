@@ -28,6 +28,7 @@ public class PartnerWorkQueues {
 
    @Autowired PartnerWorkQueueInterface partnerWorkQueueInterface;
 
+   @Deprecated
    @GET
    @Path("get/queues/{partnerId}")
    @Produces("application/json")

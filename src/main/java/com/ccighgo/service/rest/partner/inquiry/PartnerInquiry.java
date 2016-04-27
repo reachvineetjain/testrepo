@@ -21,6 +21,7 @@ import com.ccighgo.service.transport.integration.thirdparty.beans.agentViewForPa
  * @author Ahmed
  *
  */
+@Deprecated
 @Path("/partnerInquiry/")
 @Produces("application/json")
 @Consumes("application/json")
