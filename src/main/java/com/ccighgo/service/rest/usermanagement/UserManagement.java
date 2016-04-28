@@ -1,5 +1,8 @@
-/**
- * 
+/*
+ * Copyright (c) 2015, 2016, Creospan Solutions PVT LTD. All rights reserved.
+ * CREOSPAN PROPRIETARY/CONFIDENTIAL.
+ *
+ *
  */
 package com.ccighgo.service.rest.usermanagement;
 
@@ -32,8 +35,8 @@ import com.ccighgo.service.transport.utility.beans.role.Roles;
  * <h1>UserManagement</h1> The UserManagement class is the REST service front of
  * all cci user management actions in the user interface.
  * <p>
- * The class uses JAX-RX api provided by Apache CXF for RESTful web
- * services @link http://cxf.apache.org/ *
+ * The class uses JAX-RX api provided by Apache CXF for RESTful web services @link
+ * http://cxf.apache.org/ *
  *
  * @author ravimishra
  * 
