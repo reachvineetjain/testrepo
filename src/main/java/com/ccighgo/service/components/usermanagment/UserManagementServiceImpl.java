@@ -45,6 +45,7 @@ import com.ccighgo.db.entities.ResourceAction;
 import com.ccighgo.db.entities.ResourcePermission;
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.ErrorCode;
+import com.ccighgo.exception.UserManagementCodes;
 import com.ccighgo.exception.ValidationException;
 import com.ccighgo.jpa.repositories.CCISaffDefaultPermissionRepository;
 import com.ccighgo.jpa.repositories.CCIStaffRolesDepartmentRepository;
@@ -150,7 +151,7 @@ public class UserManagementServiceImpl implements UserManagementService {
    @Autowired CCIStaffUsersResourcePermissionRepository cciStaffUsersResourcePermissionRepository;
 
    @Autowired CCISaffDefaultPermissionRepository cciSaffDefaultPermissionRepository;
-   
+
    @Autowired EmailServiceImpl emailingService;
 
    @Autowired CommonComponentUtils componentUtils;
@@ -178,7 +179,7 @@ public class UserManagementServiceImpl implements UserManagementService {
       Long numberOfRecords = 0L;
       Page<CCIStaffUser> cciUserDBList = null;
       if (pageNo == null || size == null || Integer.valueOf(size) < 1 || Integer.valueOf(pageNo) < 0) {
-         cciUsers = setCCiUsersStatus(cciUsers, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_PAGE_NUM_OR_SIZE.getValue(),
+         cciUsers = setCCiUsersStatus(cciUsers, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.INVALID_PAGE_NUM_OR_SIZE.getValue(),
                messageUtil.getMessage(UserManagementMessageConstants.INVALID_PAGE_NUM_OR_SIZE));
          LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.INVALID_PAGE_NUM_OR_SIZE));
          return cciUsers;
@@ -189,13 +190,13 @@ public class UserManagementServiceImpl implements UserManagementService {
          numberOfRecords = cciUsersRepository.count();
          cciUserDBList = cciUsersRepository.findAll(page);
       } catch (CcighgoException e) {
-         cciUsers = setCCiUsersStatus(cciUsers, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_PAGE_NUM_OR_SIZE.getValue(),
+         cciUsers = setCCiUsersStatus(cciUsers, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.INVALID_PAGE_NUM_OR_SIZE.getValue(),
                messageUtil.getMessage(UserManagementMessageConstants.INVALID_PAGE_NUM_OR_SIZE));
          LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.INVALID_PAGE_NUM_OR_SIZE));
          return cciUsers;
       }
       if (cciUserDBList == null) {
-         cciUsers = setCCiUsersStatus(cciUsers, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_USER_LIST.getValue(),
+         cciUsers = setCCiUsersStatus(cciUsers, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.FAILED_GET_USER_LIST.getValue(),
                messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_USER_LIST));
          LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_USER_LIST));
          return cciUsers;
@@ -209,7 +210,7 @@ public class UserManagementServiceImpl implements UserManagementService {
             for (CCIStaffUser cUsr : cciUserDBList) {
                CCIUser cciUser = getUserDetails(cUsr);
                if (cciUser == null) {
-                  cciUsers = setCCiUsersStatus(cciUsers, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_USER_NULL.getValue(),
+                  cciUsers = setCCiUsersStatus(cciUsers, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.FAILED_USER_NULL.getValue(),
                         messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_NULL));
                   LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_NULL));
                   return cciUsers;
@@ -217,17 +218,17 @@ public class UserManagementServiceImpl implements UserManagementService {
                cciUserList.add(cciUser);
             }
             cciUsers.getCciUsers().addAll(cciUserList);
-            cciUsers = setCCiUsersStatus(cciUsers, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.USER_MANAGEMENT_CODE.getValue(),
+            cciUsers = setCCiUsersStatus(cciUsers, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, UserManagementCodes.USER_MANAGEMENT_CODE.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
          } else {
-            cciUsers = setCCiUsersStatus(cciUsers, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_USER_LIST.getValue(),
+            cciUsers = setCCiUsersStatus(cciUsers, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.FAILED_GET_USER_LIST.getValue(),
                   messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_USER_LIST));
             LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_USER_LIST));
          }
       } catch (CcighgoException e) {
-         cciUsers = setCCiUsersStatus(cciUsers, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_ALL_USERS.getValue(),
-               messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_GET_ALL_USERS));
-         LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_GET_ALL_USERS));
+         cciUsers = setCCiUsersStatus(cciUsers, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.FAILED_GET_ALL_USERS.getValue(),
+               messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_ALL_USERS));
+         LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_ALL_USERS));
       }
       return cciUsers;
    }
@@ -243,7 +244,7 @@ public class UserManagementServiceImpl implements UserManagementService {
          cciUserDBList = cciUsersRepository.findAll();
 
          if (cciUserDBList == null) {
-            cciUsers = setCCiUsersStatus(cciUsers, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_USER_LIST.getValue(),
+            cciUsers = setCCiUsersStatus(cciUsers, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.FAILED_GET_USER_LIST.getValue(),
                   messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_USER_LIST));
             LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_USER_LIST));
             return cciUsers;
@@ -256,7 +257,7 @@ public class UserManagementServiceImpl implements UserManagementService {
             for (CCIStaffUser cUsr : cciUserDBList) {
                CCIUser cciUser = getUserDetails(cUsr);
                if (cciUser == null) {
-                  cciUsers = setCCiUsersStatus(cciUsers, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_USER_NULL.getValue(),
+                  cciUsers = setCCiUsersStatus(cciUsers, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.FAILED_USER_NULL.getValue(),
                         messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_NULL));
                   LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_NULL));
                   return cciUsers;
@@ -264,17 +265,17 @@ public class UserManagementServiceImpl implements UserManagementService {
                cciUserList.add(cciUser);
             }
             cciUsers.getCciUsers().addAll(cciUserList);
-            cciUsers = setCCiUsersStatus(cciUsers, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.USER_MANAGEMENT_CODE.getValue(),
+            cciUsers = setCCiUsersStatus(cciUsers, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, UserManagementCodes.USER_MANAGEMENT_CODE.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
          } else {
-            cciUsers = setCCiUsersStatus(cciUsers, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_USER_LIST.getValue(),
+            cciUsers = setCCiUsersStatus(cciUsers, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.FAILED_GET_USER_LIST.getValue(),
                   messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_USER_LIST));
             LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_USER_LIST));
          }
       } catch (CcighgoException e) {
-         cciUsers = setCCiUsersStatus(cciUsers, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_ALL_USERS.getValue(),
-               messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_GET_ALL_USERS));
-         LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_GET_ALL_USERS));
+         cciUsers = setCCiUsersStatus(cciUsers, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.FAILED_GET_ALL_USERS.getValue(),
+               messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_ALL_USERS));
+         LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_ALL_USERS));
       }
       return cciUsers;
    }
@@ -290,7 +291,7 @@ public class UserManagementServiceImpl implements UserManagementService {
          cciUserDBList = cciUsersRepository.findAll();
 
          if (cciUserDBList == null) {
-            supervisorDetails = setSupervisorDetailsStatus(supervisorDetails, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_USER_LIST.getValue(),
+            supervisorDetails = setSupervisorDetailsStatus(supervisorDetails, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.FAILED_GET_USER_LIST.getValue(),
                   messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_USER_LIST));
             LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_USER_LIST));
             return supervisorDetails;
@@ -303,7 +304,7 @@ public class UserManagementServiceImpl implements UserManagementService {
             for (CCIStaffUser cUsr : cciUserDBList) {
                SupervisorDetail supervisorDetail = getSupervisorDetails(cUsr);
                if (supervisorDetail == null) {
-                  supervisorDetails = setSupervisorDetailsStatus(supervisorDetails, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_USER_NULL.getValue(),
+                  supervisorDetails = setSupervisorDetailsStatus(supervisorDetails, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.FAILED_USER_NULL.getValue(),
                         messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_NULL));
                   LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_NULL));
                   return supervisorDetails;
@@ -311,16 +312,16 @@ public class UserManagementServiceImpl implements UserManagementService {
                supervisorDetailList.add(supervisorDetail);
             }
             supervisorDetails.getSupervisorDetails().addAll(supervisorDetailList);
-            supervisorDetails = setSupervisorDetailsStatus(supervisorDetails, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.USER_MANAGEMENT_CODE.getValue(),
+            supervisorDetails = setSupervisorDetailsStatus(supervisorDetails, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, UserManagementCodes.USER_MANAGEMENT_CODE.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
          } else {
-            supervisorDetails = setSupervisorDetailsStatus(supervisorDetails, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_USER_LIST.getValue(),
+            supervisorDetails = setSupervisorDetailsStatus(supervisorDetails, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.FAILED_GET_USER_LIST.getValue(),
                   messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_USER_LIST));
             LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_USER_LIST));
          }
       } catch (CcighgoException e) {
-         supervisorDetails = setSupervisorDetailsStatus(supervisorDetails, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_ALL_SUPERVISORS.getValue(),
-               messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_ALL_SUPERVISORS));
+         supervisorDetails = setSupervisorDetailsStatus(supervisorDetails, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR,
+               UserManagementCodes.FAILED_GET_ALL_SUPERVISORS.getValue(), messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_ALL_SUPERVISORS));
          LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_ALL_SUPERVISORS));
       }
       return supervisorDetails;
@@ -331,7 +332,7 @@ public class UserManagementServiceImpl implements UserManagementService {
    public User getUserById(String id) {
       User user = new User();
       if (id == null || (Integer.valueOf(id)) == 0) {
-         user = setUserStatus(user, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_USER_ID.getValue(),
+         user = setUserStatus(user, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.INVALID_USER_ID.getValue(),
                messageUtil.getMessage(UserManagementMessageConstants.INVALID_USER_ID));
          LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.INVALID_USER_ID));
          return user;
@@ -390,16 +391,16 @@ public class UserManagementServiceImpl implements UserManagementService {
                List<UserNotes> userNotes = getUserNotes(cciUser, user);
                user.getUserNotes().addAll(userNotes);
             }
-            user = setUserStatus(user, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.USER_MANAGEMENT_CODE.getValue(),
+            user = setUserStatus(user, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, UserManagementCodes.USER_MANAGEMENT_CODE.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
             return user;
          } else {
-            user = setUserStatus(user, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_USER_NULL.getValue(),
+            user = setUserStatus(user, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.FAILED_USER_NULL.getValue(),
                   messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_NULL));
             LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_NULL));
          }
       } catch (CcighgoException e) {
-         user = setUserStatus(user, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_USER_ID.getValue(),
+         user = setUserStatus(user, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.INVALID_USER_ID.getValue(),
                messageUtil.getMessage(UserManagementMessageConstants.INVALID_USER_ID));
          LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.INVALID_USER_ID));
       }
@@ -411,7 +412,7 @@ public class UserManagementServiceImpl implements UserManagementService {
    public User createUser(User user, HttpServletRequest request) {
       User usr = new User();
       if (user == null) {
-         usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_USER_NULL.getValue(),
+         usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.FAILED_USER_NULL.getValue(),
                messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_NULL));
          LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_NULL));
          return usr;
@@ -425,7 +426,7 @@ public class UserManagementServiceImpl implements UserManagementService {
          // validate username
          if (loginRepository.findByLoginName(user.getLoginInfo().getLoginName()) != null) {
             // return username already exsist
-            usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.USR_MGMT_CREATE_USER_NAME_EXIST.getValue(),
+            usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.USR_MGMT_CREATE_USER_NAME_EXIST.getValue(),
                   messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_CREATE_USER_USERNAME_EXIST));
             LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_CREATE_USER_USERNAME_EXIST));
             return usr;
@@ -433,21 +434,21 @@ public class UserManagementServiceImpl implements UserManagementService {
          // findByemail
          if (loginRepository.findByEmail(user.getEmail()) != null) {
             // return email already exist
-            usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.USR_MGMT_CREATE_USER_EMAIL_EXIST.getValue(),
+            usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.USR_MGMT_CREATE_USER_EMAIL_EXIST.getValue(),
                   messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_CREATE_USER_EMAIL_EXIST));
             LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_CREATE_USER_EMAIL_EXIST));
             return usr;
          }
          String cciAdminGuid = createUserDetails(user);
          if (cciAdminGuid == null) {
-            usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_USER_DETAILS_CREATION.getValue(),
+            usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.FAILED_USER_DETAILS_CREATION.getValue(),
                   messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_DETAILS_CREATION));
             LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_DETAILS_CREATION));
             return usr;
          }
          CCIStaffUser cUser = cciUsersRepository.findByGUID(cciAdminGuid);
          if (cUser == null) {
-            usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_USER_NULL.getValue(),
+            usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.FAILED_USER_NULL.getValue(),
                   messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_NULL));
             LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_NULL));
             return usr;
@@ -464,7 +465,7 @@ public class UserManagementServiceImpl implements UserManagementService {
             if (programCheck) {
                List<CCIStaffUserProgram> userPrograms = createUserDepartmentAndPrograms(user, cUser);
                if (userPrograms == null) {
-                  usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_USER_DEPT_PROGRAM_CREATION.getValue(),
+                  usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.FAILED_USER_DEPT_PROGRAM_CREATION.getValue(),
                         messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_DEPT_PROGRAM_CREATION));
                   LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_DEPT_PROGRAM_CREATION));
                   return usr;
@@ -477,7 +478,7 @@ public class UserManagementServiceImpl implements UserManagementService {
          if (user.getRoles() != null) {
             List<CCIStaffUsersCCIStaffRole> cciStaffUsersCCIStaffRoles = createUserRole(user, cUser);
             if (cciStaffUsersCCIStaffRoles == null) {
-               usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_USER_ROLE_CREATION.getValue(),
+               usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.FAILED_USER_ROLE_CREATION.getValue(),
                      messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_ROLE_CREATION));
                LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_ROLE_CREATION));
                return usr;
@@ -489,7 +490,7 @@ public class UserManagementServiceImpl implements UserManagementService {
          if (user.getPermissions() != null) {
             List<CCIStaffUsersResourcePermission> cciUserPermissionsList = createUserPermissions(user, cUser);
             if (cciUserPermissionsList == null) {
-               usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_USER_PERMISSIONS_CREATION.getValue(),
+               usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.FAILED_USER_PERMISSIONS_CREATION.getValue(),
                      messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_PERMISSIONS_CREATION));
                LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_PERMISSIONS_CREATION));
                return usr;
@@ -509,7 +510,7 @@ public class UserManagementServiceImpl implements UserManagementService {
          }
          usr = getUserById(String.valueOf(cUser.getCciStaffUserId()));
          if (usr == null) {
-            usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_USER_NULL.getValue(),
+            usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.FAILED_USER_NULL.getValue(),
                   messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_NULL));
             LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_NULL));
             return usr;
@@ -519,16 +520,17 @@ public class UserManagementServiceImpl implements UserManagementService {
                + "<p>Please go to the following page and follow the instructions to login to the system. </p> " + "<p>"
                + CCIUtils.formResetURL(request).concat(loginEmail.getKeyValue()) + "</p></br>" + "<p>Thank you,</p><p>GO System Support</p>";
          email.send(loginEmail.getEmail(), CCIConstants.CREATE_CCI_USER_SUBJECT, body, true);
-         usr = setUserStatus(usr, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.USER_MANAGEMENT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
+         usr = setUserStatus(usr, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, UserManagementCodes.USER_MANAGEMENT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
          return usr;
       } catch (ValidationException e) {
-         usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.MISSING_REQUIRED_VALUE.getValue(),
+         usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.USR_MGMT_CREATE_USER_PARAM_REQUIRED.getValue(),
                messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_CREATE_USER_PARAM_REQUIRED));
          LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_CREATE_USER_PARAM_REQUIRED));
       } catch (CcighgoException e) {
-         usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_CREATE_USER.getValue(),
-               messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_CREATE_USER));
-         LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_CREATE_USER));
+         usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.USR_MGMT_CREATE_USER_FAILED.getValue(),
+               messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_CREATE_USER_FAILED));
+         LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_CREATE_USER_FAILED));
       }
       return usr;
    }
@@ -632,17 +634,17 @@ public class UserManagementServiceImpl implements UserManagementService {
                }
             }
             cciUsersFront.getCciUsers().addAll(cciUserList);
-            cciUsersFront = setCCiUsersStatus(cciUsersFront, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.USER_MANAGEMENT_CODE.getValue(),
+            cciUsersFront = setCCiUsersStatus(cciUsersFront, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, UserManagementCodes.USER_MANAGEMENT_CODE.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
          } else {
-            cciUsersFront = setCCiUsersStatus(cciUsersFront, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_USER_NULL.getValue(),
+            cciUsersFront = setCCiUsersStatus(cciUsersFront, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.FAILED_USER_NULL.getValue(),
                   messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_NULL));
             LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_NULL));
          }
       } catch (CcighgoException e) {
-         cciUsersFront = setCCiUsersStatus(cciUsersFront, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_USER_SEARCH.getValue(),
-               messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_SEARCH_USER));
-         LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_SEARCH_USER));
+         cciUsersFront = setCCiUsersStatus(cciUsersFront, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.USR_MGMT_SEARCH_USER_ERROR.getValue(),
+               messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_SEARCH_USER_ERROR));
+         LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_SEARCH_USER_ERROR));
       }
       return cciUsersFront;
    }
@@ -652,7 +654,7 @@ public class UserManagementServiceImpl implements UserManagementService {
    public User updateUserDemographics(User user) {
       User usr = null;
       if (user == null) {
-         usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_USER_NULL.getValue(),
+         usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.FAILED_USER_NULL.getValue(),
                messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_NULL));
          LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_NULL));
          return usr;
@@ -660,7 +662,7 @@ public class UserManagementServiceImpl implements UserManagementService {
       try {
          CCIStaffUser cciUser = cciUsersRepository.findOne(user.getCciUserId());
          if (cciUser == null) {
-            usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_USER_NULL.getValue(),
+            usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.FAILED_USER_NULL.getValue(),
                   messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_NULL));
             LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_NULL));
             return usr;
@@ -745,17 +747,18 @@ public class UserManagementServiceImpl implements UserManagementService {
          }
          usr = getUserById(String.valueOf(user.getCciUserId()));
          if (usr == null) {
-            usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_UPDATE_USER.getValue(),
-                  messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_UPDATE_USER));
-            LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_UPDATE_USER));
+            usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.USR_MGMT_UPDATE_USER_FAILED.getValue(),
+                  messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_UPDATE_USER_FAILED));
+            LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_UPDATE_USER_FAILED));
             return usr;
          }
-         usr = setUserStatus(usr, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.USER_MANAGEMENT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
+         usr = setUserStatus(usr, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, UserManagementCodes.USER_MANAGEMENT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
          return usr;
       } catch (CcighgoException e) {
-         usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_UPDATE_USER.getValue(),
-               messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_UPDATE_USER));
-         LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_UPDATE_USER));
+         usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.USR_MGMT_UPDATE_USER_FAILED.getValue(),
+               messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_UPDATE_USER_FAILED));
+         LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_UPDATE_USER_FAILED));
          return usr;
       }
    }
@@ -766,7 +769,7 @@ public class UserManagementServiceImpl implements UserManagementService {
       List<LookupDepartment> lookupDepartments = departmentRepository.findAll();
       Departments departments = null;
       if (lookupDepartments == null) {
-         departments = setDepartmentsStatus(departments, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_DEPARTMENT_WITH_PERMISSIONS.getValue(),
+         departments = setDepartmentsStatus(departments, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.FAILED_GET_DEPARTMENT_WITH_PERMISSIONS.getValue(),
                messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_DEPARTMENT_WITH_PERMISSIONS));
          LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_DEPARTMENT_WITH_PERMISSIONS));
          return departments;
@@ -774,16 +777,16 @@ public class UserManagementServiceImpl implements UserManagementService {
       try {
          departments = getDepartment(lookupDepartments);
          if (departments == null) {
-            departments = setDepartmentsStatus(departments, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_DEPARTMENT_WITH_PERMISSIONS.getValue(),
+            departments = setDepartmentsStatus(departments, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.FAILED_GET_DEPARTMENT_WITH_PERMISSIONS.getValue(),
                   messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_DEPARTMENT_WITH_PERMISSIONS));
             LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_DEPARTMENT_WITH_PERMISSIONS));
             return departments;
          }
-         departments = setDepartmentsStatus(departments, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.USER_MANAGEMENT_CODE.getValue(),
+         departments = setDepartmentsStatus(departments, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, UserManagementCodes.USER_MANAGEMENT_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
          return departments;
       } catch (CcighgoException e) {
-         departments = setDepartmentsStatus(departments, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_DEPARTMENT_WITH_PERMISSIONS.getValue(),
+         departments = setDepartmentsStatus(departments, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.FAILED_GET_DEPARTMENT_WITH_PERMISSIONS.getValue(),
                messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_DEPARTMENT_WITH_PERMISSIONS));
          LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_DEPARTMENT_WITH_PERMISSIONS));
          return departments;
@@ -796,14 +799,14 @@ public class UserManagementServiceImpl implements UserManagementService {
       User usr = null;
       try {
          if (user.getCciUserId() == 0 || user.getCciUserId() < 0 || user == null) {
-            user = setUserStatus(user, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_USER_ID.getValue(),
+            user = setUserStatus(user, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.INVALID_USER_ID.getValue(),
                   messageUtil.getMessage(UserManagementMessageConstants.INVALID_USER_ID));
             LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.INVALID_USER_ID));
             return usr;
          }
          CCIStaffUser cciStaffUser = cciUsersRepository.findOne(user.getCciUserId());
          if (cciStaffUser == null) {
-            user = setUserStatus(user, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_USER_NULL.getValue(),
+            user = setUserStatus(user, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.FAILED_USER_NULL.getValue(),
                   messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_NULL));
             LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_NULL));
             return usr;
@@ -815,9 +818,9 @@ public class UserManagementServiceImpl implements UserManagementService {
                cciStaffUsersResourcePermissionRepository.delete(userResourcePermissionsList);
                cciStaffUsersResourcePermissionRepository.flush();
             } catch (CcighgoException e) {
-               user = setUserStatus(user, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_UPDATE_USER_PERMISSIONS.getValue(),
-                     messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_UPDATE_USER_PERMISSIONS));
-               LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_UPDATE_USER_PERMISSIONS));
+               user = setUserStatus(user, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.USR_MGMT_UPDATE_USER_PERMISSIONS_FAILED.getValue(),
+                     messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_UPDATE_USER_PERMISSIONS_FAILED));
+               LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_UPDATE_USER_PERMISSIONS_FAILED));
             }
          }
          // step 2: once permissions are deleted reinsert new permissions
@@ -828,15 +831,16 @@ public class UserManagementServiceImpl implements UserManagementService {
          }
          usr = getUserById(String.valueOf(user.getCciUserId()));
          if (usr == null) {
-            usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_USER_NULL.getValue(),
+            usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.FAILED_USER_NULL.getValue(),
                   messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_NULL));
             LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_NULL));
             return usr;
          }
-         usr = setUserStatus(usr, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.USER_MANAGEMENT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
+         usr = setUserStatus(usr, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, UserManagementCodes.USER_MANAGEMENT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
          return usr;
       } catch (CcighgoException e) {
-         usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_UPDATE_PERMISSIONS.getValue(),
+         usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.FAILED_UPDATE_PERMISSIONS.getValue(),
                messageUtil.getMessage(UserManagementMessageConstants.FAILED_UPDATE_PERMISSIONS));
          LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_UPDATE_PERMISSIONS));
          return usr;
@@ -848,7 +852,7 @@ public class UserManagementServiceImpl implements UserManagementService {
    public User updateUserPicture(User user) {
       User usr = null;
       if (user == null) {
-         usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_USER_NULL.getValue(),
+         usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.FAILED_USER_NULL.getValue(),
                messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_NULL));
          LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_NULL));
          return usr;
@@ -856,7 +860,7 @@ public class UserManagementServiceImpl implements UserManagementService {
       try {
          CCIStaffUser cciUser = cciUsersRepository.findOne(user.getCciUserId());
          if (cciUser == null) {
-            usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_USER_NULL.getValue(),
+            usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.FAILED_USER_NULL.getValue(),
                   messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_NULL));
             LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_NULL));
             return usr;
@@ -864,22 +868,23 @@ public class UserManagementServiceImpl implements UserManagementService {
          cciUser.setPhoto(user.getPhotoPath());
          CCIStaffUser cUsr = cciUsersRepository.save(cciUser);
          if (cUsr == null) {
-            usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_UPDATE_USER_PICTURE.getValue(),
+            usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.FAILED_UPDATE_USER_PICTURE.getValue(),
                   messageUtil.getMessage(UserManagementMessageConstants.FAILED_UPDATE_USER_PICTURE));
             LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_UPDATE_USER_PICTURE));
             return usr;
          }
          usr = getUserById(String.valueOf(cUsr.getCciStaffUserId()));
          if (usr == null) {
-            usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_UPDATE_USER_PICTURE.getValue(),
+            usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.FAILED_UPDATE_USER_PICTURE.getValue(),
                   messageUtil.getMessage(UserManagementMessageConstants.FAILED_UPDATE_USER_PICTURE));
             LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_UPDATE_USER_PICTURE));
             return usr;
          }
-         usr = setUserStatus(usr, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.USER_MANAGEMENT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
+         usr = setUserStatus(usr, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, UserManagementCodes.USER_MANAGEMENT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
          return usr;
       } catch (CcighgoException e) {
-         usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_UPDATE_USER_PICTURE.getValue(),
+         usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.FAILED_UPDATE_USER_PICTURE.getValue(),
                messageUtil.getMessage(UserManagementMessageConstants.FAILED_UPDATE_USER_PICTURE));
          LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_UPDATE_USER_PICTURE));
          return usr;
@@ -902,7 +907,7 @@ public class UserManagementServiceImpl implements UserManagementService {
             }
          }
       } catch (CcighgoException e) {
-         roles = setRolesStatus(roles, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_ROLE_BY_DEPARTMENT.getValue(),
+         roles = setRolesStatus(roles, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.FAILED_GET_ROLE_BY_DEPARTMENT.getValue(),
                messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_ROLE_BY_DEPARTMENT));
          LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_ROLE_BY_DEPARTMENT));
          return roles;
@@ -919,7 +924,7 @@ public class UserManagementServiceImpl implements UserManagementService {
       Departments departments = null;
       StaffUserRolePermissions staffUserRolePermissions = null;
       if (roleId == null || Integer.valueOf(roleId) < 0) {
-         departments = setDepartmentsStatus(departments, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_DEFAULT_PERMISSIONS_BY_ROLE.getValue(),
+         departments = setDepartmentsStatus(departments, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.FAILED_DEFAULT_PERMISSIONS_BY_ROLE.getValue(),
                messageUtil.getMessage(UserManagementMessageConstants.FAILED_DEFAULT_PERMISSIONS_BY_ROLE));
          LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_DEFAULT_PERMISSIONS_BY_ROLE));
          return departments;
@@ -954,20 +959,20 @@ public class UserManagementServiceImpl implements UserManagementService {
             staffUserRolePermissions.getStaffUserDefaultPermissions().addAll(staffUserDefaultPermissions);
             departments = convertStaffUserDefaultPermissionsTODepartments(staffUserRolePermissions, departments);
             if (departments == null) {
-               departments = setDepartmentsStatus(departments, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_DEFAULT_PERMISSIONS_BY_ROLE.getValue(),
+               departments = setDepartmentsStatus(departments, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.FAILED_DEFAULT_PERMISSIONS_BY_ROLE.getValue(),
                      messageUtil.getMessage(UserManagementMessageConstants.FAILED_DEFAULT_PERMISSIONS_BY_ROLE));
                LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_DEFAULT_PERMISSIONS_BY_ROLE));
                return departments;
             }
-            departments = setDepartmentsStatus(departments, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.USER_MANAGEMENT_CODE.getValue(),
+            departments = setDepartmentsStatus(departments, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, UserManagementCodes.USER_MANAGEMENT_CODE.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
          } else {
-            departments = setDepartmentsStatus(departments, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_USER_NULL.getValue(),
+            departments = setDepartmentsStatus(departments, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.FAILED_USER_NULL.getValue(),
                   messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_NULL));
             LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_NULL));
          }
       } catch (CcighgoException e) {
-         departments = setDepartmentsStatus(departments, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_DEFAULT_PERMISSIONS_BY_ROLE.getValue(),
+         departments = setDepartmentsStatus(departments, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.FAILED_DEFAULT_PERMISSIONS_BY_ROLE.getValue(),
                messageUtil.getMessage(UserManagementMessageConstants.FAILED_DEFAULT_PERMISSIONS_BY_ROLE));
          LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_DEFAULT_PERMISSIONS_BY_ROLE));
       }
@@ -1041,7 +1046,7 @@ public class UserManagementServiceImpl implements UserManagementService {
             GoIdSequence goIdSequence = goIdSequenceRepository.findOne(Integer.valueOf(id));
             Login user = loginRepository.findByGoId(goIdSequence);
             if (user == null) {
-               request.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_USER_NULL.getValue(),
+               request.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.FAILED_USER_NULL.getValue(),
                      messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_NULL)));
                LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_NULL));
                return request;
@@ -1049,15 +1054,15 @@ public class UserManagementServiceImpl implements UserManagementService {
 
             user.setActive(CCIConstants.INACTIVE);
             loginRepository.saveAndFlush(user);
-            request.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.USER_MANAGEMENT_CODE.getValue(),
+            request.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, UserManagementCodes.USER_MANAGEMENT_CODE.getValue(),
                   messageUtil.getMessage((CCIConstants.SERVICE_SUCCESS))));
          } else {
-            request.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_USER_ID.getValue(),
+            request.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.INVALID_USER_ID.getValue(),
                   messageUtil.getMessage(UserManagementMessageConstants.INVALID_USER_ID)));
             LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.INVALID_USER_ID));
          }
       } catch (CcighgoException e) {
-         request.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_USER_ID.getValue(),
+         request.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.INVALID_USER_ID.getValue(),
                messageUtil.getMessage(UserManagementMessageConstants.INVALID_USER_ID)));
          LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.INVALID_USER_ID));
       }
@@ -1071,14 +1076,14 @@ public class UserManagementServiceImpl implements UserManagementService {
       List<UserNotes> userNotes = null;
       try {
          if (id == null) {
-            userNotes = setUserNotesStatus(userNotes, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_USER_ID.getValue(),
+            userNotes = setUserNotesStatus(userNotes, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.INVALID_USER_ID.getValue(),
                   messageUtil.getMessage(UserManagementMessageConstants.INVALID_USER_ID));
             LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.INVALID_USER_ID));
             return userNotes;
          }
          CCIStaffUser cciUser = cciUsersRepository.findOne(Integer.valueOf(id));
          if (cciUser == null) {
-            userNotes = setUserNotesStatus(userNotes, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_USER_NULL.getValue(),
+            userNotes = setUserNotesStatus(userNotes, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.FAILED_USER_NULL.getValue(),
                   messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_NULL));
             LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_NULL));
             return userNotes;
@@ -1087,17 +1092,17 @@ public class UserManagementServiceImpl implements UserManagementService {
          if (cciUser.getCcistaffUserNotes() != null) {
             userNotes = getUserNotes(cciUser, user);
             if (userNotes == null) {
-               userNotes = setUserNotesStatus(userNotes, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_USER_NOTES_NULL.getValue(),
+               userNotes = setUserNotesStatus(userNotes, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.FAILED_USER_NOTES_NULL.getValue(),
                      messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_NOTES_NULL));
                LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_NOTES_NULL));
                return userNotes;
             }
             user.getUserNotes().addAll(userNotes);
-            userNotes = setUserNotesStatus(userNotes, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.USER_MANAGEMENT_CODE.getValue(),
+            userNotes = setUserNotesStatus(userNotes, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, UserManagementCodes.USER_MANAGEMENT_CODE.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
          }
       } catch (CcighgoException e) {
-         userNotes = setUserNotesStatus(userNotes, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_USER_NOTES.getValue(),
+         userNotes = setUserNotesStatus(userNotes, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.FAILED_GET_USER_NOTES.getValue(),
                messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_USER_NOTES));
          LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_USER_NOTES));
       }
@@ -1119,15 +1124,15 @@ public class UserManagementServiceImpl implements UserManagementService {
          cciUserNoteRepository.save(cciStaffUserNote);
          usr = getUserNotesById(userNotes.getCciUserId() + "");
          if (usr == null) {
-            usr = setUserNotesStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_DEFAULT_PERMISSIONS_BY_ROLE.getValue(),
+            usr = setUserNotesStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.FAILED_DEFAULT_PERMISSIONS_BY_ROLE.getValue(),
                   messageUtil.getMessage(UserManagementMessageConstants.FAILED_DEFAULT_PERMISSIONS_BY_ROLE));
             LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_USER_NOTES));
             return usr;
          }
-         usr = setUserNotesStatus(usr, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.USER_MANAGEMENT_CODE.getValue(),
+         usr = setUserNotesStatus(usr, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, UserManagementCodes.USER_MANAGEMENT_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
       } catch (CcighgoException e) {
-         usr = setUserNotesStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_USER_NOTES.getValue(),
+         usr = setUserNotesStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.FAILED_GET_USER_NOTES.getValue(),
                messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_USER_NOTES));
          LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_USER_NOTES));
       }
@@ -1332,12 +1337,12 @@ public class UserManagementServiceImpl implements UserManagementService {
             }
          } else {
             permissionGroupOptionsList = setStaffUserDefaultPermissionGroupOptionsStatus(permissionGroupOptionsList, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR,
-                  ErrorCode.FAILED_GET_RESOURCE_ACTION_LIST.getValue(), messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_RESOURCE_ACTION_LIST));
+                  UserManagementCodes.FAILED_GET_RESOURCE_ACTION_LIST.getValue(), messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_RESOURCE_ACTION_LIST));
             LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_RESOURCE_ACTION_LIST));
          }
       } catch (CcighgoException e) {
          permissionGroupOptionsList = setStaffUserDefaultPermissionGroupOptionsStatus(permissionGroupOptionsList, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR,
-               ErrorCode.FAILED_GET_RESOURCE_ACTION_LIST.getValue(), messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_RESOURCE_ACTION_LIST));
+               UserManagementCodes.FAILED_GET_RESOURCE_ACTION_LIST.getValue(), messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_RESOURCE_ACTION_LIST));
          LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_GET_RESOURCE_ACTION_LIST));
       }
       return permissionGroupOptionsList;
@@ -1348,7 +1353,7 @@ public class UserManagementServiceImpl implements UserManagementService {
    public User updateUserDetails(User user) {
       User usr = null;
       if (user == null) {
-         usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_USER_NULL.getValue(),
+         usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.FAILED_USER_NULL.getValue(),
                messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_NULL));
          LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_NULL));
          return usr;
@@ -1357,15 +1362,15 @@ public class UserManagementServiceImpl implements UserManagementService {
          boolean programCheck = true;
          CCIStaffUser tempCCIUser = cciUsersRepository.findOne(user.getCciUserId());
          if (tempCCIUser == null) {
-            usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_UPDATE_USER.getValue(),
-                  messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_UPDATE_USER));
-            LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_UPDATE_USER));
+            usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.USR_MGMT_UPDATE_USER_FAILED.getValue(),
+                  messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_UPDATE_USER_FAILED));
+            LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_UPDATE_USER_FAILED));
             return usr;
          }
          if (!user.getLoginInfo().getLoginName().equals(tempCCIUser.getGoIdSequence().getLogins().iterator().next().getLoginName())
                && loginRepository.findByLoginName(user.getLoginInfo().getLoginName()) != null) {
             // return username already exsist
-            usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.USR_MGMT_UPDATE_USER_NAME_EXIST.getValue(),
+            usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.USR_MGMT_UPDATE_USER_NAME_EXIST.getValue(),
                   messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_UPDATE_USER_NAME_EXIST));
             LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_UPDATE_USER_NAME_EXIST));
             return usr;
@@ -1374,7 +1379,7 @@ public class UserManagementServiceImpl implements UserManagementService {
          if (!user.getEmail().equals(tempCCIUser.getGoIdSequence().getLogins().iterator().next().getEmail()) && loginRepository.findByEmail(user.getEmail()) != null) {
 
             // return email already exist
-            usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.USR_MGMT_UPDATE_USER_EMAIL_EXIST.getValue(),
+            usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.USR_MGMT_UPDATE_USER_EMAIL_EXIST.getValue(),
                   messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_UPDATE_USER_EMAIL_EXIST));
             LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_UPDATE_USER_EMAIL_EXIST));
             return usr;
@@ -1468,20 +1473,21 @@ public class UserManagementServiceImpl implements UserManagementService {
          cciUsersRepository.flush();
          usr = getUserById(String.valueOf(tempCCIUser.getCciStaffUserId()));
          if (usr == null) {
-            usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_UPDATE_USER.getValue(),
-                  messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_UPDATE_USER));
-            LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_UPDATE_USER));
+            usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.USR_MGMT_UPDATE_USER_FAILED.getValue(),
+                  messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_UPDATE_USER_FAILED));
+            LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_UPDATE_USER_FAILED));
             return usr;
          }
-         usr = setUserStatus(usr, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.USER_MANAGEMENT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
+         usr = setUserStatus(usr, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, UserManagementCodes.USER_MANAGEMENT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
       } catch (ValidationException e) {
-         usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.MISSING_REQUIRED_VALUE.getValue(),
+         usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.USR_MGMT_CREATE_USER_PARAM_REQUIRED.getValue(),
                messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_CREATE_USER_PARAM_REQUIRED));
          LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_CREATE_USER_PARAM_REQUIRED));
       } catch (CcighgoException e) {
-         usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_UPDATE_USER.getValue(),
-               messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_UPDATE_USER));
-         LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_UPDATE_USER));
+         usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.USR_MGMT_UPDATE_USER_FAILED.getValue(),
+               messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_UPDATE_USER_FAILED));
+         LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_UPDATE_USER_FAILED));
       }
       return usr;
    }
@@ -1491,7 +1497,7 @@ public class UserManagementServiceImpl implements UserManagementService {
    public User updateUser(User user) {
       User usr = null;
       if (user == null) {
-         usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_USER_NULL.getValue(),
+         usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.FAILED_USER_NULL.getValue(),
                messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_NULL));
          LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.FAILED_USER_NULL));
          return usr;
@@ -1513,20 +1519,21 @@ public class UserManagementServiceImpl implements UserManagementService {
          }
          usr = getUserById(String.valueOf(user.getCciUserId()));
          if (usr == null) {
-            usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_UPDATE_USER.getValue(),
-                  messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_UPDATE_USER));
-            LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_UPDATE_USER));
+            usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.USR_MGMT_UPDATE_USER_FAILED.getValue(),
+                  messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_UPDATE_USER_FAILED));
+            LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_UPDATE_USER_FAILED));
             return usr;
          }
-         usr = setUserStatus(usr, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.USER_MANAGEMENT_CODE.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
+         usr = setUserStatus(usr, CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, UserManagementCodes.USER_MANAGEMENT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS));
       } catch (ValidationException e) {
-         usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.MISSING_REQUIRED_VALUE.getValue(),
+         usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.USR_MGMT_UPDATE_USER_PARAM_REQUIRED.getValue(),
                messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_UPDATE_USER_PARAM_REQUIRED));
          LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_UPDATE_USER_PARAM_REQUIRED));
       } catch (CcighgoException e) {
-         usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_UPDATE_USER.getValue(),
-               messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_UPDATE_USER));
-         LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_UPDATE_USER));
+         usr = setUserStatus(usr, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.USR_MGMT_UPDATE_USER_FAILED.getValue(),
+               messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_UPDATE_USER_FAILED));
+         LOGGER.error(messageUtil.getMessage(UserManagementMessageConstants.USR_MGMT_UPDATE_USER_FAILED));
       }
       return usr;
 
@@ -1615,21 +1622,21 @@ public class UserManagementServiceImpl implements UserManagementService {
                   + formResetURL(request).concat(login.getKeyValue()) + "</p>" + "<p>If you didn't request a new password, please let us know.</p>" + "<p>Thank you,</p>"
                   + "<p>CCI Greenheart.</p>";
             emailingService.send(login.getEmail(), CCIConstants.RESET_PASSWORD_SUBJECT, body, true);
-            response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
+            response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, UserManagementCodes.UTILITY_SERVICE_CODE.getValue(),
                   "An email has been sent to address " + "\'" + login.getEmail() + "\'" + " for login name " + "\'" + login.getLoginName() + "\'"
                         + " with instructions to reset password"));
          } else {
-            response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
+            response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, UserManagementCodes.NO_RECORD.getValue(),
                   messageUtil.getMessage(CCIConstants.NO_RECORD)));
             LOGGER.error(messageUtil.getMessage(CCIConstants.NO_RECORD));
          }
       } catch (CcighgoException e) {
-         response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_USER.getValue(), e.getMessage()));
+         response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, UserManagementCodes.ERROR_GET_USER.getValue(), e.getMessage()));
          LOGGER.error(e.getMessage());
       }
       return response;
    }
-   
+
    private String formResetURL(HttpServletRequest request) {
       String url = "";
       try {
@@ -1639,8 +1646,6 @@ public class UserManagementServiceImpl implements UserManagementService {
       }
       return url;
    }
-   
-   
 
    /**
     * @param user
