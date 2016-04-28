@@ -22,6 +22,7 @@ import com.ccighgo.db.entities.PartnerPermission;
 import com.ccighgo.db.entities.PartnerUser;
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.ErrorCode;
+import com.ccighgo.exception.PartnerCodes;
 import com.ccighgo.jpa.repositories.GenderRepository;
 import com.ccighgo.jpa.repositories.GoIdSequenceRepository;
 import com.ccighgo.jpa.repositories.LoginRepository;
@@ -36,6 +37,7 @@ import com.ccighgo.service.component.emailing.EmailServiceImpl;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.components.errormessages.constants.PartnerAdminSeasonConstants;
+import com.ccighgo.service.components.errormessages.constants.PartnerUserMessageConstants;
 import com.ccighgo.service.components.errormessages.constants.RegionManagementMessageConstants;
 import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.partner.beans.partner.user.details.PartnerUserDetails;
@@ -80,8 +82,8 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
    public PartnerUsers getAllPartnerUsers(String partnerId) {
       PartnerUsers partnerUsers = new PartnerUsers();
       if (partnerId == null || Integer.valueOf(partnerId) < 0 || Integer.valueOf(partnerId) == 0) {
-         partnerUsers.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_SEASON_ID.getValue(),
-               messageUtil.getMessage(CCIConstants.SEASON_ID_INVALID)));
+         partnerUsers.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.NULL_PARTNER_ID.getValue(),
+               messageUtil.getMessage(PartnerUserMessageConstants.INVALID_PARTNER_USER_ID)));
       } else {
          try {
             List<PartnerUser> partnerUsersDBList = partnerUserRepository.findByPartnerGoId(Integer.valueOf(partnerId));
@@ -103,17 +105,17 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
                   partnerUsersUIList.add(puser);
                }
                partnerUsers.getPartnerUsers().addAll(partnerUsersUIList);
-               partnerUsers.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
+               partnerUsers.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE,
                      messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
             } else {
-               partnerUsers.setStatus(
-                     componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
+               partnerUsers.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD_IN_DB, CCIConstants.TYPE_INFO, CCIConstants.NO_DATA_CODE,
+                     messageUtil.getMessage(CCIConstants.NO_RECORD)));
                LOGGER.error(messageUtil.getMessage(CCIConstants.NO_RECORD));
             }
          } catch (CcighgoException e) {
-            partnerUsers.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_GET_SUP_REG_LIST.getValue(),
-                  messageUtil.getMessage(RegionManagementMessageConstants.ERROR_GET_SUP_REG_LIST)));
-            LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.ERROR_GET_SUP_REG_LIST));
+            partnerUsers.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.EXCEPTION_IN_FETCHING_PARTNER_USER_LIST.getValue(),
+                  messageUtil.getMessage(PartnerUserMessageConstants.FAILED_GET_PARTNER_USER_LIST)));
+            LOGGER.error(e);
          }
       }
       return partnerUsers;
@@ -124,15 +126,13 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
    public Response updatePartnerUserStatus(String statusVal, String partnerUserId) {
       Response response = new Response();
       if (partnerUserId == null) {
-         response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(),
-               messageUtil.getMessage(PartnerAdminSeasonConstants.INVALID_PARTNER_ADMIN_SEASON_ID)));
-         LOGGER.error(messageUtil.getMessage(PartnerAdminSeasonConstants.INVALID_PARTNER_ADMIN_SEASON_ID));
+         response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, CCIConstants.NULL_PARTNER_ID,
+               messageUtil.getMessage(PartnerUserMessageConstants.INVALID_PARTNER_USER_ID)));
          return response;
       }
       if (statusVal == null || !(Integer.valueOf(statusVal) == 0 || Integer.valueOf(statusVal) == 1)) {
-         response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(),
-               messageUtil.getMessage(PartnerAdminSeasonConstants.PARTNER_ADMIN_SEASON_INVALID_STATUS_VALUE)));
-         LOGGER.error(messageUtil.getMessage(PartnerAdminSeasonConstants.PARTNER_ADMIN_SEASON_INVALID_STATUS_VALUE));
+         response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.PARTNER_USER_STATUS_NULL.getValue(),
+               messageUtil.getMessage(PartnerUserMessageConstants.FAILED_UPDATE_PARTNER_USER_STATUS)));
          return response;
       } else {
          try {
@@ -148,12 +148,12 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
             }
             partnerUserRepository.saveAndFlush(partnerUser);
             loginRepository.saveAndFlush(login);
-            response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
+            response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE,
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          } catch (CcighgoException e) {
-            response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(),
-                  messageUtil.getMessage(PartnerAdminSeasonConstants.ERROR_UPDATE_PARTNER_ADMIN_SEASON_STATUS)));
-            LOGGER.error(messageUtil.getMessage(PartnerAdminSeasonConstants.ERROR_UPDATE_PARTNER_ADMIN_SEASON_STATUS));
+            response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.ERROR_UPDATE_PARTNER_USER_STATUS.getValue(),
+                  messageUtil.getMessage(PartnerUserMessageConstants.EXCEPTION_UPDATING_PARTNER_USER_STATUS)));
+            LOGGER.error(e);
          }
       }
       return response;
@@ -163,9 +163,9 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
    public Response resetPartnerUserPassword(String partnerUserId, HttpServletRequest request) {
       Response response = new Response();
       if (partnerUserId == null) {
-         response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(),
-               messageUtil.getMessage(PartnerAdminSeasonConstants.INVALID_PARTNER_ADMIN_SEASON_ID)));
-         LOGGER.error(messageUtil.getMessage(PartnerAdminSeasonConstants.INVALID_PARTNER_ADMIN_SEASON_ID));
+         response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, CCIConstants.NULL_PARTNER_ID,
+               messageUtil.getMessage(PartnerUserMessageConstants.INVALID_PARTNER_USER_ID)));
+         LOGGER.error(messageUtil.getMessage(PartnerUserMessageConstants.INVALID_PARTNER_USER_ID));
          return response;
       } else {
          try {
@@ -180,14 +180,14 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
                      "An email has been sent to address " + "\'" + partnerUser.getLogin().getEmail() + "\'" + " for login name " + "\'" + partnerUser.getLogin().getLoginName()
                            + "\'" + " with instructions to reset password"));
             } else {
-               response.setStatus(
-                     componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
+               response.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD_IN_DB, CCIConstants.TYPE_INFO, CCIConstants.NO_DATA_CODE,
+                     messageUtil.getMessage(CCIConstants.NO_RECORD)));
                LOGGER.error(messageUtil.getMessage(CCIConstants.NO_RECORD));
             }
          } catch (CcighgoException e) {
-            response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(),
-                  messageUtil.getMessage(PartnerAdminSeasonConstants.ERROR_UPDATE_PARTNER_ADMIN_SEASON_STATUS)));
-            LOGGER.error(messageUtil.getMessage(PartnerAdminSeasonConstants.ERROR_UPDATE_PARTNER_ADMIN_SEASON_STATUS));
+            response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.ERROR_RESETING_PARTNER_USER_PASSWORD.getValue(),
+                  messageUtil.getMessage(PartnerUserMessageConstants.ERROR_RESETTING_PARTNER_USER_PASSWORD)));
+            LOGGER.error(messageUtil.getMessage(PartnerUserMessageConstants.ERROR_RESETTING_PARTNER_USER_PASSWORD));
          }
       }
       return response;
@@ -198,9 +198,9 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
    public PartnerUserDetails getPartnerUserDetails(String partnerUserId) {
       PartnerUserDetails partnerUserDetails = new PartnerUserDetails();
       if (partnerUserId == null) {
-         partnerUserDetails.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(),
-               messageUtil.getMessage(PartnerAdminSeasonConstants.INVALID_PARTNER_ADMIN_SEASON_ID)));
-         LOGGER.error(messageUtil.getMessage(PartnerAdminSeasonConstants.INVALID_PARTNER_ADMIN_SEASON_ID));
+         partnerUserDetails.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, CCIConstants.NULL_PARTNER_ID,
+               messageUtil.getMessage(PartnerUserMessageConstants.INVALID_PARTNER_USER_ID)));
+         LOGGER.error(messageUtil.getMessage(PartnerUserMessageConstants.INVALID_PARTNER_USER_ID));
          return partnerUserDetails;
       } else {
          try {
@@ -273,85 +273,130 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
                Programs j1Program = new Programs();
                j1Program.setProgramName("J1HS");
                Permissions j1Permissions = new Permissions();
-               j1Permissions.setAccounting(partnerPermission.getJ1AccountingInsurance() == CCIConstants.ACTIVE ? true : false);
-               j1Permissions.setAdmin(partnerPermission.getJ1Admin() == CCIConstants.ACTIVE ? true : false);
-               j1Permissions.setApplications(partnerPermission.getJ1Applications() == CCIConstants.ACTIVE ? true : false);
-               j1Permissions.setContracting(partnerPermission.getJ1Contracting() == CCIConstants.ACTIVE ? true : false);
-               j1Permissions.setFlights(partnerPermission.getJ1Flights() == CCIConstants.ACTIVE ? true : false);
-               j1Permissions.setInsurance(partnerPermission.getJ1Insurance() == CCIConstants.ACTIVE ? true : false);
-               j1Permissions.setMonitoring(partnerPermission.getJ1Monitoring() == CCIConstants.ACTIVE ? true : false);
-               j1Permissions.setPlacementInfo(partnerPermission.getJ1PlacementInfo() == CCIConstants.ACTIVE ? true : false);
-               j1Permissions.setStudentsPreProgram(partnerPermission.getJ1StudentsPreProgram() == CCIConstants.ACTIVE ? true : false);
+               // j1Permissions.setAccounting(partnerPermission.getJ1AccountingInsurance()
+               // == CCIConstants.ACTIVE ? true : false);
+               // j1Permissions.setAdmin(partnerPermission.getJ1Admin() ==
+               // CCIConstants.ACTIVE ? true : false);
+               // j1Permissions.setApplications(partnerPermission.getJ1Applications()
+               // == CCIConstants.ACTIVE ? true : false);
+               // j1Permissions.setContracting(partnerPermission.getJ1Contracting()
+               // == CCIConstants.ACTIVE ? true : false);
+               // j1Permissions.setFlights(partnerPermission.getJ1Flights() ==
+               // CCIConstants.ACTIVE ? true : false);
+               // j1Permissions.setInsurance(partnerPermission.getJ1Insurance()
+               // == CCIConstants.ACTIVE ? true : false);
+               // j1Permissions.setMonitoring(partnerPermission.getJ1Monitoring()
+               // == CCIConstants.ACTIVE ? true : false);
+               // j1Permissions.setPlacementInfo(partnerPermission.getJ1PlacementInfo()
+               // == CCIConstants.ACTIVE ? true : false);
+               // j1Permissions.setStudentsPreProgram(partnerPermission.getJ1StudentsPreProgram()
+               // == CCIConstants.ACTIVE ? true : false);
                j1Program.setPermissions(j1Permissions);
                userProgramsAndPermissions.add(j1Program);
 
                Programs f1Program = new Programs();
                f1Program.setProgramName(CCIConstants.HSP_F1);
                Permissions f1Permissions = new Permissions();
-               f1Permissions.setAccounting(partnerPermission.getF1AccountingInsurance() == CCIConstants.ACTIVE ? true : false);
-               f1Permissions.setAdmin(partnerPermission.getF1Admin() == CCIConstants.ACTIVE ? true : false);
-               f1Permissions.setApplications(partnerPermission.getF1Applications() == CCIConstants.ACTIVE ? true : false);
-               f1Permissions.setContracting(partnerPermission.getF1Contracting() == CCIConstants.ACTIVE ? true : false);
-               f1Permissions.setFlights(partnerPermission.getF1Flights() == CCIConstants.ACTIVE ? true : false);
-               f1Permissions.setInsurance(partnerPermission.getF1Insurance() == CCIConstants.ACTIVE ? true : false);
-               f1Permissions.setMonitoring(partnerPermission.getF1Monitoring() == CCIConstants.ACTIVE ? true : false);
-               f1Permissions.setPlacementInfo(partnerPermission.getF1PlacementInfo() == CCIConstants.ACTIVE ? true : false);
-               f1Permissions.setStudentsPreProgram(partnerPermission.getF1StudentsPreProgram() == CCIConstants.ACTIVE ? true : false);
+               // f1Permissions.setAccounting(partnerPermission.getF1AccountingInsurance()
+               // == CCIConstants.ACTIVE ? true : false);
+               // f1Permissions.setAdmin(partnerPermission.getF1Admin() ==
+               // CCIConstants.ACTIVE ? true : false);
+               // f1Permissions.setApplications(partnerPermission.getF1Applications()
+               // == CCIConstants.ACTIVE ? true : false);
+               // f1Permissions.setContracting(partnerPermission.getF1Contracting()
+               // == CCIConstants.ACTIVE ? true : false);
+               // f1Permissions.setFlights(partnerPermission.getF1Flights() ==
+               // CCIConstants.ACTIVE ? true : false);
+               // f1Permissions.setInsurance(partnerPermission.getF1Insurance()
+               // == CCIConstants.ACTIVE ? true : false);
+               // f1Permissions.setMonitoring(partnerPermission.getF1Monitoring()
+               // == CCIConstants.ACTIVE ? true : false);
+               // f1Permissions.setPlacementInfo(partnerPermission.getF1PlacementInfo()
+               // == CCIConstants.ACTIVE ? true : false);
+               // f1Permissions.setStudentsPreProgram(partnerPermission.getF1StudentsPreProgram()
+               // == CCIConstants.ACTIVE ? true : false);
                f1Program.setPermissions(f1Permissions);
                userProgramsAndPermissions.add(f1Program);
 
                Programs ihpProgram = new Programs();
                ihpProgram.setProgramName("IHP");
                Permissions ihpPermissions = new Permissions();
-               ihpPermissions.setAccounting(partnerPermission.getIhpAccountingInsurance() == CCIConstants.ACTIVE ? true : false);
-               ihpPermissions.setAdmin(partnerPermission.getIhpAdmin() == CCIConstants.ACTIVE ? true : false);
-               ihpPermissions.setApplications(partnerPermission.getIhpApplications() == CCIConstants.ACTIVE ? true : false);
-               ihpPermissions.setContracting(partnerPermission.getIhpContracting() == CCIConstants.ACTIVE ? true : false);
-               ihpPermissions.setFlights(partnerPermission.getIhpFlights() == CCIConstants.ACTIVE ? true : false);
-               ihpPermissions.setInsurance(partnerPermission.getIhpInsurance() == CCIConstants.ACTIVE ? true : false);
-               ihpPermissions.setMonitoring(partnerPermission.getIhpMonitoring() == CCIConstants.ACTIVE ? true : false);
-               ihpPermissions.setPlacementInfo(partnerPermission.getIhpPlacementInfo() == CCIConstants.ACTIVE ? true : false);
-               ihpPermissions.setStudentsPreProgram(partnerPermission.getIhpStudentsPreProgram() == CCIConstants.ACTIVE ? true : false);
+               // ihpPermissions.setAccounting(partnerPermission.getIhpAccountingInsurance()
+               // == CCIConstants.ACTIVE ? true : false);
+               // ihpPermissions.setAdmin(partnerPermission.getIhpAdmin() ==
+               // CCIConstants.ACTIVE ? true : false);
+               // ihpPermissions.setApplications(partnerPermission.getIhpApplications()
+               // == CCIConstants.ACTIVE ? true : false);
+               // ihpPermissions.setContracting(partnerPermission.getIhpContracting()
+               // == CCIConstants.ACTIVE ? true : false);
+               // ihpPermissions.setFlights(partnerPermission.getIhpFlights() ==
+               // CCIConstants.ACTIVE ? true : false);
+               // ihpPermissions.setInsurance(partnerPermission.getIhpInsurance()
+               // == CCIConstants.ACTIVE ? true : false);
+               // ihpPermissions.setMonitoring(partnerPermission.getIhpMonitoring()
+               // == CCIConstants.ACTIVE ? true : false);
+               // ihpPermissions.setPlacementInfo(partnerPermission.getIhpPlacementInfo()
+               // == CCIConstants.ACTIVE ? true : false);
+               // ihpPermissions.setStudentsPreProgram(partnerPermission.getIhpStudentsPreProgram()
+               // == CCIConstants.ACTIVE ? true : false);
                ihpProgram.setPermissions(ihpPermissions);
                userProgramsAndPermissions.add(ihpProgram);
 
                Programs wntProgram = new Programs();
                wntProgram.setProgramName("W&T");
                Permissions wntPermissions = new Permissions();
-               wntPermissions.setAccounting(partnerPermission.getWtAccountingInsurance() == CCIConstants.ACTIVE ? true : false);
-               wntPermissions.setAdmin(partnerPermission.getWtAdmin() == CCIConstants.ACTIVE ? true : false);
-               wntPermissions.setApplications(partnerPermission.getWtApplications() == CCIConstants.ACTIVE ? true : false);
-               wntPermissions.setContracting(partnerPermission.getWtContracting() == CCIConstants.ACTIVE ? true : false);
-               wntPermissions.setFlights(partnerPermission.getWtFlights() == CCIConstants.ACTIVE ? true : false);
-               wntPermissions.setInsurance(partnerPermission.getWtInsurance() == CCIConstants.ACTIVE ? true : false);
-               wntPermissions.setMonitoring(partnerPermission.getWtMonitoring() == CCIConstants.ACTIVE ? true : false);
-               wntPermissions.setPlacementInfo(partnerPermission.getWtPlacementInfo() == CCIConstants.ACTIVE ? true : false);
-               wntPermissions.setStudentsPreProgram(partnerPermission.getWtStudentsPreProgram() == CCIConstants.ACTIVE ? true : false);
+               // wntPermissions.setAccounting(partnerPermission.getWtAccountingInsurance()
+               // == CCIConstants.ACTIVE ? true : false);
+               // wntPermissions.setAdmin(partnerPermission.getWtAdmin() ==
+               // CCIConstants.ACTIVE ? true : false);
+               // wntPermissions.setApplications(partnerPermission.getWtApplications()
+               // == CCIConstants.ACTIVE ? true : false);
+               // wntPermissions.setContracting(partnerPermission.getWtContracting()
+               // == CCIConstants.ACTIVE ? true : false);
+               // wntPermissions.setFlights(partnerPermission.getWtFlights() ==
+               // CCIConstants.ACTIVE ? true : false);
+               // wntPermissions.setInsurance(partnerPermission.getWtInsurance()
+               // == CCIConstants.ACTIVE ? true : false);
+               // wntPermissions.setMonitoring(partnerPermission.getWtMonitoring()
+               // == CCIConstants.ACTIVE ? true : false);
+               // wntPermissions.setPlacementInfo(partnerPermission.getWtPlacementInfo()
+               // == CCIConstants.ACTIVE ? true : false);
+               // wntPermissions.setStudentsPreProgram(partnerPermission.getWtStudentsPreProgram()
+               // == CCIConstants.ACTIVE ? true : false);
                wntProgram.setPermissions(wntPermissions);
                userProgramsAndPermissions.add(wntProgram);
 
                Programs capProgram = new Programs();
                capProgram.setProgramName(CCIConstants.WP_WT_CAP);
                Permissions capPermissions = new Permissions();
-               capPermissions.setAccounting(partnerPermission.getCapAccountingInsurance() == CCIConstants.ACTIVE ? true : false);
-               capPermissions.setAdmin(partnerPermission.getCapAdmin() == CCIConstants.ACTIVE ? true : false);
-               capPermissions.setApplications(partnerPermission.getCapApplications() == CCIConstants.ACTIVE ? true : false);
-               capPermissions.setContracting(partnerPermission.getCapContracting() == CCIConstants.ACTIVE ? true : false);
-               capPermissions.setFlights(partnerPermission.getCapFlights() == CCIConstants.ACTIVE ? true : false);
-               capPermissions.setInsurance(partnerPermission.getCapInsurance() == CCIConstants.ACTIVE ? true : false);
-               capPermissions.setMonitoring(partnerPermission.getCapMonitoring() == CCIConstants.ACTIVE ? true : false);
-               capPermissions.setPlacementInfo(partnerPermission.getCapPlacementInfo() == CCIConstants.ACTIVE ? true : false);
-               capPermissions.setStudentsPreProgram(partnerPermission.getCapStudentsPreProgram() == CCIConstants.ACTIVE ? true : false);
+               // capPermissions.setAccounting(partnerPermission.getCapAccountingInsurance()
+               // == CCIConstants.ACTIVE ? true : false);
+               // capPermissions.setAdmin(partnerPermission.getCapAdmin() ==
+               // CCIConstants.ACTIVE ? true : false);
+               // capPermissions.setApplications(partnerPermission.getCapApplications()
+               // == CCIConstants.ACTIVE ? true : false);
+               // capPermissions.setContracting(partnerPermission.getCapContracting()
+               // == CCIConstants.ACTIVE ? true : false);
+               // capPermissions.setFlights(partnerPermission.getCapFlights() ==
+               // CCIConstants.ACTIVE ? true : false);
+               // capPermissions.setInsurance(partnerPermission.getCapInsurance()
+               // == CCIConstants.ACTIVE ? true : false);
+               // capPermissions.setMonitoring(partnerPermission.getCapMonitoring()
+               // == CCIConstants.ACTIVE ? true : false);
+               // capPermissions.setPlacementInfo(partnerPermission.getCapPlacementInfo()
+               // == CCIConstants.ACTIVE ? true : false);
+               // capPermissions.setStudentsPreProgram(partnerPermission.getCapStudentsPreProgram()
+               // == CCIConstants.ACTIVE ? true : false);
                capProgram.setPermissions(capPermissions);
                userProgramsAndPermissions.add(capProgram);
             }
             partnerUserDetails.getUserProgramsAndPermissions().addAll(userProgramsAndPermissions);
-            partnerUserDetails.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
+            partnerUserDetails.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE,
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          } catch (CcighgoException e) {
-            partnerUserDetails.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(),
-                  messageUtil.getMessage(PartnerAdminSeasonConstants.ERROR_UPDATE_PARTNER_ADMIN_SEASON_STATUS)));
-            LOGGER.error(messageUtil.getMessage(PartnerAdminSeasonConstants.ERROR_UPDATE_PARTNER_ADMIN_SEASON_STATUS));
+            partnerUserDetails.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.ERROR_VIEWING_PARTNER_USER_DATA.getValue(),
+                  messageUtil.getMessage(PartnerUserMessageConstants.ERROR_VIEWING_PARTNER_USER_DATA)));
+            LOGGER.error(messageUtil.getMessage(PartnerUserMessageConstants.ERROR_VIEWING_PARTNER_USER_DATA));
          }
       }
       return partnerUserDetails;
@@ -362,8 +407,8 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
    public PartnerUserOffices getPartnerUserOffices(String partnerGoId) {
       PartnerUserOffices partnerUserOffices = new PartnerUserOffices();
       if (partnerGoId == null || Integer.valueOf(partnerGoId) < 0 || Integer.valueOf(partnerGoId) == 0) {
-         partnerUserOffices.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_PARTNER_ID.getValue(),
-               messageUtil.getMessage(CCIConstants.SEASON_ID_INVALID)));
+         partnerUserOffices.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, CCIConstants.NULL_PARTNER_ID,
+               messageUtil.getMessage(PartnerUserMessageConstants.INVALID_PARTNER_USER_ID)));
       } else {
          try {
             List<PartnerUser> partnerUsersDBList = partnerUserRepository.findByPartnerGoId(Integer.valueOf(partnerGoId));
@@ -408,14 +453,15 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
                      userOfficesList.add(usrOffice);
                   }
                   partnerUserOffices.getUserOffices().addAll(userOfficesList);
-                  partnerUserOffices.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
+                  partnerUserOffices.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE,
                         messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
                }
             } else {
                throw new CcighgoException("no partner user found");
             }
          } catch (CcighgoException e) {
-            partnerUserOffices.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(), e.getMessage()));
+            partnerUserOffices.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.ERROR_FETCHING_PARTNER_USER_OFFICE.getValue(),
+                  e.getMessage()));
             LOGGER.error(e.getMessage());
          }
       }
@@ -427,6 +473,8 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
    public PartnerUserDetails addPartnerUser(PartnerUserDetails partnerUserDetails, HttpServletRequest request) {
       PartnerUserDetails newUser = new PartnerUserDetails();
       if (partnerUserDetails == null) {
+         newUser.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, CCIConstants.NULL_PARAM,
+               messageUtil.getMessage(PartnerUserMessageConstants.ERROR_ADDING_PARTNERUSER)));
       } else {
          try {
             String access = PasscodeGenerator.generateRandomPasscode(8, 8, 1, 1, 1).toString();
@@ -506,59 +554,104 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
                if (partnerUserDetails.getUserProgramsAndPermissions() != null) {
                   for (Programs p : partnerUserDetails.getUserProgramsAndPermissions()) {
                      if (p.getProgramName().equals("J1HS")) {
-                        partnerUserPermission.setJ1AccountingInsurance(p.getPermissions().isAccounting() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                        partnerUserPermission.setJ1Admin(p.getPermissions().isAdmin() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                        partnerUserPermission.setJ1Applications(p.getPermissions().isApplications() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                        partnerUserPermission.setJ1Contracting(p.getPermissions().isContracting() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                        partnerUserPermission.setJ1Flights(p.getPermissions().isFlights() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                        partnerUserPermission.setJ1Insurance(p.getPermissions().isInsurance() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                        partnerUserPermission.setJ1Monitoring(p.getPermissions().isMonitoring() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                        partnerUserPermission.setJ1PlacementInfo(p.getPermissions().isPlacementInfo() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                        partnerUserPermission.setJ1StudentsPreProgram(p.getPermissions().isStudentsPreProgram() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                        // partnerUserPermission.setJ1AccountingInsurance(p.getPermissions().isAccounting()
+                        // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                        // partnerUserPermission.setJ1Admin(p.getPermissions().isAdmin()
+                        // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                        // partnerUserPermission.setJ1Applications(p.getPermissions().isApplications()
+                        // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                        // partnerUserPermission.setJ1Contracting(p.getPermissions().isContracting()
+                        // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                        // partnerUserPermission.setJ1Flights(p.getPermissions().isFlights()
+                        // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                        // partnerUserPermission.setJ1Insurance(p.getPermissions().isInsurance()
+                        // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                        // partnerUserPermission.setJ1Monitoring(p.getPermissions().isMonitoring()
+                        // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                        // partnerUserPermission.setJ1PlacementInfo(p.getPermissions().isPlacementInfo()
+                        // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                        // partnerUserPermission.setJ1StudentsPreProgram(p.getPermissions().isStudentsPreProgram()
+                        // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
                      }
                      if (p.getProgramName().equals(CCIConstants.HSP_F1)) {
-                        partnerUserPermission.setF1AccountingInsurance(p.getPermissions().isAccounting() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                        partnerUserPermission.setF1Admin(p.getPermissions().isAdmin() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                        partnerUserPermission.setF1Applications(p.getPermissions().isApplications() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                        partnerUserPermission.setF1Contracting(p.getPermissions().isContracting() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                        partnerUserPermission.setF1Flights(p.getPermissions().isFlights() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                        partnerUserPermission.setF1Insurance(p.getPermissions().isInsurance() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                        partnerUserPermission.setF1Monitoring(p.getPermissions().isMonitoring() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                        partnerUserPermission.setF1PlacementInfo(p.getPermissions().isPlacementInfo() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                        partnerUserPermission.setF1StudentsPreProgram(p.getPermissions().isStudentsPreProgram() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                        // partnerUserPermission.setF1AccountingInsurance(p.getPermissions().isAccounting()
+                        // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                        // partnerUserPermission.setF1Admin(p.getPermissions().isAdmin()
+                        // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                        // partnerUserPermission.setF1Applications(p.getPermissions().isApplications()
+                        // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                        // partnerUserPermission.setF1Contracting(p.getPermissions().isContracting()
+                        // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                        // partnerUserPermission.setF1Flights(p.getPermissions().isFlights()
+                        // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                        // partnerUserPermission.setF1Insurance(p.getPermissions().isInsurance()
+                        // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                        // partnerUserPermission.setF1Monitoring(p.getPermissions().isMonitoring()
+                        // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                        // partnerUserPermission.setF1PlacementInfo(p.getPermissions().isPlacementInfo()
+                        // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                        // partnerUserPermission.setF1StudentsPreProgram(p.getPermissions().isStudentsPreProgram()
+                        // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
                      }
                      if (p.getProgramName().equals("IHP")) {
-                        partnerUserPermission.setIhpAccountingInsurance(p.getPermissions().isAccounting() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                        partnerUserPermission.setIhpAdmin(p.getPermissions().isAdmin() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                        partnerUserPermission.setIhpApplications(p.getPermissions().isApplications() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                        partnerUserPermission.setIhpContracting(p.getPermissions().isContracting() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                        partnerUserPermission.setIhpFlights(p.getPermissions().isFlights() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                        partnerUserPermission.setIhpInsurance(p.getPermissions().isInsurance() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                        partnerUserPermission.setIhpMonitoring(p.getPermissions().isMonitoring() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                        partnerUserPermission.setIhpPlacementInfo(p.getPermissions().isPlacementInfo() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                        partnerUserPermission.setIhpStudentsPreProgram(p.getPermissions().isStudentsPreProgram() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                        // partnerUserPermission.setIhpAccountingInsurance(p.getPermissions().isAccounting()
+                        // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                        // partnerUserPermission.setIhpAdmin(p.getPermissions().isAdmin()
+                        // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                        // partnerUserPermission.setIhpApplications(p.getPermissions().isApplications()
+                        // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                        // partnerUserPermission.setIhpContracting(p.getPermissions().isContracting()
+                        // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                        // partnerUserPermission.setIhpFlights(p.getPermissions().isFlights()
+                        // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                        // partnerUserPermission.setIhpInsurance(p.getPermissions().isInsurance()
+                        // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                        // partnerUserPermission.setIhpMonitoring(p.getPermissions().isMonitoring()
+                        // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                        // partnerUserPermission.setIhpPlacementInfo(p.getPermissions().isPlacementInfo()
+                        // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                        // partnerUserPermission.setIhpStudentsPreProgram(p.getPermissions().isStudentsPreProgram()
+                        // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
                      }
                      if (p.getProgramName().equals("W&T")) {
-                        partnerUserPermission.setWtAccountingInsurance(p.getPermissions().isAccounting() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                        partnerUserPermission.setWtAdmin(p.getPermissions().isAdmin() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                        partnerUserPermission.setWtApplications(p.getPermissions().isApplications() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                        partnerUserPermission.setWtContracting(p.getPermissions().isContracting() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                        partnerUserPermission.setWtFlights(p.getPermissions().isFlights() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                        partnerUserPermission.setWtInsurance(p.getPermissions().isInsurance() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                        partnerUserPermission.setWtMonitoring(p.getPermissions().isMonitoring() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                        partnerUserPermission.setWtPlacementInfo(p.getPermissions().isPlacementInfo() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                        partnerUserPermission.setWtStudentsPreProgram(p.getPermissions().isStudentsPreProgram() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                        // partnerUserPermission.setWtAccountingInsurance(p.getPermissions().isAccounting()
+                        // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                        // partnerUserPermission.setWtAdmin(p.getPermissions().isAdmin()
+                        // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                        // partnerUserPermission.setWtApplications(p.getPermissions().isApplications()
+                        // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                        // partnerUserPermission.setWtContracting(p.getPermissions().isContracting()
+                        // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                        // partnerUserPermission.setWtFlights(p.getPermissions().isFlights()
+                        // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                        // partnerUserPermission.setWtInsurance(p.getPermissions().isInsurance()
+                        // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                        // partnerUserPermission.setWtMonitoring(p.getPermissions().isMonitoring()
+                        // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                        // partnerUserPermission.setWtPlacementInfo(p.getPermissions().isPlacementInfo()
+                        // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                        // partnerUserPermission.setWtStudentsPreProgram(p.getPermissions().isStudentsPreProgram()
+                        // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
                      }
                      if (p.getProgramName().equals(CCIConstants.WP_WT_CAP)) {
-                        partnerUserPermission.setCapAccountingInsurance(p.getPermissions().isAccounting() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                        partnerUserPermission.setCapAdmin(p.getPermissions().isAdmin() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                        partnerUserPermission.setCapApplications(p.getPermissions().isApplications() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                        partnerUserPermission.setCapContracting(p.getPermissions().isContracting() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                        partnerUserPermission.setCapFlights(p.getPermissions().isFlights() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                        partnerUserPermission.setCapInsurance(p.getPermissions().isInsurance() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                        partnerUserPermission.setCapMonitoring(p.getPermissions().isMonitoring() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                        partnerUserPermission.setCapPlacementInfo(p.getPermissions().isPlacementInfo() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                        partnerUserPermission.setCapStudentsPreProgram(p.getPermissions().isStudentsPreProgram() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                        // partnerUserPermission.setCapAccountingInsurance(p.getPermissions().isAccounting()
+                        // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                        // partnerUserPermission.setCapAdmin(p.getPermissions().isAdmin()
+                        // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                        // partnerUserPermission.setCapApplications(p.getPermissions().isApplications()
+                        // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                        // partnerUserPermission.setCapContracting(p.getPermissions().isContracting()
+                        // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                        // partnerUserPermission.setCapFlights(p.getPermissions().isFlights()
+                        // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                        // partnerUserPermission.setCapInsurance(p.getPermissions().isInsurance()
+                        // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                        // partnerUserPermission.setCapMonitoring(p.getPermissions().isMonitoring()
+                        // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                        // partnerUserPermission.setCapPlacementInfo(p.getPermissions().isPlacementInfo()
+                        // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                        // partnerUserPermission.setCapStudentsPreProgram(p.getPermissions().isStudentsPreProgram()
+                        // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
                      }
                   }
                }
@@ -570,24 +663,24 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
                      + formResetURL(request).concat(loginEmail.getKeyValue()) + "</p></br>" + "<p>Thank you,</p><p>GO System Support.</p>";
                email.send(loginEmail.getEmail(), CCIConstants.CREATE_CCI_USER_SUBJECT, body, true);
                newUser = getPartnerUserDetails(String.valueOf(patUser.getPartnerUserId()));
-               newUser.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
+               newUser.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE,
                      messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
             } else {
                if (checkLoginNameExists != null) {
-                  newUser.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(),
-                        messageUtil.getMessage("User with same login already exists")));
-                  LOGGER.error(messageUtil.getMessage("User with same login already exists"));
+                  newUser.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.ERROR_USER_WITH_THE_SAME_LOGINNAME_EXIST.getValue(),
+                        messageUtil.getMessage(PartnerUserMessageConstants.ERROR_USERNAME_DUPLICATE)));
+                  LOGGER.error(messageUtil.getMessage(PartnerUserMessageConstants.ERROR_USERNAME_DUPLICATE));
                }
                if (checkEmailExists != null) {
-                  newUser.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(),
-                        messageUtil.getMessage("User with same email already exists")));
-                  LOGGER.error(messageUtil.getMessage("User with same email already exists"));
+                  newUser.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.ERROR_USER_WITH_THE_SAME_EMAIL_EXIST.getValue(),
+                        messageUtil.getMessage(PartnerUserMessageConstants.ERROR_PARTNER_USER_EMAIL_DUPLICATE)));
+                  LOGGER.error(messageUtil.getMessage(PartnerUserMessageConstants.ERROR_PARTNER_USER_EMAIL_DUPLICATE));
                }
             }
          } catch (CcighgoException e) {
-            newUser.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(),
-                  messageUtil.getMessage(PartnerAdminSeasonConstants.ERROR_UPDATE_PARTNER_ADMIN_SEASON_STATUS)));
-            LOGGER.error(messageUtil.getMessage(PartnerAdminSeasonConstants.ERROR_UPDATE_PARTNER_ADMIN_SEASON_STATUS));
+            newUser.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.ERROR_ADDING_PARTNERUSER.getValue(),
+                  messageUtil.getMessage(PartnerUserMessageConstants.ERROR_ADDING_PARTNERUSER)));
+            LOGGER.error(messageUtil.getMessage(PartnerUserMessageConstants.ERROR_ADDING_PARTNERUSER));
          }
       }
       return newUser;
@@ -607,9 +700,9 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
    public PartnerUserDetails updatePartnerUser(PartnerUserDetails partnerUserDetails, HttpServletRequest request) {
       PartnerUserDetails updatedUser = new PartnerUserDetails();
       if (partnerUserDetails == null) {
-         updatedUser.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_REQUEST.getValue(),
-               messageUtil.getMessage(PartnerAdminSeasonConstants.ERROR_UPDATE_PARTNER_ADMIN_SEASON_STATUS)));
-         LOGGER.error(messageUtil.getMessage(PartnerAdminSeasonConstants.ERROR_UPDATE_PARTNER_ADMIN_SEASON_STATUS));
+         updatedUser.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, CCIConstants.NULL_PARAM,
+               messageUtil.getMessage(PartnerUserMessageConstants.ERROR_UPDATED_PARTNER_USER_DATA_IS_NULL)));
+         LOGGER.error(messageUtil.getMessage(PartnerUserMessageConstants.ERROR_UPDATED_PARTNER_USER_DATA_IS_NULL));
          return updatedUser;
       } else {
          try {
@@ -667,69 +760,114 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
             if (partnerUserDetails.getUserProgramsAndPermissions() != null) {
                for (Programs p : partnerUserDetails.getUserProgramsAndPermissions()) {
                   if (p.getProgramName().equals("J1HS")) {
-                     partnerUserPermission.setJ1AccountingInsurance(p.getPermissions().isAccounting() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                     partnerUserPermission.setJ1Admin(p.getPermissions().isAdmin() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                     partnerUserPermission.setJ1Applications(p.getPermissions().isApplications() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                     partnerUserPermission.setJ1Contracting(p.getPermissions().isContracting() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                     partnerUserPermission.setJ1Flights(p.getPermissions().isFlights() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                     partnerUserPermission.setJ1Insurance(p.getPermissions().isInsurance() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                     partnerUserPermission.setJ1Monitoring(p.getPermissions().isMonitoring() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                     partnerUserPermission.setJ1PlacementInfo(p.getPermissions().isPlacementInfo() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                     partnerUserPermission.setJ1StudentsPreProgram(p.getPermissions().isStudentsPreProgram() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                     // partnerUserPermission.setJ1AccountingInsurance(p.getPermissions().isAccounting()
+                     // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                     // partnerUserPermission.setJ1Admin(p.getPermissions().isAdmin()
+                     // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                     // partnerUserPermission.setJ1Applications(p.getPermissions().isApplications()
+                     // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                     // partnerUserPermission.setJ1Contracting(p.getPermissions().isContracting()
+                     // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                     // partnerUserPermission.setJ1Flights(p.getPermissions().isFlights()
+                     // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                     // partnerUserPermission.setJ1Insurance(p.getPermissions().isInsurance()
+                     // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                     // partnerUserPermission.setJ1Monitoring(p.getPermissions().isMonitoring()
+                     // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                     // partnerUserPermission.setJ1PlacementInfo(p.getPermissions().isPlacementInfo()
+                     // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                     // partnerUserPermission.setJ1StudentsPreProgram(p.getPermissions().isStudentsPreProgram()
+                     // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
                   }
                   if (p.getProgramName().equals(CCIConstants.HSP_F1)) {
-                     partnerUserPermission.setF1AccountingInsurance(p.getPermissions().isAccounting() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                     partnerUserPermission.setF1Admin(p.getPermissions().isAdmin() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                     partnerUserPermission.setF1Applications(p.getPermissions().isApplications() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                     partnerUserPermission.setF1Contracting(p.getPermissions().isContracting() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                     partnerUserPermission.setF1Flights(p.getPermissions().isFlights() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                     partnerUserPermission.setF1Insurance(p.getPermissions().isInsurance() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                     partnerUserPermission.setF1Monitoring(p.getPermissions().isMonitoring() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                     partnerUserPermission.setF1PlacementInfo(p.getPermissions().isPlacementInfo() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                     partnerUserPermission.setF1StudentsPreProgram(p.getPermissions().isStudentsPreProgram() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                     // partnerUserPermission.setF1AccountingInsurance(p.getPermissions().isAccounting()
+                     // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                     // partnerUserPermission.setF1Admin(p.getPermissions().isAdmin()
+                     // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                     // partnerUserPermission.setF1Applications(p.getPermissions().isApplications()
+                     // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                     // partnerUserPermission.setF1Contracting(p.getPermissions().isContracting()
+                     // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                     // partnerUserPermission.setF1Flights(p.getPermissions().isFlights()
+                     // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                     // partnerUserPermission.setF1Insurance(p.getPermissions().isInsurance()
+                     // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                     // partnerUserPermission.setF1Monitoring(p.getPermissions().isMonitoring()
+                     // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                     // partnerUserPermission.setF1PlacementInfo(p.getPermissions().isPlacementInfo()
+                     // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                     // partnerUserPermission.setF1StudentsPreProgram(p.getPermissions().isStudentsPreProgram()
+                     // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
                   }
                   if (p.getProgramName().equals("IHP")) {
-                     partnerUserPermission.setIhpAccountingInsurance(p.getPermissions().isAccounting() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                     partnerUserPermission.setIhpAdmin(p.getPermissions().isAdmin() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                     partnerUserPermission.setIhpApplications(p.getPermissions().isApplications() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                     partnerUserPermission.setIhpContracting(p.getPermissions().isContracting() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                     partnerUserPermission.setIhpFlights(p.getPermissions().isFlights() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                     partnerUserPermission.setIhpInsurance(p.getPermissions().isInsurance() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                     partnerUserPermission.setIhpMonitoring(p.getPermissions().isMonitoring() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                     partnerUserPermission.setIhpPlacementInfo(p.getPermissions().isPlacementInfo() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                     partnerUserPermission.setIhpStudentsPreProgram(p.getPermissions().isStudentsPreProgram() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                     // partnerUserPermission.setIhpAccountingInsurance(p.getPermissions().isAccounting()
+                     // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                     // partnerUserPermission.setIhpAdmin(p.getPermissions().isAdmin()
+                     // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                     // partnerUserPermission.setIhpApplications(p.getPermissions().isApplications()
+                     // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                     // partnerUserPermission.setIhpContracting(p.getPermissions().isContracting()
+                     // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                     // partnerUserPermission.setIhpFlights(p.getPermissions().isFlights()
+                     // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                     // partnerUserPermission.setIhpInsurance(p.getPermissions().isInsurance()
+                     // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                     // partnerUserPermission.setIhpMonitoring(p.getPermissions().isMonitoring()
+                     // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                     // partnerUserPermission.setIhpPlacementInfo(p.getPermissions().isPlacementInfo()
+                     // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                     // partnerUserPermission.setIhpStudentsPreProgram(p.getPermissions().isStudentsPreProgram()
+                     // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
                   }
                   if (p.getProgramName().equals("W&T")) {
-                     partnerUserPermission.setWtAccountingInsurance(p.getPermissions().isAccounting() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                     partnerUserPermission.setWtAdmin(p.getPermissions().isAdmin() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                     partnerUserPermission.setWtApplications(p.getPermissions().isApplications() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                     partnerUserPermission.setWtContracting(p.getPermissions().isContracting() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                     partnerUserPermission.setWtFlights(p.getPermissions().isFlights() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                     partnerUserPermission.setWtInsurance(p.getPermissions().isInsurance() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                     partnerUserPermission.setWtMonitoring(p.getPermissions().isMonitoring() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                     partnerUserPermission.setWtPlacementInfo(p.getPermissions().isPlacementInfo() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                     partnerUserPermission.setWtStudentsPreProgram(p.getPermissions().isStudentsPreProgram() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                     // partnerUserPermission.setWtAccountingInsurance(p.getPermissions().isAccounting()
+                     // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                     // partnerUserPermission.setWtAdmin(p.getPermissions().isAdmin()
+                     // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                     // partnerUserPermission.setWtApplications(p.getPermissions().isApplications()
+                     // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                     // partnerUserPermission.setWtContracting(p.getPermissions().isContracting()
+                     // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                     // partnerUserPermission.setWtFlights(p.getPermissions().isFlights()
+                     // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                     // partnerUserPermission.setWtInsurance(p.getPermissions().isInsurance()
+                     // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                     // partnerUserPermission.setWtMonitoring(p.getPermissions().isMonitoring()
+                     // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                     // partnerUserPermission.setWtPlacementInfo(p.getPermissions().isPlacementInfo()
+                     // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                     // partnerUserPermission.setWtStudentsPreProgram(p.getPermissions().isStudentsPreProgram()
+                     // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
                   }
                   if (p.getProgramName().equals(CCIConstants.WP_WT_CAP)) {
-                     partnerUserPermission.setCapAccountingInsurance(p.getPermissions().isAccounting() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                     partnerUserPermission.setCapAdmin(p.getPermissions().isAdmin() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                     partnerUserPermission.setCapApplications(p.getPermissions().isApplications() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                     partnerUserPermission.setCapContracting(p.getPermissions().isContracting() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                     partnerUserPermission.setCapFlights(p.getPermissions().isFlights() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                     partnerUserPermission.setCapInsurance(p.getPermissions().isInsurance() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                     partnerUserPermission.setCapMonitoring(p.getPermissions().isMonitoring() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                     partnerUserPermission.setCapPlacementInfo(p.getPermissions().isPlacementInfo() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-                     partnerUserPermission.setCapStudentsPreProgram(p.getPermissions().isStudentsPreProgram() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                     // partnerUserPermission.setCapAccountingInsurance(p.getPermissions().isAccounting()
+                     // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                     // partnerUserPermission.setCapAdmin(p.getPermissions().isAdmin()
+                     // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                     // partnerUserPermission.setCapApplications(p.getPermissions().isApplications()
+                     // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                     // partnerUserPermission.setCapContracting(p.getPermissions().isContracting()
+                     // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                     // partnerUserPermission.setCapFlights(p.getPermissions().isFlights()
+                     // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                     // partnerUserPermission.setCapInsurance(p.getPermissions().isInsurance()
+                     // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                     // partnerUserPermission.setCapMonitoring(p.getPermissions().isMonitoring()
+                     // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                     // partnerUserPermission.setCapPlacementInfo(p.getPermissions().isPlacementInfo()
+                     // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+                     // partnerUserPermission.setCapStudentsPreProgram(p.getPermissions().isStudentsPreProgram()
+                     // ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
                   }
                }
             }
             partnerPermissionRepository.saveAndFlush(partnerUserPermission);
             updatedUser = getPartnerUserDetails(String.valueOf(partnerUser.getPartnerUserId()));
-            updatedUser.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
+            updatedUser.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE,
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          } catch (CcighgoException e) {
-            updatedUser.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(), e.getMessage()));
-            LOGGER.error(messageUtil.getMessage(PartnerAdminSeasonConstants.ERROR_UPDATE_PARTNER_ADMIN_SEASON_STATUS));
+            updatedUser.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.ERROR_UPDATING_PARTNERUSER_DATA.getValue(), e.getMessage()));
+            LOGGER.error(messageUtil.getMessage(PartnerUserMessageConstants.ERROR_UPDATING_PARTNERUSER_DATA));
          }
       }
       return updatedUser;

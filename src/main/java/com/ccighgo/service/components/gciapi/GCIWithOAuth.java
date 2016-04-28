@@ -1,7 +1,12 @@
 package com.ccighgo.service.components.gciapi;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import oauth.signpost.OAuthConsumer;
+import oauth.signpost.commonshttp.CommonsHttpOAuthConsumer;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -17,9 +22,7 @@ import org.springframework.stereotype.Component;
 
 import com.ccighgo.service.components.greenheartclub.GHClubmpl;
 import com.ccighgo.service.rest.greenheartclub.GciApiUser;
-
-import oauth.signpost.OAuthConsumer;
-import oauth.signpost.commonshttp.CommonsHttpOAuthConsumer;
+import com.google.gson.Gson;
 
 @Component
 public class GCIWithOAuth {
@@ -48,47 +51,42 @@ public class GCIWithOAuth {
 
    public static void main(String[] args) {
       GCIWithOAuth d = new GCIWithOAuth();
-      // System.out.println(d.readPrivate("https://gcidev.wpengine.com/api/v2/test/read"));
-      // System.out.println(d.testCreate("https://gcidev.wpengine.com/api/v2/test/create/",
-      // "mido9"));
+      System.out.println("Read Private : " + d.readPrivate("https://gcidev.wpengine.com/api/v2/test/read"));
+      System.out.println("Test Create : " + d.testCreate("https://gcidev.wpengine.com/api/v2/test/create/", "mido9"));
       // 3302
 
-      // System.out.println(d.testEdit("https://gcidev.wpengine.com/api/v2/test/edit",
-      // "CreospanUser", "3302"));
-      // System.out.println(d.testDelete("https://gcidev.wpengine.com/api/v2/test/delete?id=3302",
-      // "3302"));
+      System.out.println("Test Edit : " + d.testEdit("https://gcidev.wpengine.com/api/v2/test/edit", "CreospanUser", "3302"));
+      System.out.println("Test Delete : " + d.testDelete("https://gcidev.wpengine.com/api/v2/test/delete?id=3302", "3302"));
 
-      // System.out.println(d.getAllHoursByParticipant("https://gcidev.wpengine.com/api/v2/hours/get/id",
-      // "3302"));
+      System.out.println("Get All hourse By Participant : " + d.getAllHoursByParticipant("https://gcidev.wpengine.com/api/v2/hours/get/id", "3302"));
 
-      // System.out.println(d.getHoursByProgram("https://gcidev.wpengine.com/api/v2/hours/get/program",
-      // "", "", ""));
+      System.out.println("Get Hours By Program: " + d.getHoursByProgram("https://gcidev.wpengine.com/api/v2/hours/get/program", "", "", ""));
 
       /**
        * Create User
        * 
        */
-      // GciApiUser user = new GciApiUser();
-      // user.setEmail("ahmed.amer.samir@gmail.com");
-      // user.setFirstName("Ahmed");
-      // user.setLastName("Abdelmaaboud");
-      // user.setPassword("asd123!@#");
-      // user.setProgram("Workprogram");
-      // user.setUsername("ahmedsamircpp");
-      // System.out.println(d.createUser(GHClubmpl.CREATE_USER, user));
+      GciApiUser user = new GciApiUser();
+      user.setEmail("ahmed.amer.samir@gmail.com");
+      user.setFirstName("Ahmed");
+      user.setLastName("Abdelmaaboud");
+      user.setPassword("asd123!@#");
+      user.setProgram("Workprogram");
+      user.setUsername("ahmedsamircpp");
+      user.setId("989898");
+      System.out.println("Create User : " + d.createUser(GHClubmpl.CREATE_USER, user));
 
       /**
        * Check User Exist
        */
-      // System.out.println(d.userExist(GHClubmpl.USER_EXIST, "3307"));
+      System.out.println("User Exist: " + d.userExist(GHClubmpl.USER_EXIST, "3307"));
 
       /**
        * Check Email Exist
        */
-      // System.out.println(d.userEmailExist(GHClubmpl.CHECK_USER_EMAIL,
-      // "email@creospan.com"));
+      System.out.println("User Email Exist : " + d.userEmailExist(GHClubmpl.CHECK_USER_EMAIL, "email@creospan.com"));
 
-      // Gson gson = new Gson();
+      Gson gson = new Gson();
       // String authenticate2 =
       // d.authenticate("https://gcidev.wpengine.com/oauth1/request");
       // AuthenticationObject authenticate = gson.fromJson(authenticate2,
@@ -107,42 +105,43 @@ public class GCIWithOAuth {
       /**
        * Check UserId
        */
-      // System.out.println(d.userNameExist(GHClubmpl.CHECK_USERNAME, "ahmed"));
+      System.out.println("Check UserName Exist: " + d.userNameExist(GHClubmpl.CHECK_USERNAME, "ahmed"));
       /**
        * udpate UserId
        */
-      // System.out.println(d.setUserId(GHClubmpl.UPDATE_USER_ID, "333",
-      // "3333"));
+      System.out.println("Set UserId: " + d.setUserId(GHClubmpl.UPDATE_USER_ID, "333", "3333"));
 
       /**
        * update Program
        */
-      // System.out.println(d.setUserProgram(GHClubmpl.UPDATE_USER_PROGRAM,
-      // "333", "ahmed"));
+      System.out.println("Set User Program :" + d.setUserProgram(GHClubmpl.UPDATE_USER_PROGRAM, "333", "ahmed"));
 
       /**
        * update User name
        */
-      // System.out.println(d.setUserName(GHClubmpl.UPDATE_USER_NAME, "333",
-      // "ahmed"));
+      System.out.println("Set User Name :" + d.setUserName(GHClubmpl.UPDATE_USER_NAME, "333", "ahmed"));
 
       /**
        * Update User Password
        */
-      // System.out.println(d.setUserPassword(GHClubmpl.UPDATE_USER_PASSWORD,
-      // "333", "password"));
+      System.out.println("Set User Password :  " + d.setUserPassword(GHClubmpl.UPDATE_USER_PASSWORD, "333", "password"));
       /**
        * Update User Email
        */
-      // System.out.println(d.setUserEmail(GHClubmpl.UPDATE_USER_EMAIL, "333",
-      // "ahmed@gmail.com"));
+      System.out.println("Set User Email" + d.setUserEmail(GHClubmpl.UPDATE_USER_EMAIL, "333", "ahmed@gmail.com"));
 
       /**
        * 
        */
-      System.out.println(d.getAllHoursByParticipant(GHClubmpl.FETCH_HOURS_BY_PARTICIPANT, "333"));
+      System.out.println("Get All Hours By Participant" + d.getAllHoursByParticipant(GHClubmpl.FETCH_HOURS_BY_PARTICIPANT, "333"));
 
-      System.out.println(d.getHoursByProgram(GHClubmpl.FETCH_HOURS_BY_PROGRAM, "333", "05/08/2012", "05/08/2016"));
+      System.out.println("Get Hours By Program" + d.getHoursByProgram(GHClubmpl.FETCH_HOURS_BY_PROGRAM, "333", "05/08/2012", "05/08/2016"));
+      Map<String, String> programs = new HashMap<String, String>();
+      programs.put("39_2", "Programs One*");
+      programs.put("20_39", "Example Two*");
+      String json = gson.toJson(programs);
+      System.out.println(json);
+      System.out.println(" Update Programs : " + d.updatePrograms(GHClubmpl.UPDATE_PROGRAMS, json));
 
    }
 
@@ -474,4 +473,21 @@ public class GCIWithOAuth {
       }
    }
 
+   public String updatePrograms(String updatePrograms, String programs) {
+      try {
+         OAuthConsumer consumer = new CommonsHttpOAuthConsumer(CONSUMER_KEY, CONSUMER_SECRET);
+         consumer.setTokenWithSecret(TOKEN, TOKEN_SECRET);
+         HttpPost request = new HttpPost(updatePrograms);
+         List<NameValuePair> params = new ArrayList<NameValuePair>(2);
+         params.add(new BasicNameValuePair("programs", programs));
+         request.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
+         consumer.sign(request);
+         HttpClient httpClient = new DefaultHttpClient();
+         HttpResponse response = httpClient.execute(request);
+         return EntityUtils.toString(response.getEntity());
+      } catch (Exception e) {
+         e.printStackTrace();
+         return "";
+      }
+   }
 }

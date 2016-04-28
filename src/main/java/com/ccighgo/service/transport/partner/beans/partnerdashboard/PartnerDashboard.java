@@ -50,6 +50,7 @@ import com.ccighgo.service.transport.common.response.beans.Response;
     "partnerId",
     "partnerCompany",
     "partnerCompanyLogo",
+    "partnerEmail",
     "username",
     "firstName",
     "lastName",
@@ -68,6 +69,8 @@ public class PartnerDashboard
     protected String partnerCompany;
     @XmlElement(required = true)
     protected String partnerCompanyLogo;
+    @XmlElement(required = true)
+    protected String partnerEmail;
     @XmlElement(required = true)
     protected String username;
     @XmlElement(required = true)
@@ -145,6 +148,30 @@ public class PartnerDashboard
      */
     public void setPartnerCompanyLogo(String value) {
         this.partnerCompanyLogo = value;
+    }
+    
+    /**
+     * Gets the value of the partnerEmail property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getPartnerEmail() {
+        return partnerEmail;
+    }
+
+    /**
+     * Sets the value of the partnerCompanyLogo property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setPartnerEmail(String value) {
+        this.partnerEmail = value;
     }
 
     /**

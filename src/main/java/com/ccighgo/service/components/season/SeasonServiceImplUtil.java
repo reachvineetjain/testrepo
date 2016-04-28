@@ -12,7 +12,6 @@ import javax.persistence.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -96,7 +95,6 @@ import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSField
 import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSJanStart;
 import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.J1HSNotes;
 import com.ccighgo.service.transport.season.beans.seasonhspj1hsdetails.SeasonHspJ1HSDetails;
-import com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatuses;
 import com.ccighgo.service.transport.season.beans.seasonwpdetails.SeasonWPDetails;
 import com.ccighgo.service.transport.season.beans.seasonwpdetails.WPBasicDetail;
 import com.ccighgo.service.transport.season.beans.seasonwpdetails.WPDocuments;
@@ -648,29 +646,6 @@ public class SeasonServiceImplUtil {
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
       }
-   }
-
-   public SeasonStatuses getSeasonStatus() {
-      SeasonStatuses seasonStatuses = null;
-      try {
-         Sort sort = new Sort(Sort.Direction.ASC, "status");
-         List<SeasonStatus> seasonStatusDBList = seasonStatusRepository.findAll(sort);
-         if (seasonStatusDBList != null) {
-            seasonStatuses = new SeasonStatuses();
-            List<com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatus> seasonStatusList = new ArrayList<com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatus>();
-            for (SeasonStatus ss : seasonStatusDBList) {
-               com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatus status = new com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatus();
-               status.setSeasonStatusId(ss.getSeasonStatusId());
-               status.setSeasonStatus(ss.getStatus());
-               status.setActive(ss.getActive() == CCIConstants.ACTIVE ? true : false);
-               seasonStatusList.add(status);
-            }
-            seasonStatuses.getSeasonStatuses().addAll(seasonStatusList);
-         }
-      } catch (Exception e) {
-         ExceptionUtil.logException(e, logger);
-      }
-      return seasonStatuses;
    }
 
    public HSPF1BasicDetails getHSPF1NameAndStatus(SeasonF1Detail allF1Details) {

@@ -291,4 +291,15 @@ public class CCIConstants {
 
    public static final String MM_dd_yyy_T_H_M_S = "yyyy-MM-dd'T'HH:mm:ss";
    public static final String MM_dd_yyy_H_M_S = "yyyy-MM-dd HH:mm:ss";
+
+   public static final int SUCCESS_CODE = 200;
+
+   public static final int NO_DATA_CODE = 201;
+   public static final int WRONG_PARAM = 212;
+
+   public static final String NO_RECORD_IN_DB = "NO DATA FOUND IN DB!";
+
+   public static final int NULL_PARAM = 213;
+
+   public static final int NULL_PARTNER_ID = 214;
 }

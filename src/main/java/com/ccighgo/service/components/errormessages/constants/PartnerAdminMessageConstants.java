@@ -48,4 +48,7 @@ public class PartnerAdminMessageConstants {
    public static final String EXCEPTION_FS_ADMIN_PROGRAM_STATS = "exception.fetching.fieldstaff.program.stats";
    public static final String EXCEPTION_FS_ADMIN_ADDED_SCHOOL = "exception.fetching.fieldstaff.addedschool";
    public static final String EXCEPTION_UPDATEING_FIELDSTAFF_REQUEST_STATUS = "exception.updating.fieldstaff.request.status";
+   public static final String NO_WORKQUEUE_PARTNER_INQUIRY_OVERVIEW_DETAIL = "no.workqueue.partner.inquiry.overview.detail";
+   public static final String NO_WORKQUEUE_PARTNER_INQUIRY_OVERVIEW_UPDATE = "no.workqueue.partner.inquiry.overview.detail.update";
+   public static final String NO_WORKQUEUE_PARTNER_INQUIRY_LEAD_DETAIL = "no.workqueue.partner.inquiry.lead.detail";
 }
