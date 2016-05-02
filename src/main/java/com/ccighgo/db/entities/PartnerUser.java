@@ -1,7 +1,12 @@
 package com.ccighgo.db.entities;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import java.util.List;
 
 
@@ -54,7 +59,8 @@ public class PartnerUser implements Serializable {
 	private String website;
 
 	//bi-directional many-to-one association to PartnerPermission
-	@OneToMany(mappedBy="partnerUser")
+	@OneToMany(mappedBy = "partnerUser", fetch = FetchType.EAGER)
+   @Fetch(value = FetchMode.SUBSELECT)
 	private List<PartnerPermission> partnerPermissions;
 
 	//bi-directional many-to-one association to Login
