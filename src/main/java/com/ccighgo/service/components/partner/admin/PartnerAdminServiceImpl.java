@@ -220,8 +220,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          }
          try {
             PartnerReviewStatus partnerReviewStatus = partnerReviewStatusRepository.findStatusByPartnerId(goId);
-            if (partnerReviewStatus != null && partnerReviewStatus.getPartnerStatus2() != null) {
-               pwt.setLeadStatus(partnerReviewStatus.getPartnerStatus2().getPartnerStatusName());
+            if (partnerReviewStatus != null && partnerReviewStatus.getPartnerStatus1() != null) {
+               pwt.setLeadStatus(partnerReviewStatus.getPartnerStatus1().getPartnerStatusName());
             }
          } catch (Exception e) {
             ExceptionUtil.logException(e, logger);
