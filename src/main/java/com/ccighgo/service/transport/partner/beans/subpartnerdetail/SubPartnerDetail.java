@@ -45,6 +45,7 @@ import com.ccighgo.service.transport.common.response.beans.Response;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "SubPartnerDetail", propOrder = {
     "goId",
+    "partnerGoId",
     "active",
     "partnerDetail",
     "subPartnerPrimaryContact",
@@ -58,6 +59,7 @@ public class SubPartnerDetail
 {
 
     protected String goId;
+    protected Integer partnerGoId;
     protected Boolean active;
     protected Details partnerDetail;
     protected SubPartnersPrimaryContact subPartnerPrimaryContact;
@@ -88,6 +90,31 @@ public class SubPartnerDetail
      */
     public void setGoId(String value) {
         this.goId = value;
+    }
+    
+    
+    /**
+     * Gets the value of the partnerGoId property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public Integer getPartnerGoId() {
+        return partnerGoId;
+    }
+
+    /**
+     * Sets the value of the partnerGoId property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setPartnerGoId(Integer value) {
+        this.partnerGoId = value;
     }
 
     /**
