@@ -19,9 +19,15 @@ public class PartnerPermission implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer partnerPermissionId;
 
-	private Integer lookupDepartmentProgramId;
+	//bi-directional many-to-one association to LookupDepartmentProgram
+	@ManyToOne
+	@JoinColumn(name="lookupDepartmentProgramId")
+	private LookupDepartmentProgram lookupDepartmentProgram;
 
-	private Integer partnerPermissionsCategoryId;
+	//bi-directional many-to-one association to PartnerPermissionsCategory
+	@ManyToOne
+	@JoinColumn(name="partnerPermissionsCategoryId")
+	private PartnerPermissionsCategory partnerPermissionsCategory;
 
 	//bi-directional many-to-one association to PartnerUser
 	@ManyToOne
@@ -39,20 +45,20 @@ public class PartnerPermission implements Serializable {
 		this.partnerPermissionId = partnerPermissionId;
 	}
 
-	public Integer getLookupDepartmentProgramId() {
-		return this.lookupDepartmentProgramId;
+	public LookupDepartmentProgram getLookupDepartmentProgram() {
+		return this.lookupDepartmentProgram;
 	}
 
-	public void setLookupDepartmentProgramId(Integer lookupDepartmentProgramId) {
-		this.lookupDepartmentProgramId = lookupDepartmentProgramId;
+	public void setLookupDepartmentProgram(LookupDepartmentProgram lookupDepartmentProgram) {
+		this.lookupDepartmentProgram = lookupDepartmentProgram;
 	}
 
-	public Integer getPartnerPermissionsCategoryId() {
-		return this.partnerPermissionsCategoryId;
+	public PartnerPermissionsCategory getPartnerPermissionsCategory() {
+		return this.partnerPermissionsCategory;
 	}
 
-	public void setPartnerPermissionsCategoryId(Integer partnerPermissionsCategoryId) {
-		this.partnerPermissionsCategoryId = partnerPermissionsCategoryId;
+	public void setPartnerPermissionsCategory(PartnerPermissionsCategory partnerPermissionsCategory) {
+		this.partnerPermissionsCategory = partnerPermissionsCategory;
 	}
 
 	public PartnerUser getPartnerUser() {
