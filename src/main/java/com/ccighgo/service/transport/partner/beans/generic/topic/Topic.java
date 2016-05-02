@@ -10,10 +10,12 @@ package com.ccighgo.service.transport.partner.beans.generic.topic;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
+
 import com.ccighgo.service.transport.common.response.beans.Response;
 
 
@@ -74,7 +76,8 @@ import com.ccighgo.service.transport.common.response.beans.Response;
     "trainee",
     "wt",
     "partnerNotes",
-    "createdBy"
+    "createdBy",
+    "partnerSeasonId"
 })
 public class Topic
     extends Response
@@ -102,7 +105,7 @@ public class Topic
     protected Boolean wt;
     protected List<SubPartnerScreeningNotes> partnerNotes;
     protected TopicUserCreator createdBy;
-
+    protected Integer partnerSeasonId;
     /**
      * Gets the value of the loginId property.
      * 
@@ -564,4 +567,13 @@ public class Topic
         this.createdBy = value;
     }
 
+   public Integer getPartnerSeasonId() {
+      return partnerSeasonId;
+   }
+
+   public void setPartnerSeasonId(Integer partnerSeasonId) {
+      this.partnerSeasonId = partnerSeasonId;
+   }
+
+    
 }

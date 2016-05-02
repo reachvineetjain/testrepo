@@ -8,7 +8,7 @@
 		<xsd:appinfo>
 			<jaxb:schemaBindings>
 				<jaxb:package
-					name="com.ccighgo.service.transport.partner.beans.generic.notes" />
+					name="com.ccighgo.service.transport.partner.beans.generic.partnerseason.notes" />
 			</jaxb:schemaBindings>
 		</xsd:appinfo>
 	</xsd:annotation>
@@ -31,8 +31,6 @@
 					<xsd:element name="loginId" type="xsd:int" minOccurs="0"
 						maxOccurs="1" />
 					<xsd:element name="topicId" type="xsd:int" minOccurs="0"
-						maxOccurs="1" />
-					<xsd:element name="partnerId" type="xsd:int" minOccurs="0"
 						maxOccurs="1" />
 					<xsd:element name="partnerSeasonId" type="xsd:int" minOccurs="0"
 						maxOccurs="1" />

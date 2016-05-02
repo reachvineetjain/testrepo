@@ -7,7 +7,7 @@
 		<xsd:appinfo>
 			<jaxb:schemaBindings>
 				<jaxb:package
-					name="com.ccighgo.service.transport.partner.beans.generic.topic" />
+					name="com.ccighgo.service.transport.partner.beans.generic.partnerseason.topic" />
 			</jaxb:schemaBindings>
 		</xsd:appinfo>
 	</xsd:annotation>
@@ -34,11 +34,9 @@
 						maxOccurs="1" />
 					<xsd:element name="isTopicPublic" type="xsd:boolean"
 						minOccurs="0" maxOccurs="1" />
-					<xsd:element name="goId" type="xsd:int" minOccurs="0"
-						maxOccurs="1" />
-					<xsd:element name="partnerNoteTopicId" type="xsd:int"
+					<xsd:element name="partnerSeasonNoteTopicId" type="xsd:int"
 						minOccurs="0" maxOccurs="1" />
-					<xsd:element name="partnerNoteTopicName" type="xsd:string"
+					<xsd:element name="partnerSeasonNoteTopicName" type="xsd:string"
 						minOccurs="0" maxOccurs="1" />
 					<xsd:element name="competitorInfo" type="xsd:boolean"
 						minOccurs="0" maxOccurs="1" />
@@ -64,7 +62,7 @@
 						minOccurs="0" maxOccurs="1" />
 					<xsd:element name="w_t" type="xsd:boolean" minOccurs="0"
 						maxOccurs="1" />
-					<xsd:element name="partnerNotes" type="cd:SubPartnerScreeningNotes"
+					<xsd:element name="partnerSeasonNotes" type="cd:SubPartnerScreeningNotes"
 						minOccurs="0" maxOccurs="unbounded" />
 					<xsd:element name="createdBy" type="cd:TopicUserCreator"
 						minOccurs="0" maxOccurs="1" />
@@ -89,7 +87,7 @@
 						minOccurs="0" maxOccurs="1" />
 					<xsd:element name="topicId" type="xsd:int" minOccurs="0"
 						maxOccurs="1" />
-					<xsd:element name="partnerId" type="xsd:int" minOccurs="0"
+					<xsd:element name="partnerSeasonId" type="xsd:int" minOccurs="0"
 						maxOccurs="1" />
 					<xsd:element name="userId" type="xsd:int" minOccurs="0"
 						maxOccurs="1" />
