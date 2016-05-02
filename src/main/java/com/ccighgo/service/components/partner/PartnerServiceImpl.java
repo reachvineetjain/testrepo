@@ -82,10 +82,6 @@ import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.DateUtils;
 import com.ccighgo.utils.ExceptionUtil;
 
-/**
- * @author ravi
- *
- */
 @Component
 public class PartnerServiceImpl implements PartnerService {
 
