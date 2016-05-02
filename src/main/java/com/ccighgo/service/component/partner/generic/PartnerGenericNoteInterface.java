@@ -39,4 +39,14 @@ public interface PartnerGenericNoteInterface {
    public WSDefaultResponse tagTopic(Topic topic);
 
    public WSDefaultResponse createTopic(Topic topic);
+
+   public WSDefaultResponse addPartnerSeasonNote(ScreenNote note);
+
+   public WSDefaultResponse deletePartnerSeasonNote(DeleteNote deleteNote);
+
+   public Topics viewPartnerSeasonTopics(int partnerId, int seasonId);
+
+   public WSDefaultResponse tagPartnerSeasonTopic(Topic topic);
+
+   public WSDefaultResponse createPartnerSeasonTopic(Topic topic);
 }

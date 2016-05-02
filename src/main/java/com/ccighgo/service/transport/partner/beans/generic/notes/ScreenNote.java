@@ -48,7 +48,8 @@ import com.ccighgo.service.transport.common.response.beans.Response;
     "createdOn",
     "loginId",
     "topicId",
-    "partnerId"
+    "partnerId",
+    "partnerSeasonId"
 })
 public class ScreenNote
     extends Response
@@ -62,6 +63,7 @@ public class ScreenNote
     protected Integer loginId;
     protected Integer topicId;
     protected Integer partnerId;
+    protected Integer partnerSeasonId;
 
     /**
      * Gets the value of the noteId property.
@@ -231,4 +233,15 @@ public class ScreenNote
         this.partnerId = value;
     }
 
+   public Integer getPartnerSeasonId() {
+      return partnerSeasonId;
+   }
+
+   public void setPartnerSeasonId(Integer partnerSeasonId) {
+      this.partnerSeasonId = partnerSeasonId;
+   }
+
+
+
+    
 }
