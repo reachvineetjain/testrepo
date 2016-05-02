@@ -1,5 +1,8 @@
-/**
- * 
+/*
+ * Copyright (c) 2015, 2016, Creospan Solutions PVT LTD. All rights reserved.
+ * CREOSPAN PROPRIETARY/CONFIDENTIAL.
+ *
+ *
  */
 package com.ccighgo.service.rest.authorization;
 

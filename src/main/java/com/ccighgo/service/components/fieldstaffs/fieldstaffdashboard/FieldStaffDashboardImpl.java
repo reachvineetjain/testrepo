@@ -14,6 +14,7 @@ import com.ccighgo.db.entities.FieldStaffWorkQueueType;
 import com.ccighgo.db.entities.FieldStaffWorkQueueTypeAggregate;
 import com.ccighgo.db.entities.Login;
 import com.ccighgo.exception.ErrorCode;
+import com.ccighgo.exception.FieldStaffCodes;
 import com.ccighgo.jpa.repositories.FieldStaffAnnouncementRepository;
 import com.ccighgo.jpa.repositories.FieldStaffRepository;
 import com.ccighgo.jpa.repositories.FieldStaffWorkQueueCategoriesRepository;
@@ -102,7 +103,7 @@ public class FieldStaffDashboardImpl implements FieldStaffDashboardInterface {
                erdDashboard.getAnnouncements().add(erdAnn);
             }
 
-         erdDashboard.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(),
+         erdDashboard.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, FieldStaffCodes.SUCCESS.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
          e.printStackTrace();
@@ -140,10 +141,10 @@ public class FieldStaffDashboardImpl implements FieldStaffDashboardInterface {
          pi.setMallingZip(fs.getMailingZipCode());
          pi.setMallingState(fs.getLookupUsstate1().getStateName());
          erdMyAccount.setPersonalInfo(pi);
-         erdMyAccount.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(),
+         erdMyAccount.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, FieldStaffCodes.SUCCESS.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
-         erdMyAccount.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(),
+         erdMyAccount.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_INFO, FieldStaffCodes.ERROR_GET_ERD_MY_ACCOUNT.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
          LOGGER.error(CCIConstants.SERVICE_FAILURE);
       }
