@@ -1,5 +1,7 @@
 package com.ccighgo.jpa.repositories;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -11,5 +13,8 @@ public interface PartnerPermissionRepository extends JpaRepository<PartnerPermis
 
    @Query("SELECT p FROM PartnerPermission p WHERE p.partnerUser.partnerUserId = ?1")
    public PartnerPermission findByPartnerUserId(Integer partnerUser);
+
+   @Query("SELECT p FROM PartnerPermission p WHERE p.partnerUser.partnerUserId = ?1 AND p.lookupDepartmentProgramId = ?2")
+   public List<PartnerPermission> findByPartnerUserIdAndProgramId(Integer partnerUserId, Integer lookupDepartmentProgramId);
 
 }

@@ -302,4 +302,15 @@ public class CCIConstants {
    public static final int NULL_PARAM = 213;
 
    public static final int NULL_PARTNER_ID = 214;
+   
+   //Partner permissions
+   public static final Integer Admin = 1;
+   public static final Integer Applications = 2;
+   public static final Integer Flights = 3;
+   public static final Integer PlacementInfo = 4;
+   public static final Integer Monitoring = 5;
+   public static final Integer AccountingInsurance = 6;
+   public static final Integer StudentPreProgram = 7;
+   public static final Integer Contracting = 8;
+   public static final Integer Insurance = 9;
 }
