@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ccighgo.db.entities.FieldStaffType;
 import com.ccighgo.exception.ErrorCode;
+import com.ccighgo.exception.FieldStaffCodes;
 import com.ccighgo.jpa.repositories.FieldStaffLeadershipSeasonRepository;
 import com.ccighgo.jpa.repositories.FieldStaffRepository;
 import com.ccighgo.jpa.repositories.FieldStaffTypeRepository;
@@ -23,6 +24,7 @@ import com.ccighgo.jpa.repositories.LoginRepository;
 import com.ccighgo.jpa.repositories.SeasonGeographyConfigurationRepository;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
+import com.ccighgo.service.components.fieldstaffs.fieldstaffdashboard.FiledStaffConstants;
 import com.ccighgo.service.transport.fieldstaff.beans.ac.season.contacts.FSACSeasonContact;
 import com.ccighgo.service.transport.fieldstaff.beans.ac.season.contacts.FSACSeasonContacts;
 import com.ccighgo.service.transport.fieldstaff.beans.erd.seasons.FSERDSeason;
@@ -111,10 +113,10 @@ public class FieldStaffListingInterfaceImpl implements FieldStaffListingInterfac
          }
          fieldStaffList.setCount(count);
          fieldStaffList.getFieldStaff().addAll(fieldStaffs);
-         fieldStaffList.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FS_SERVICE_SUCCESS.getValue(),
+         fieldStaffList.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, FieldStaffCodes.SUCCESS.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
-         fieldStaffList.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GETTING_FIELDSTAFF_LIST.getValue(), e.getMessage()));
+         fieldStaffList.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, FieldStaffCodes.ERROR_GETTING_FIELDSTAFF_LIST.getValue(), e.getMessage()));
          LOGGER.error(e.getMessage());
       }
       return fieldStaffList;
@@ -138,7 +140,7 @@ public class FieldStaffListingInterfaceImpl implements FieldStaffListingInterfac
                }
             }
             fsTypes.getFieldStaffType().addAll(fieldStaffType);
-            fsTypes.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FS_SERVICE_SUCCESS.getValue(),
+            fsTypes.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, FieldStaffCodes.SUCCESS.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          }
       } catch (Exception e) {
@@ -177,14 +179,14 @@ public class FieldStaffListingInterfaceImpl implements FieldStaffListingInterfac
                fslcSeasonContactsList.add(contact);
             }
             fslcSeasonContacts.getFSLCSeasonContacts().addAll(fslcSeasonContactsList);
-            fslcSeasonContacts.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FS_SERVICE_SUCCESS.getValue(),
+            fslcSeasonContacts.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, FieldStaffCodes.SUCCESS.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          } else {
             fslcSeasonContacts.setStatus(
-                  componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
+                  componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, FieldStaffCodes.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
          }
       } catch (Exception e) {
-         fslcSeasonContacts.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GETTING_FIELDSTAFF_LIST.getValue(), e.getMessage()));
+         fslcSeasonContacts.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, FieldStaffCodes.ERROR_GETTING_FS_LC_SEASON_CONTACTS.getValue(), e.getMessage()));
          LOGGER.error(e.getMessage());
       }
       return fslcSeasonContacts;
@@ -216,14 +218,14 @@ public class FieldStaffListingInterfaceImpl implements FieldStaffListingInterfac
                fsacSeasonContactsList.add(contact);
             }
             fsacSeasonContacts.getFSACSeasonContacts().addAll(fsacSeasonContactsList);
-            fsacSeasonContacts.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FS_SERVICE_SUCCESS.getValue(),
+            fsacSeasonContacts.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, FieldStaffCodes.SUCCESS.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          } else {
             fsacSeasonContacts.setStatus(
-                  componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
+                  componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, FieldStaffCodes.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
          }
       } catch (Exception e) {
-         fsacSeasonContacts.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GETTING_FIELDSTAFF_LIST.getValue(), e.getMessage()));
+         fsacSeasonContacts.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, FieldStaffCodes.ERROR_GETTING_FS_AC_SEASON_CONTACTS.getValue(), e.getMessage()));
          LOGGER.error(e.getMessage());
       }
       return fsacSeasonContacts;
@@ -249,14 +251,14 @@ public class FieldStaffListingInterfaceImpl implements FieldStaffListingInterfac
                fsrdSeasonContactsList.add(contact);
             }
             fsrdSeasonContacts.getFSRDSeasonContacts().addAll(fsrdSeasonContactsList);
-            fsrdSeasonContacts.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FS_SERVICE_SUCCESS.getValue(),
+            fsrdSeasonContacts.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, FieldStaffCodes.SUCCESS.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          } else {
             fsrdSeasonContacts.setStatus(
-                  componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
+                  componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, FieldStaffCodes.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
          }
       } catch (Exception e) {
-         fsrdSeasonContacts.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GETTING_FIELDSTAFF_LIST.getValue(), e.getMessage()));
+         fsrdSeasonContacts.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, FieldStaffCodes.ERROR_GETTING_FS_RD_SEASON_CONTACTS.getValue(), e.getMessage()));
          LOGGER.error(e.getMessage());
       }
       return fsrdSeasonContacts;
@@ -285,14 +287,14 @@ public class FieldStaffListingInterfaceImpl implements FieldStaffListingInterfac
                fsrmSeasonContactsList.add(contact);
             }
             fsrmSeasonContacts.getFSRMSeasonContacts().addAll(fsrmSeasonContactsList);
-            fsrmSeasonContacts.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FS_SERVICE_SUCCESS.getValue(),
+            fsrmSeasonContacts.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, FieldStaffCodes.SUCCESS.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          } else {
             fsrmSeasonContacts.setStatus(
-                  componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
+                  componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, FieldStaffCodes.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
          }
       } catch (Exception e) {
-         fsrmSeasonContacts.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GETTING_FIELDSTAFF_LIST.getValue(), e.getMessage()));
+         fsrmSeasonContacts.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, FieldStaffCodes.ERROR_GETTING_FS_RM_SEASON_CONTACTS.getValue(), e.getMessage()));
          LOGGER.error(e.getMessage());
       }
       return fsrmSeasonContacts;
@@ -315,14 +317,14 @@ public class FieldStaffListingInterfaceImpl implements FieldStaffListingInterfac
                erdSeasonList.add(season);
             }
             erdSeasons.getFSERDSeasons().addAll(erdSeasonList);
-            erdSeasons.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FS_SERVICE_SUCCESS.getValue(),
+            erdSeasons.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, FieldStaffCodes.SUCCESS.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          } else {
             erdSeasons.setStatus(
-                  componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
+                  componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, FieldStaffCodes.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
          }
       } catch (Exception e) {
-         erdSeasons.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GETTING_FIELDSTAFF_LIST.getValue(), e.getMessage()));
+         erdSeasons.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, FieldStaffCodes.ERROR_GETTING_FS_ERD_SEASONS.getValue(), e.getMessage()));
          LOGGER.error(e.getMessage());
       }
       return erdSeasons;
