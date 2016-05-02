@@ -1770,30 +1770,31 @@
 			<arg value="${xsd.dir}/accounting/PaymentDetails.xsd" />
 		</java>
 	</target>
-	
+
 	<target name="HfParticipantList">
-			<java classname="com.sun.tools.internal.xjc.XJCFacade">
-				<arg value="-d" />
-				<arg value="${java.dir}" />
-				<arg value="${xsd.dir}/hostfamily/application_part2/ParticipantsLeadList.xsd" />
-			</java>
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/hostfamily/application_part2/ParticipantsLeadList.xsd" />
+		</java>
 	</target>
 	<target name="HfParticipantDetail">
-				<java classname="com.sun.tools.internal.xjc.XJCFacade">
-					<arg value="-d" />
-					<arg value="${java.dir}" />
-					<arg value="${xsd.dir}/hostfamily/application_part2/ParticipantsDetail.xsd" />
-				</java>
-		</target>
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/hostfamily/application_part2/ParticipantsDetail.xsd" />
+		</java>
+	</target>
 
-	
+
 	<target name="PartnerSeasonGenericNote">
-			<java classname="com.sun.tools.internal.xjc.XJCFacade">
-				<arg value="-d" />
-				<arg value="${java.dir}" />
-				<arg value="${xsd.dir}/generic/PartnerSeasonGenericNote.xsd" />
-			</java>
-		</target>
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/generic/PartnerSeasonGenericNote.xsd" />
+		</java>
+	</target>
+	
 	<target name="PartnerSeasonGenericTopic">
 		<java classname="com.sun.tools.internal.xjc.XJCFacade">
 			<arg value="-d" />
