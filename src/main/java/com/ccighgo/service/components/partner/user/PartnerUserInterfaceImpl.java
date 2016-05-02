@@ -126,7 +126,7 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
    public Response updatePartnerUserStatus(String statusVal, String partnerUserId) {
       Response response = new Response();
       if (partnerUserId == null) {
-         response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, CCIConstants.NULL_PARTNER_ID,
+         response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, CCIConstants.INVALID_PARTNER_ID,
                messageUtil.getMessage(PartnerUserMessageConstants.INVALID_PARTNER_USER_ID)));
          return response;
       }
@@ -163,7 +163,7 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
    public Response resetPartnerUserPassword(String partnerUserId, HttpServletRequest request) {
       Response response = new Response();
       if (partnerUserId == null) {
-         response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, CCIConstants.NULL_PARTNER_ID,
+         response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, CCIConstants.INVALID_PARTNER_ID,
                messageUtil.getMessage(PartnerUserMessageConstants.INVALID_PARTNER_USER_ID)));
          LOGGER.error(messageUtil.getMessage(PartnerUserMessageConstants.INVALID_PARTNER_USER_ID));
          return response;
@@ -198,7 +198,7 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
    public PartnerUserDetails getPartnerUserDetails(String partnerUserId) {
       PartnerUserDetails partnerUserDetails = new PartnerUserDetails();
       if (partnerUserId == null) {
-         partnerUserDetails.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, CCIConstants.NULL_PARTNER_ID,
+         partnerUserDetails.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, CCIConstants.INVALID_PARTNER_ID,
                messageUtil.getMessage(PartnerUserMessageConstants.INVALID_PARTNER_USER_ID)));
          LOGGER.error(messageUtil.getMessage(PartnerUserMessageConstants.INVALID_PARTNER_USER_ID));
          return partnerUserDetails;
@@ -407,7 +407,7 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
    public PartnerUserOffices getPartnerUserOffices(String partnerGoId) {
       PartnerUserOffices partnerUserOffices = new PartnerUserOffices();
       if (partnerGoId == null || Integer.valueOf(partnerGoId) < 0 || Integer.valueOf(partnerGoId) == 0) {
-         partnerUserOffices.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, CCIConstants.NULL_PARTNER_ID,
+         partnerUserOffices.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, CCIConstants.INVALID_PARTNER_ID,
                messageUtil.getMessage(PartnerUserMessageConstants.INVALID_PARTNER_USER_ID)));
       } else {
          try {

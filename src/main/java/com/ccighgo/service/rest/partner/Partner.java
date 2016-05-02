@@ -47,7 +47,6 @@ public class Partner {
    public PartnerF1Dashboard getActiveParticipangetF1DashboardtsList(@PathParam("partnerGoId") String partnerGoId) {
       LOGGER.info("calling Partner.getF1Dashboard for partner id {}", partnerGoId);
       return partnerService.getF1Dashboard(partnerGoId);
-
    }
 
    @GET

@@ -217,6 +217,9 @@
 		<class>com.ccighgo.db.entities.HostFamilyWorkQueueType</class>
 		<class>com.ccighgo.db.entities.HostFamilyWorkQueueTypeAggregate</class>
 
+		<class>com.ccighgo.db.entities.PartnerPermissionsCategory</class>
+		<class>com.ccighgo.db.entities.PartnerSeasonNoteTopic</class>
+		<class>com.ccighgo.db.entities.PartnerSeasonNote</class>
 		<properties>
 			<property name="connection.provider_class"
 				value="org.hibernate.connection.C3P0ConnectionProvider" />
