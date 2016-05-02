@@ -302,7 +302,12 @@ public class CCIConstants {
    public static final int NULL_PARAM = 213;
 
    public static final int NULL_PARTNER_ID = 214;
-   
+
+   public static final int INVALID_PARTNER_ID = 214;
+
+   public static final int INVALID_PARAM = 215;
+
+   public static final String NO_UPDATE = "NO UPDATE";   
    //Partner permissions
    public static final Integer Admin = 1;
    public static final Integer Applications = 2;

@@ -55,7 +55,8 @@ import com.ccighgo.db.entities.SeasonWADetail;
 import com.ccighgo.db.entities.SeasonWnTSpringDetail;
 import com.ccighgo.db.entities.SeasonWnTSummerDetail;
 import com.ccighgo.db.entities.SeasonWnTWinterDetail;
-import com.ccighgo.exception.ErrorCode;
+import com.ccighgo.exception.PartnerCodes;
+import com.ccighgo.exception.PartnerCodes;
 import com.ccighgo.jpa.repositories.AdminQuickStatsCategoriesAggregateRepository;
 import com.ccighgo.jpa.repositories.AdminQuickStatsCategoriesRepository;
 import com.ccighgo.jpa.repositories.AdminQuickStatsTypeAggregateRepository;
@@ -220,8 +221,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          }
          try {
             PartnerReviewStatus partnerReviewStatus = partnerReviewStatusRepository.findStatusByPartnerId(goId);
-            if (partnerReviewStatus != null && partnerReviewStatus.getPartnerStatus2() != null) {
-               pwt.setLeadStatus(partnerReviewStatus.getPartnerStatus2().getPartnerStatusName());
+            if (partnerReviewStatus != null && partnerReviewStatus.getPartnerStatus1() != null) {
+               pwt.setLeadStatus(partnerReviewStatus.getPartnerStatus1().getPartnerStatusName());
             }
          } catch (Exception e) {
             ExceptionUtil.logException(e, logger);
@@ -308,7 +309,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          pwt.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE, messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
-         pwt.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.EXCEPTION_WOEKQUEUE_PARTNER_INQUIRY_LEAD_DETAIL.getValue(),
+         pwt.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.EXCEPTION_WOEKQUEUE_PARTNER_INQUIRY_LEAD_DETAIL.getValue(),
                messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_PARTNER_INQUIRY_LEAD_DETAIL)));
          logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_PARTNER_INQUIRY_LEAD_DETAIL));
       }
@@ -380,7 +381,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          pwt.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE, messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
-         pwt.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_WOEKQUEUE_PARTNER_INQUIRY_LEAD_UPDATE.getValue(),
+         pwt.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.NO_WOEKQUEUE_PARTNER_INQUIRY_LEAD_UPDATE.getValue(),
                messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_PARTNER_INQUIRY_LEAD_UPDATE)));
          logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_PARTNER_INQUIRY_LEAD_UPDATE));
       }
@@ -470,7 +471,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          pwt.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE, messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
-         pwt.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.WOEKQUEUE_PARTNER_INQUIRY_OVERVIEW_UPDATE.getValue(),
+         pwt.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.WOEKQUEUE_PARTNER_INQUIRY_OVERVIEW_UPDATE.getValue(),
                messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_PARTNER_INQUIRY_OVERVIEW_UPDATE)));
          logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_PARTNER_INQUIRY_OVERVIEW_UPDATE));
       }
@@ -653,7 +654,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          pwt.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE, messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
-         pwt.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_WOEKQUEUE_PARTNER_INQUIRY_OVERVIEW_DETAIL.getValue(),
+         pwt.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.NO_WOEKQUEUE_PARTNER_INQUIRY_OVERVIEW_DETAIL.getValue(),
                messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_PARTNER_INQUIRY_OVERVIEW_DETAIL)));
          logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_PARTNER_INQUIRY_OVERVIEW_DETAIL));
       }
@@ -678,7 +679,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          }
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
-         pwt.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_WOEKQUEUE_TYPE.getValue(),
+         pwt.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.NO_WOEKQUEUE_TYPE.getValue(),
                messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_TYPE)));
          logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_TYPE));
       }
@@ -720,7 +721,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          }
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
-         pwqc.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_WOEKQUEUE_CATEGORY.getValue(),
+         pwqc.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.NO_WOEKQUEUE_CATEGORY.getValue(),
                messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_CATEGORY)));
          logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_CATEGORY));
       }
@@ -773,7 +774,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          }
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
-         pwqa.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_WOEKQUEUE_SUBMITTED_APPLICATIONS.getValue(),
+         pwqa.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.NO_WOEKQUEUE_SUBMITTED_APPLICATIONS.getValue(),
                messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_SUBMITTED_APPLICATIONS)));
          logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_SUBMITTED_APPLICATIONS));
       }
@@ -835,7 +836,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          }
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
-         adr.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_WOEKQUEUE_SUBMITTED_DEADLINE.getValue(),
+         adr.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.NO_WOEKQUEUE_SUBMITTED_DEADLINE.getValue(),
                messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_SUBMITTED_DEADLINE)));
          logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_SUBMITTED_DEADLINE));
       }
@@ -891,7 +892,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
-         rca.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_WOEKQUEUE_SUBMITTED_ALLOCATION_CHANGE.getValue(),
+         rca.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.NO_WOEKQUEUE_SUBMITTED_ALLOCATION_CHANGE.getValue(),
                messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_SUBMITTED_ALLOCATION_CHANGE)));
          logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_SUBMITTED_ALLOCATION_CHANGE));
 
@@ -945,7 +946,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          }
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
-         nr.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_WOEKQUEUE_SUBMITTED_NOTE_REVIEW.getValue(),
+         nr.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.NO_WOEKQUEUE_SUBMITTED_NOTE_REVIEW.getValue(),
                messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_SUBMITTED_DEADLINE)));
          logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_SUBMITTED_DEADLINE));
 
@@ -964,7 +965,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
-         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CANT_UPDATE_PARTNER_APPLICATION_FOLLOW_UP_DATE.getValue(),
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.CANT_UPDATE_PARTNER_APPLICATION_FOLLOW_UP_DATE.getValue(),
                messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_FOLLOW_UP_DATE)));
          logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_FOLLOW_UP_DATE));
       }
@@ -983,7 +984,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
-         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CANT_UPDATE_PARTNER__APPLICATION_STATUS.getValue(),
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.CANT_UPDATE_PARTNER__APPLICATION_STATUS.getValue(),
                messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_PARTNER_REQUEST_STATUS)));
          logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_PARTNER_REQUEST_STATUS));
       }
@@ -1015,11 +1016,11 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          pwt.getQuickLinks().add(details3);
          pwt.getQuickLinks().add(details4);
 
-         pwt.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.WORK_QUEUE_QUICK_LINKS.getValue(),
+         pwt.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE,
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
-         pwt.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_WORK_QUEUE_QUICK_LINKS.getValue(),
+         pwt.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.NO_WORK_QUEUE_QUICK_LINKS.getValue(),
                messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORK_QUICK_LINKS)));
          logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORK_QUICK_LINKS));
       }
@@ -1048,7 +1049,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          }
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
-         pwt.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_WORK_QUEUE_QUICK_STATS_TITLE.getValue(),
+         pwt.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.NO_WORK_QUEUE_QUICK_STATS_TITLE.getValue(),
                messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORK_QUICK_STATS_TITLE)));
          logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORK_QUICK_STATS_TITLE));
       }
@@ -1075,7 +1076,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          }
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
-         pwt.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_WORK_QUEUE_QUICK_STATS_CATEGORY.getValue(),
+         pwt.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.NO_WORK_QUEUE_QUICK_STATS_CATEGORY.getValue(),
                messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORK_QUEUE_QUICK_STATS_CATEGORY)));
          logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORK_QUEUE_QUICK_STATS_CATEGORY));
       }
@@ -1096,11 +1097,11 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          partnerAdminDashboardBenchmarks2.setTotal(90);
          benchMark.getBenchmarks().add(partnerAdminDashboardBenchmarks2);
 
-         benchMark.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.WORK_QUEUE_BENCHMARKS.getValue(),
+         benchMark.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, PartnerCodes.WORK_QUEUE_BENCHMARKS.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
-         benchMark.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_WORK_QUEUE_BENCHMARKS.getValue(),
+         benchMark.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.NO_WORK_QUEUE_BENCHMARKS.getValue(),
                messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORK_QUEUE_BENCHMARKS)));
          logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORK_QUEUE_BENCHMARKS));
       }
@@ -1175,7 +1176,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          }
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
-         documents.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CREATE_PARTNER_DOCUMENT.getValue(),
+         documents.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.CREATE_PARTNER_DOCUMENT.getValue(),
                messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_CREATING_PARTNER_DOCUMENT)));
 
       }
@@ -1219,7 +1220,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          }
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
-         documents.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.REMOVING_PARTNER_DOCUMENT.getValue(),
+         documents.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.REMOVING_PARTNER_DOCUMENT.getValue(),
                messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_REMOVING_PARTNER_DOCUMENT)));
 
       }
@@ -1254,7 +1255,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                .setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE, messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
-         pOffices.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ADDING_PARTNER_OFFICE.getValue(),
+         pOffices.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.ADDING_PARTNER_OFFICE.getValue(),
                messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_CREATING_PARTNER_OFFICE)));
       }
 
@@ -1283,12 +1284,12 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                office.setOfficeType(partnerOffice.getPartnerOfficeType().getPartnerOfficeType());
                pOffices.getOffices().add(office);
             }
-            pOffices.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.GET_PARTNER_OFFICE.getValue(),
+            pOffices.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, PartnerCodes.GET_PARTNER_OFFICE.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          }
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
-         pOffices.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.UPDATE_PARTNER_OFFICE.getValue(),
+         pOffices.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.UPDATE_PARTNER_OFFICE.getValue(),
                messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_GETTING_PARTNER_OFFICE)));
       }
       return pOffices;
@@ -1303,7 +1304,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          for (Integer item : deletedItems.getOffices()) {
             List<PartnerUser> partnerUserList = partnerUserRepository.findPartnerUserByPartnerIdAndOfficceId(deletedItems.getGoId(), item);
             if (!(partnerUserList.isEmpty())) {
-               pOffices.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_INFO, ErrorCode.REMOVE_PARTNER_OFFICE_NO_PARTNER_USER.getValue(),
+               pOffices.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_INFO, PartnerCodes.REMOVE_PARTNER_OFFICE_NO_PARTNER_USER.getValue(),
                      messageUtil.getMessage(PartnerAdminMessageConstants.CANT_REMOVE_PARTNER_OFFICE)));
             } else {
                pOffices.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE,
@@ -1334,7 +1335,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          }
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
-         pOffices.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.REMOVE_PARTNER_OFFICE.getValue(),
+         pOffices.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.REMOVE_PARTNER_OFFICE.getValue(),
                messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_REMOVE_PARTNER_OFFICE)));
       }
       return pOffices;
@@ -1377,7 +1378,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 
          // if(login==null){
          // pContacts.setStatus(componentUtils.getStatus(CCIConstants.FAILURE,
-         // CCIConstants.TYPE_ERROR, ErrorCode.NO_LOGIN_DATA.getValue(),
+         // CCIConstants.TYPE_ERROR, PartnerCodes.NO_LOGIN_DATA.getValue(),
          // messageUtil.getMessage(PartnerAdminMessageConstants.NO_DATA_FOR_THAT_USER_ID)));
          // return pContacts;
          // }
@@ -1434,7 +1435,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          }
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
-         pContacts.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.PARTNER_CONTACT_CREATE.getValue(),
+         pContacts.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.PARTNER_CONTACT_CREATE.getValue(),
                messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_CREATE_PARTNER_CONTACT)));
       }
       return pContacts;
@@ -1473,7 +1474,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          }
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
-         pContacts.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.REMOVE_PARTNER_CONTACT.getValue(),
+         pContacts.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.REMOVE_PARTNER_CONTACT.getValue(),
                messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_REMOVING_PARTNER_CONTACT)));
       }
       return pContacts;
@@ -1507,7 +1508,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          }
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
-         pn.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CREATE_PARTNER_NOTE.getValue(),
+         pn.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.CREATE_PARTNER_NOTE.getValue(),
                messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_CREATING_PARTNER_NOTE)));
       }
       return pn;
@@ -1547,7 +1548,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          }
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
-         prc.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CREATE_PARTNER_REFERENCE.getValue(),
+         prc.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.CREATE_PARTNER_REFERENCE.getValue(),
                messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_CREATING_PARTNER_REFERENCE)));
       }
       return prc;
@@ -1578,15 +1579,16 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          }
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
-         prc.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.REMOVE_PARTNER_REFERENCE.getValue(),
+         prc.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.REMOVE_PARTNER_REFERENCE.getValue(),
                messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_REMOVING_PARTNER_REFERENCE)));
       }
       return prc;
    }
 
+   @Deprecated
    @Override
    public WSDefaultResponse sendLogin() {
-      // TODO Auto-generated method stub
+      
       return null;
    }
 
@@ -1621,7 +1623,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                .setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE, messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
-         pOffices.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.UPDATE_PARTNER_OFFICE.getValue(),
+         pOffices.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.UPDATE_PARTNER_OFFICE.getValue(),
                messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATING_PARTNER_OFFICE)));
       }
       return pOffices;
@@ -1671,7 +1673,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          }
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
-         pContacts.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.UPDATE_PARTNER_CONTACTS.getValue(),
+         pContacts.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.UPDATE_PARTNER_CONTACTS.getValue(),
                messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATING_PARTNER_CONTACT)));
       }
       return pContacts;
@@ -1690,7 +1692,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
-         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CANT_UPDATE_PARTNER_APPLICATION_STATUS_AND_NOTES.getValue(),
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.CANT_UPDATE_PARTNER_APPLICATION_STATUS_AND_NOTES.getValue(),
                messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_PARTNER_REQUEST_STATUS)));
          logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_PARTNER_REQUEST_STATUS));
       }
@@ -1709,7 +1711,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
-         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.MARK_NOTE_AS_READ.getValue(),
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.MARK_NOTE_AS_READ.getValue(),
                messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_MARKING_NOTE_AS_READ)));
          logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_MARKING_NOTE_AS_READ));
       }
@@ -1731,7 +1733,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
-         partnerStatusAsPatterns.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.GET_ALL_PARTNER_STATUS.getValue(),
+         partnerStatusAsPatterns.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.GET_ALL_PARTNER_STATUS.getValue(),
                messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_GETTING_ALL_PARTNER_STATUS)));
          logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_GETTING_ALL_PARTNER_STATUS));
       }
@@ -1754,7 +1756,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
 
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
-         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CANT_UPDATE_FOLLOW_UP_DATE.getValue(),
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.CANT_UPDATE_FOLLOW_UP_DATE.getValue(),
                messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_FOLLOW_UP_DATE)));
          logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_FOLLOW_UP_DATE));
       }
@@ -1773,7 +1775,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
-         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CANT_UPDATE_PARTNER_ALLOCATION_FOLLOW_UP_DATE.getValue(),
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.CANT_UPDATE_PARTNER_ALLOCATION_FOLLOW_UP_DATE.getValue(),
                messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_FOLLOW_UP_DATE)));
          logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_FOLLOW_UP_DATE));
       }
@@ -1791,7 +1793,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
-         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CANT_UPDATE_PARTNER_NOTES_REVIEW_FOLLOW_UP_DATE.getValue(),
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.CANT_UPDATE_PARTNER_NOTES_REVIEW_FOLLOW_UP_DATE.getValue(),
                messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_FOLLOW_UP_DATE)));
          logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_FOLLOW_UP_DATE));
       }
@@ -1839,7 +1841,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
-         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CANT_ASSIGN_SEASON_TO_SUB_PARTNER.getValue(),
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.CANT_ASSIGN_SEASON_TO_SUB_PARTNER.getValue(),
                messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_PARTNER_SEASON)));
          logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_PARTNER_SEASON));
       }
@@ -1954,13 +1956,14 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          }
          seasons.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE, messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
-         seasons.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_FETCHING_ALL_AVAILABLE_SEASONS.getValue(),
+         seasons.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.ERROR_FETCHING_ALL_AVAILABLE_SEASONS.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
          ExceptionUtil.logException(e, logger);
       }
       return seasons;
    }
 
+   @Deprecated
    @Override
    public SeasonsForPartners getAllAvailableSeasons(String partnerId) {
       SeasonsForPartners seasons = new SeasonsForPartners();
@@ -2067,11 +2070,11 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                   }
             }
          }
-         seasons.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
-               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+//         seasons.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, PartnerCodes.DEFAULT_CODE.getValue(),
+//               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
-         seasons.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(),
-               messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
+//         seasons.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.DEFAULT_CODE.getValue(),
+//               messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
          ExceptionUtil.logException(e, logger);
       }
       return seasons;
@@ -2121,7 +2124,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
-         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CANT_ASSIGN_SEASON_TO_SUBPARTNER.getValue(),
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.CANT_ASSIGN_SEASON_TO_SUBPARTNER.getValue(),
                messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_PARTNER_SEASON)));
          logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_PARTNER_SEASON));
       }
@@ -2155,7 +2158,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          }
          seasons.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE, messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
-         seasons.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FETCHING_AVAILABLE_SEASONS_FOR_PARTNER.getValue(),
+         seasons.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.FETCHING_AVAILABLE_SEASONS_FOR_PARTNER.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
          ExceptionUtil.logException(e, logger);
       }

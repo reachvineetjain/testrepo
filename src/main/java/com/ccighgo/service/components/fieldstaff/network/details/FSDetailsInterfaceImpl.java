@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.ErrorCode;
+import com.ccighgo.exception.FieldStaffCodes;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.components.fieldstaff.details.listing.FieldStaffLeadershipDetailsInterfaceImpl;
@@ -82,14 +83,14 @@ public class FSDetailsInterfaceImpl implements FSDetailsInterface {
             }
             myList.setCount(count);
             myList.getMyFieldStaffs().addAll(myFieldStaffs);
-            myList.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
+            myList.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, FieldStaffCodes.SUCCESS.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          } else {
             myList.setStatus(
-                  componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
+                  componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, FieldStaffCodes.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
          }
       } catch (CcighgoException e) {
-         myList.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(), e.getMessage()));
+         myList.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, FieldStaffCodes.ERROR_GET_FS_LEADERSHIP.getValue(), e.getMessage()));
          LOGGER.error(e.getMessage());
       }
       return myList;
@@ -137,14 +138,14 @@ public class FSDetailsInterfaceImpl implements FSDetailsInterface {
             }
             networkList.setCount(count);
             networkList.getFslNetworks().addAll(fslNetworks);
-            networkList.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
+            networkList.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, FieldStaffCodes.SUCCESS.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          } else {
             networkList.setStatus(
-                  componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
+                  componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, FieldStaffCodes.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
          }
       } catch (CcighgoException e) {
-         networkList.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(), e.getMessage()));
+         networkList.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, FieldStaffCodes.ERROR_GETTING_FS_NETWORK_LIST.getValue(), e.getMessage()));
          LOGGER.error(e.getMessage());
       }
       return networkList;
@@ -173,15 +174,15 @@ public class FSDetailsInterfaceImpl implements FSDetailsInterface {
                categories.setCount(obj[2] != null ? Integer.valueOf(obj[2].toString()) : CCIConstants.INACTIVE);
                fsCategoriesList.getFieldStaffCategories().add(categories);
             }
-            fsCategoriesList.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(),
+            fsCategoriesList.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, FieldStaffCodes.SUCCESS.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          } else {
             fsCategoriesList.setStatus(
-                  componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
+                  componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, FieldStaffCodes.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
          }
 
       } catch (Exception e) {
-         fsCategoriesList.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GETTING_FIELDSTAFF.getValue(), e.getMessage()));
+         fsCategoriesList.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, FieldStaffCodes.ERROR_GET_FS_PLACEMENT_CATEGORIES_LIST.getValue(), e.getMessage()));
          LOGGER.error(e.getMessage());
       }
 
@@ -211,15 +212,15 @@ public class FSDetailsInterfaceImpl implements FSDetailsInterface {
                categories.setCount(obj[2] != null ? Integer.valueOf(obj[2].toString()) : CCIConstants.INACTIVE);
                fsCategoriesList.getFieldStaffCategories().add(categories);
             }
-            fsCategoriesList.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(),
+            fsCategoriesList.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, FieldStaffCodes.SUCCESS.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          } else {
             fsCategoriesList.setStatus(
-                  componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
+                  componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, FieldStaffCodes.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
          }
 
       } catch (Exception e) {
-         fsCategoriesList.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GETTING_FIELDSTAFF.getValue(), e.getMessage()));
+         fsCategoriesList.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, FieldStaffCodes.ERROR_GET_FS_MONITORING_CATEGORIES_LIST.getValue(), e.getMessage()));
          LOGGER.error(e.getMessage());
       }
 
@@ -248,15 +249,15 @@ public class FSDetailsInterfaceImpl implements FSDetailsInterface {
                categories.setCount(obj[2] != null ? Integer.valueOf(obj[2].toString()) : CCIConstants.INACTIVE);
                fsCategoriesList.getFieldStaffCategories().add(categories);
             }
-            fsCategoriesList.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(),
+            fsCategoriesList.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, FieldStaffCodes.SUCCESS.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          } else {
             fsCategoriesList.setStatus(
-                  componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
+                  componentUtils.getStatus(CCIConstants.NO_RECORD, CCIConstants.TYPE_INFO, FieldStaffCodes.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
          }
 
       } catch (Exception e) {
-         fsCategoriesList.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GETTING_FIELDSTAFF.getValue(), e.getMessage()));
+         fsCategoriesList.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, FieldStaffCodes.ERROR_GET_FS_NETWORK_CATEGORIES_LIST.getValue(), e.getMessage()));
          LOGGER.error(e.getMessage());
       }
 
@@ -285,15 +286,15 @@ public class FSDetailsInterfaceImpl implements FSDetailsInterface {
                categories.setCount(obj[2] != null ? Integer.valueOf(obj[2].toString()) : CCIConstants.INACTIVE);
                fsCategoriesList.getFieldStaffCategories().add(categories);
             }
-            fsCategoriesList.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(),
+            fsCategoriesList.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, FieldStaffCodes.SUCCESS.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          } else {
             fsCategoriesList.setStatus(
-                  componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
+                  componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, FieldStaffCodes.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
          }
 
       } catch (Exception e) {
-         fsCategoriesList.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GETTING_FIELDSTAFF.getValue(), e.getMessage()));
+         fsCategoriesList.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, FieldStaffCodes.ERROR_GET_FS_HF_CATEGORIES_LIST.getValue(), e.getMessage()));
          LOGGER.error(e.getMessage());
       }
 

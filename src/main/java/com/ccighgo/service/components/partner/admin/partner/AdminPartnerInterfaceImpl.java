@@ -27,7 +27,7 @@ import com.ccighgo.db.entities.PartnerReviewStatus;
 import com.ccighgo.db.entities.PartnerSeason;
 import com.ccighgo.db.entities.PartnerUser;
 import com.ccighgo.exception.CcighgoException;
-import com.ccighgo.exception.ErrorCode;
+import com.ccighgo.exception.PartnerCodes;
 import com.ccighgo.jpa.repositories.CCIStaffUsersRepository;
 import com.ccighgo.jpa.repositories.CountryRepository;
 import com.ccighgo.jpa.repositories.GoIdSequenceRepository;
@@ -228,7 +228,7 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
          partner.setLoginId(login.getLoginId());
          partner.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE, messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (CcighgoException e) {
-         partner.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_TO_ADD_PARTNER.getValue(), e.getMessage()));
+         partner.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.FAILED_TO_ADD_PARTNER.getValue(), e.getMessage()));
          LOGGER.error(e.getMessage());
       }
       return partner;
@@ -307,7 +307,7 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
             }
          }
       } catch (CcighgoException e) {
-         addedPartners.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_TO_GET_ADDED_PARTNER_LIST.getValue(), e.getMessage()));
+         addedPartners.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.FAILED_TO_GET_ADDED_PARTNER_LIST.getValue(), e.getMessage()));
          LOGGER.error(e.getMessage());
       }
       return addedPartners;
@@ -365,7 +365,7 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
 
          resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE, messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (CcighgoException e) {
-         resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_TOGGLE_ACTIVE_STATUS.getValue(), e.getMessage()));
+         resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.FAILED_TOGGLE_ACTIVE_STATUS.getValue(), e.getMessage()));
          LOGGER.error(e.getMessage());
       }
       return resp;
@@ -402,7 +402,7 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
             response.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD, CCIConstants.TYPE_INFO, CCIConstants.NO_DATA_CODE, messageUtil.getMessage(CCIConstants.NO_RECORD)));
          }
       } catch (CcighgoException e) {
-         response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_SENDING_LOGIN_INFO.getValue(), e.getMessage()));
+         response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.ERROR_SENDING_LOGIN_INFO.getValue(), e.getMessage()));
          LOGGER.error(e.getMessage());
       }
       return response;
@@ -472,7 +472,7 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
          leadPartners.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE,
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (CcighgoException e) {
-         leadPartners.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_LEAD_PARTNER_LIST.getValue(), e.getMessage()));
+         leadPartners.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.ERROR_GET_LEAD_PARTNER_LIST.getValue(), e.getMessage()));
          LOGGER.error(e.getMessage());
       }
       return leadPartners;
@@ -487,7 +487,7 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
          partnerReviewStatusRepository.saveAndFlush(partnerReviewStatus);
          resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE, messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (CcighgoException e) {
-         resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_SETTING_PARTNER_LEAD_AS_JUNK.getValue(), e.getMessage()));
+         resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.ERROR_SETTING_PARTNER_LEAD_AS_JUNK.getValue(), e.getMessage()));
          LOGGER.error(e.getMessage());
       }
       return resp;
@@ -502,7 +502,7 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
          partnerReviewStatusRepository.saveAndFlush(partnerReviewStatus);
          resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE, messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (CcighgoException e) {
-         resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_SETTING_PARTNER_LEAD_TO_BLACKLIST.getValue(), e.getMessage()));
+         resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.ERROR_SETTING_PARTNER_LEAD_TO_BLACKLIST.getValue(), e.getMessage()));
          LOGGER.error(e.getMessage());
       }
       return resp;
@@ -518,7 +518,7 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
          partnerReviewStatusRepository.saveAndFlush(partnerReviewStatus);
          resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE, messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (CcighgoException e) {
-         resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_SETTING_PARTNER_LEAD_TO_INVALID.getValue(), e.getMessage()));
+         resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.ERROR_SETTING_PARTNER_LEAD_TO_INVALID.getValue(), e.getMessage()));
          LOGGER.error(e.getMessage());
       }
       return resp;
@@ -616,7 +616,7 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
             resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE, messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          }
       } catch (CcighgoException e) {
-         resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_SENDING_LOGIN_TO_PARTNER_LEAD.getValue(), e.getMessage()));
+         resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.ERROR_SENDING_LOGIN_TO_PARTNER_LEAD.getValue(), e.getMessage()));
          LOGGER.error(e.getMessage());
       }
       return resp;
