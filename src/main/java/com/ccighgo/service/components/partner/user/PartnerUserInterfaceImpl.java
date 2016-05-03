@@ -86,17 +86,17 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
 
    @Override
    @Transactional(readOnly = true)
-   public PartnerUsers getAllPartnerUsers(String partnerId) {
+   public PartnerUsers getAllPartnerUsers(String partnerUserGoId) {
       PartnerUsers partnerUsers = new PartnerUsers();
-      if (partnerId == null || Integer.valueOf(partnerId) < 0 || Integer.valueOf(partnerId) == 0) {
+      if (partnerUserGoId == null || Integer.valueOf(partnerUserGoId) < 0 || Integer.valueOf(partnerUserGoId) == 0) {
          partnerUsers.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.NULL_PARTNER_ID.getValue(),
                messageUtil.getMessage(PartnerUserMessageConstants.INVALID_PARTNER_USER_ID)));
       } else {
          try {
-            List<PartnerUser> partnerUsersDBList = partnerUserRepository.findByPartnerGoId(Integer.valueOf(partnerId));
+            List<PartnerUser> partnerUsersDBList = partnerUserRepository.findByPartnerGoId(Integer.valueOf(partnerUserGoId));
             if (partnerUsersDBList != null) {
                partnerUsers.setPartnerUserCount(partnerUsersDBList.size());
-               partnerUsers.setPartnerGoId(Integer.valueOf(partnerId));
+               partnerUsers.setPartnerGoId(Integer.valueOf(partnerUserGoId));
                List<com.ccighgo.service.transport.partner.beans.partnerusers.PartnerUser> partnerUsersUIList = new ArrayList<com.ccighgo.service.transport.partner.beans.partnerusers.PartnerUser>();
                for (PartnerUser user : partnerUsersDBList) {
                   com.ccighgo.service.transport.partner.beans.partnerusers.PartnerUser puser = new com.ccighgo.service.transport.partner.beans.partnerusers.PartnerUser();
@@ -105,6 +105,7 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
                   puser.setPartnerUserFirstName(user.getFirstName());
                   puser.setPartnerUserLastName(user.getLastName());
                   puser.setIsPrimary(user.getIsPrimary() == CCIConstants.ACTIVE);
+                  puser.setPartnerGoId(user.getPartner().getPartnerGoId());
                   puser.setPartnerUserLoginName(user.getLogin().getLoginName());
                   if (user.getLogin() != null)
                      puser.setPartnerUserEmail(user.getLogin().getEmail());

@@ -49,7 +49,8 @@ import javax.xml.bind.annotation.XmlType;
     "isPrimary",
     "partnerUserLoginName",
     "partnerUserEmail",
-    "partnerUserStatus"
+    "partnerUserStatus",
+    "partnerGoId"
 })
 public class PartnerUser {
 
@@ -66,6 +67,7 @@ public class PartnerUser {
     @XmlElement(required = true)
     protected String partnerUserEmail;
     protected int partnerUserStatus;
+    protected int partnerGoId;
 
     /**
      * Gets the value of the partnerUserId property.
@@ -235,4 +237,13 @@ public class PartnerUser {
         this.partnerUserStatus = value;
     }
 
+   public int getPartnerGoId() {
+      return partnerGoId;
+   }
+
+   public void setPartnerGoId(int partnerGoId) {
+      this.partnerGoId = partnerGoId;
+   }
+
+    
 }
