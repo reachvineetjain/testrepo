@@ -492,7 +492,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             GoIdSequence goIdSequence = new GoIdSequence();
             Login login = new Login();
             try {
-               subPartnerDetails.setParentPartnerGoId(Integer.parseInt(subPartner.getGoId()));
+               subPartnerDetails.setParentPartnerGoId((subPartner.getPartnerGoId()));
                subPartnerDetails.setIsSubPartner(CCIConstants.ACTIVE);
 
                List<Login> loginList = new ArrayList<Login>();
@@ -675,6 +675,17 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             }
             Login login = partnerUser.getLogin();
             if (login != null) {
+               if(!(login.getEmail().equals(subPartner.getSubPartnerPrimaryContact().getEmail()))){
+                  Login duplicateExists = loginRepository.findByEmail(subPartner.getSubPartnerPrimaryContact().getEmail());
+                  if(duplicateExists==null){
+                     login.setEmail(subPartner.getSubPartnerPrimaryContact().getEmail());
+                  }
+                  else{
+                     responce.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_UPDATE_SUB_PARTNER.getValue(),
+                           messageUtil.getMessage(SubPartnerMessageConstants.DUPLICATE_EMAIL_ID)));
+                     return responce;
+                  }
+               }
                login.setLoginName(subPartner.getPartnerDetail().getUsername());
                login.setPassword(subPartner.getPartnerDetail().getPassword());
                login.setActive(subPartner.isActive() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
