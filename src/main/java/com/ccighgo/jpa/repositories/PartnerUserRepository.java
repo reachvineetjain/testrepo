@@ -25,7 +25,7 @@ public interface PartnerUserRepository extends JpaRepository<PartnerUser, Intege
    List<Object> searchPartnerUser(String firstName, String lastName,
          /* String email, */ String userName, byte active);
 
-   @Query("SELECT p FROM PartnerUser p WHERE p.partner.partnerGoId=?2 AND p.login.loginId=?1 ")
+   @Query("SELECT p FROM PartnerUser p WHERE p.partner.partnerGoId=?1 AND p.login.loginId=?2 ")
    PartnerUser findByPartnerGoIdAndLoginId(Integer partnerGoId, Integer loginId);
 
    @Query("SELECT p FROM PartnerUser p WHERE p.partner.partnerGoId = ?1 AND p.partnerOffice.partnerOfficeId = ?2")
