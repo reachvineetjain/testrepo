@@ -57,6 +57,7 @@ import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.PasscodeGenerator;
 import com.ccighgo.utils.PasswordUtil;
 import com.ccighgo.utils.UuidUtils;
+import org.springframework.data.jpa.repository.Modifying;
 
 /**
  * @author ravi
