@@ -903,6 +903,8 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
    }
 
    @Override
+   @Transactional
+   @Modifying
    public PartnerUserDetails updatePartnerUser(PartnerUserDetails partnerUserDetails, HttpServletRequest request) {
       PartnerUserDetails updatedUser = new PartnerUserDetails();
       if (partnerUserDetails == null) {
