@@ -540,8 +540,9 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                }
                if (participant.getEndDate() != null) {
                   details.setParticipantEndDate(DateUtils.getDateAndTime(participant.getEndDate()));
-                  details.setParticipantFirstName(participant.getFirstName());
                }
+               //BUG 1382 participant listing the “first name” for created participant 
+               details.setParticipantFirstName(participant.getFirstName());
                if (participant.getGuaranteed() != null) {
                   details.setParticipantGuranteed(participant.getGuaranteed() == 1);
                }
