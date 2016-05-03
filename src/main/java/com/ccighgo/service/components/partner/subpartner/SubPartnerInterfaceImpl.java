@@ -492,7 +492,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             GoIdSequence goIdSequence = new GoIdSequence();
             Login login = new Login();
             try {
-               subPartnerDetails.setParentPartnerGoId(Integer.parseInt(subPartner.getGoId()));
+               subPartnerDetails.setParentPartnerGoId((subPartner.getPartnerGoId()));
                subPartnerDetails.setIsSubPartner(CCIConstants.ACTIVE);
 
                List<Login> loginList = new ArrayList<Login>();
