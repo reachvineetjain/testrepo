@@ -113,7 +113,7 @@ public class PartnerSeasonNotesTest {
    }
    @Test
    public void testDeleteNote() {
-      String json = executeService_Post("{\"DeleteNote\":{\"noteId\":\"5\"}}",DELETE_PARTNER_SEASON_NOTE);
+      String json = executeService_Post("{\"DeleteNote\":{\"noteId\":\"6\"}}",DELETE_PARTNER_SEASON_NOTE);
       LOGGER.info("Result : " + json);
    }
 
