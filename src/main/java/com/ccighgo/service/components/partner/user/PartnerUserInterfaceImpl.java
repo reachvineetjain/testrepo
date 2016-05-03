@@ -57,6 +57,7 @@ import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.PasscodeGenerator;
 import com.ccighgo.utils.PasswordUtil;
 import com.ccighgo.utils.UuidUtils;
+import org.springframework.data.jpa.repository.Modifying;
 
 /**
  * @author ravi
@@ -903,6 +904,8 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
    }
 
    @Override
+   @Transactional
+   @Modifying
    public PartnerUserDetails updatePartnerUser(PartnerUserDetails partnerUserDetails, HttpServletRequest request) {
       PartnerUserDetails updatedUser = new PartnerUserDetails();
       if (partnerUserDetails == null) {
