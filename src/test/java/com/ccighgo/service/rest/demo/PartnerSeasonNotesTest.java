@@ -23,8 +23,8 @@ import com.ccighgo.service.components.greenheartclub.utils.GHC_Response;
 import com.google.gson.Gson;
 
 @SuppressWarnings("deprecation")
-public class PartnerSeasonNotesTestCases {
-   private static final Logger LOGGER = Logger.getLogger(PartnerSeasonNotesTestCases.class);
+public class PartnerSeasonNotesTest {
+   private static final Logger LOGGER = Logger.getLogger(PartnerSeasonNotesTest.class);
    private static final int SUCCESS_200 = 200; 
    public final String CREATE_PARTNER_SEASON_NOTE_TOPIC = "http://52.2.191.63:8086/cci_gh_go/services/partnerSeasonGenericNotes/createTopic";
    public final String CREATE_PARTNER_SEASON_NOTE = "http://52.2.191.63:8086/cci_gh_go/services/partnerSeasonGenericNotes/add";
