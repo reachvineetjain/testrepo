@@ -14,9 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.component.partner.generic.PartnerGenericNoteInterface;
 import com.ccighgo.service.transport.partner.beans.generic.deletenote.DeleteNote;
-import com.ccighgo.service.transport.partner.beans.generic.notes.ScreenNote;
-import com.ccighgo.service.transport.partner.beans.generic.topic.Topic;
-import com.ccighgo.service.transport.partner.beans.generic.topic.Topics;
+import com.ccighgo.service.transport.partner.beans.generic.partnerseason.notes.ScreenNote;
+import com.ccighgo.service.transport.partner.beans.generic.partnerseason.topic.Topic;
+import com.ccighgo.service.transport.partner.beans.generic.partnerseason.topic.Topics;
 import com.ccighgo.utils.WSDefaultResponse;
 
 /**

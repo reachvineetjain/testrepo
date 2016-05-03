@@ -357,7 +357,7 @@ public class PartnerGenericNote implements PartnerGenericNoteInterface {
    }
 
    @Override
-   public WSDefaultResponse addPartnerSeasonNote(ScreenNote note) {
+   public WSDefaultResponse addPartnerSeasonNote(com.ccighgo.service.transport.partner.beans.generic.partnerseason.notes.ScreenNote note) {
       try {
          if (note != null)
             LOGGER.info("noteId: " + note.getNoteId() + " noteValue: " + note.getNoteValue() + "_public: " + note.isPublic() + " createdOn: " + note.getCreatedOn() + " loginId: "
@@ -425,13 +425,13 @@ public class PartnerGenericNote implements PartnerGenericNoteInterface {
    }
 
    @Override
-   public Topics viewPartnerSeasonTopics(int partnerSeasonId,int seasonId) {
+   public com.ccighgo.service.transport.partner.beans.generic.partnerseason.topic.Topics viewPartnerSeasonTopics(int partnerSeasonId,int seasonId) {
       try {
          LOGGER.info("partnerSeasonId: " + partnerSeasonId);
       } catch (Exception e) {
          LOGGER.error(e.getMessage(), e);
       }
-      Topics topicsList = new Topics();
+      com.ccighgo.service.transport.partner.beans.generic.partnerseason.topic.Topics topicsList = new com.ccighgo.service.transport.partner.beans.generic.partnerseason.topic.Topics();
       try {
          List<PartnerSeasonNoteTopic> partnerTopics = partnerSeasonNoteTopicRepository.findAllPartnerSeasonNoteTopicByPartnerSeasonId(Integer.valueOf(partnerSeasonId));
          if (partnerTopics == null) {
@@ -442,11 +442,11 @@ public class PartnerGenericNote implements PartnerGenericNoteInterface {
          }
          if (partnerTopics != null) {
             for (PartnerSeasonNoteTopic partnerTopic : partnerTopics) {
-               Topic tpc = new Topic();
+               com.ccighgo.service.transport.partner.beans.generic.partnerseason.topic.Topic tpc = new com.ccighgo.service.transport.partner.beans.generic.partnerseason.topic.Topic();
                tpc.setLoginId(partnerTopic.getCreatedBy());
 //               tpc.setGoId(partnerTopic.getPartner().getGoIdSequence().getGoId());
-               tpc.setPartnerNoteTopicName(partnerTopic.getPartnerSeasonNoteTopicName());
-               tpc.setPartnerNoteTopicId(partnerTopic.getPartnerSeasonNoteTopicId());
+               tpc.setPartnerSeasonNoteTopicName(partnerTopic.getPartnerSeasonNoteTopicName());
+               tpc.setPartnerSeasonNoteTopicId(partnerTopic.getPartnerSeasonNoteTopicId());
                tpc.setCompetitorInfo(partnerTopic.getCompetitorInfo() == CCIConstants.ACTIVE ? true : false);
                tpc.setEmbassyVisaInfo(partnerTopic.getEmbassy_VisaInfo() == CCIConstants.ACTIVE ? true : false);
                tpc.setIsPublic(partnerTopic.getIsPublic() == CCIConstants.ACTIVE ? true : false);
@@ -462,10 +462,10 @@ public class PartnerGenericNote implements PartnerGenericNoteInterface {
                List<PartnerSeasonNote> partnerSeasonNotes = partnerTopic.getPartnerSeasonNotes();
                if (partnerSeasonNotes != null) {
                   for (PartnerSeasonNote partnerSeasonNote : partnerSeasonNotes) {
-                     SubPartnerScreeningNotes note = new SubPartnerScreeningNotes();
+                     com.ccighgo.service.transport.partner.beans.generic.partnerseason.topic.SubPartnerScreeningNotes note = new com.ccighgo.service.transport.partner.beans.generic.partnerseason.topic.SubPartnerScreeningNotes();
                      UserInformationOfCreatedBy userInformationOfCreatedBy = reusedFunctions.getPartnerCreatedByInformation(partnerSeasonNote.getCreatedBy());
                      if (userInformationOfCreatedBy != null) {
-                        NoteUserCreator noteCreator = new NoteUserCreator();
+                        com.ccighgo.service.transport.partner.beans.generic.partnerseason.topic.NoteUserCreator noteCreator = new com.ccighgo.service.transport.partner.beans.generic.partnerseason.topic.NoteUserCreator();
                         noteCreator.setPhotoUrl(userInformationOfCreatedBy.getPhotoUrl());
                         noteCreator.setRole(userInformationOfCreatedBy.getRole());
                         noteCreator.setUserName(userInformationOfCreatedBy.getUserName());
@@ -475,15 +475,15 @@ public class PartnerGenericNote implements PartnerGenericNoteInterface {
                      note.setNoteId(partnerSeasonNote.getPartnerSeasonNotesId());
                      note.setCreatedOn(DateUtils.getDateAndTime(partnerSeasonNote.getCreatedOn()));
                      note.setNoteValue(partnerSeasonNote.getPartnerNote());
-                     note.setTopicId(tpc.getPartnerNoteTopicId());
-                     note.setPartnerId(Integer.valueOf(partnerSeasonId));
-                     tpc.getPartnerNotes().add(note);
+                     note.setTopicId(tpc.getPartnerSeasonNoteTopicId());
+                     note.setPartnerSeasonId(Integer.valueOf(partnerSeasonId));
+                     tpc.getPartnerSeasonNotes().add(note);
                   }
                }
                if (partnerTopic.getCreatedBy() != null) {
                   UserInformationOfCreatedBy userInformationOfCreatedBy = reusedFunctions.getPartnerCreatedByInformation(partnerTopic.getCreatedBy());
                   if (userInformationOfCreatedBy != null) {
-                     TopicUserCreator topicCreator = new TopicUserCreator();
+                     com.ccighgo.service.transport.partner.beans.generic.partnerseason.topic.TopicUserCreator topicCreator = new com.ccighgo.service.transport.partner.beans.generic.partnerseason.topic.TopicUserCreator();
                      topicCreator.setPhotoUrl(userInformationOfCreatedBy.getPhotoUrl());
                      topicCreator.setRole(userInformationOfCreatedBy.getRole());
                      topicCreator.setUserName(userInformationOfCreatedBy.getUserName());
@@ -505,11 +505,10 @@ public class PartnerGenericNote implements PartnerGenericNoteInterface {
    }
 
    @Override
-   public WSDefaultResponse tagPartnerSeasonTopic(Topic topic) {
+   public WSDefaultResponse tagPartnerSeasonTopic(com.ccighgo.service.transport.partner.beans.generic.partnerseason.topic.Topic topic) {
       try {
          if (topic != null)
-            LOGGER.info("loginId: " + topic.getLoginId() + "isTopicPublic: " + topic.isIsTopicPublic() + "goId: " + topic.getGoId() + "partnerNoteTopicId: "
-                  + topic.getPartnerNoteTopicId() + "partnerNoteTopicName: " + topic.getPartnerNoteTopicName() + "embassyVisaInfo: " + topic.isEmbassyVisaInfo() + "f1: "
+            LOGGER.info("loginId: " + topic.getLoginId() + "isTopicPublic: " + topic.isIsTopicPublic()  + "embassyVisaInfo: " + topic.isEmbassyVisaInfo() + "f1: "
                   + topic.isF1() + "ght: " + topic.isGht() + "intern: " + topic.isIntern() + "isPublic: " + topic.isIsPublic() + "j1: " + topic.isMeetingVisit()
                   + " meetingVisit: " + topic.isMeetingVisit() + "seasonInfo: " + topic.isSeasonInfo() + "stInbound: " + topic.isStInbound() + "trainee: " + topic.isTrainee()
                   + "wt: " + topic.isWT() + " createdBy: " + topic.getCreatedBy());
@@ -518,7 +517,7 @@ public class PartnerGenericNote implements PartnerGenericNoteInterface {
       }
       WSDefaultResponse responce = new WSDefaultResponse();
       try {
-         PartnerSeasonNoteTopic topicData = partnerSeasonNoteTopicRepository.findOne(topic.getPartnerNoteTopicId());
+         PartnerSeasonNoteTopic topicData = partnerSeasonNoteTopicRepository.findOne(topic.getPartnerSeasonNoteTopicId());
          if (topic.isCompetitorInfo() != null) {
             topicData.setCompetitorInfo(topic.isCompetitorInfo() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
          }
@@ -570,11 +569,11 @@ public class PartnerGenericNote implements PartnerGenericNoteInterface {
    }
 
    @Override
-   public WSDefaultResponse createPartnerSeasonTopic(Topic topic) {
+   public WSDefaultResponse createPartnerSeasonTopic(com.ccighgo.service.transport.partner.beans.generic.partnerseason.topic.Topic topic) {
       try {
          if (topic != null)
-            LOGGER.info("loginId: " + topic.getLoginId() + "isTopicPublic: " + topic.isIsTopicPublic() + "goId: " + topic.getGoId() + "partnerNoteTopicId: "
-                  + topic.getPartnerNoteTopicId() + "partnerNoteTopicName: " + topic.getPartnerNoteTopicName() + "embassyVisaInfo: " + topic.isEmbassyVisaInfo() + "f1: "
+            LOGGER.info("loginId: " + topic.getLoginId() + "isTopicPublic: " + topic.isIsTopicPublic() + "partnerNoteTopicId: "
+                  + topic.getPartnerSeasonNoteTopicId() + "partnerNoteTopicName: " + topic.getPartnerSeasonNoteTopicName() + "embassyVisaInfo: " + topic.isEmbassyVisaInfo() + "f1: "
                   + topic.isF1() + "ght: " + topic.isGht() + "intern: " + topic.isIntern() + "isPublic: " + topic.isIsPublic() + "j1: " + topic.isMeetingVisit()
                   + " meetingVisit: " + topic.isMeetingVisit() + "seasonInfo: " + topic.isSeasonInfo() + "stInbound: " + topic.isStInbound() + "trainee: " + topic.isTrainee()
                   + "wt: " + topic.isWT() + " createdBy: " + topic.getCreatedBy());
@@ -586,7 +585,7 @@ public class PartnerGenericNote implements PartnerGenericNoteInterface {
          PartnerSeasonNoteTopic topicData = new PartnerSeasonNoteTopic();
          PartnerSeason partner = partnerSeasonsRepository.findOne(topic.getPartnerSeasonId());
          topicData.setPartnerSeason(partner);
-         topicData.setPartnerSeasonNoteTopicName(topic.getPartnerNoteTopicName());
+         topicData.setPartnerSeasonNoteTopicName(topic.getPartnerSeasonNoteTopicName());
          topicData.setIsPublic(topic.isIsPublic() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
          topicData.setIsVisibleToPartner(CCIConstants.TRUE_BYTE);
          topicData.setCreatedBy(topic.getLoginId());
