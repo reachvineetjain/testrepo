@@ -425,7 +425,7 @@ public class PartnerGenericNote implements PartnerGenericNoteInterface {
    }
 
    @Override
-   public com.ccighgo.service.transport.partner.beans.generic.partnerseason.topic.Topics viewPartnerSeasonTopics(int partnerSeasonId,int seasonId) {
+   public com.ccighgo.service.transport.partner.beans.generic.partnerseason.topic.Topics viewPartnerSeasonTopics(int partnerSeasonId) {
       try {
          LOGGER.info("partnerSeasonId: " + partnerSeasonId);
       } catch (Exception e) {
