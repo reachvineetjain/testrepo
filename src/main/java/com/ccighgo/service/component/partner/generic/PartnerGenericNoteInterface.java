@@ -45,7 +45,7 @@ public interface PartnerGenericNoteInterface {
    public WSDefaultResponse deletePartnerSeasonNote(DeleteNote deleteNote);
 
    public com.ccighgo.service.transport.partner.beans.generic.partnerseason.topic.Topics
-   viewPartnerSeasonTopics(int partnerId, int seasonId);
+   viewPartnerSeasonTopics(int partnerId);
 
    public WSDefaultResponse tagPartnerSeasonTopic(com.ccighgo.service.transport.partner.beans.generic.partnerseason.topic.Topic topic);
 

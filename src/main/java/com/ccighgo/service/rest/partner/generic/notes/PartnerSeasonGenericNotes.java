@@ -59,10 +59,10 @@ public class PartnerSeasonGenericNotes {
     * @return
     */
    @GET
-   @Path("view/{partnerId}/{seasonId}")
+   @Path("view/{partnerSeasonId}")
    @Produces("application/json")
-   public Topics viewTopics(@PathParam("partnerId") String partnerId,@PathParam("seasonId") String seasonId) {
-      return partnerGenericNoteInterface.viewPartnerSeasonTopics(Integer.parseInt(partnerId),Integer.parseInt(seasonId));
+   public Topics viewTopics(@PathParam("partnerSeasonId") String partnerSeasonId) {
+      return partnerGenericNoteInterface.viewPartnerSeasonTopics(Integer.parseInt(partnerSeasonId));
    }
 
    /**
