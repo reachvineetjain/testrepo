@@ -40,7 +40,7 @@ public class GreenHeartClub {
       return greenHeartClub.readPrivate();
    }
 
-   @POST
+   @GET
    @Path("testCreate/{title}")
    @Produces("application/json")
    @Consumes("application/json")
@@ -48,7 +48,7 @@ public class GreenHeartClub {
       return greenHeartClub.testCreate(title);
    }
 
-   @POST
+   @GET
    @Path("testEdit/{title}/{id}")
    @Produces("application/json")
    @Consumes("application/json")
@@ -56,7 +56,7 @@ public class GreenHeartClub {
       return greenHeartClub.testEdit(title, id);
    }
 
-   @POST
+   @GET
    @Path("testDelete/{id}")
    @Produces("application/json")
    @Consumes("application/json")
@@ -64,7 +64,7 @@ public class GreenHeartClub {
       return greenHeartClub.testDelete(id);
    }
 
-   @POST
+   @GET
    @Path("createUser")
    @Produces("application/json")
    @Consumes("application/json")
@@ -72,7 +72,7 @@ public class GreenHeartClub {
       return greenHeartClub.createUser(user);
    }
 
-   @POST
+   @GET
    @Path("userExist/{id}")
    @Produces("application/json")
    @Consumes("application/json")
@@ -80,7 +80,7 @@ public class GreenHeartClub {
       return greenHeartClub.userExist(id);
    }
 
-   @POST
+   @GET
    @Path("userEmailExist/{email}")
    @Produces("application/json")
    @Consumes("application/json")
@@ -88,7 +88,7 @@ public class GreenHeartClub {
       return greenHeartClub.userEmailExist(email);
    }
 
-   @POST
+   @GET
    @Path("userNameExist/{username}")
    @Produces("application/json")
    @Consumes("application/json")
@@ -96,7 +96,7 @@ public class GreenHeartClub {
       return greenHeartClub.userNameExist(username);
    }
 
-   @POST
+   @GET
    @Path("setUserId/{currentId}/{newId}")
    @Produces("application/json")
    @Consumes("application/json")
@@ -104,7 +104,7 @@ public class GreenHeartClub {
       return greenHeartClub.setUserId(currentId, newId);
    }
 
-   @POST
+   @GET
    @Path("setUserProgram/{id}/{program}")
    @Produces("application/json")
    @Consumes("application/json")
@@ -112,7 +112,7 @@ public class GreenHeartClub {
       return greenHeartClub.setUserProgram(id, program);
    }
 
-   @POST
+   @GET
    @Path("setUserName/{id}/{username}")
    @Produces("application/json")
    @Consumes("application/json")
@@ -120,7 +120,7 @@ public class GreenHeartClub {
       return greenHeartClub.setUserName(id, username);
    }
 
-   @POST
+   @GET
    @Path("setUserPassword/{id}/{password}")
    @Produces("application/json")
    @Consumes("application/json")
@@ -128,7 +128,7 @@ public class GreenHeartClub {
       return greenHeartClub.setUserPassword(id, password);
    }
 
-   @POST
+   @GET
    @Path("setUserEmail/{id}/{email}")
    @Produces("application/json")
    @Consumes("application/json")
@@ -136,7 +136,7 @@ public class GreenHeartClub {
       return greenHeartClub.setUserEmail(id, email);
    }
 
-   @POST
+   @GET
    @Path("getUser/{goId}")
    @Produces("application/json")
    @Consumes("application/json")
