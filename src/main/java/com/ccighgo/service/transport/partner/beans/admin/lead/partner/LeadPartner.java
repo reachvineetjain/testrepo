@@ -56,6 +56,7 @@ import javax.xml.bind.annotation.XmlType;
     "extenstion",
     "email",
     "website",
+    "leadStatus",
     "leadCountry",
     "programs"
 })
@@ -77,6 +78,8 @@ public class LeadPartner {
     protected String email;
     @XmlElement(required = true)
     protected String website;
+    @XmlElement(required = true)
+    protected String leadStatus;
     @XmlElement(required = true)
     protected LeadCountry leadCountry;
     @XmlElement(required = true)
@@ -280,6 +283,30 @@ public class LeadPartner {
      */
     public void setWebsite(String value) {
         this.website = value;
+    }
+    
+    /**
+     * Gets the value of the leadStatus property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getLeadStatus() {
+        return leadStatus;
+    }
+
+    /**
+     * Sets the value of the leadStatus property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setLeadStatus(String value) {
+        this.leadStatus = value;
     }
 
     /**

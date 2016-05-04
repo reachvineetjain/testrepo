@@ -11,6 +11,7 @@ import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.partner.beans.admin.add.partner.AdminAddPartner;
 import com.ccighgo.service.transport.partner.beans.admin.added.partner.AddedPartners;
 import com.ccighgo.service.transport.partner.beans.admin.lead.partner.LeadPartners;
+import com.ccighgo.service.transport.partner.beans.admin.lead.partner.status.PartnerLeadStatus;
 
 /**
  * @author ravi
@@ -75,5 +76,10 @@ public interface AdminPartnerInterface {
     * @return
     */
    public Response partnerLeadSendLogin(String partnerGoId, String loginVal, String loginId, HttpServletRequest request);
+
+   /**
+    * @return
+    */
+   public PartnerLeadStatus getLeadPartnerStatuses();
 
 }
