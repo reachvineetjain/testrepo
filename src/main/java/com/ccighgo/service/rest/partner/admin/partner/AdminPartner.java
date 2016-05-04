@@ -21,6 +21,7 @@ import com.ccighgo.service.transport.common.response.beans.Response;
 import com.ccighgo.service.transport.partner.beans.admin.add.partner.AdminAddPartner;
 import com.ccighgo.service.transport.partner.beans.admin.added.partner.AddedPartners;
 import com.ccighgo.service.transport.partner.beans.admin.lead.partner.LeadPartners;
+import com.ccighgo.service.transport.partner.beans.admin.lead.partner.status.PartnerLeadStatus;
 import com.ccighgo.service.transport.partner.beans.partner.season.application.PartnerSeasonApplicationList;
 
 /**
@@ -154,5 +155,17 @@ public class AdminPartner {
    @Produces("application/json")
    public Response partnerLeadSendLogin(@PathParam("partnerGoId") String partnerGoId, @PathParam("loginVal") String loginVal, @PathParam("loginId") String loginId) {
       return adminPartnerInterface.partnerLeadSendLogin(partnerGoId, loginVal, loginId, request);
+   }
+   
+   /**
+    * @param partnerGoId
+    * @param reason
+    * @return
+    */
+   @GET
+   @Path("lead/status")
+   @Produces("application/json")
+   public PartnerLeadStatus getLeadPartnerStatuses() {
+      return adminPartnerInterface.getLeadPartnerStatuses();
    }
 }

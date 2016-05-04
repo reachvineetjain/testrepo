@@ -67,7 +67,7 @@ public class PartnerAgentInterfaceImpl implements PartnerAgentInterface {
       PartnerAgentAddedSeasons partnerAgentAddedSeasons = new PartnerAgentAddedSeasons();
       if (partnerGoId == null) {
          partnerAgentAddedSeasons = setPartnerAgentAddedSeasonsStatus(partnerAgentAddedSeasons, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR,
-               CCIConstants.NULL_PARTNER_ID, messageUtil.getMessage(PartnerAgentMessageConstants.INVALID_PARTNER_ID));
+               CCIConstants.INVALID_PARTNER_ID, messageUtil.getMessage(PartnerAgentMessageConstants.INVALID_PARTNER_ID));
          LOGGER.error(messageUtil.getMessage(PartnerAgentMessageConstants.INVALID_PARTNER_ID));
          return partnerAgentAddedSeasons;
       }
@@ -182,7 +182,7 @@ public class PartnerAgentInterfaceImpl implements PartnerAgentInterface {
          }
          Partner partner = partnerRepository.findOne(partnerSeasonApplicationList.getPartnerId());
          if (partner == null) {
-            partnerAgentSeasons = setPartnerAgentSeasonsStatus(partnerAgentSeasons, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, CCIConstants.NULL_PARTNER_ID,
+            partnerAgentSeasons = setPartnerAgentSeasonsStatus(partnerAgentSeasons, CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, CCIConstants.INVALID_PARTNER_ID,
                   messageUtil.getMessage(PartnerAgentMessageConstants.INVALID_PARTNER_ID));
             LOGGER.error(messageUtil.getMessage(PartnerAgentMessageConstants.INVALID_PARTNER_ID));
             return partnerAgentSeasons;

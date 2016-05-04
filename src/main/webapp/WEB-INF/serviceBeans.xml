@@ -99,6 +99,7 @@
 				class="com.ccighgo.service.rest.genericupdatelog.GenericUpdateLogs" />
 			<bean id="greenheartclub"
 				class="com.ccighgo.service.rest.greenheartclub.GreenHeartClub" />
+				<bean id="partnerSeasonGenericNotes" class="com.ccighgo.service.rest.partner.generic.notes.PartnerSeasonGenericNotes" />
 		</jaxrs:serviceBeans>
 		<jaxrs:providers>
 			<ref bean="jsonProvider" />

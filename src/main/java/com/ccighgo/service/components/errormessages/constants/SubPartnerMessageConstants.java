@@ -11,4 +11,7 @@ public class SubPartnerMessageConstants {
    public static final String SUB_PARTNER_CREATE_USER_EMAIL_EXIST = "sub.partner.email.already.exist";
    public static final String FAILED_TO_GET_EMAIL = "failed.get.email";
    public static final String FAILED_TO_ADD_SUBPARTNER_NOTE = "failed.to.add.subpartner.note";
+   public static final String ERROR_CREATE_SUBPARTNER = "error.create.subpartner.missing.partner.info";
+   public static final String DUPLICATE_EMAIL_ID = "error.update.subpartner.duplicate.email";
+   
 }

@@ -21,6 +21,7 @@ import com.ccighgo.db.entities.Login;
 import com.ccighgo.db.entities.LoginHistory;
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.ErrorCode;
+import com.ccighgo.exception.FieldStaffCodes;
 import com.ccighgo.jpa.repositories.AdminQuickStatsCategoriesAggregateRepository;
 import com.ccighgo.jpa.repositories.FieldStaffRepository;
 import com.ccighgo.jpa.repositories.FieldStaffStatusRepository;
@@ -34,6 +35,7 @@ import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.components.errormessages.constants.FieldStaffMessageConstants;
 import com.ccighgo.service.components.errormessages.constants.PartnerAdminMessageConstants;
+import com.ccighgo.service.components.fieldstaffs.fieldstaffdashboard.FiledStaffConstants;
 import com.ccighgo.service.transport.beans.fieldstaff.fieldstaffoverview.FieldStaffDetails;
 import com.ccighgo.service.transport.beans.fieldstaff.fieldstaffoverview.FieldStaffOverview;
 import com.ccighgo.service.transport.common.response.beans.Response;
@@ -116,13 +118,13 @@ public class FieldStaffImpl implements FieldStaffsInterface {
             fieldstaff.setSeasons(seasonsName);
             fieldstaff.setImageURL(fs.getPhoto());
             addedFieldStaff.getFieldStaffs().add(fieldstaff);
-            addedFieldStaff.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(),
+            addedFieldStaff.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, FieldStaffCodes.SUCCESS.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          }
 
       } catch (Exception e) {
 
-         addedFieldStaff.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GETTING_FIELDSATFF_BY_ROLL.getValue(),
+         addedFieldStaff.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, FieldStaffCodes.ERROR_GETTING_FIELDSATFF_BY_ROLL.getValue(),
                messageUtil.getMessage(FieldStaffMessageConstants.ERROR_GETTING_FIELDSTAFF_BY_ROLL)));
          LOGGER.error(messageUtil.getMessage(FieldStaffMessageConstants.ERROR_GETTING_FIELDSTAFF_BY_ROLL));
 
@@ -223,11 +225,11 @@ public class FieldStaffImpl implements FieldStaffsInterface {
          fieldStaffOverview.setActive(login.getActive() == CCIConstants.ACTIVE);
          fieldStaffOverview.setFieldStaffDetails(fsd);
          fieldStaffOverview.setFieldStaffStatus(fscs);
-         fieldStaffOverview.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(),
+         fieldStaffOverview.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, FieldStaffCodes.SUCCESS.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
          e.printStackTrace();
-         fieldStaffOverview.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GETTING_FIELDSTAFF_DETAILE.getValue(),
+         fieldStaffOverview.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, FieldStaffCodes.ERROR_GETTING_FIELDSTAFF_DETAILE.getValue(),
                messageUtil.getMessage(FieldStaffMessageConstants.ERROR_GETTING_FIELDSTAFF_DETAIL)));
          LOGGER.error(messageUtil.getMessage(FieldStaffMessageConstants.ERROR_GETTING_FIELDSTAFF_DETAIL));
       }
@@ -275,11 +277,11 @@ public class FieldStaffImpl implements FieldStaffsInterface {
          fs.setModifiedBy(fieldStaffDetail.getLoginId());
          fieldStaffRepository.saveAndFlush(fs);
 
-         response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(),
+         response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, FieldStaffCodes.SUCCESS.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
-         response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(),
+         response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_INFO, FieldStaffCodes.ERROR_UPDATE_FS_DETAILS.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
          LOGGER.error(messageUtil.getMessage(CCIConstants.SERVICE_FAILURE));
       }
@@ -318,16 +320,16 @@ public class FieldStaffImpl implements FieldStaffsInterface {
                   + formResetURL(request).concat(login.getKeyValue()) + "</p>" + "<p>If you didn't request a new password, please let us know.</p>" + "<p>Thank you,</p>"
                   + "<p>CCI Greenheart.</p>";
             emailingService.send(login.getEmail(), CCIConstants.RESET_PASSWORD_SUBJECT, body, true);
-            response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
+            response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, FieldStaffCodes.SUCCESS.getValue(),
                   "An email has been sent to address " + "\'" + login.getEmail() + "\'" + " for login name " + "\'" + login.getLoginName() + "\'"
                         + " with instructions to reset password"));
          } else {
-            response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
+            response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, FieldStaffCodes.NO_RECORD.getValue(),
                   messageUtil.getMessage(CCIConstants.NO_RECORD)));
             LOGGER.error(messageUtil.getMessage(CCIConstants.NO_RECORD));
          }
       } catch (CcighgoException e) {
-         response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_SEASON.getValue(), e.getMessage()));
+         response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, FieldStaffCodes.ERROR_RESET_PASSWORD.getValue(), e.getMessage()));
          LOGGER.error(e.getMessage());
       }
       return response;
@@ -375,19 +377,19 @@ public class FieldStaffImpl implements FieldStaffsInterface {
 
                   pwqa.getFieldStaffPendingApplications().add(pd);
                }
-               pwqa.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.WOEKQUEUE_FS_PENDING_APPROVAL.getValue(),
+               pwqa.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, FieldStaffCodes.SUCCESS.getValue(),
                      messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
             } else {
-               pwqa.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD, CCIConstants.TYPE_INFO, ErrorCode.WOEKQUEUE_FS_PENDING_APPROVAL.getValue(),
+               pwqa.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD, CCIConstants.TYPE_INFO, FieldStaffCodes.NO_RECORD.getValue(),
                      messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
             }
          } else {
-            pwqa.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_WOEKQUEUE_FS_PENDING_APPROVAL.getValue(),
+            pwqa.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, FieldStaffCodes.SUCCESS.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          }
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
-         pwqa.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_WOEKQUEUE_FS_PENDING_APPROVAL.getValue(),
+         pwqa.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, FieldStaffCodes.ERROR_WOEKQUEUE_FS_PENDING_APPROVAL.getValue(),
                messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_FS_PENDING_APPROVAL)));
          LOGGER.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_FS_PENDING_APPROVAL));
       }
@@ -410,19 +412,19 @@ public class FieldStaffImpl implements FieldStaffsInterface {
                   pd.setCategoryId(categoryId);
                   pwqa.getApplicationStats().add(pd);
                }
-               pwqa.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FS_ADMIN_APPLICATION_STATS.getValue(),
+               pwqa.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, FieldStaffCodes.SUCCESS.getValue(),
                      messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
             } else {
-               pwqa.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD, CCIConstants.TYPE_INFO, ErrorCode.FS_ADMIN_APPLICATION_STATS.getValue(),
+               pwqa.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD, CCIConstants.TYPE_INFO, FieldStaffCodes.NO_RECORD.getValue(),
                      messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
             }
          } else {
-            pwqa.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.EMPTY_FS_ADMIN_APPLICATION_STATS.getValue(),
+            pwqa.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, FieldStaffCodes.SUCCESS.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          }
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
-         pwqa.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.EXCEPTION_FS_ADMIN_APPLICATION_STATS.getValue(),
+         pwqa.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, FieldStaffCodes.ERROR_FS_ADMIN_APPLICATION_STATS.getValue(),
                messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_FS_ADMIN_APPLICATION_STATS)));
          LOGGER.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_FS_ADMIN_APPLICATION_STATS));
       }
@@ -442,19 +444,19 @@ public class FieldStaffImpl implements FieldStaffsInterface {
                   pd.setRecordStatus(wq.getStatus());
                   pwqa.getProgramStats().add(pd);
                }
-               pwqa.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FS_ADMIN_PROGRAM_STATS.getValue(),
+               pwqa.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, FieldStaffCodes.SUCCESS.getValue(),
                      messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
             } else {
-               pwqa.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD, CCIConstants.TYPE_INFO, ErrorCode.FS_ADMIN_PROGRAM_STATS.getValue(),
+               pwqa.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD, CCIConstants.TYPE_INFO, FieldStaffCodes.NO_RECORD.getValue(),
                      messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
             }
          } else {
-            pwqa.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.EMPTY_FS_ADMIN_PROGRAM_STATS.getValue(),
+            pwqa.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, FieldStaffCodes.SUCCESS.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          }
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
-         pwqa.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.EXCEPTION_FS_ADMIN_PROGRAM_STATS.getValue(),
+         pwqa.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, FieldStaffCodes.ERROR_FS_ADMIN_PROGRAM_STATS.getValue(),
                messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_FS_ADMIN_PROGRAM_STATS)));
          LOGGER.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_FS_ADMIN_PROGRAM_STATS));
       }
@@ -480,19 +482,19 @@ public class FieldStaffImpl implements FieldStaffsInterface {
                   pd.setContactEmail(String.valueOf(wq[6]));
                   pwqa.getAddedSchool().add(pd);
                }
-               pwqa.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FS_ADMIN_ADDED_SCHOOL.getValue(),
+               pwqa.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, FieldStaffCodes.SUCCESS.getValue(),
                      messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
             } else {
-               pwqa.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD, CCIConstants.TYPE_INFO, ErrorCode.FS_ADMIN_ADDED_SCHOOL.getValue(),
+               pwqa.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD, CCIConstants.TYPE_INFO, FieldStaffCodes.NO_RECORD.getValue(),
                      messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
             }
          } else {
-            pwqa.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.EMPTY_FS_ADMIN_ADDED_SCHOOL.getValue(),
+            pwqa.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD, CCIConstants.TYPE_INFO, FieldStaffCodes.NO_RECORD.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          }
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
-         pwqa.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.EXCEPTION_FS_ADMIN_ADDED_SCHOOL.getValue(),
+         pwqa.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, FieldStaffCodes.ERROR_FS_ADMIN_ADDED_SCHOOL.getValue(),
                messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_FS_ADMIN_ADDED_SCHOOL)));
          LOGGER.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_FS_ADMIN_ADDED_SCHOOL));
       }
@@ -524,11 +526,11 @@ public class FieldStaffImpl implements FieldStaffsInterface {
          login.setActive(status);
          login.setModifiedBy(Integer.valueOf(loginId));
          loginRepository.saveAndFlush(login);
-         response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(),
+         response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, FieldStaffCodes.SUCCESS.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
-         response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_CODE.getValue(),
+         response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_INFO, FieldStaffCodes.ERROR_UPDATE_FS_STATUS.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
          LOGGER.error(messageUtil.getMessage(CCIConstants.SERVICE_FAILURE));
       }
@@ -546,10 +548,10 @@ public class FieldStaffImpl implements FieldStaffsInterface {
          // partnerReviewStatus.setPartnerStatus1(partnerStatus);
          // partnerReviewStatus.setPartnerStatusReason(note);
          // partnerReviewStatusRepository.saveAndFlush(partnerReviewStatus);
-         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FIELDSTAFF_REQUEST_STATUS_UPDATED.getValue(),
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, FieldStaffCodes.SUCCESS.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
-         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CANT_UPDATE_FIELDSTAFF_REQUEST_STATUS.getValue(),
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, FieldStaffCodes.ERROR_CHANGE_PARTNER_APPLICATION_STATUS.getValue(),
                messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_FIELDSTAFF_REQUEST_STATUS)));
       }
       return wsDefaultResponse;
@@ -563,10 +565,10 @@ public class FieldStaffImpl implements FieldStaffsInterface {
          // partnerAgentInquiryRepository.findPartnerByGoId(goId);
          // partnerAgentInquiry.setFollowUpDate(DateUtils.getDateFromString_followUpdate(newFollowUpDate));
          // partnerAgentInquiryRepository.saveAndFlush(partnerAgentInquiry);
-         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FOLLOW_UP_DATE_UPDATED.getValue(),
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, FieldStaffCodes.SUCCESS.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
-         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CANT_UPDATE_FOLLOW_UP_DATE.getValue(),
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, FieldStaffCodes.ERROR_UPDATE_FOLLOW_UP_DATE.getValue(),
                messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_FOLLOW_UP_DATE)));
       }
       return wsDefaultResponse;
@@ -618,19 +620,19 @@ public class FieldStaffImpl implements FieldStaffsInterface {
 
                   pwqa.getHostFamilies().add(pd);
                }
-               pwqa.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FS_ADMIN_HOST_FAMILY.getValue(),
+               pwqa.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, FieldStaffCodes.SUCCESS.getValue(),
                      messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
             } else {
-               pwqa.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FS_ADMIN_HOST_FAMILY.getValue(),
+               pwqa.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, FieldStaffCodes.NO_RECORD.getValue(),
                      messageUtil.getMessage(CCIConstants.NO_RECORD)));
             }
          } else {
-            pwqa.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.EMPTY_FS_ADMIN_HOST_FAMILY.getValue(),
+            pwqa.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, FieldStaffCodes.NO_RECORD.getValue(),
                   messageUtil.getMessage(CCIConstants.NO_RECORD)));
          }
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
-         pwqa.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.EXCEPTION_FS_ADMIN_HOST_FAMILY.getValue(),
+         pwqa.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, FieldStaffCodes.ERROR_FS_ADMIN_HOST_FAMILY.getValue(),
                messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_FS_ADMIN_HOST_FAMILY)));
          LOGGER.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_FS_ADMIN_HOST_FAMILY));
       }

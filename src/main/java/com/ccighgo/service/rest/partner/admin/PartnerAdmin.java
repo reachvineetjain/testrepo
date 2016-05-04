@@ -352,6 +352,7 @@ public class PartnerAdmin {
       return partnerAdminService.removeNewPartnerInquiryReferenceCheck(deletedItems);
    }
 
+   @Deprecated
    @GET
    @Path("sendLogin")
    @Produces("application/json")

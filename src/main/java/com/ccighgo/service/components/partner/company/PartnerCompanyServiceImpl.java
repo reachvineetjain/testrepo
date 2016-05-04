@@ -70,7 +70,7 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
    public PartnerCompanyDetail getPartnerCompanyDetails(String partnerGoId) {
       PartnerCompanyDetail partnerCompanyDetail = new PartnerCompanyDetail();
       if (partnerGoId == null) {
-         partnerCompanyDetail.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, CCIConstants.NULL_PARTNER_ID,
+         partnerCompanyDetail.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, CCIConstants.INVALID_PARTNER_ID,
                messageUtil.getMessage(PartnerSeasonMessageConstants.INVALID_PARTNER_ID)));
          LOGGER.error(messageUtil.getMessage(PartnerSeasonMessageConstants.INVALID_PARTNER_ID));
          return partnerCompanyDetail;
@@ -222,7 +222,7 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
    public PartnerCompanyDetail updatePartnerCompanyDetails(PartnerCompanyDetail partnerCompanyDetail) {
       PartnerCompanyDetail updatedObject = new PartnerCompanyDetail();
       if (partnerCompanyDetail.getPartnerGoId() == 0 || partnerCompanyDetail.getPartnerGoId() < 0) {
-         partnerCompanyDetail.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, CCIConstants.NULL_PARTNER_ID,
+         partnerCompanyDetail.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, CCIConstants.INVALID_PARTNER_ID,
                messageUtil.getMessage(PartnerSeasonMessageConstants.INVALID_PARTNER_ID)));
          LOGGER.error(messageUtil.getMessage(PartnerSeasonMessageConstants.INVALID_PARTNER_ID));
          return partnerCompanyDetail;
@@ -339,7 +339,7 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
    public Response addNewPartnerOffice(String partnerGoId, NewPartnerOffice newPartnerOffice) {
       Response resp = new Response();
       if (partnerGoId == null || Integer.valueOf(partnerGoId) == 0 || Integer.valueOf(partnerGoId) < 0 || newPartnerOffice == null) {
-         resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, CCIConstants.NULL_PARTNER_ID,
+         resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, CCIConstants.INVALID_PARTNER_ID,
                messageUtil.getMessage(PartnerSeasonMessageConstants.INVALID_PARTNER_ID)));
          LOGGER.error(messageUtil.getMessage(PartnerSeasonMessageConstants.INVALID_PARTNER_ID));
          return resp;
@@ -385,7 +385,7 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
    public Response deletePartnerOffice(String partnerOfficeId) {
       Response resp = new Response();
       if (partnerOfficeId == null || Integer.valueOf(partnerOfficeId) == 0 || Integer.valueOf(partnerOfficeId) < 0 || partnerOfficeId == null) {
-         resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, CCIConstants.NULL_PARTNER_ID,
+         resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, CCIConstants.INVALID_PARTNER_ID,
                messageUtil.getMessage(PartnerSeasonMessageConstants.INVALID_PARTNER_ID)));
          LOGGER.error(messageUtil.getMessage(PartnerSeasonMessageConstants.INVALID_PARTNER_ID));
          return resp;
