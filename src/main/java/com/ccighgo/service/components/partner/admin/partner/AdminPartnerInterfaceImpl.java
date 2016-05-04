@@ -243,7 +243,7 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
    public AddedPartners getAddedPartnerList() {
       AddedPartners addedPartners = new AddedPartners();
       try {
-         List<PartnerReviewStatus> partnerReviewStatusList = partnerReviewStatusRepository.findReviewStatusByStatus(11);
+         List<PartnerReviewStatus> partnerReviewStatusList = partnerReviewStatusRepository.findAddedPartners(11);
          if (partnerReviewStatusList == null) {
             throw new CcighgoException("No Active partners found.");
          }
