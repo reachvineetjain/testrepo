@@ -117,7 +117,7 @@ public class PartnerSeasonNotesTest {
       Assert.assertFalse(json.contains("\"statusCode\":\"Failure\""));
       LOGGER.info("Result : " + json);
    }
-   @Test
+  // @Test
    public void testDeleteNote() {
       String json = executeService_Post("{\"DeleteNote\":{\"noteId\":\"15\"}}",DELETE_PARTNER_SEASON_NOTE);
       Assert.assertFalse(json.contains("\"statusCode\":\"Failure\""));

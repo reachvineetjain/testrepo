@@ -45,7 +45,7 @@ public class ReusedFunctionImpl implements ReusedFunctions {
                         userInformationOfCreatedBy.setRole(cciStaffUsersCCIStaffRole.getCcistaffRole().getCciStaffRoleName());
                   }
                } else if (loginUsrType.getUserType().getUserTypeCode().equals(CCIConstants.PARTNER_USER)) {
-                  PartnerUser partnerUser = partnerUserRepository.findByPartnerGoIdAndLoginId(createdBy, goId);
+                  PartnerUser partnerUser = partnerUserRepository.findByPartnerGoIdAndLoginId(goId,createdBy);
                   userInformationOfCreatedBy.setUserName(partnerUser.getFirstName() + " " + partnerUser.getLastName());
                   userInformationOfCreatedBy.setUserId(goId);
                   userInformationOfCreatedBy.setPhotoUrl(partnerUser.getPhoto());
