@@ -264,7 +264,11 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
                         // id 1 is of main office
                         poff.setPartnerOfficeType(partnerOfficeTypeRepository.findOne(1));
                         partnerOfficeRepository.saveAndFlush(poff);
-                        break;
+                     } else {
+                        com.ccighgo.db.entities.PartnerOffice poff = partnerOfficeRepository.findOne(po.getPartnerOfficeId());
+                        // id 3 is of other
+                        poff.setPartnerOfficeType(partnerOfficeTypeRepository.findOne(3));
+                        partnerOfficeRepository.saveAndFlush(poff);
                      }
                   }
                }
