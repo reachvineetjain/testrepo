@@ -103,8 +103,8 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
          partnerCompanyDetails.setCCIAccountingDesignation(partner.getQuickbooksCode());
          partnerCompanyDetails.setDAndBNumber(partner.getDandBNumber() != null ? partner.getDandBNumber() : 0);
          partnerCompanyDetails.setPersonToSignContract(partner.getContractSigner());
-         partnerCompanyDetails.setSubscribeCCINewsletter(partner.getSubscribeToCCINewsletter() == CCIConstants.ACTIVE ? true : false);
-         partnerCompanyDetails.setRecieveHSPNotificationEmails(partner.getReceiveAYPMails() == CCIConstants.ACTIVE ? true : false);
+         partnerCompanyDetails.setSubscribeCCINewsletter(partner.getSubscribeToCCINewsletter()!=null&&partner.getSubscribeToCCINewsletter() == CCIConstants.ACTIVE ? true : false);
+         partnerCompanyDetails.setRecieveHSPNotificationEmails(partner.getReceiveAYPMails()!=null&&partner.getReceiveAYPMails() == CCIConstants.ACTIVE ? true : false);
          partnerCompanyDetails.setGeneralEmail(partner.getEmail());
 
          if (partnerLogin != null) {
