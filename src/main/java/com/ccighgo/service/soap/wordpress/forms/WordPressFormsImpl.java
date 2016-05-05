@@ -67,12 +67,12 @@ public class WordPressFormsImpl implements IWordPressForms {
          LOGGER.info("Inquiry partner Is Called !!d!");
          if (InternationalPartners != null) {
             Login user = loginRepository.findByEmail(InternationalPartners.getEmail());
-            PartnerAgentInquiry pa = partnerAgentInquiryRepository.findByEmail(InternationalPartners.getEmail());
             if (user != null) {
                String message = "400:Duplicate Row (User Already Exist ):400:Duplicate Row (User Already Exist) [Login Table ]";
                LOGGER.info(message);
                return message;
             }
+            PartnerAgentInquiry pa = partnerAgentInquiryRepository.findByEmail(InternationalPartners.getEmail());
             if (pa != null) {
                String message = "400:Duplicate Row (User Already Exist ):400:Duplicate Row (User Already Exist) [PartnerAgentInquiry Table ]";
                LOGGER.info(message);
