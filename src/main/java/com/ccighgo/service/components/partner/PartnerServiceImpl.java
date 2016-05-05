@@ -611,7 +611,8 @@ public class PartnerServiceImpl implements PartnerService {
                            cat.setPartnerWorkQueueCategoryName(category.getPartnerWQCategoryName() != null ? category.getPartnerWQCategoryName() : "");
                            PartnerWorkQueueCategoryAggregate catAgg = partnerWorkQueueCategoryAggregateRepository.getCategoryAggregate(pqType.getPartnerWQTypeId(),
                                  category.getPartnerWQCategoryId(), partner.getPartnerGoId(), CCIConstants.HSP_J1_HS_ID);
-                           cat.setPartnerWorkQueueCategoryNo(catAgg.getPartnerWQCategoryAggregate() != null ? catAgg.getPartnerWQCategoryAggregate() : 0);
+                           if (catAgg != null)
+                              cat.setPartnerWorkQueueCategoryNo(catAgg.getPartnerWQCategoryAggregate() != null ? catAgg.getPartnerWQCategoryAggregate() : 0);
                            cat.setPartnerWorkQueueCategoryUrl("TBD");
                            partnerWorkQueueCategories.add(cat);
                         }
@@ -821,7 +822,8 @@ public class PartnerServiceImpl implements PartnerService {
                            cat.setPartnerWorkQueueCategoryName(category.getPartnerWQCategoryName());
                            PartnerWorkQueueCategoryAggregate catAgg = partnerWorkQueueCategoryAggregateRepository.getCategoryAggregate(pqType.getPartnerWQTypeId(),
                                  category.getPartnerWQCategoryId(), partner.getPartnerGoId(), CCIConstants.HSP_F1_ID);
-                           cat.setPartnerWorkQueueCategoryNo(catAgg.getPartnerWQCategoryAggregate());
+                           if (catAgg != null)
+                              cat.setPartnerWorkQueueCategoryNo(catAgg.getPartnerWQCategoryAggregate());
                            cat.setPartnerWorkQueueCategoryUrl("TBD");
                            partnerWorkQueueCategories.add(cat);
                         }
@@ -1007,7 +1009,8 @@ public class PartnerServiceImpl implements PartnerService {
                            cat.setPartnerWorkQueueCategoryName(category.getPartnerWQCategoryName());
                            PartnerWorkQueueCategoryAggregate catAgg = partnerWorkQueueCategoryAggregateRepository.getCategoryAggregate(pqType.getPartnerWQTypeId(),
                                  category.getPartnerWQCategoryId(), partner.getPartnerGoId(), CCIConstants.HSP_STP_IHP_ID);
-                           cat.setPartnerWorkQueueCategoryNo(catAgg.getPartnerWQCategoryAggregate());
+                           if (catAgg != null)
+                              cat.setPartnerWorkQueueCategoryNo(catAgg.getPartnerWQCategoryAggregate());
                            cat.setPartnerWorkQueueCategoryUrl("TBD");
                            partnerWorkQueueCategories.add(cat);
                         }
