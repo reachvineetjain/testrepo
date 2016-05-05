@@ -215,10 +215,10 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
             PartnerUser partnerUser = partnerUserRepository.findOne(Integer.valueOf(partnerUserId));
             partnerUserDetails.setPartnerGoId(partnerUser.getPartner().getPartnerGoId());
             partnerUserDetails.setPartnerUserId(partnerUser.getPartnerUserId());
-            partnerUserDetails.setUserActiveStatus(partnerUser.getActive() == CCIConstants.ACTIVE ? 1 : 0);
+            partnerUserDetails.setUserActiveStatus(partnerUser.getActive()!=null && partnerUser.getActive() == CCIConstants.ACTIVE ? 1 : 0);
             partnerUserDetails.setUserFirstName(partnerUser.getFirstName());
             partnerUserDetails.setUserLastName(partnerUser.getLastName());
-            partnerUserDetails.setIsPrimary(partnerUser.getIsPrimary() == CCIConstants.ACTIVE);
+            partnerUserDetails.setIsPrimary(partnerUser.getIsPrimary()!=null && partnerUser.getIsPrimary() == CCIConstants.ACTIVE);
             // salutation
             UserSalutation salutation = new UserSalutation();
             salutation.setSalutationId(partnerUser.getSalutation().getSalutationId());
