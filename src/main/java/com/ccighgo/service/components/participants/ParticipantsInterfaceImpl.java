@@ -278,7 +278,11 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                         participant.setEndDate(ps.getPartnerSeasonEndDate());
                      }
                   }
-                  participant.setPartner1(partner);
+                  if (partner.getIsSubPartner() == CCIConstants.TRUE_BYTE) {
+                     participant.setPartner2(partner);
+                  } else {
+                     participant.setPartner1(partner);
+                  }
                   participant.setGuaranteed((byte) (p.isGuranteed() ? 1 : 0));
                   participant.setParticipantGoId(goIdSequence.getGoId());
                   participantRepository.saveAndFlush(participant);
@@ -541,7 +545,8 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                if (participant.getEndDate() != null) {
                   details.setParticipantEndDate(DateUtils.getDateAndTime(participant.getEndDate()));
                }
-               //BUG 1382 participant listing the “first name” for created participant 
+               // BUG 1382 participant listing the “first name” for created
+               // participant
                details.setParticipantFirstName(participant.getFirstName());
                if (participant.getGuaranteed() != null) {
                   details.setParticipantGuranteed(participant.getGuaranteed() == 1);
@@ -553,7 +558,8 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                if (participant.getDepartmentProgram() != null) {
                   details.setParticipantProgramName(participant.getDepartmentProgram().getProgramName());
                }
-               //BUG 1173 point 1. As per discussion we need to show both program option as well as available programs
+               // BUG 1173 point 1. As per discussion we need to show both
+               // program option as well as available programs
                if (participant.getDepartmentProgramOption() != null) {
                   details.setParticipantProgramOptionId(participant.getDepartmentProgramOption().getDepartmentProgramOptionId());
                   details.setParticipantProgramOption(participant.getDepartmentProgramOption().getProgramOptionName());
