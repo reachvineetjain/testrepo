@@ -8,6 +8,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import com.ccighgo.service.transport.common.response.beans.Response;
+import com.ccighgo.service.transport.document.resources.DocumentResources;
 import com.ccighgo.service.transport.partner.beans.partnerseason.PartnerSeasonProgramStatus;
 import com.ccighgo.service.transport.partner.beans.partnerseasondetail.NoteTags;
 import com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatuses;
@@ -194,4 +195,6 @@ public interface UtilityServices {
    public PartnerStatuses getPartnerStatus();
 
    public UserTypes getUserTypes();
+
+   public DocumentResources getResourcesList(Integer goId);
 }

@@ -6,28 +6,26 @@
 //
 
 
-package com.ccighgo.service.transport.common.response.beans;
+package com.ccighgo.service.transport.document.resources;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
-import com.ccighgo.service.transport.document.resources.DocumentResources;
 
 
 /**
- * <p>Java class for Response complex type.
+ * <p>Java class for ResourcesURLDetails complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="Response">
+ * &lt;complexType name="ResourcesURLDetails">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="header" type="{http://www.ccighgo.com/common}Header"/>
- *         &lt;element name="status" type="{http://www.ccighgo.com/common}Status"/>
+ *         &lt;element name="resourceDisplayName" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="resourceUrl" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -37,66 +35,63 @@ import com.ccighgo.service.transport.document.resources.DocumentResources;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Response", propOrder = {
-    "header",
-    "status"
+@XmlType(name = "ResourcesURLDetails", propOrder = {
+    "resourceDisplayName",
+    "resourceUrl"
 })
-@XmlSeeAlso({
-    DocumentResources.class
-})
-public class Response {
+public class ResourcesURLDetails {
 
     @XmlElement(required = true)
-    protected Header header;
+    protected String resourceDisplayName;
     @XmlElement(required = true)
-    protected Status status;
+    protected String resourceUrl;
 
     /**
-     * Gets the value of the header property.
+     * Gets the value of the resourceDisplayName property.
      * 
      * @return
      *     possible object is
-     *     {@link Header }
+     *     {@link String }
      *     
      */
-    public Header getHeader() {
-        return header;
+    public String getResourceDisplayName() {
+        return resourceDisplayName;
     }
 
     /**
-     * Sets the value of the header property.
+     * Sets the value of the resourceDisplayName property.
      * 
      * @param value
      *     allowed object is
-     *     {@link Header }
+     *     {@link String }
      *     
      */
-    public void setHeader(Header value) {
-        this.header = value;
+    public void setResourceDisplayName(String value) {
+        this.resourceDisplayName = value;
     }
 
     /**
-     * Gets the value of the status property.
+     * Gets the value of the resourceUrl property.
      * 
      * @return
      *     possible object is
-     *     {@link Status }
+     *     {@link String }
      *     
      */
-    public Status getStatus() {
-        return status;
+    public String getResourceUrl() {
+        return resourceUrl;
     }
 
     /**
-     * Sets the value of the status property.
+     * Sets the value of the resourceUrl property.
      * 
      * @param value
      *     allowed object is
-     *     {@link Status }
+     *     {@link String }
      *     
      */
-    public void setStatus(Status value) {
-        this.status = value;
+    public void setResourceUrl(String value) {
+        this.resourceUrl = value;
     }
 
 }
