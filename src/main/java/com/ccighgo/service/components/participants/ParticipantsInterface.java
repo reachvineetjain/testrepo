@@ -142,5 +142,11 @@ public interface ParticipantsInterface {
     * @return
     */
    public SeasonsForParticipants getAllAvailableSeasons2(String partnerId);
+   /**
+    * 
+    * @param participantId
+    * @return
+    */
+   public WSDefaultResponse unAssignPartcipantSubPartner(String participantId);
 
 }
