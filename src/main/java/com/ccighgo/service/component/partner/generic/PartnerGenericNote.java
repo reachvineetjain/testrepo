@@ -369,8 +369,11 @@ public class PartnerGenericNote implements PartnerGenericNoteInterface {
       try {
          PartnerSeasonNote noteEntity = new PartnerSeasonNote();
          noteEntity.setCreatedBy(note.getLoginId());
-         noteEntity.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
-         noteEntity.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
+         if (note.getCreatedOn() == null) {
+            note.setCreatedOn(DateUtils.getDateAndTime2(new Date()));
+         }
+         noteEntity.setCreatedOn(new java.sql.Timestamp(DateUtils.getMysqlDateFromStringFormatwithSlash(note.getCreatedOn()).getTime()));
+         noteEntity.setModifiedOn(new java.sql.Timestamp(DateUtils.getMysqlDateFromStringFormatwithSlash(note.getCreatedOn()).getTime()));
          noteEntity.setModifiedBy(note.getLoginId());
 
          noteEntity.setPartnerSeason(partnerSeasonsRepository.findOne(note.getPartnerSeasonId()));

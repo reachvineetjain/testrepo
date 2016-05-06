@@ -507,7 +507,6 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
    public AddedParticipantsList getAddedParticipant(String partnerId) {
       AddedParticipantsList addedParticipants = new AddedParticipantsList();
       try {
-         // TODO
          List<Participant> participants = null;
          Partner partner = partnerRepository.findOne(Integer.parseInt(partnerId));
          if (partner.getIsSubPartner() == CCIConstants.TRUE_BYTE) {
@@ -987,5 +986,23 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
          ExceptionUtil.logException(e, logger);
       }
       return seasons;
+   }
+
+   @Override
+   public WSDefaultResponse unAssignPartcipantSubPartner(String participantId) {
+      WSDefaultResponse wsDefaultResponse = new WSDefaultResponse();
+      try {
+         Participant p = participantRepository.findOne(Integer.parseInt(participantId));
+         p.setPartner2(null);
+         participantRepository.saveAndFlush(p);
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.CHANGE_PARTICIPANT_SUBPARTNER.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, logger);
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CANT_CHANGE_PARTICIPANT_SUBPARTNER.getValue(),
+               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_PATICIPANT_SUBPARTNER)));
+         logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_PATICIPANT_SUBPARTNER));
+      }
+      return wsDefaultResponse;
    }
 }
