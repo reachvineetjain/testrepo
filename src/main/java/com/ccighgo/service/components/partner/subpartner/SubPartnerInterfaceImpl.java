@@ -62,6 +62,8 @@ import com.ccighgo.service.transport.partner.beans.subpartner.SubPartnerStatus;
 import com.ccighgo.service.transport.partner.beans.subpartner.SubPartners;
 import com.ccighgo.service.transport.partner.beans.subpartnerdetail.Country;
 import com.ccighgo.service.transport.partner.beans.subpartnerdetail.Details;
+import com.ccighgo.service.transport.partner.beans.subpartnerdetail.OfficeAddressCountry;
+import com.ccighgo.service.transport.partner.beans.subpartnerdetail.SubPartnerOffice;
 import com.ccighgo.service.transport.partner.beans.subpartnerdetail.SubPartnerScreeningNotes;
 import com.ccighgo.service.transport.partner.beans.subpartnerdetail.SubPartnersMailingAddress;
 import com.ccighgo.service.transport.partner.beans.subpartnerdetail.SubPartnersPhysicalAddress;
@@ -331,6 +333,46 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
                subPartnerPrimaryContact.setWebsite(partnerContact.getWebsite());
             }
          }
+         
+         //=====================Bug 1412===========
+         
+         // Partner Offices
+         List<SubPartnerOffice> subPartnerOfficeList = null;
+         int count = 0;
+         if (partnerSubPartner.getPartnerOffices() != null && partnerSubPartner.getPartnerOffices().size() > 0) {
+            count = partnerSubPartner.getPartnerOffices().size();
+            subPartnerOfficeList = new ArrayList<SubPartnerOffice>();
+            for (com.ccighgo.db.entities.PartnerOffice pOffice : partnerSubPartner.getPartnerOffices()) {
+               SubPartnerOffice partOffice = new SubPartnerOffice();
+               partOffice.setPartnerOfficeId(pOffice.getPartnerOfficeId());
+               partOffice.setOfficeAddressLineOne(pOffice.getAdressOne());
+               partOffice.setOfficeAddressLineTwo(pOffice.getAdressTwo());
+               partOffice.setCity(pOffice.getCity());
+               partOffice.setZipCode(pOffice.getPostalCode());
+               OfficeAddressCountry officeAddressCountry = new OfficeAddressCountry();
+               officeAddressCountry.setOfficeAddressCountryId(pOffice.getLookupCountry().getCountryId());
+               officeAddressCountry.setOfficeAddressCountryISOCode(pOffice.getLookupCountry().getCountryCode());
+               officeAddressCountry.setOfficeAddressCountryName(pOffice.getLookupCountry().getCountryName());
+               partOffice.setOfficeAddressCountry(officeAddressCountry);
+               partOffice.setOfficePhone(pOffice.getPhoneNumber());
+               partOffice.setOfficeFax(pOffice.getFaxNumber());
+               partOffice.setOfficeEmail(pOffice.getEmail());
+               partOffice.setOfficeWebsite(pOffice.getWebsite());
+               if (pOffice.getPartnerOfficeType().getPartnerOfficeType().equals(CCIConstants.PRIMARY_OFFICE)) {
+                  partOffice.setIsPrimary(true);
+               } else {
+                  partOffice.setIsPrimary(false);
+               }
+               subPartnerOfficeList.add(partOffice);
+            }
+         }
+         subPartnerDetail.setSubPartnerOfficesCount(count);
+         if (subPartnerOfficeList != null) {
+            subPartnerDetail.getSubPartnerOffices().addAll(subPartnerOfficeList);
+         }
+         
+         //=========================End of 1412
+                      
          SubPartnersPhysicalAddress subPartnerPhysicalAddress = new SubPartnersPhysicalAddress();
          subPartnerPhysicalAddress.setPhysicalAddress1(partnerSubPartner.getPhysicalAddressLineOne());
          subPartnerPhysicalAddress.setPhysicalAddress2(partnerSubPartner.getPhysicalAddressLineTwo());
@@ -470,7 +512,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             return responce;
          }
          //Bug-1253: check if parent partner info exists which can be used to inherit partner season and cci contacts. 
-         PartnerUser parentUser = partnerUserRepository.findByPartnerGoIdAndLoginId(subPartner.getPartnerGoId(), subPartner.getLoginId());
+         PartnerUser parentUser = partnerUserRepository.findByPartnerGoIdAndLoginId(Integer.valueOf(subPartner.getGoId()), subPartner.getLoginId());
          if(parentUser==null){
             responce.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.SUB_PARTNER_CREATE_USER_EMAIL_EXIST.getValue(),
                   messageUtil.getMessage(SubPartnerMessageConstants.ERROR_CREATE_SUBPARTNER)));
@@ -492,7 +534,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             GoIdSequence goIdSequence = new GoIdSequence();
             Login login = new Login();
             try {
-               subPartnerDetails.setParentPartnerGoId((subPartner.getPartnerGoId()));
+               subPartnerDetails.setParentPartnerGoId(Integer.valueOf(subPartner.getGoId()));
                subPartnerDetails.setIsSubPartner(CCIConstants.ACTIVE);
 
                List<Login> loginList = new ArrayList<Login>();
