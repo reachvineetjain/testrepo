@@ -28,5 +28,6 @@ public class UtilityServiceMessageConstants {
    public static final String FAILED_GET_DOCUMENT_TYPES = "error.get.document.types";
    public static final String ERROR_INSERTING_BACKGROUND_DATA = "error.inserting.background.data";
    public static final String INSERTING_BACKGROUND_DATA_SUCCCESSFULLY = "info.inserting.backgroundcheck.data";
+   public static final String ERROR_GET_RESOURCES_LIST = "error.get.resources.list.user";
 
 }

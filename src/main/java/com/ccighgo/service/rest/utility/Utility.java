@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccighgo.service.components.utility.UtilityServices;
 import com.ccighgo.service.transport.common.response.beans.Response;
+import com.ccighgo.service.transport.document.resources.DocumentResources;
 import com.ccighgo.service.transport.partner.beans.partnerseason.PartnerSeasonProgramStatus;
 import com.ccighgo.service.transport.partner.beans.partnerseasondetail.NoteTags;
 import com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatuses;
@@ -314,5 +315,20 @@ public class Utility {
    @Produces("application/json")
    public UserTypes getUserTypes() {
       return utilityServices.getUserTypes();
+   }
+
+   /**
+    * It returns list of links to the resources (i.e links to
+    * contents,texts,images,videos) based on the type of the user.
+    * 
+    * @param goId
+    *           of the user
+    * @return the object DocumentResources in JSON format
+    */
+   @GET
+   @Path("resources/list/{goId}")
+   @Produces("application/json")
+   public DocumentResources getResourcesList(@PathParam("goId") Integer goId) {
+      return utilityServices.getResourcesList(goId);
    }
 }

@@ -1811,5 +1811,13 @@
 			<arg value="${xsd.dir}/partner/admin/PartnerLeadStatus.xsd" />
 		</java>
 	</target>
-	
+
+	<target name="DocumentResources">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/resources/DocumentResources.xsd" />
+		</java>
+	</target>
+
 </project>
