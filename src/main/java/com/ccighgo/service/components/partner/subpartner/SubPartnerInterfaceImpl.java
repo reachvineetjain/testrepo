@@ -614,8 +614,9 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             if(parentPartnerProgramContactsList!=null){
                List<PartnerProgram> subpartnerProgramContactsList = new ArrayList<PartnerProgram>();
                for(PartnerProgram pp:parentPartnerProgramContactsList){
-                  pp.setPartner(subPartnerDetails);
-                  subpartnerProgramContactsList.add(pp);
+                  PartnerProgram inherited = pp;
+                  inherited.setPartner(subPartnerDetails);
+                  subpartnerProgramContactsList.add(inherited);
                }
                partnerProgramRepository.save(subpartnerProgramContactsList);
                partnerProgramRepository.flush();
@@ -625,8 +626,9 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             if(partnerSeasons!=null && !(partnerSeasons.isEmpty())){
                List<PartnerSeason> subPartnerSeasons = new ArrayList<PartnerSeason>();
                for(PartnerSeason ps:partnerSeasons){
-                  ps.setPartner(subPartnerDetails);
-                  subPartnerSeasons.add(ps);
+                  PartnerSeason inherited = ps;
+                  inherited.setPartner(subPartnerDetails);
+                  subPartnerSeasons.add(inherited);
                }
                partnerSeasonsRepository.save(subPartnerSeasons);
                partnerSeasonsRepository.flush();

@@ -22,7 +22,9 @@ import com.ccighgo.db.entities.LoginUserType;
 import com.ccighgo.db.entities.Participant;
 import com.ccighgo.db.entities.ParticipantStatus;
 import com.ccighgo.db.entities.Partner;
+import com.ccighgo.db.entities.PartnerReviewStatus;
 import com.ccighgo.db.entities.PartnerSeason;
+import com.ccighgo.db.entities.PartnerUser;
 import com.ccighgo.db.entities.Season;
 import com.ccighgo.db.entities.SeasonCAPDetail;
 import com.ccighgo.db.entities.SeasonF1Detail;
@@ -644,10 +646,17 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
          List<Partner> allPartners = partnerRepository.findByIsSubPartnerAndParentId(partnerId);
          if (allPartners != null) {
             for (Partner p : allPartners) {
-               SubPartnersForParticipantsDetails details = new SubPartnersForParticipantsDetails();
-               details.setSubPartnerId(p.getPartnerGoId());
-               details.setSubPartnerName(p.getCompanyName());
-               subPartners.getDetails().add(details);
+               //Bug : 1409, get only active sub-partners. crazy code but no other option
+               if(p.getPartnerReviewStatuses()!=null){
+                  if(p.getPartnerReviewStatuses().get(0)!=null){
+                     if(p.getPartnerReviewStatuses().get(0).getPartnerStatus2().getPartnerStatusId()!=CCIConstants.DELETED_STATUS){
+                        SubPartnersForParticipantsDetails details = new SubPartnersForParticipantsDetails();
+                        details.setSubPartnerId(p.getPartnerGoId());
+                        details.setSubPartnerName(p.getCompanyName());
+                        subPartners.getDetails().add(details);
+                     }
+                  }
+               }
             }
          }
          subPartners.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
