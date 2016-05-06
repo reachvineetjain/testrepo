@@ -181,4 +181,11 @@ public class Participants {
       LOGGER.info("calling Participants.sendLogin ");
       return participantsInterface.sendLogin(participantGoId, request);
    }
+   @GET
+   @Path("unAssignPartcipantSubPartner/{participantId}")
+   @Produces("application/json")
+   public WSDefaultResponse unAssignPartcipantSubPartner( @PathParam("participantId") String participantId) {
+      LOGGER.info("calling Participants.assignSubpartnerToParticipant ");
+      return participantsInterface.unAssignPartcipantSubPartner( participantId);
+   }
 }
