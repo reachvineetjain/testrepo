@@ -37,6 +37,10 @@
 							maxOccurs="1" />
 						<xsd:element name="mailingAddressIsSameAsPhysicalAdress"
 							type="xsd:boolean" />
+						<xsd:element name="subPartnerOfficesCount" type="xsd:int"
+						minOccurs="1" maxOccurs="1" />
+						<xsd:element name="subPartnerOffices" type="cd:SubPartnerOffice"
+						minOccurs="1" maxOccurs="unbounded" />
 					</xsd:sequence>
 				</xsd:sequence>
 			</xsd:extension>
@@ -147,6 +151,44 @@
 		<xsd:sequence>
 			<xsd:element name="salutationId" type="xsd:int" />
 			<xsd:element name="salutationName" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="SubPartnerOffice">
+		<xsd:sequence>
+			<xsd:element name="isPrimary" type="xsd:boolean"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="partnerOfficeId" type="xsd:int"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="officeAddressLineOne" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="officeAddressLineTwo" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="city" type="xsd:string" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="zipCode" type="xsd:string" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="officeAddressCountry" type="cd:OfficeAddressCountry"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="officePhone" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="officeFax" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="officeEmail" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="officeWebsite" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="OfficeAddressCountry">
+		<xsd:sequence>
+			<xsd:element name="officeAddressCountryId" type="xsd:int"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="officeAddressCountryISOCode" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="officeAddressCountryName" type="xsd:string"
+				minOccurs="1" maxOccurs="1" />
 		</xsd:sequence>
 	</xsd:complexType>
 
