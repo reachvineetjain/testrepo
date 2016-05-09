@@ -326,9 +326,9 @@ public class Utility {
     * @return the object DocumentResources in JSON format
     */
    @GET
-   @Path("resources/list/{goId}")
+   @Path("resources/list/{goId}/{userTypeId}")
    @Produces("application/json")
-   public DocumentResources getResourcesList(@PathParam("goId") Integer goId) {
-      return utilityServices.getResourcesList(goId);
+   public DocumentResources getResourcesList(@PathParam("goId") Integer goId, @PathParam("userTypeId") Integer userTypeId) {
+      return utilityServices.getResourcesList(goId, userTypeId);
    }
 }

@@ -104,7 +104,7 @@ import com.ccighgo.utils.UuidUtils;
 public class UtilityServicesImpl implements UtilityServices {
 
    private static final Logger LOGGER = LoggerFactory.getLogger(UtilityServicesImpl.class);
-   private static final String SP_GET_RESOURCE_URL_LIST = "CALL SPGetResourceURL(?)";
+   private static final String SP_GET_RESOURCE_URL_LIST = "CALL SPGetResourceURL(?,?)";
 
    @Autowired CountryRepository countryRepository;
    @Autowired StateRepository stateRepository;
@@ -928,29 +928,27 @@ public class UtilityServicesImpl implements UtilityServices {
    }
 
    @Override
-   public DocumentResources getResourcesList(Integer goId) {
+   public DocumentResources getResourcesList(Integer goId, Integer userTypeId) {
       DocumentResources documentResources = new DocumentResources();
       try {
          // call to the stored procedure.
          Query query = entityManager.createNativeQuery(SP_GET_RESOURCE_URL_LIST);
          query.setParameter(1, goId);
+         query.setParameter(2, userTypeId);
 
-         List<Object[]> results = query.getResultList();         
+         List<Object[]> results = query.getResultList();
          if (results != null && results.size() > 0) {
             for (Object[] obj : results) {
                /* The positions of the fields in the result set */
-               // 0.goId,1.ProgramName,2.ResourceTypeName,3.DisplayName,4.ResourceURL
+               // 0.goId,1.ProgramName,2.ResourceUrl
                ProgramResources programResources = new ProgramResources();
                programResources.setProgramName(obj[1].toString());
-               programResources.setResourceTypeName(obj[2].toString());
-
-               ResourcesURLDetails urlDetails = new ResourcesURLDetails();
-               urlDetails.setResourceDisplayName(obj[3] != null ? obj[3].toString() : CCIConstants.EMPTY);
-               urlDetails.setResourceUrl(obj[4].toString());
-               programResources.getResourcesURLDetails().add(urlDetails);
-
+               programResources.setResourceUrl(obj[2].toString());
                documentResources.getProgramResources().add(programResources);
             }
+            documentResources.setGoId(goId);
+            documentResources.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE,
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          } else {
             documentResources.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD_IN_DB, CCIConstants.TYPE_INFO, CCIConstants.NO_DATA_CODE,
                   messageUtil.getMessage(CCIConstants.NO_RECORD)));
