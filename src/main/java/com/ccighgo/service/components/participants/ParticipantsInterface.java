@@ -139,9 +139,10 @@ public interface ParticipantsInterface {
 
    /**
     * @param partnerId
+    * @param participantId 
     * @return
     */
-   public SeasonsForParticipants getAllAvailableSeasons2(String partnerId);
+   public SeasonsForParticipants getAllAvailableSeasons2(String partnerId, String participantId);
    /**
     * 
     * @param participantId
