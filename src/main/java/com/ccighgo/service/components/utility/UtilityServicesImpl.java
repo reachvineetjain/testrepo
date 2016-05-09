@@ -928,13 +928,13 @@ public class UtilityServicesImpl implements UtilityServices {
    }
 
    @Override
-   public DocumentResources getResourcesList(String goId, String userTypeId) {
+   public DocumentResources getResourcesList(Integer goId, Integer userTypeId) {
       DocumentResources documentResources = new DocumentResources();
       try {
          // call to the stored procedure.
          Query query = entityManager.createNativeQuery(SP_GET_RESOURCE_URL_LIST);
-         query.setParameter(1, Integer.valueOf(goId));
-         query.setParameter(2, Integer.valueOf(userTypeId));
+         query.setParameter(1, goId);
+         query.setParameter(2, userTypeId);
 
          List<Object[]> results = query.getResultList();
          if (results != null && results.size() > 0) {
@@ -946,7 +946,7 @@ public class UtilityServicesImpl implements UtilityServices {
                programResources.setResourceUrl(obj[2].toString());
                documentResources.getProgramResources().add(programResources);
             }
-            documentResources.setGoId(Integer.valueOf(goId));
+            documentResources.setGoId(goId);
             documentResources.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE,
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          } else {
