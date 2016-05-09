@@ -328,7 +328,7 @@ public class Utility {
    @GET
    @Path("resources/list/{goId}/{userTypeId}")
    @Produces("application/json")
-   public DocumentResources getResourcesList(@PathParam("goId") Integer goId, @PathParam("userTypeId") Integer userTypeId) {
+   public DocumentResources getResourcesList(@PathParam("goId") String goId, @PathParam("userTypeId") String userTypeId) {
       return utilityServices.getResourcesList(goId, userTypeId);
    }
 }
