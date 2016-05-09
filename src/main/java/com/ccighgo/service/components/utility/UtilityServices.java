@@ -196,5 +196,5 @@ public interface UtilityServices {
 
    public UserTypes getUserTypes();
 
-   public DocumentResources getResourcesList(Integer goId,Integer userTypeId);
+   public DocumentResources getResourcesList(String goId, String userTypeId);
 }
