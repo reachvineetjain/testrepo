@@ -101,8 +101,16 @@ public class Participants {
    @Produces("application/json")
    public SeasonsForParticipants getAllAvailableSeasons(@PathParam("partnerId") String partnerId) {
       LOGGER.info("calling Participants.getAllAvailableSeasons ");
-      return participantsInterface.getAllAvailableSeasons2(partnerId);
+      return participantsInterface.getAllAvailableSeasons2(partnerId,null);
    }
+   @GET
+   @Path("allSeasons/{partnerId}/{participantId}")
+   @Produces("application/json")
+   public SeasonsForParticipants getAllAvailableSeasons(@PathParam("partnerId") String partnerId,@PathParam("participantId")String participantId) {
+      LOGGER.info("calling Participants.getAllAvailableSeasons ");
+      return participantsInterface.getAllAvailableSeasons2(partnerId,participantId);
+   }
+   
 
    @GET
    @Path("allProgramOptions/{partnerId}/{seasonId}/{departmentProgramId}")

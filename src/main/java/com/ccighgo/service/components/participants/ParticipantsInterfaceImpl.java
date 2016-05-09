@@ -960,12 +960,12 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
    }
 
    @Override
-   public SeasonsForParticipants getAllAvailableSeasons2(String partnerId) {
+   public SeasonsForParticipants getAllAvailableSeasons2(String partnerId,String participantId) {
       SeasonsForParticipants seasons = new SeasonsForParticipants();
       try {
 
          @SuppressWarnings("unchecked")
-         List<Object[]> result = em.createNativeQuery("call SPPartnerParticipantSeasons(:partnerId)").setParameter("partnerId", partnerId).getResultList();
+         List<Object[]> result = em.createNativeQuery("call SPPartnerParticipantSeasons_new(:partnerId,:participantId)").setParameter("partnerId", partnerId).setParameter("participantId", participantId).getResultList();
          if (result != null) {
             for (Object[] dt : result) {
                SeasonsForParticipantDetails seasonsForParticipantDetails = new SeasonsForParticipantDetails();
