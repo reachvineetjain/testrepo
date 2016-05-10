@@ -156,7 +156,7 @@ public class AdminPartner {
    public Response partnerLeadSendLogin(@PathParam("partnerGoId") String partnerGoId, @PathParam("loginVal") String loginVal, @PathParam("loginId") String loginId) {
       return adminPartnerInterface.partnerLeadSendLogin(partnerGoId, loginVal, loginId, request);
    }
-   
+
    /**
     * @param partnerGoId
     * @param reason

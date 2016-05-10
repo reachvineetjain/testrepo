@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:util="http://www.springframework.org/schema/util" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:jaxws="http://cxf.apache.org/jaxws" xmlns:jaxrs="http://cxf.apache.org/jaxrs"
-	xmlns:cxf="http://cxf.apache.org/core" xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:task="http://www.springframework.org/schema/task"
-	xsi:schemaLocation="
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:util="http://www.springframework.org/schema/util" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:jaxws="http://cxf.apache.org/jaxws" xmlns:jaxrs="http://cxf.apache.org/jaxrs" xmlns:cxf="http://cxf.apache.org/core" xmlns:context="http://www.springframework.org/schema/context"
+   xmlns:task="http://www.springframework.org/schema/task"
+   xsi:schemaLocation="
     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
     http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd
     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
@@ -12,104 +10,75 @@
     http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd
     http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.0.xsd">
 
-	<import resource="classpath:META-INF/cxf/cxf.xml" />
-	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
+   <import resource="classpath:META-INF/cxf/cxf.xml" />
+   <import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
 
-	<util:list id="jsonTypes">
-		<value>application/json</value>
-		<value>application/jettison</value>
-	</util:list>
+   <util:list id="jsonTypes">
+      <value>application/json</value>
+      <value>application/jettison</value>
+   </util:list>
 
-	<util:list id="jsonKeys">
-		<value>data</value>
-		<value>messages</value>
-	</util:list>
+   <util:list id="jsonKeys">
+      <value>data</value>
+      <value>messages</value>
+   </util:list>
 
-	<bean id="jsonProvider" class="com.ccighgo.custom.utilities.CustomJSONProvider">
-	</bean>
+   <bean id="jsonProvider" class="com.ccighgo.custom.utilities.CustomJSONProvider">
+   </bean>
 
-	<jaxrs:server id="service" address="/">
-		<jaxrs:serviceBeans>
-			<bean id="seasons" class="com.ccighgo.service.rest.season.Seasons" />
-			<bean id="userManagement"
-				class="com.ccighgo.service.rest.usermanagement.UserManagement" />
-			<bean id="utility" class="com.ccighgo.service.rest.utility.Utility" />
-			<bean id="updateLog" class="com.ccighgo.service.rest.updatelog.UpdateLog" />
-			<bean id="insurance" class="com.ccighgo.service.rest.insurance.Insurance" />
-			<bean id="regionManagement"
-				class="com.ccighgo.service.rest.regionmanagement.RegionManagement" />
-			<bean id="regionAssignment"
-				class="com.ccighgo.service.rest.regionassignment.RegionAssignment" />
-			<bean id="gciapi" class="com.ccighgo.service.rest.wordpress.forms.GCIAPI" />
-			<bean id="cciResources" class="com.ccighgo.service.rest.cciresources.CCIResources" />
-			<bean id="authentication"
-				class="com.ccighgo.service.rest.authentication.Authentication" />
-			<bean id="notification"
-				class="com.ccighgo.service.rest.pushnotification.PushNotification" />
-			<bean id="authorization" class="com.ccighgo.service.rest.authorization.Authorization" />
-			<bean id="backgroundcheck"
-				class="com.ccighgo.service.rest.backgroundcheck.BackgroundCheck" />
-			<bean id="partner" class="com.ccighgo.service.rest.partner.Partner" />
-			<bean id="participants" class="com.ccighgo.service.rest.participants.Participants" />
-			<bean id="partnerUser" class="com.ccighgo.service.rest.partner.user.PartnerUser" />
-			<bean id="subPartner"
-				class="com.ccighgo.service.rest.partner.subpartner.SubPartner" />
-			<bean id="partnerSeason" class="com.ccighgo.service.rest.partner.season.PartnerSeason" />
-			<bean id="partnerAgent" class="com.ccighgo.service.rest.partner.agent.PartnerAgent" />
-			<bean id="partnerQuickStatistics"
-				class="com.ccighgo.service.rest.partner.quick.stats.PartnerQuickStatistics" />
-			<bean id="partnerWorkQueues"
-				class="com.ccighgo.service.rest.partner.work.queue.PartnerWorkQueues" />
-			<bean id="partnerCompany"
-				class="com.ccighgo.service.rest.partner.company.PartnerCompany" />
-			<bean id="partnerAdmin" class="com.ccighgo.service.rest.partner.admin.PartnerAdmin" />
-			<bean id="partnerAdminSeason"
-				class="com.ccighgo.service.rest.partner.admin.season.PartnerAdminSeason" />
-			<bean id="partnerGenericNotes"
-				class="com.ccighgo.service.rest.partner.generic.notes.PartnerGenericNotes" />
-			<bean id="genericDocuments"
-				class="com.ccighgo.service.rest.generic.documents.GenericDocuments" />
-			<bean id="adminPartner"
-				class="com.ccighgo.service.rest.partner.admin.partner.AdminPartner" />
-			<bean id="fieldStaffListing"
-				class="com.ccighgo.service.rest.fieldstaff.listing.FieldStaffListing" />
-			<bean id="fieldStaffSeason"
-				class="com.ccighgo.service.rest.fieldstaff.season.FieldStaffSeason" />
-			<bean id="fieldStaffs" class="com.ccighgo.service.rest.fieldstaffs.FieldStaffs" />
-			<bean id="fieldStaffGenericNote"
-				class="com.ccighgo.service.rest.generic.notes.fieldstaffs.FieldStaffGenericNote" />
-			<bean id="fieldStaffLeadershipDetails"
-				class="com.ccighgo.service.rest.fieldstaff.details.listing.FieldStaffLeadershipDetails" />
-			<bean id="AdminERDParticipant"
-				class="com.ccighgo.service.rest.fieldstaffs.participant.AdminERDParticipant" />
-			<bean id="fieldStaffERDDashboard"
-				class="com.ccighgo.service.rest.fieldstaffs.erddashboard.FieldStaffERDDashboard" />
-			<bean id="fieldStaffMyPlacements"
-				class="com.ccighgo.service.rest.fieldstaffs.myplacements.FieldStaffMyPlacements" />
-			<bean id="nonificationServer"
-				class="com.ccighgo.service.rest.pushnotification.NotificationServer" />
-			<bean id="sevisBatch" class="com.ccighgo.service.rest.sevis.SevisBatch" />
-			<bean id="fSDetails"
-				class="com.ccighgo.service.rest.fieldstaff.network.details.FSDetails" />
-			<bean id="hFApplicationProcess"
-				class="com.ccighgo.service.rest.hf.participant.application.process.HFApplicationProcess" />
-			<bean id="hfParticipantApplicationSeasons"
-				class="com.ccighgo.service.rest.hf.participant.application.season.HfParticipantApplicationSeasons" />
-			<bean id="GenericUpdateLogs"
-				class="com.ccighgo.service.rest.genericupdatelog.GenericUpdateLogs" />
-			<bean id="greenheartclub"
-				class="com.ccighgo.service.rest.greenheartclub.GreenHeartClub" />
-				<bean id="partnerSeasonGenericNotes" class="com.ccighgo.service.rest.partner.generic.notes.PartnerSeasonGenericNotes" />
-		</jaxrs:serviceBeans>
-		<jaxrs:providers>
-			<ref bean="jsonProvider" />
-		</jaxrs:providers>
-	</jaxrs:server>
-	<!-- SOAP configuration -->
-	<jaxws:endpoint
-		implementor="com.ccighgo.service.soap.wordpress.forms.WordPressFormsImpl"
-		address="/findForm" />
+   <jaxrs:server id="service" address="/">
+      <jaxrs:serviceBeans>
+         <bean id="seasons" class="com.ccighgo.service.rest.season.Seasons" />
+         <bean id="userManagement" class="com.ccighgo.service.rest.usermanagement.UserManagement" />
+         <bean id="utility" class="com.ccighgo.service.rest.utility.Utility" />
+         <bean id="updateLog" class="com.ccighgo.service.rest.updatelog.UpdateLog" />
+         <bean id="insurance" class="com.ccighgo.service.rest.insurance.Insurance" />
+         <bean id="regionManagement" class="com.ccighgo.service.rest.regionmanagement.RegionManagement" />
+         <bean id="regionAssignment" class="com.ccighgo.service.rest.regionassignment.RegionAssignment" />
+         <bean id="gciapi" class="com.ccighgo.service.rest.wordpress.forms.GCIAPI" />
+         <bean id="cciResources" class="com.ccighgo.service.rest.cciresources.CCIResources" />
+         <bean id="authentication" class="com.ccighgo.service.rest.authentication.Authentication" />
+         <bean id="notification" class="com.ccighgo.service.rest.pushnotification.PushNotification" />
+         <bean id="authorization" class="com.ccighgo.service.rest.authorization.Authorization" />
+         <bean id="backgroundcheck" class="com.ccighgo.service.rest.backgroundcheck.BackgroundCheck" />
+         <bean id="partner" class="com.ccighgo.service.rest.partner.Partner" />
+         <bean id="participants" class="com.ccighgo.service.rest.participants.Participants" />
+         <bean id="partnerUser" class="com.ccighgo.service.rest.partner.user.PartnerUser" />
+         <bean id="subPartner" class="com.ccighgo.service.rest.partner.subpartner.SubPartner" />
+         <bean id="partnerSeason" class="com.ccighgo.service.rest.partner.season.PartnerSeason" />
+         <bean id="partnerAgent" class="com.ccighgo.service.rest.partner.agent.PartnerAgent" />
+         <bean id="partnerQuickStatistics" class="com.ccighgo.service.rest.partner.quick.stats.PartnerQuickStatistics" />
+         <bean id="partnerWorkQueues" class="com.ccighgo.service.rest.partner.work.queue.PartnerWorkQueues" />
+         <bean id="partnerCompany" class="com.ccighgo.service.rest.partner.company.PartnerCompany" />
+         <bean id="partnerAdmin" class="com.ccighgo.service.rest.partner.admin.PartnerAdmin" />
+         <bean id="partnerAdminSeason" class="com.ccighgo.service.rest.partner.admin.season.PartnerAdminSeason" />
+         <bean id="partnerGenericNotes" class="com.ccighgo.service.rest.partner.generic.notes.PartnerGenericNotes" />
+         <bean id="genericDocuments" class="com.ccighgo.service.rest.generic.documents.GenericDocuments" />
+         <bean id="adminPartner" class="com.ccighgo.service.rest.partner.admin.partner.AdminPartner" />
+         <bean id="fieldStaffListing" class="com.ccighgo.service.rest.fieldstaff.listing.FieldStaffListing" />
+         <bean id="fieldStaffSeason" class="com.ccighgo.service.rest.fieldstaff.season.FieldStaffSeason" />
+         <bean id="fieldStaffs" class="com.ccighgo.service.rest.fieldstaffs.FieldStaffs" />
+         <bean id="fieldStaffGenericNote" class="com.ccighgo.service.rest.generic.notes.fieldstaffs.FieldStaffGenericNote" />
+         <bean id="fieldStaffLeadershipDetails" class="com.ccighgo.service.rest.fieldstaff.details.listing.FieldStaffLeadershipDetails" />
+         <bean id="AdminERDParticipant" class="com.ccighgo.service.rest.fieldstaffs.participant.AdminERDParticipant" />
+         <bean id="fieldStaffERDDashboard" class="com.ccighgo.service.rest.fieldstaffs.erddashboard.FieldStaffERDDashboard" />
+         <bean id="fieldStaffMyPlacements" class="com.ccighgo.service.rest.fieldstaffs.myplacements.FieldStaffMyPlacements" />
+         <bean id="nonificationServer" class="com.ccighgo.service.rest.pushnotification.NotificationServer" />
+         <bean id="sevisBatch" class="com.ccighgo.service.rest.sevis.SevisBatch" />
+         <bean id="fSDetails" class="com.ccighgo.service.rest.fieldstaff.network.details.FSDetails" />
+         <bean id="hFApplicationProcess" class="com.ccighgo.service.rest.hf.participant.application.process.HFApplicationProcess" />
+         <bean id="hfParticipantApplicationSeasons" class="com.ccighgo.service.rest.hf.participant.application.season.HfParticipantApplicationSeasons" />
+         <bean id="GenericUpdateLogs" class="com.ccighgo.service.rest.genericupdatelog.GenericUpdateLogs" />
+         <bean id="greenheartclub" class="com.ccighgo.service.rest.greenheartclub.GreenHeartClub" />
+         <bean id="partnerSeasonGenericNotes" class="com.ccighgo.service.rest.partner.generic.notes.PartnerSeasonGenericNotes" />
+      </jaxrs:serviceBeans>
+      <jaxrs:providers>
+         <ref bean="jsonProvider" />
+      </jaxrs:providers>
+   </jaxrs:server>
+   <!-- SOAP configuration -->
+   <jaxws:endpoint implementor="com.ccighgo.service.soap.wordpress.forms.WordPressFormsImpl" address="/findForm" />
 
-	<task:annotation-driven />
+   <task:annotation-driven />
 
 </beans>

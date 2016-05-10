@@ -133,7 +133,7 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
                partOffice.setOfficeAddressCountry(officeAddressCountry);
                partOffice.setOfficePhone(pOffice.getPhoneNumber());
                partOffice.setOfficeFax(pOffice.getFaxNumber());
-               partOffice.setOfficeEmail(pOffice.getEmail());
+               partOffice.setOfficeEmail(pOffice.getEmail()!=null?pOffice.getEmail():"");
                partOffice.setOfficeWebsite(pOffice.getWebsite());
                if (pOffice.getPartnerOfficeType().getPartnerOfficeType().equals(CCIConstants.PRIMARY_OFFICE)) {
                   partOffice.setIsPrimary(true);
