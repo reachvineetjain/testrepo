@@ -49,7 +49,7 @@ public interface AdminPartnerInterface {
    /**
     * @return
     */
-   public LeadPartners getLeadPartnerList();
+   public LeadPartners getLeadPartnerList(String statusId);
 
    /**
     * @param partnerGoId

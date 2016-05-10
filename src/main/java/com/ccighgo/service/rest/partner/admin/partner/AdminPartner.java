@@ -106,10 +106,10 @@ public class AdminPartner {
     * @return
     */
    @GET
-   @Path("lead/partner/list/")
+   @Path("lead/partner/list/{statusId}")
    @Produces("application/json")
-   public LeadPartners getLeadPartnerList() {
-      return adminPartnerInterface.getLeadPartnerList();
+   public LeadPartners getLeadPartnerList(@PathParam("statusId") String statusId) {
+      return adminPartnerInterface.getLeadPartnerList(statusId);
    }
 
    /**
@@ -156,7 +156,7 @@ public class AdminPartner {
    public Response partnerLeadSendLogin(@PathParam("partnerGoId") String partnerGoId, @PathParam("loginVal") String loginVal, @PathParam("loginId") String loginId) {
       return adminPartnerInterface.partnerLeadSendLogin(partnerGoId, loginVal, loginId, request);
    }
-   
+
    /**
     * @param partnerGoId
     * @param reason

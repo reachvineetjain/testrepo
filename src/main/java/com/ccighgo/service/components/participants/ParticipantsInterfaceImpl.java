@@ -22,7 +22,9 @@ import com.ccighgo.db.entities.LoginUserType;
 import com.ccighgo.db.entities.Participant;
 import com.ccighgo.db.entities.ParticipantStatus;
 import com.ccighgo.db.entities.Partner;
+import com.ccighgo.db.entities.PartnerReviewStatus;
 import com.ccighgo.db.entities.PartnerSeason;
+import com.ccighgo.db.entities.PartnerUser;
 import com.ccighgo.db.entities.Season;
 import com.ccighgo.db.entities.SeasonCAPDetail;
 import com.ccighgo.db.entities.SeasonF1Detail;
@@ -278,7 +280,11 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                         participant.setEndDate(ps.getPartnerSeasonEndDate());
                      }
                   }
-                  participant.setPartner1(partner);
+                  if (partner.getIsSubPartner() == CCIConstants.TRUE_BYTE) {
+                     participant.setPartner2(partner);
+                  } else {
+                     participant.setPartner1(partner);
+                  }
                   participant.setGuaranteed((byte) (p.isGuranteed() ? 1 : 0));
                   participant.setParticipantGoId(goIdSequence.getGoId());
                   participantRepository.saveAndFlush(participant);
@@ -540,7 +546,8 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                if (participant.getEndDate() != null) {
                   details.setParticipantEndDate(DateUtils.getDateAndTime(participant.getEndDate()));
                }
-               //BUG 1382 participant listing the “first name” for created participant 
+               // BUG 1382 participant listing the “first name” for created
+               // participant
                details.setParticipantFirstName(participant.getFirstName());
                if (participant.getGuaranteed() != null) {
                   details.setParticipantGuranteed(participant.getGuaranteed() == 1);
@@ -552,7 +559,8 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                if (participant.getDepartmentProgram() != null) {
                   details.setParticipantProgramName(participant.getDepartmentProgram().getProgramName());
                }
-               //BUG 1173 point 1. As per discussion we need to show both program option as well as available programs
+               // BUG 1173 point 1. As per discussion we need to show both
+               // program option as well as available programs
                if (participant.getDepartmentProgramOption() != null) {
                   details.setParticipantProgramOptionId(participant.getDepartmentProgramOption().getDepartmentProgramOptionId());
                   details.setParticipantProgramOption(participant.getDepartmentProgramOption().getProgramOptionName());
@@ -637,10 +645,17 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
          List<Partner> allPartners = partnerRepository.findByIsSubPartnerAndParentId(partnerId);
          if (allPartners != null) {
             for (Partner p : allPartners) {
-               SubPartnersForParticipantsDetails details = new SubPartnersForParticipantsDetails();
-               details.setSubPartnerId(p.getPartnerGoId());
-               details.setSubPartnerName(p.getCompanyName());
-               subPartners.getDetails().add(details);
+               //Bug : 1409, get only active sub-partners. crazy code but no other option
+               if(p.getPartnerReviewStatuses()!=null){
+                  if(p.getPartnerReviewStatuses().get(0)!=null){
+                     if(p.getPartnerReviewStatuses().get(0).getPartnerStatus2().getPartnerStatusId()!=CCIConstants.DELETED_STATUS){
+                        SubPartnersForParticipantsDetails details = new SubPartnersForParticipantsDetails();
+                        details.setSubPartnerId(p.getPartnerGoId());
+                        details.setSubPartnerName(p.getCompanyName());
+                        subPartners.getDetails().add(details);
+                     }
+                  }
+               }
             }
          }
          subPartners.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
@@ -950,7 +965,7 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
       try {
 
          @SuppressWarnings("unchecked")
-         List<Object[]> result = em.createNativeQuery("call SPPartnerParticipantSeasons_new(:partnerId,:participantId)").setParameter("partnerId", partnerId).setParameter("participantId", participantId).getResultList();
+         List<Object[]> result = em.createNativeQuery("call SPPartnerParticipantSeasons(:partnerId,:participantId)").setParameter("partnerId", partnerId).setParameter("participantId", participantId).getResultList();
          if (result != null) {
             for (Object[] dt : result) {
                SeasonsForParticipantDetails seasonsForParticipantDetails = new SeasonsForParticipantDetails();

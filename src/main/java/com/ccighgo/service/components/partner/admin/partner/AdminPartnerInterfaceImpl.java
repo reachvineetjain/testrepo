@@ -243,7 +243,7 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
    public AddedPartners getAddedPartnerList() {
       AddedPartners addedPartners = new AddedPartners();
       try {
-         List<PartnerReviewStatus> partnerReviewStatusList = partnerReviewStatusRepository.findReviewStatusByStatus(11);
+         List<PartnerReviewStatus> partnerReviewStatusList = partnerReviewStatusRepository.findAddedPartners(11);
          if (partnerReviewStatusList == null) {
             throw new CcighgoException("No Active partners found.");
          }
@@ -424,11 +424,11 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
 
    @Override
    @Transactional(readOnly = true)
-   public LeadPartners getLeadPartnerList() {
+   public LeadPartners getLeadPartnerList(String statusId) {
       LeadPartners leadPartners = new LeadPartners();
       try {
          // 4 is pending status
-         List<PartnerReviewStatus> partnerReviewStatusList = partnerReviewStatusRepository.findReviewStatusByStatus(4);
+         List<PartnerReviewStatus> partnerReviewStatusList = partnerReviewStatusRepository.findReviewStatusByStatus(Integer.valueOf(statusId));
          if (partnerReviewStatusList == null) {
             throw new CcighgoException("No Leads found.");
          }
