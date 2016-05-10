@@ -965,7 +965,7 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
       try {
 
          @SuppressWarnings("unchecked")
-         List<Object[]> result = em.createNativeQuery("call SPPartnerParticipantSeasons_new(:partnerId,:participantId)").setParameter("partnerId", partnerId).setParameter("participantId", participantId).getResultList();
+         List<Object[]> result = em.createNativeQuery("call SPPartnerParticipantSeasons(:partnerId,:participantId)").setParameter("partnerId", partnerId).setParameter("participantId", participantId).getResultList();
          if (result != null) {
             for (Object[] dt : result) {
                SeasonsForParticipantDetails seasonsForParticipantDetails = new SeasonsForParticipantDetails();
