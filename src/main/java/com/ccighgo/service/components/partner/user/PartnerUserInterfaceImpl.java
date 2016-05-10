@@ -662,7 +662,7 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
 
                      usrOffice.setOfficePhone(pOffice.getPhoneNumber());
                      usrOffice.setOfficeFax(pOffice.getFaxNumber());
-                     usrOffice.setOfficeEmail(pOffice.getPartner().getEmail());
+                     usrOffice.setOfficeEmail(pOffice.getEmail());
                      usrOffice.setOfficeWebsite(pOffice.getWebsite());
                      if (pOffice.getPartnerOfficeType().equals(CCIConstants.PRIMARY_OFFICE)) {
                         usrOffice.setIsPrimary(true);
