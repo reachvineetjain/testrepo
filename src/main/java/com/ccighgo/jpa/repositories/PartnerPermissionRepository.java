@@ -18,8 +18,5 @@ public interface PartnerPermissionRepository extends JpaRepository<PartnerPermis
    @Query("SELECT p FROM PartnerPermission p WHERE p.partnerUser.partnerUserId = ?1 AND p.lookupDepartmentProgram.lookupDepartmentProgramId = ?2")
    public List<PartnerPermission> findByPartnerUserIdAndProgramId(Integer partnerUserId, Integer lookupDepartmentProgramId);
 
-   @Modifying
-   @Query("delete from PartnerPermission s where s.partnerUser.partnerUserId=?1 AND  s.lookupDepartmentProgram.lookupDepartmentProgramId =?2")
-   public void deleteAllPermissionOfPartnerUserInCertainDepartmentProgram(Integer partnerUserId, Integer lookupDepartmentProgramId);
 
 }
