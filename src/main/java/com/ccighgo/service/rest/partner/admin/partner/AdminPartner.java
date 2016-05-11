@@ -111,6 +111,14 @@ public class AdminPartner {
    public LeadPartners getLeadPartnerList(@PathParam("statusId") String statusId) {
       return adminPartnerInterface.getLeadPartnerList(statusId);
    }
+   
+   @GET
+   @Path("lead/partner/list")
+   @Produces("application/json")
+   public LeadPartners getLeadPartnerList() {
+      return adminPartnerInterface.getLeadPartnerList(4+"");
+   }
+   
 
    /**
     * @param partnerGoId
