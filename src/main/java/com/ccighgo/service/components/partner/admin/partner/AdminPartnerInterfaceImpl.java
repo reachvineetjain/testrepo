@@ -71,6 +71,8 @@ import com.ccighgo.utils.UuidUtils;
 @Component
 public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
 
+   private static final int VALID_STATUS = 11;
+
    private static final Logger LOGGER = LoggerFactory.getLogger(AdminPartnerInterfaceImpl.class);
 
    @Autowired CommonComponentUtils componentUtils;
@@ -243,7 +245,7 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
    public AddedPartners getAddedPartnerList() {
       AddedPartners addedPartners = new AddedPartners();
       try {
-         List<PartnerReviewStatus> partnerReviewStatusList = partnerReviewStatusRepository.findAddedPartners(11);
+         List<PartnerReviewStatus> partnerReviewStatusList = partnerReviewStatusRepository.findAddedPartners(VALID_STATUS);
          if (partnerReviewStatusList == null) {
             throw new CcighgoException("No Active partners found.");
          }
@@ -330,6 +332,13 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
          }
          if (goId == null || Integer.valueOf(goId) == 0 || Integer.valueOf(goId) < 0) {
             throw new CcighgoException("login info of partner is required update the record");
+         }
+         if (loggedinUserLoginId != null) {
+            Login currentUser = loginRepository.findOne(Integer.parseInt(loggedinUserLoginId));
+            if (currentUser != null) {
+               currentUser.setActive(currentUser.getActive().equals(CCIConstants.ACTIVE) ? CCIConstants.INACTIVE : CCIConstants.ACTIVE);
+               loginRepository.saveAndFlush(currentUser);
+            }
          }
          List<Login> partnerLogin = loginRepository.findAllByGoId(Integer.valueOf(goId));
          if (partnerLogin == null) {
@@ -650,8 +659,7 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
                   messageUtil.getMessage(CCIConstants.NO_RECORD)));
          }
       } catch (CcighgoException e) {
-         pPeadStatuses.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.ERROR_GET_LEAD_STATUS_LIST.getValue(),
-               e.getMessage()));
+         pPeadStatuses.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.ERROR_GET_LEAD_STATUS_LIST.getValue(), e.getMessage()));
          LOGGER.error(e.getMessage());
       }
       return pPeadStatuses;
