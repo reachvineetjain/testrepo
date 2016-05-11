@@ -1249,6 +1249,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          po.setPhoneNumber(officesDetails.getPhone());
          po.setPostalCode(officesDetails.getZipCode());
          po.setWebsite(officesDetails.getWebsite());
+         po.setEmail(officesDetails.getEmail());
          partnerOfficeRepository.saveAndFlush(po);
          pOffices = getListofOffices(officesDetails.getGoId());
          pOffices
@@ -1270,13 +1271,14 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
             for (PartnerOffice partnerOffice : offices) {
                PartnerAdminOverviewOfficesDetails office = new PartnerAdminOverviewOfficesDetails();
                office.setPartnerOfficeId(partnerOffice.getPartnerOfficeId());
+               office.setGoId(goId);
                office.setAddress1(partnerOffice.getAdressOne());
                office.setAddress2(partnerOffice.getAdressTwo());
                office.setCity(partnerOffice.getCity());
                String countryName = partnerOffice.getLookupCountry().getCountryName();
                if (countryName != null)
                   office.setCountry(countryName);
-               office.setEmail(partnerOffice.getPartner().getEmail());
+               office.setEmail(partnerOffice.getEmail());
                office.setFax(partnerOffice.getFaxNumber());
                office.setPhone(partnerOffice.getPhoneNumber());
                office.setWebsite(partnerOffice.getWebsite());
