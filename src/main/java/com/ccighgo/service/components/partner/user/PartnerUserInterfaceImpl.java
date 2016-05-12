@@ -582,7 +582,7 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
                }
                // save login
                Login newUserLogin = new Login();
-               newUserLogin.setActive(CCIConstants.ACTIVE);
+               newUserLogin.setActive(partnerUserDetails.getUserActiveStatus() == 1 ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
                GoIdSequence goId = new GoIdSequence();
                goId.setGoId(partnerUserDetails.getPartnerGoId());
                newUserLogin.setGoIdSequence(goId);
@@ -627,7 +627,6 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
                pUser.setFax(partnerUserDetails.getUserFax());
                pUser.setIsPrimary(CCIConstants.INACTIVE);
                pUser.setActive(partnerUserDetails.getUserActiveStatus() == CCIConstants.ACTIVE ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
-              
                if (partnerUserDetails.getUserOffices() != null) {
                   for (UserOffice uo : partnerUserDetails.getUserOffices()) {
                      if (uo.isIsPrimary()) {
