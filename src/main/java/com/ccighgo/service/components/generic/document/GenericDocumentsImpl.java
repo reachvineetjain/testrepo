@@ -44,6 +44,7 @@ import com.ccighgo.service.transport.generic.beans.documents.seasoncontract.Gene
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.DateUtils;
 import com.ccighgo.utils.ExceptionUtil;
+import com.ccighgo.utils.ExtraData;
 import com.ccighgo.utils.WSDefaultResponse;
 import com.ccighgo.utils.reuse.function.ReusedFunctions;
 import com.ccighgo.utils.reuse.function.pojo.UserInformationOfCreatedBy;
@@ -152,6 +153,10 @@ public class GenericDocumentsImpl implements GenericDocumentsInterface {
          p.setDocumentInformation(d);
          p.setPartner(partner);
          partnerDocumentsRepository.saveAndFlush(p);
+         
+         ExtraData e = new ExtraData();
+         e.setPartnerGenericDocuments(viewPartnerDocument(partnerGenericDocuments.getGoId()+""));
+         responce.setExtraData(e);
          responce.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DOCUMENT_CREATED.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {

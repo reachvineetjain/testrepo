@@ -71,6 +71,8 @@ import com.ccighgo.utils.UuidUtils;
 @Component
 public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
 
+   private static final int VALID_STATUS = 11;
+
    private static final Logger LOGGER = LoggerFactory.getLogger(AdminPartnerInterfaceImpl.class);
 
    @Autowired CommonComponentUtils componentUtils;
@@ -243,7 +245,7 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
    public AddedPartners getAddedPartnerList() {
       AddedPartners addedPartners = new AddedPartners();
       try {
-         List<PartnerReviewStatus> partnerReviewStatusList = partnerReviewStatusRepository.findAddedPartners(11);
+         List<PartnerReviewStatus> partnerReviewStatusList = partnerReviewStatusRepository.findAddedPartners(VALID_STATUS);
          if (partnerReviewStatusList == null) {
             throw new CcighgoException("No Active partners found.");
          }
@@ -331,6 +333,7 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
          if (partnerLoginId == null || Integer.valueOf(partnerLoginId) == 0 || Integer.valueOf(partnerLoginId) < 0) {
             throw new CcighgoException("login info of partner is required update the record");
          }
+         
          Byte activeStatus = null;
          if (Integer.valueOf(statusVal) == 1) {
             activeStatus = CCIConstants.ACTIVE;
@@ -338,7 +341,7 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
          if (Integer.valueOf(statusVal) == 0) {
             activeStatus = CCIConstants.INACTIVE;
          }
-         //first disable login of the partner
+         //first enable/disable login of the partner
          //Bug 1459
          Login login = loginRepository.findOne(Integer.valueOf(partnerLoginId));
          if(login!=null){
@@ -349,7 +352,7 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
             throw new CcighgoException("no record found to update status with the login info provided, please check request url");
          }
          
-        // Get list of partner users and disable their login
+        // Get list of partner users and enable/disable their login
          List<Login> partnerLogin = loginRepository.findAllByGoId(login.getGoIdSequence().getGoId());
          if (partnerLogin == null) {
             throw new CcighgoException("no record found to update status with the login info provided, please check request url");
@@ -363,6 +366,7 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
             }
             loginRepository.save(logins);
          }
+         //Enable/disable login of subpartners
          List<Partner> subPartners = partnerRepository.findByIsSubPartnerAndParentId(login.getGoIdSequence().getGoId());
          if (subPartners != null && !subPartners.isEmpty()) {
             logins = new ArrayList<Login>();
@@ -664,8 +668,7 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
                   messageUtil.getMessage(CCIConstants.NO_RECORD)));
          }
       } catch (CcighgoException e) {
-         pPeadStatuses.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.ERROR_GET_LEAD_STATUS_LIST.getValue(),
-               e.getMessage()));
+         pPeadStatuses.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.ERROR_GET_LEAD_STATUS_LIST.getValue(), e.getMessage()));
          LOGGER.error(e.getMessage());
       }
       return pPeadStatuses;

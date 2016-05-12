@@ -255,9 +255,9 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
       AssignedRegion assignedRegion = new AssignedRegion();
       try {
          List<Region> list = seasonGeographyConfigurationRepository.findDistinctRegionsObjectBySuperRegionIdAndSeasonId(superRegionId, seasonId);
-         if (list == null) {
+         if (list == null || list.isEmpty()) {
             assignedRegion.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
-                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+                  messageUtil.getMessage(CCIConstants.NO_RECORD)));
             return assignedRegion;
          } else {
             assignedRegion.setSeasonId(seasonId);
