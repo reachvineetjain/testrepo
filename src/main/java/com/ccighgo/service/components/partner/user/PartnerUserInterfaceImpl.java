@@ -626,7 +626,8 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
                pUser.setEmergencyPhone(partnerUserDetails.getUserEmergencyPhone());
                pUser.setFax(partnerUserDetails.getUserFax());
                pUser.setIsPrimary(CCIConstants.INACTIVE);
-               pUser.setActive(CCIConstants.ACTIVE);
+               pUser.setActive(partnerUserDetails.getUserActiveStatus() == CCIConstants.ACTIVE ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
+              
                if (partnerUserDetails.getUserOffices() != null) {
                   for (UserOffice uo : partnerUserDetails.getUserOffices()) {
                      if (uo.isIsPrimary()) {
