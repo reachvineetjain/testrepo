@@ -321,7 +321,7 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
 
    @Override
    @Transactional
-   public Response toggleActiveStatus(String statusVal, String loggedinUserLoginId, String goId) {
+   public Response toggleActiveStatus(String statusVal, String loggedinUserLoginId, String partnerLoginId) {
       Response resp = new Response();
       try {
          if (!(Integer.valueOf(statusVal) == 0) && !(Integer.valueOf(statusVal) == 1)) {
@@ -330,20 +330,10 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
          if (loggedinUserLoginId == null || Integer.valueOf(loggedinUserLoginId) == 0 || Integer.valueOf(loggedinUserLoginId) < 0) {
             throw new CcighgoException("logged in user info is required to update the record");
          }
-         if (goId == null || Integer.valueOf(goId) == 0 || Integer.valueOf(goId) < 0) {
+         if (partnerLoginId == null || Integer.valueOf(partnerLoginId) == 0 || Integer.valueOf(partnerLoginId) < 0) {
             throw new CcighgoException("login info of partner is required update the record");
          }
-         if (loggedinUserLoginId != null) {
-            Login currentUser = loginRepository.findOne(Integer.parseInt(loggedinUserLoginId));
-            if (currentUser != null) {
-               currentUser.setActive(currentUser.getActive().equals(CCIConstants.ACTIVE) ? CCIConstants.INACTIVE : CCIConstants.ACTIVE);
-               loginRepository.saveAndFlush(currentUser);
-            }
-         }
-         List<Login> partnerLogin = loginRepository.findAllByGoId(Integer.valueOf(goId));
-         if (partnerLogin == null) {
-            throw new CcighgoException("no record found to update status with the login info provided, please check request url");
-         }
+         
          Byte activeStatus = null;
          if (Integer.valueOf(statusVal) == 1) {
             activeStatus = CCIConstants.ACTIVE;
@@ -351,7 +341,22 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
          if (Integer.valueOf(statusVal) == 0) {
             activeStatus = CCIConstants.INACTIVE;
          }
-
+         //first enable/disable login of the partner
+         //Bug 1459
+         Login login = loginRepository.findOne(Integer.valueOf(partnerLoginId));
+         if(login!=null){
+            login.setActive(activeStatus);
+            login.setModifiedBy(Integer.parseInt(loggedinUserLoginId));
+            loginRepository.saveAndFlush(login);
+         }else{
+            throw new CcighgoException("no record found to update status with the login info provided, please check request url");
+         }
+         
+        // Get list of partner users and enable/disable their login
+         List<Login> partnerLogin = loginRepository.findAllByGoId(login.getGoIdSequence().getGoId());
+         if (partnerLogin == null) {
+            throw new CcighgoException("no record found to update status with the login info provided, please check request url");
+         }
          List<Login> logins = new ArrayList<Login>();
          if (partnerLogin != null && !partnerLogin.isEmpty()) {
             for (Login user : partnerLogin) {
@@ -361,8 +366,8 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
             }
             loginRepository.save(logins);
          }
-
-         List<Partner> subPartners = partnerRepository.findByIsSubPartnerAndParentId(Integer.valueOf(goId));
+         //Enable/disable login of subpartners
+         List<Partner> subPartners = partnerRepository.findByIsSubPartnerAndParentId(login.getGoIdSequence().getGoId());
          if (subPartners != null && !subPartners.isEmpty()) {
             logins = new ArrayList<Login>();
             for (Partner partner : subPartners) {
@@ -624,8 +629,12 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
             if (Integer.valueOf(loginVal).equals(CCIConstants.SEND_LOGIN)) {
                sendLogin(String.valueOf(newPartner.getPartnerGoId()), request);
                partnerReviewStatus.setPartnerStatus1(partnerStatusRepository.findOne(CCIConstants.VALID));
+               //BUG 1399
+               partnerReviewStatus.setPartnerStatus2(partnerStatusRepository.findOne(CCIConstants.PENDING_STATUS));
             } else {
                partnerReviewStatus.setPartnerStatus1(partnerStatusRepository.findOne(CCIConstants.VALID));
+               //Bug 1399
+               partnerReviewStatus.setPartnerStatus2(partnerStatusRepository.findOne(CCIConstants.PENDING_STATUS));
             }
             partnerReviewStatusRepository.saveAndFlush(partnerReviewStatus);
             resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE, messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
