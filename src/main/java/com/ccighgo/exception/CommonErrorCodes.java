@@ -9,7 +9,7 @@ package com.ccighgo.exception;
  */
 public enum CommonErrorCodes {
 
-   UTILITY_SERVICE_CODE(290);
+   SERVICE_SUCCESS(120000101), UTILITY_SERVICE_CODE(120000102);
 
    private int itemId;
 
