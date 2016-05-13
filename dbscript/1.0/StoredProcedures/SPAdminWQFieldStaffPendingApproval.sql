@@ -1,6 +1,6 @@
 DELIMITER $$
 
-USE `cci_gh_go_dev`$$
+USE `cci_gh_go_qa`$$
 
 DROP PROCEDURE IF EXISTS `SPAdminWQFieldStaffPendingApproval`$$
 
