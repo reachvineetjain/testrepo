@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2015, 2016, Creospan Solutions Pvt Ltd. All rights reserved.
+ * CREOSPAN PROPRIETARY/CONFIDENTIAL.
+ *
+ *
+ *
+ */
 package com.ccighgo.service.components.regionassignment;
 
 import java.util.HashMap;
@@ -17,7 +24,8 @@ import com.ccighgo.db.entities.Region;
 import com.ccighgo.db.entities.Season;
 import com.ccighgo.db.entities.SeasonGeographyConfiguration;
 import com.ccighgo.db.entities.SuperRegion;
-import com.ccighgo.exception.ErrorCode;
+import com.ccighgo.exception.CommonErrorCodes;
+import com.ccighgo.exception.RegionAssignmentErrorCode;
 import com.ccighgo.jpa.repositories.FieldStaffLeadershipSeasonRepository;
 import com.ccighgo.jpa.repositories.FieldStaffRepository;
 import com.ccighgo.jpa.repositories.RegionRepository;
@@ -47,6 +55,14 @@ import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.ExceptionUtil;
 import com.ccighgo.utils.WSDefaultResponse;
 
+/**
+ * This class contains the implementations for all the business methods used to
+ * assign the different types of Field Staffs(i.e ERD,RD,AC,LC,RM etc) to Super
+ * Regions ,Regions and States
+ * 
+ * @author vijay
+ *
+ */
 @Component
 public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
 
@@ -72,10 +88,12 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
    public AssignedSuperRegion getAssignedSuperRegionDetails(Integer seasonId) {
       AssignedSuperRegion assignedSuperRegion = new AssignedSuperRegion();
       try {
+         // Fetch the list of all the Super Regions associated with given
+         // season.
          List<SuperRegion> list = seasonGeographyConfigurationRepository.findDistinctSuperRegionObjectBySeasonId(seasonId);
          if (list == null) {
-            assignedSuperRegion.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
-                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+            assignedSuperRegion.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO,
+                  RegionAssignmentErrorCode.SUPER_REGION_RECORD_NOT_FOUND.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD_IN_DB)));
             return assignedSuperRegion;
          } else {
             assignedSuperRegion.setSeasonId(seasonId);
@@ -89,6 +107,7 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
                   SeasonGeographyConfiguration configurations = seasonGeographyConfigurationRepository.findSuperRegionRowBySuperRegionIdSeasonId(superRegion.getSuperRegionId(),
                         seasonId);
                   sr.setSeasonGeographyConfigurationId(configurations.getSeasonGeographyConfigurationId());
+                  // Find the list of all the ERDs assigned to the Super Regions
                   List<FieldStaffLeadershipSeason> assignedUsers = fieldStaffLeadershipSeasonRepository.findAllFieldStaffBySeasonIdAndSuperRegionIdAndFieldStaffType(seasonId,
                         superRegion.getSuperRegionId(), CCIConstants.FieldStaffTypeCode_ERD);
                   if (assignedUsers != null) {
@@ -111,12 +130,12 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
                assignedSuperRegion.getSuperRegions().add(sr);
             }
          }
-         assignedSuperRegion.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+         assignedSuperRegion.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CommonErrorCodes.SERVICE_SUCCESS.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
-         assignedSuperRegion.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(),
-               messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
+         assignedSuperRegion.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, RegionAssignmentErrorCode.PROBLEM_FETCHING_SUPER_REGIONS.getValue(),
+               messageUtil.getMessage(RegionAssignmentMessageConstants.PROBLEM_FETCHING_SUPER_REGIONS)));
          LOGGER.error(messageUtil.getMessage(RegionAssignmentMessageConstants.PROBLEM_FETCHING_SUPER_REGIONS));
       }
       return assignedSuperRegion;
@@ -127,10 +146,12 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
       HashMap<Integer, Boolean> staffExist = new HashMap<Integer, Boolean>();
       SuperRegionsERDs superRegionsERDs = new SuperRegionsERDs();
       try {
+         // Fetch the list of all the Super Regions associated with given
+         // season.
          List<SuperRegion> list = seasonGeographyConfigurationRepository.findDistinctSuperRegionObjectBySeasonId(seasonId);
          if (list == null) {
-            superRegionsERDs.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
-                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+            superRegionsERDs.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO,
+                  RegionAssignmentErrorCode.SUPER_REGION_ASSIGNED_ERD_RECORD_NOT_FOUND.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD_IN_DB)));
             return superRegionsERDs;
          } else {
             for (SuperRegion superRegion : list) {
@@ -139,7 +160,8 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
                if (superRegion != null) {
                   sr.setSuperRegionId(superRegion.getSuperRegionId());
                   sr.setSuperRegionName(superRegion.getSuperRegionName());
-
+                  // call the procedure to get the list of all the ERDs mappings
+                  // for given season
                   Query query = em.createNativeQuery(SP_FIELD_STAFF_REGION_ASSIGN);
                   query.setParameter(1, seasonId);
                   query.setParameter(2, ASSIGN_FS_SUPER_REGION_FLAG);
@@ -171,13 +193,14 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
             }
 
          }
-         superRegionsERDs.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+         superRegionsERDs.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CommonErrorCodes.SERVICE_SUCCESS.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
-         superRegionsERDs.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(),
-               messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
-         LOGGER.error(messageUtil.getMessage(RegionAssignmentMessageConstants.GENERAL_ERROR));
+         superRegionsERDs.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR,
+               RegionAssignmentErrorCode.FAILED_GET_ASSIGNED_ERD_SUPER_REGION.getValue(),
+               messageUtil.getMessage(RegionAssignmentMessageConstants.FAILED_GET_ASSIGNED_ERD_SUPER_REGION)));
+         LOGGER.error(messageUtil.getMessage(RegionAssignmentMessageConstants.FAILED_GET_ASSIGNED_ERD_SUPER_REGION));
       }
       return superRegionsERDs;
 
@@ -216,15 +239,15 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
             fieldStaffLeadershipSeason.setSeasonGeographyConfiguration(seasonGeographicConfigRow);
             fieldStaffLeadershipSeasonRepository.saveAndFlush(fieldStaffLeadershipSeason);
          }
-         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CommonErrorCodes.SERVICE_SUCCESS.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          return wsDefaultResponse;
 
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
-         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(),
-               messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
-         LOGGER.error(messageUtil.getMessage(RegionAssignmentMessageConstants.GENERAL_ERROR));
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR,
+               RegionAssignmentErrorCode.ASSIGN_ERD_TO_SUPER_REGION_FAILED.getValue(), messageUtil.getMessage(RegionAssignmentMessageConstants.ASSIGN_ERD_TO_SUPER_REGION_FAILED)));
+         LOGGER.error(messageUtil.getMessage(RegionAssignmentMessageConstants.ASSIGN_ERD_TO_SUPER_REGION_FAILED));
       }
       return wsDefaultResponse;
    }
@@ -234,9 +257,9 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
       AssignedRegion assignedRegion = new AssignedRegion();
       try {
          List<Region> list = seasonGeographyConfigurationRepository.findDistinctRegionsObjectBySuperRegionIdAndSeasonId(superRegionId, seasonId);
-         if (list == null) {
-            assignedRegion.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
-                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         if (list == null || list.isEmpty()) {
+            assignedRegion.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, RegionAssignmentErrorCode.REGION_RECORD_NOT_FOUND.getValue(),
+                  messageUtil.getMessage(CCIConstants.NO_RECORD_IN_DB)));
             return assignedRegion;
          } else {
             assignedRegion.setSeasonId(seasonId);
@@ -277,13 +300,13 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
                assignedRegion.getRegionDetail().add(rd);
             }
          }
-         assignedRegion.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+         assignedRegion.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CommonErrorCodes.SERVICE_SUCCESS.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
-         assignedRegion.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(),
-               messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
-         LOGGER.error(messageUtil.getMessage(RegionAssignmentMessageConstants.GENERAL_ERROR));
+         assignedRegion.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, RegionAssignmentErrorCode.PROBLEM_FETCHING_REGIONS.getValue(),
+               messageUtil.getMessage(RegionAssignmentMessageConstants.PROBLEM_FETCHING_REGIONS)));
+         LOGGER.error(messageUtil.getMessage(RegionAssignmentMessageConstants.PROBLEM_FETCHING_REGIONS));
       }
       return assignedRegion;
    }
@@ -296,8 +319,8 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
          // should add when state = null
          List<SeasonGeographyConfiguration> list = seasonGeographyConfigurationRepository.findDistinctRegionsBySuperRegionIdAndSeasonIdObject(superRegionId, seasonId);
          if (list == null) {
-            regionsRDs.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
-                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+            regionsRDs.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, RegionAssignmentErrorCode.REGION_ASSIGNED_RD_RECORD_NOT_FOUND.getValue(),
+                  messageUtil.getMessage(CCIConstants.NO_RECORD_IN_DB)));
             return regionsRDs;
          } else {
             for (SeasonGeographyConfiguration sgc : list) {
@@ -339,13 +362,13 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
             }
 
          }
-         regionsRDs.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+         regionsRDs.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CommonErrorCodes.SERVICE_SUCCESS.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
-         regionsRDs.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(),
-               messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
-         LOGGER.error(messageUtil.getMessage(RegionAssignmentMessageConstants.GENERAL_ERROR));
+         regionsRDs.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, RegionAssignmentErrorCode.FAILED_GET_ASSIGNED_RD_REGION.getValue(),
+               messageUtil.getMessage(RegionAssignmentMessageConstants.FAILED_GET_ASSIGNED_RD_REGION)));
+         LOGGER.error(messageUtil.getMessage(RegionAssignmentMessageConstants.FAILED_GET_ASSIGNED_RD_REGION));
       }
       return regionsRDs;
 
@@ -357,8 +380,8 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
       try {
          List<LookupUSState> list = seasonGeographyConfigurationRepository.findDistinctStatesObjectBySuperRegionRegionAandSeasonId(superRegionId, regionId, seasonId);
          if (list == null) {
-            assignedStateInfo.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
-                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+            assignedStateInfo.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, RegionAssignmentErrorCode.STATES_RECORD_NOT_FOUND.getValue(),
+                  messageUtil.getMessage(CCIConstants.NO_RECORD_IN_DB)));
             return assignedStateInfo;
          } else {
             assignedStateInfo.setSeasonId(seasonId);
@@ -399,13 +422,13 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
                assignedStateInfo.getStateInfo().add(sInfo);
             }
          }
-         assignedStateInfo.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+         assignedStateInfo.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CommonErrorCodes.SERVICE_SUCCESS.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
-         assignedStateInfo.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(),
+         assignedStateInfo.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, RegionAssignmentErrorCode.PROBLEM_FETCHING_STATES.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
-         LOGGER.error(messageUtil.getMessage(RegionAssignmentMessageConstants.GENERAL_ERROR));
+         LOGGER.error(messageUtil.getMessage(RegionAssignmentMessageConstants.PROBLEM_FETCHING_STATES));
       }
       return assignedStateInfo;
    }
@@ -420,8 +443,8 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
       try {
          List<LookupUSState> list = seasonGeographyConfigurationRepository.findDistinctStatesObjectBySuperRegionRegionAandSeasonId(superRegionId, regionId, seasonId);
          if (list == null) {
-            stateStaff.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
-                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+            stateStaff.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO,
+                  RegionAssignmentErrorCode.STATES_ASSIGNED_FIELD_STAFF_RECORD_NOT_FOUND.getValue(), messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
             return stateStaff;
          } else {
 
@@ -470,13 +493,13 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
 
             stateStaff.getAssignedStateStaffs().addAll(staffExist.values());
          }
-         stateStaff.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+         stateStaff.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CommonErrorCodes.SERVICE_SUCCESS.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
-         stateStaff.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(),
-               messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
-         LOGGER.error(messageUtil.getMessage(RegionAssignmentMessageConstants.GENERAL_ERROR));
+         stateStaff.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, RegionAssignmentErrorCode.FAILED_GET_ASSIGNED_FS_STATES.getValue(),
+               messageUtil.getMessage(RegionAssignmentMessageConstants.FAILED_GET_ASSIGNED_FS_STATES)));
+         LOGGER.error(messageUtil.getMessage(RegionAssignmentMessageConstants.FAILED_GET_ASSIGNED_FS_STATES));
       }
       return stateStaff;
    }
@@ -501,13 +524,13 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
             fieldStaffLeadershipSeasonRepository.saveAndFlush(fieldStaffLeadershipSeason);
          }
 
-         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CommonErrorCodes.SERVICE_SUCCESS.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
-         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(),
-               messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
-         LOGGER.error(messageUtil.getMessage(RegionAssignmentMessageConstants.GENERAL_ERROR));
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, RegionAssignmentErrorCode.ASSIGN_RD_TO_REGION_FAILED.getValue(),
+               messageUtil.getMessage(RegionAssignmentMessageConstants.ASSIGN_RD_TO_REGION_FAILED)));
+         LOGGER.error(messageUtil.getMessage(RegionAssignmentMessageConstants.ASSIGN_RD_TO_REGION_FAILED));
       }
       return wsDefaultResponse;
    }
@@ -532,13 +555,13 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
             fieldStaffLeadershipSeasonRepository.saveAndFlush(fieldStaffLeadershipSeason);
          }
 
-         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CommonErrorCodes.SERVICE_SUCCESS.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
-         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(),
-               messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
-         LOGGER.error(messageUtil.getMessage(RegionAssignmentMessageConstants.GENERAL_ERROR));
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, RegionAssignmentErrorCode.ASSIGN_FS_TO_STATES_FAILED.getValue(),
+               messageUtil.getMessage(RegionAssignmentMessageConstants.ASSIGN_FS_TO_STATES_FAILED)));
+         LOGGER.error(messageUtil.getMessage(RegionAssignmentMessageConstants.ASSIGN_FS_TO_STATES_FAILED));
       }
       return wsDefaultResponse;
    }
@@ -547,15 +570,14 @@ public class RegionAssignmentServicesImpl implements RegionAssignmentServices {
    public WSDefaultResponse deleteMember(DeleteRegionMember deleteRegionMember) {
       WSDefaultResponse wsDefaultResponse = new WSDefaultResponse();
       try {
-          fieldStaffLeadershipSeasonRepository.delete(deleteRegionMember.getFieldStaffLeadershipSeasonId());
-        // seasonGeographyConfigurationRepository.delete(deleteRegionMember.getSeasonGeographyConfigurationId());
-         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+         fieldStaffLeadershipSeasonRepository.delete(deleteRegionMember.getFieldStaffLeadershipSeasonId());
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CommonErrorCodes.SERVICE_SUCCESS.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
-         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(),
-               messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
-         LOGGER.error(messageUtil.getMessage(RegionAssignmentMessageConstants.GENERAL_ERROR));
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, RegionAssignmentErrorCode.FAILED_TO_REMOVE_ASSIGNED_FS.getValue(),
+               messageUtil.getMessage(RegionAssignmentMessageConstants.FAILED_TO_REMOVE_ASSIGNED_FS)));
+         LOGGER.error(messageUtil.getMessage(RegionAssignmentMessageConstants.FAILED_TO_REMOVE_ASSIGNED_FS));
       }
       return wsDefaultResponse;
 

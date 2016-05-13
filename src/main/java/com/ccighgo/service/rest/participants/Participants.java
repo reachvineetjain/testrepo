@@ -101,8 +101,16 @@ public class Participants {
    @Produces("application/json")
    public SeasonsForParticipants getAllAvailableSeasons(@PathParam("partnerId") String partnerId) {
       LOGGER.info("calling Participants.getAllAvailableSeasons ");
-      return participantsInterface.getAllAvailableSeasons2(partnerId);
+      return participantsInterface.getAllAvailableSeasons2(partnerId,null);
    }
+   @GET
+   @Path("allSeasons/{partnerId}/{participantId}")
+   @Produces("application/json")
+   public SeasonsForParticipants getAllAvailableSeasons(@PathParam("partnerId") String partnerId,@PathParam("participantId")String participantId) {
+      LOGGER.info("calling Participants.getAllAvailableSeasons ");
+      return participantsInterface.getAllAvailableSeasons2(partnerId,participantId);
+   }
+   
 
    @GET
    @Path("allProgramOptions/{partnerId}/{seasonId}/{departmentProgramId}")
@@ -180,5 +188,12 @@ public class Participants {
    public Response sendLogin(@PathParam("participantGoId") String participantGoId) {
       LOGGER.info("calling Participants.sendLogin ");
       return participantsInterface.sendLogin(participantGoId, request);
+   }
+   @GET
+   @Path("unAssignPartcipantSubPartner/{participantId}")
+   @Produces("application/json")
+   public WSDefaultResponse unAssignPartcipantSubPartner( @PathParam("participantId") String participantId) {
+      LOGGER.info("calling Participants.assignSubpartnerToParticipant ");
+      return participantsInterface.unAssignPartcipantSubPartner( participantId);
    }
 }

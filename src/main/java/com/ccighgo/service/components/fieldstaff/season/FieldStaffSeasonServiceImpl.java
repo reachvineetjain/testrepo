@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ccighgo.db.entities.FieldStaffStatus;
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.ErrorCode;
+import com.ccighgo.exception.FieldStaffCodes;
 import com.ccighgo.jpa.repositories.FieldStaffSeasonRepository;
 import com.ccighgo.jpa.repositories.FieldStaffStatusRepository;
 import com.ccighgo.jpa.repositories.PaymentScheduleRepository;
@@ -100,10 +101,10 @@ public class FieldStaffSeasonServiceImpl implements FieldStaffSeasonService {
             }
          }
          fsSeasonList.setCount(count);
-         fsSeasonList.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FS_SERVICE_SUCCESS.getValue(),
+         fsSeasonList.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, FieldStaffCodes.SUCCESS.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (CcighgoException e) {
-         fsSeasonList.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_FSL_SEASON.getValue(), e.getMessage()));
+         fsSeasonList.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, FieldStaffCodes.ERROR_GET_FS_SEASON.getValue(), e.getMessage()));
          LOGGER.error(e.getMessage());
       }
       return fsSeasonList;
@@ -133,10 +134,10 @@ public class FieldStaffSeasonServiceImpl implements FieldStaffSeasonService {
          }
          fieldStaffLeadershipSeasonDetail.setAgreeToTerms(Integer.valueOf(seasonId) == 1 ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
          fieldStaffSeasonRepository.saveAndFlush(fieldStaffLeadershipSeasonDetail);
-         resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FS_SERVICE_SUCCESS.getValue(),
+         resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, FieldStaffCodes.SUCCESS.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (CcighgoException e) {
-         resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_UPDATE_FSL_SEASON_SIGN_CONTRACT.getValue(), e.getMessage()));
+         resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, FieldStaffCodes.ERROR_UPDATE_FSL_SEASON_SIGN_CONTRACT.getValue(), e.getMessage()));
       }
       return resp;
    }
@@ -204,10 +205,10 @@ public class FieldStaffSeasonServiceImpl implements FieldStaffSeasonService {
          fsSeason.setRd(rdName);
          fsSeason.setRm(rmName);
          fsSeason.setRecruiterLC(season.getIsRecruiterLC().equals(CCIConstants.ACTIVE) ? true : false);
-         fsSeason.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FS_SERVICE_SUCCESS.getValue(),
+         fsSeason.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, FieldStaffCodes.SUCCESS.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (CcighgoException e) {
-         fsSeason.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_UPDATE_FSL_SEASON_SIGN_CONTRACT.getValue(), e.getMessage()));
+         fsSeason.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, FieldStaffCodes.ERROR_GET_FS_ADMIN_SEASON_DETAILS.getValue(), e.getMessage()));
       }
 
       return fsSeason;
@@ -229,11 +230,11 @@ public class FieldStaffSeasonServiceImpl implements FieldStaffSeasonService {
             fieldStaffStatuses.add(f);
          }
          list.getFieldStaffStatuses().addAll(fieldStaffStatuses);
-         list.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FS_SERVICE_SUCCESS.getValue(),
+         list.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, FieldStaffCodes.SUCCESS.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
 
       } catch (CcighgoException e) {
-         list.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_UPDATE_FSL_SEASON_SIGN_CONTRACT.getValue(), e.getMessage()));
+         list.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, FieldStaffCodes.ERROR_GET_FS_STATUS_LIST.getValue(), e.getMessage()));
       }
       return list;
    }
@@ -254,10 +255,10 @@ public class FieldStaffSeasonServiceImpl implements FieldStaffSeasonService {
             pssList.add(p);
          }
          list.getPaymentSchedules().addAll(pssList);
-         list.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FS_SERVICE_SUCCESS.getValue(),
+         list.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, FieldStaffCodes.SUCCESS.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (CcighgoException e) {
-         list.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_UPDATE_FSL_SEASON_SIGN_CONTRACT.getValue(), e.getMessage()));
+         list.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, FieldStaffCodes.ERROR_GET_PAYMENT_SCHEDULE_LIST.getValue(), e.getMessage()));
       }
       return list;
    }
@@ -285,11 +286,11 @@ public class FieldStaffSeasonServiceImpl implements FieldStaffSeasonService {
          fsSeason.setCanRepresentGrantPax(details.isCanPresentGrantsParticipants() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
          fsSeason = fieldStaffSeasonRepository.saveAndFlush(fsSeason);
          updatedObject = details;
-         updatedObject.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FS_SERVICE_SUCCESS.getValue(),
+         updatedObject.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, FieldStaffCodes.SUCCESS.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (CcighgoException e) {
          updatedObject
-               .setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_UPDATE_FSL_SEASON_SIGN_CONTRACT.getValue(), e.getMessage()));
+               .setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, FieldStaffCodes.ERROR_UPDATE_FS_ADMIN_SEASON_DETAILS.getValue(), e.getMessage()));
       }
       return updatedObject;
    }
@@ -305,10 +306,10 @@ public class FieldStaffSeasonServiceImpl implements FieldStaffSeasonService {
          }
          fieldStaffSeasonRepository.delete(Integer.valueOf(fsSeasonId));
          fieldStaffSeasonRepository.flush();
-         resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FS_SERVICE_SUCCESS.getValue(),
+         resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, FieldStaffCodes.SUCCESS.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (CcighgoException e) {
-         resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_DELETE_FSL_SEASON.getValue(), e.getMessage()));
+         resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, FieldStaffCodes.ERROR_DELETE_FSL_SEASON.getValue(), e.getMessage()));
       }
       return resp;
    }
@@ -323,10 +324,10 @@ public class FieldStaffSeasonServiceImpl implements FieldStaffSeasonService {
          com.ccighgo.db.entities.FieldStaffSeason season = fieldStaffSeasonRepository.findOne(Integer.valueOf(fsSeasonId));
          season.setActive(CCIConstants.INACTIVE);
          fieldStaffSeasonRepository.saveAndFlush(season);
-         resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FS_SERVICE_SUCCESS.getValue(),
+         resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, FieldStaffCodes.SUCCESS.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (CcighgoException e) {
-         resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_DELETE_FSL_SEASON.getValue(), e.getMessage()));
+         resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, FieldStaffCodes.ERROR_DEACTIVATE_FSL_SEASON.getValue(), e.getMessage()));
       }
       return resp;
    }

@@ -8,6 +8,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
+import com.ccighgo.service.transport.common.response.beans.Response;
+
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "SubPartnerDetail", propOrder = {
     "subPartnerId",
@@ -17,7 +19,7 @@ import javax.xml.bind.annotation.XmlType;
     "subPartnerCountry",
     "subPartnerStatus"
 })
-public class SubPartnerDetail {
+public class SubPartnerDetail extends Response{
 
    protected int subPartnerId;
    @XmlElement(required = true)

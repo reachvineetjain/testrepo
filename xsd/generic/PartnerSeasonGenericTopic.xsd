@@ -1,0 +1,121 @@
+<xsd:schema targetNamespace="http://www.ccighgo.com/partnergenericnote"
+	elementFormDefault="unqualified" attributeFormDefault="unqualified"
+	jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:cd="http://www.ccighgo.com/partnergenericnote"
+	xmlns:Q1="http://www.ccighgo.com" xmlns:common="http://www.ccighgo.com/common">
+	<xsd:annotation>
+		<xsd:appinfo>
+			<jaxb:schemaBindings>
+				<jaxb:package
+					name="com.ccighgo.service.transport.partner.beans.generic.partnerseason.topic" />
+			</jaxb:schemaBindings>
+		</xsd:appinfo>
+	</xsd:annotation>
+	<xsd:import schemaLocation="../Common.xsd" namespace="http://www.ccighgo.com/common" />
+	<xsd:element name="topics" type="cd:topics" />
+
+	<xsd:complexType name="topics">
+		<xsd:complexContent>
+			<xsd:extension base="common:Response">
+				<xsd:sequence>
+					<xsd:element name="topics" type="cd:topic" minOccurs="0"
+						maxOccurs="unbounded" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="topic">
+		<xsd:complexContent>
+			<xsd:extension base="common:Response">
+				<xsd:sequence>
+					<xsd:element name="loginId" type="xsd:int" minOccurs="0"
+						maxOccurs="1" />
+						<xsd:element name="partnerSeasonId" type="xsd:int" minOccurs="0"
+						maxOccurs="1" />
+					<xsd:element name="isTopicPublic" type="xsd:boolean"
+						minOccurs="0" maxOccurs="1" />
+					<xsd:element name="partnerSeasonNoteTopicId" type="xsd:int"
+						minOccurs="0" maxOccurs="1" />
+					<xsd:element name="partnerSeasonNoteTopicName" type="xsd:string"
+						minOccurs="0" maxOccurs="1" />
+					<xsd:element name="competitorInfo" type="xsd:boolean"
+						minOccurs="0" maxOccurs="1" />
+					<xsd:element name="embassy_VisaInfo" type="xsd:boolean"
+						minOccurs="0" maxOccurs="1" />
+					<xsd:element name="f1" type="xsd:boolean" minOccurs="0"
+						maxOccurs="1" />
+					<xsd:element name="ght" type="xsd:boolean" minOccurs="0"
+						maxOccurs="1" />
+					<xsd:element name="intern" type="xsd:boolean"
+						minOccurs="0" maxOccurs="1" />
+					<xsd:element name="isPublic" type="xsd:boolean"
+						minOccurs="0" maxOccurs="1" />
+					<xsd:element name="j1" type="xsd:boolean" minOccurs="0"
+						maxOccurs="1" />
+					<xsd:element name="meeting_visit" type="xsd:boolean"
+						minOccurs="0" maxOccurs="1" />
+					<xsd:element name="seasonInfo" type="xsd:boolean"
+						minOccurs="0" maxOccurs="1" />
+					<xsd:element name="stInbound" type="xsd:boolean"
+						minOccurs="0" maxOccurs="1" />
+					<xsd:element name="trainee" type="xsd:boolean"
+						minOccurs="0" maxOccurs="1" />
+					<xsd:element name="w_t" type="xsd:boolean" minOccurs="0"
+						maxOccurs="1" />
+					<xsd:element name="partnerSeasonNotes" type="cd:SubPartnerScreeningNotes"
+						minOccurs="0" maxOccurs="unbounded" />
+					<xsd:element name="createdBy" type="cd:TopicUserCreator"
+						minOccurs="0" maxOccurs="1" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="SubPartnerScreeningNotes">
+		<xsd:complexContent>
+			<xsd:extension base="common:Response">
+				<xsd:sequence>
+
+					<xsd:element name="noteId" type="xsd:int" minOccurs="0"
+						maxOccurs="1" />
+					<xsd:element name="noteValue" type="xsd:string"
+						minOccurs="0" maxOccurs="1" />
+					<xsd:element name="public" type="xsd:boolean"
+						minOccurs="0" maxOccurs="1" />
+					<xsd:element name="createdOn" type="xsd:string"
+						minOccurs="0" maxOccurs="1" />
+					<xsd:element name="createdBy" type="cd:NoteUserCreator"
+						minOccurs="0" maxOccurs="1" />
+					<xsd:element name="topicId" type="xsd:int" minOccurs="0"
+						maxOccurs="1" />
+					<xsd:element name="partnerSeasonId" type="xsd:int" minOccurs="0"
+						maxOccurs="1" />
+					<xsd:element name="userId" type="xsd:int" minOccurs="0"
+						maxOccurs="1" />
+					<xsd:element name="loginId" type="xsd:int" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="NoteUserCreator">
+		<xsd:sequence>
+			<xsd:element name="userName" type="xsd:string" minOccurs="0"
+				maxOccurs="1" />
+			<xsd:element name="role" type="xsd:string" minOccurs="0"
+				maxOccurs="1" />
+			<xsd:element name="photoUrl" type="xsd:string" minOccurs="0"
+				maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="TopicUserCreator">
+		<xsd:sequence>
+			<xsd:element name="userName" type="xsd:string" minOccurs="0"
+				maxOccurs="1" />
+			<xsd:element name="role" type="xsd:string" minOccurs="0"
+				maxOccurs="1" />
+			<xsd:element name="photoUrl" type="xsd:string" minOccurs="0"
+				maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+</xsd:schema>

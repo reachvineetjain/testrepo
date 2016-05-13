@@ -57,12 +57,12 @@
          <bean id="adminPartner" class="com.ccighgo.service.rest.partner.admin.partner.AdminPartner" />
          <bean id="fieldStaffListing" class="com.ccighgo.service.rest.fieldstaff.listing.FieldStaffListing" />
          <bean id="fieldStaffSeason" class="com.ccighgo.service.rest.fieldstaff.season.FieldStaffSeason" />
-         <bean id="fieldStaffs" class="com.ccighgo.service.rest.fieldstaffs.FieldStaffs"/>
-         <bean id="fieldStaffGenericNote" class="com.ccighgo.service.rest.generic.notes.fieldstaffs.FieldStaffGenericNote"/>
+         <bean id="fieldStaffs" class="com.ccighgo.service.rest.fieldstaffs.FieldStaffs" />
+         <bean id="fieldStaffGenericNote" class="com.ccighgo.service.rest.generic.notes.fieldstaffs.FieldStaffGenericNote" />
          <bean id="fieldStaffLeadershipDetails" class="com.ccighgo.service.rest.fieldstaff.details.listing.FieldStaffLeadershipDetails" />
-         <bean id="AdminERDParticipant" class="com.ccighgo.service.rest.fieldstaffs.participant.AdminERDParticipant"/>
-         <bean id="fieldStaffERDDashboard" class="com.ccighgo.service.rest.fieldstaffs.erddashboard.FieldStaffERDDashboard"/>
-         <bean id="fieldStaffMyPlacements" class="com.ccighgo.service.rest.fieldstaffs.myplacements.FieldStaffMyPlacements"/>
+         <bean id="AdminERDParticipant" class="com.ccighgo.service.rest.fieldstaffs.participant.AdminERDParticipant" />
+         <bean id="fieldStaffERDDashboard" class="com.ccighgo.service.rest.fieldstaffs.erddashboard.FieldStaffERDDashboard" />
+         <bean id="fieldStaffMyPlacements" class="com.ccighgo.service.rest.fieldstaffs.myplacements.FieldStaffMyPlacements" />
          <bean id="nonificationServer" class="com.ccighgo.service.rest.pushnotification.NotificationServer" />
          <bean id="sevisBatch" class="com.ccighgo.service.rest.sevis.SevisBatch" />
          <bean id="fSDetails" class="com.ccighgo.service.rest.fieldstaff.network.details.FSDetails" />
@@ -70,6 +70,7 @@
          <bean id="hfParticipantApplicationSeasons" class="com.ccighgo.service.rest.hf.participant.application.season.HfParticipantApplicationSeasons" />
          <bean id="GenericUpdateLogs" class="com.ccighgo.service.rest.genericupdatelog.GenericUpdateLogs" />
          <bean id="greenheartclub" class="com.ccighgo.service.rest.greenheartclub.GreenHeartClub" />
+         <bean id="partnerSeasonGenericNotes" class="com.ccighgo.service.rest.partner.generic.notes.PartnerSeasonGenericNotes" />
       </jaxrs:serviceBeans>
       <jaxrs:providers>
          <ref bean="jsonProvider" />
@@ -77,7 +78,7 @@
    </jaxrs:server>
    <!-- SOAP configuration -->
    <jaxws:endpoint implementor="com.ccighgo.service.soap.wordpress.forms.WordPressFormsImpl" address="/findForm" />
-   
-   <task:annotation-driven/>
+
+   <task:annotation-driven />
 
 </beans>

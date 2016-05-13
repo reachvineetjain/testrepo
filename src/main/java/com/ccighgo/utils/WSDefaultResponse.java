@@ -8,6 +8,7 @@ public class WSDefaultResponse extends Response {
    protected NoteUserCreator createdBy;
    private Integer topicOfNotesId;
    private int goId;
+   private ExtraData extraData;
 
    public NoteUserCreator getCreatedBy() {
       return createdBy;
@@ -33,4 +34,13 @@ public class WSDefaultResponse extends Response {
       this.goId = goId;
    }
 
+   public ExtraData getExtraData() {
+      return extraData;
+   }
+
+   public void setExtraData(ExtraData extraData) {
+      this.extraData = extraData;
+   }
+
+   
 }

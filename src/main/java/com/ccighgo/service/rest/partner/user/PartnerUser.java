@@ -52,15 +52,15 @@ public class PartnerUser {
    /**
     * REST service to return list of partner user for specified partner
     * 
-    * @param partnerId
+    * @param partnerUserGoId
     * @return
     */
    @GET
-   @Path("list/{partnerId}")
+   @Path("list/{partnerUserGoId}")
    @Produces("application/json")
-   public PartnerUsers getAllPartnerUsers(@PathParam("partnerId") String partnerId) {
-      LOGGER.debug("calling PartnerUser.getAllPartnerUsers for partner id {}", partnerId);
-      return partnerUserInterface.getAllPartnerUsers(partnerId);
+   public PartnerUsers getAllPartnerUsers(@PathParam("partnerUserGoId") String partnerUserGoId) {
+      LOGGER.debug("calling PartnerUser.getAllPartnerUsers for partner id {}", partnerUserGoId);
+      return partnerUserInterface.getAllPartnerUsers(partnerUserGoId);
    }
 
    /**
@@ -72,9 +72,9 @@ public class PartnerUser {
     * @return
     */
    @GET
-   @Path("update/status/{statusVal}/{partnerUserId}")
+   @Path("update/status/{statusVal}/{partnerUserGoId}")
    @Produces("application/json")
-   public Response updatePartnerUserStatus(@PathParam("statusVal") String statusVal, @PathParam("partnerUserId") String partnerUserId) {
+   public Response updatePartnerUserStatus(@PathParam("statusVal") String statusVal, @PathParam("partnerUserGoId") String partnerUserId) {
       LOGGER.debug("calling PartnerUser.updatePartnerUserStatus for partnerGoId id {}", partnerUserId);
       return partnerUserInterface.updatePartnerUserStatus(statusVal, partnerUserId);
    }
@@ -84,9 +84,9 @@ public class PartnerUser {
     * @return
     */
    @GET
-   @Path("reset/access/{partnerUserId}")
+   @Path("reset/access/{partnerUserGoId}")
    @Produces("application/json")
-   public Response resetPartnerUserPassword(@PathParam("partnerUserId") String partnerUserId) {
+   public Response resetPartnerUserPassword(@PathParam("partnerUserGoId") String partnerUserId) {
       LOGGER.debug("calling PartnerUser.getAllPartnerUsers for partner id {}", partnerUserId);
       return partnerUserInterface.resetPartnerUserPassword(partnerUserId, request);
    }
@@ -94,15 +94,15 @@ public class PartnerUser {
    /**
     * Populates details for selected partner user
     * 
-    * @param partnerUserId
+    * @param partnerUserGoId
     * @return
     */
    @GET
-   @Path("view/user/details/{partnerUserId}")
+   @Path("view/user/details/{partnerUserGoId}")
    @Produces("application/json")
-   public PartnerUserDetails getPartnerUserDetails(@PathParam("partnerUserId") String partnerUserId) {
-      LOGGER.debug("calling PartnerUser.getPartnerUserDetails for partnerUserId id {}", partnerUserId);
-      return partnerUserInterface.getPartnerUserDetails(partnerUserId);
+   public PartnerUserDetails getPartnerUserDetails(@PathParam("partnerUserGoId") String partnerUserGoId) {
+      LOGGER.debug("calling PartnerUser.getPartnerUserDetails for partnerUserId id {}", partnerUserGoId);
+      return partnerUserInterface.getPartnerUserDetails(partnerUserGoId);
    }
 
    /**
@@ -110,9 +110,9 @@ public class PartnerUser {
     * @return
     */
    @GET
-   @Path("edit/user/details/{partnerUserId}")
+   @Path("edit/user/details/{partnerUserGoId}")
    @Produces("application/json")
-   public PartnerUserDetails editPartnerUserDetails(@PathParam("partnerUserId") String partnerUserId) {
+   public PartnerUserDetails editPartnerUserDetails(@PathParam("partnerUserGoId") String partnerUserId) {
       LOGGER.debug("calling PartnerUser.getPartnerUserDetails for partnerUserId id {}", partnerUserId);
       return partnerUserInterface.getPartnerUserDetails(partnerUserId);
    }

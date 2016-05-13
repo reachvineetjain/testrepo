@@ -34,6 +34,9 @@
 						maxOccurs="1" />
 					<xsd:element name="partnerId" type="xsd:int" minOccurs="0"
 						maxOccurs="1" />
+					<xsd:element name="partnerSeasonId" type="xsd:int" minOccurs="0"
+						maxOccurs="1" />
+							
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>

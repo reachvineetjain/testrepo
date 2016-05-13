@@ -174,8 +174,8 @@
             <exclusion>
                <groupId>javax.servlet</groupId>
                <artifactId>servlet-api</artifactId>
-               
-                 </exclusion>
+
+            </exclusion>
          </exclusions>
       </dependency>
 
@@ -275,71 +275,95 @@
          <version>1.3.2</version>
       </dependency>
 
-	<dependency>
-    	<groupId>javax.websocket</groupId>
-    	<artifactId>javax.websocket-api</artifactId>
-    	<version>1.1</version>
-    	<scope>provided</scope>
-	</dependency>
+      <dependency>
+         <groupId>javax.websocket</groupId>
+         <artifactId>javax.websocket-api</artifactId>
+         <version>1.1</version>
+         <scope>provided</scope>
+      </dependency>
 
-	<!-- Added for Tomcat 7 server, Tomcat 8 don't need this -->
-	<dependency>
-		<groupId>org.apache.tomcat</groupId>
-		<artifactId>tomcat7-websocket</artifactId>
-		<version>7.0.67</version>
-		<scope>provided</scope>
-	</dependency>
+      <!-- Added for Tomcat 7 server, Tomcat 8 don't need this -->
+      <dependency>
+         <groupId>org.apache.tomcat</groupId>
+         <artifactId>tomcat7-websocket</artifactId>
+         <version>7.0.67</version>
+         <scope>provided</scope>
+      </dependency>
 
-
-	<dependency>
-    <groupId>org.glassfish.tyrus.bundles</groupId>
-    <artifactId>tyrus-standalone-client</artifactId>
-    <version>1.12</version>
-    <scope>provided</scope>
-</dependency>
-
- <dependency>
-	<groupId>com.google.code.gson</groupId>
-	<artifactId>gson</artifactId>
-	<version>1.7.1</version>
-  </dependency>
-<dependency>
-    <groupId>org.springframework</groupId>
-    <artifactId>spring-test</artifactId>
-    <version>3.2.3.RELEASE</version>
-    <scope>test</scope>
-</dependency>
-
-<dependency>
-	<groupId>com.google.gdata</groupId>
-	<artifactId>gdata-core-1.0</artifactId>
-	<version>1.41.3</version>
-</dependency>
 
       <dependency>
-  <groupId>oauth.signpost</groupId>
-  <artifactId>signpost-core</artifactId>
-  <version>1.2</version>
-  <scope>compile</scope>
-</dependency>
- 
-<dependency>
-  <groupId>oauth.signpost</groupId>
-  <artifactId>signpost-commonshttp4</artifactId>
-  <version>1.2.1.1</version>
-</dependency>
-<dependency>
-	<groupId>javax.xml</groupId>
-	<artifactId>jaxp-api</artifactId>
-	<version>1.4.2</version>
-</dependency>
-    
-    
+         <groupId>org.glassfish.tyrus.bundles</groupId>
+         <artifactId>tyrus-standalone-client</artifactId>
+         <version>1.12</version>
+         <scope>provided</scope>
+      </dependency>
+
+      <dependency>
+         <groupId>com.google.code.gson</groupId>
+         <artifactId>gson</artifactId>
+         <version>1.7.1</version>
+      </dependency>
+      <dependency>
+         <groupId>org.springframework</groupId>
+         <artifactId>spring-test</artifactId>
+         <version>3.2.3.RELEASE</version>
+         <scope>test</scope>
+      </dependency>
+
+      <dependency>
+         <groupId>com.google.gdata</groupId>
+         <artifactId>gdata-core-1.0</artifactId>
+         <version>1.41.3</version>
+      </dependency>
+
+      <dependency>
+         <groupId>oauth.signpost</groupId>
+         <artifactId>signpost-core</artifactId>
+         <version>1.2</version>
+         <scope>compile</scope>
+      </dependency>
+
+      <dependency>
+         <groupId>oauth.signpost</groupId>
+         <artifactId>signpost-commonshttp4</artifactId>
+         <version>1.2.1.1</version>
+      </dependency>
+      <dependency>
+         <groupId>javax.xml</groupId>
+         <artifactId>jaxp-api</artifactId>
+         <version>1.4.2</version>
+      </dependency>
+
+
+      <dependency>
+         <groupId>com.google.guava</groupId>
+         <artifactId>guava</artifactId>
+         <version>19.0</version>
+      </dependency>
+
+      <dependency>
+         <groupId>org.hamcrest</groupId>
+         <artifactId>hamcrest-all</artifactId>
+         <version>1.3</version>
+      </dependency>
+
+
+
    </dependencies>
 
    <build>
       <finalName>cci_gh_go_qa</finalName>
       <plugins>
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>2.4.3</version>
+            <configuration>
+               <includes>
+                  <include>**/*Test.java</include>
+               </includes>
+            </configuration>
+         </plugin>
          <plugin>
             <artifactId>maven-compiler-plugin</artifactId>
             <version>3.3</version>
@@ -373,19 +397,19 @@
       </plugins>
    </build>
    <repositories>
-   <repository>
-	<id>mandubian-mvn</id>
-	<url>http://mandubian-mvn.googlecode.com/svn/trunk/mandubian-mvn/repository</url>
-</repository>
-        <repository>
-            <id>signpost-snapshots</id>
-            <url>http://oss.sonatype.org/content/repositories/signpost-snapshots</url>
-            <releases>
-              <enabled>false</enabled>
-            </releases>
-            <snapshots>
-              <enabled>true</enabled>
-            </snapshots>
-        </repository>
+      <repository>
+         <id>mandubian-mvn</id>
+         <url>http://mandubian-mvn.googlecode.com/svn/trunk/mandubian-mvn/repository</url>
+      </repository>
+      <repository>
+         <id>signpost-snapshots</id>
+         <url>http://oss.sonatype.org/content/repositories/signpost-snapshots</url>
+         <releases>
+            <enabled>false</enabled>
+         </releases>
+         <snapshots>
+            <enabled>true</enabled>
+         </snapshots>
+      </repository>
    </repositories>
 </project>

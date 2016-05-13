@@ -7,6 +7,15 @@ public class HFCommunityAndSchoolPageParam {
    private int seasonId;
    private int deptProgramId;
    private int applicationCategoryId;
+   private int hostFamilySeasnId;
+
+   public int getHostFamilySeasnId() {
+      return hostFamilySeasnId;
+   }
+
+   public void setHostFamilySeasnId(int hostFamilySeasnId) {
+      this.hostFamilySeasnId = hostFamilySeasnId;
+   }
 
    public int getLoginId() {
       return loginId;

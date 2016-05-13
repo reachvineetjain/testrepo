@@ -72,7 +72,7 @@ public class PartnerAdmin {
    @Path("workQueueType/{roleType}")
    @Produces("application/json")
    public AdminPartnerWorkQueueType getWorkQueueType(@PathParam("roleType") String roleType) {
-      LOGGER.debug("fun : getWorkQueueType []");
+      LOGGER.debug("fun : getWorkQueueType []  roleType : " + roleType);
       return partnerAdminService.getWorkQueueType(roleType);
    }
 
@@ -80,7 +80,7 @@ public class PartnerAdmin {
    @Path("workQueueCategory/{adminWorkQueueTypeId}/{loginId}")
    @Produces("application/json")
    public AdminPartnerWorkQueueCategory getWorkQueueCategory(@PathParam("adminWorkQueueTypeId") String adminWorkQueueTypeId, @PathParam("loginId") String loginId) {
-      LOGGER.debug("fun : getWorkQueueCategory []");
+      LOGGER.debug("fun : getWorkQueueCategory [] type id: " + adminWorkQueueTypeId + " loginId: " + loginId);
       return partnerAdminService.getWorkQueueCategory(Integer.parseInt(adminWorkQueueTypeId), Integer.parseInt(loginId));
    }
 
@@ -105,10 +105,11 @@ public class PartnerAdmin {
    @Path("quickstatsCategory/{typeId}/{categoryId}")
    @Produces("application/json")
    public PartnerAdminDashboardQuickStatsCategory getQuickStatsCategory(@PathParam("typeId") String typeId, @PathParam("categoryId") String categoryId) {
-      LOGGER.debug("fun : getQuickStatsCategory []");
+      LOGGER.debug("fun : getQuickStatsCategory [] typeId : " + typeId + "  CategoryId : " + categoryId);
       return partnerAdminService.getApplicationQuickStatsCategory(Integer.parseInt(typeId), Integer.parseInt(categoryId));
    }
 
+   @Deprecated
    @GET
    @Path("benchmark")
    @Produces("application/json")
@@ -128,7 +129,7 @@ public class PartnerAdmin {
    @Produces("application/json")
    public AdminPartnerWorkQueueSubmittedApplications getWorkQueueSubmittedApplications(@PathParam("typeId") String typeId, @PathParam("categoryId") String categoryId,
          @PathParam("cciStaffUserId") String staffUserId, @PathParam("roleType") String roleType) {
-      LOGGER.debug("fun : getWorkQueueSubmittedApplications []");
+      LOGGER.debug("fun : getWorkQueueSubmittedApplications [] typeId : " + typeId + "  categoryId:  " + categoryId + " cciStaffUserID : " + staffUserId + " RoleType:" + roleType);
       return partnerAdminService.getWorkQueueSubmittedApplications(Integer.parseInt(typeId), Integer.parseInt(categoryId), Integer.parseInt(staffUserId), roleType);
    }
 
@@ -141,6 +142,7 @@ public class PartnerAdmin {
    @Produces("application/json")
    public AdminPartnerWorkQueueDeadlineRequests getWorkQueueDeadlineRequests(@PathParam("typeId") String typeId, @PathParam("categoryId") String categoryId,
          @PathParam("cciStaffUserId") String staffUserId, @PathParam("roleType") String roleType) {
+      LOGGER.debug("fun : getWorkQueueDeadlineRequests [] typeId : " + typeId + "  categoryId:  " + categoryId + " cciStaffUserID : " + staffUserId + " RoleType:" + roleType);
       return partnerAdminService.getWorkQueueDeadlineRequests(Integer.parseInt(typeId), Integer.parseInt(categoryId), Integer.parseInt(staffUserId), roleType);
    }
 
@@ -149,6 +151,8 @@ public class PartnerAdmin {
    @Produces("application/json")
    public AdminPartnerWorkQueueRequestChangeInAllocation getWorkQueueChangeInAllocationRequests(@PathParam("typeId") String typeId, @PathParam("categoryId") String categoryId,
          @PathParam("cciStaffUserId") String staffUserId, @PathParam("roleType") String roleType) {
+      LOGGER.debug("fun : getWorkQueueChangeInAllocationRequests [] typeId : " + typeId + "  categoryId:  " + categoryId + " cciStaffUserID : " + staffUserId + " RoleType:"
+            + roleType);
       return partnerAdminService.getWorkQueueChangeInAllocationRequests(Integer.parseInt(typeId), Integer.parseInt(categoryId), Integer.parseInt(staffUserId), roleType);
    }
 
@@ -157,6 +161,7 @@ public class PartnerAdmin {
    @Produces("application/json")
    public AdminPartnerWorkQueueNotesReview getWorkQueuePartnerNoteReview(@PathParam("typeId") String typeId, @PathParam("categoryId") String categoryId,
          @PathParam("cciStaffUserId") String staffUserId, @PathParam("roleType") String roleType) {
+      LOGGER.debug("fun : getWorkQueuePartnerNoteReview [] typeId : " + typeId + "  categoryId:  " + categoryId + " cciStaffUserID : " + staffUserId + " RoleType:" + roleType);
       return partnerAdminService.getWorkQueuePartnerNoteReview(Integer.parseInt(typeId), Integer.parseInt(categoryId), Integer.parseInt(staffUserId), roleType);
 
    }
@@ -168,7 +173,7 @@ public class PartnerAdmin {
    @Path("changeApplicationStatus/{goId}/{newStatus}")
    @Produces("application/json")
    public WSDefaultResponse changePartnerApplicationStatus(@PathParam("goId") String goId, @PathParam("newStatus") String newStatus) {
-      LOGGER.debug("fun : changePartnerApplicationStatus []");
+      LOGGER.debug("fun : changePartnerApplicationStatus [] GoId : " + goId + "  New Status: " + newStatus);
       return partnerAdminService.changePartnerApplicationStatus(Integer.parseInt(goId), newStatus);
    }
 
@@ -176,7 +181,7 @@ public class PartnerAdmin {
    @Path("changeApplicationStatus/{goId}/{newStatus}/{note}")
    @Produces("application/json")
    public WSDefaultResponse changePartnerApplicationStatus(@PathParam("goId") String goId, @PathParam("newStatus") String newStatus, @PathParam("note") String note) {
-      LOGGER.debug("fun : changePartnerApplicationStatus []");
+      LOGGER.debug("fun : changePartnerApplicationStatus []GoId : " + goId + "  New Status: " + newStatus + " Note : " + note);
       return partnerAdminService.changePartnerApplicationStatus(Integer.parseInt(goId), newStatus, note);
    }
 
@@ -184,7 +189,7 @@ public class PartnerAdmin {
    @Path("updatePartnerApplicationFollowUpDate/{goId}/{followUpdate}")
    @Produces("application/json")
    public WSDefaultResponse updatePartnerApplicationFollowUpDate(@PathParam("goId") String goId, @PathParam("followUpdate") String followUpdate) {
-      LOGGER.debug("fun : updatePartnerApplicationFollowUpDate");
+      LOGGER.debug("fun : updatePartnerApplicationFollowUpDate  goId: " + goId + "  followUpdate:" + followUpdate);
       return partnerAdminService.updatePartnerApplicationFollowUpDate(Integer.parseInt(goId), followUpdate);
    }
 
@@ -192,7 +197,7 @@ public class PartnerAdmin {
    @Path("addNoteToPartnerApplication/{goId}/{noteValue}")
    @Produces("application/json")
    public WSDefaultResponse addNoteToPartnerApplication(@PathParam("goId") String goId, @PathParam("noteValue") String noteValue) {
-      LOGGER.debug("fun : addNoteToPartnerApplication");
+      LOGGER.debug("fun : addNoteToPartnerApplication goId : " + goId + " NoteValue: " + noteValue);
       return partnerAdminService.addNoteToPartnerApplication(Integer.parseInt(goId), noteValue);
    }
 
@@ -208,7 +213,7 @@ public class PartnerAdmin {
    @Path("partnerInquiryOverViewData/{partnerAgentGoId}")
    @Produces("application/json")
    public PartnerRecruitmentAdmin getPartnerInquiryOverviewData(@PathParam("partnerAgentGoId") String partnerAgentGoId) {
-      LOGGER.debug("fun : getPartnerInquiryOverviewData");
+      LOGGER.debug("fun : getPartnerInquiryOverviewData GoId : " + partnerAgentGoId);
       return partnerAdminService.getPartnerInquiryOverviewData(Integer.parseInt(partnerAgentGoId));
    }
 
@@ -224,7 +229,7 @@ public class PartnerAdmin {
    @Path("partnerInquiryLeadData/{partnerAgentGoId}")
    @Produces("application/json")
    public PartnerRecruitmentAdminLead getPartnerInquiryLeadData(@PathParam("partnerAgentGoId") String partnerAgentGoId) {
-      LOGGER.debug("fun : getPartnerInquiryLeadData");
+      LOGGER.debug("fun : getPartnerInquiryLeadData GoID: " + partnerAgentGoId);
       return partnerAdminService.getPartnerInquiryLeadData(Integer.parseInt(partnerAgentGoId));
    }
 
@@ -232,7 +237,7 @@ public class PartnerAdmin {
    @Path("updatePartnerInquiryLeadData")
    @Produces("application/json")
    public PartnerRecruitmentAdminLead updatePartnerInquiryLeadData(PartnerRecruitmentAdminLead partnerRecruitmentAdminLead) {
-      LOGGER.debug("fun : getPartnerInquiryLeadData");
+      LOGGER.debug("fun : getPartnerInquiryLeadData ");
       return partnerAdminService.updatePartnerInquiryLeadData(partnerRecruitmentAdminLead);
    }
 
@@ -347,6 +352,7 @@ public class PartnerAdmin {
       return partnerAdminService.removeNewPartnerInquiryReferenceCheck(deletedItems);
    }
 
+   @Deprecated
    @GET
    @Path("sendLogin")
    @Produces("application/json")

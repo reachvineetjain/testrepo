@@ -82,10 +82,6 @@ import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.DateUtils;
 import com.ccighgo.utils.ExceptionUtil;
 
-/**
- * @author ravi
- *
- */
 @Component
 public class PartnerServiceImpl implements PartnerService {
 
@@ -119,7 +115,6 @@ public class PartnerServiceImpl implements PartnerService {
 
    @Override
    public PartnerDashboard getPartnerDashboard(String partnerGoId) {
-      LOGGER.info("Partner GoId : " + partnerGoId);
       PartnerDashboard partnerDashboard = new PartnerDashboard();
       if (partnerGoId == null || Integer.valueOf(partnerGoId) == 0 || Integer.valueOf(partnerGoId) < 0) {
          partnerDashboard.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_PARTNER_ID.getValue(),
@@ -145,6 +140,7 @@ public class PartnerServiceImpl implements PartnerService {
                      partnerDashboard.setFirstName(partnerUser.getFirstName());
                      partnerDashboard.setLastName(partnerUser.getLastName());
                      partnerDashboard.setUsername(partnerUser.getLogin().getLoginName());
+                     partnerDashboard.setPartnerEmail(partnerUser.getLogin().getEmail());
                      partnerDashboard.setPhotoPath(partnerUser.getPhoto());
                      break;
                   }
@@ -194,87 +190,210 @@ public class PartnerServiceImpl implements PartnerService {
                      partnerProgramsList.add(prg);
                   }
                   partnerDashboard.getPartnerPrograms().addAll(partnerProgramsList);
-
                   List<Programs> userProgramsAndPermissions = new ArrayList<Programs>();
-                  PartnerPermission partnerPermission = partnerPermissionRepository.findByPartnerUserId(partnerUser.getPartnerUserId());
-                  if (partnerPermission != null) {
-                     Programs j1Program = new Programs();
-                     j1Program.setProgramName("J1HS");
-                     Permissions j1Permissions = new Permissions();
-                     j1Permissions.setAccounting(partnerPermission.getJ1AccountingInsurance() == CCIConstants.ACTIVE ? true : false);
-                     j1Permissions.setAdmin(partnerPermission.getJ1Admin() == CCIConstants.ACTIVE ? true : false);
-                     j1Permissions.setApplications(partnerPermission.getJ1Applications() == CCIConstants.ACTIVE ? true : false);
-                     j1Permissions.setContracting(partnerPermission.getJ1Contracting() == CCIConstants.ACTIVE ? true : false);
-                     j1Permissions.setFlights(partnerPermission.getJ1Flights() == CCIConstants.ACTIVE ? true : false);
-                     j1Permissions.setInsurance(partnerPermission.getJ1Insurance() == CCIConstants.ACTIVE ? true : false);
-                     j1Permissions.setMonitoring(partnerPermission.getJ1Monitoring() == CCIConstants.ACTIVE ? true : false);
-                     j1Permissions.setPlacementInfo(partnerPermission.getJ1PlacementInfo() == CCIConstants.ACTIVE ? true : false);
-                     j1Permissions.setStudentsPreProgram(partnerPermission.getJ1StudentsPreProgram() == CCIConstants.ACTIVE ? true : false);
-                     j1Program.setPermissions(j1Permissions);
-                     userProgramsAndPermissions.add(j1Program);
-
-                     Programs f1Program = new Programs();
-                     f1Program.setProgramName(CCIConstants.HSP_F1);
-                     Permissions f1Permissions = new Permissions();
-                     f1Permissions.setAccounting(partnerPermission.getF1AccountingInsurance() == CCIConstants.ACTIVE ? true : false);
-                     f1Permissions.setAdmin(partnerPermission.getF1Admin() == CCIConstants.ACTIVE ? true : false);
-                     f1Permissions.setApplications(partnerPermission.getF1Applications() == CCIConstants.ACTIVE ? true : false);
-                     f1Permissions.setContracting(partnerPermission.getF1Contracting() == CCIConstants.ACTIVE ? true : false);
-                     f1Permissions.setFlights(partnerPermission.getF1Flights() == CCIConstants.ACTIVE ? true : false);
-                     f1Permissions.setInsurance(partnerPermission.getF1Insurance() == CCIConstants.ACTIVE ? true : false);
-                     f1Permissions.setMonitoring(partnerPermission.getF1Monitoring() == CCIConstants.ACTIVE ? true : false);
-                     f1Permissions.setPlacementInfo(partnerPermission.getF1PlacementInfo() == CCIConstants.ACTIVE ? true : false);
-                     f1Permissions.setStudentsPreProgram(partnerPermission.getF1StudentsPreProgram() == CCIConstants.ACTIVE ? true : false);
-                     f1Program.setPermissions(f1Permissions);
-                     userProgramsAndPermissions.add(f1Program);
-
-                     Programs ihpProgram = new Programs();
-                     ihpProgram.setProgramName("IHP");
-                     Permissions ihpPermissions = new Permissions();
-                     ihpPermissions.setAccounting(partnerPermission.getIhpAccountingInsurance() == CCIConstants.ACTIVE ? true : false);
-                     ihpPermissions.setAdmin(partnerPermission.getIhpAdmin() == CCIConstants.ACTIVE ? true : false);
-                     ihpPermissions.setApplications(partnerPermission.getIhpApplications() == CCIConstants.ACTIVE ? true : false);
-                     ihpPermissions.setContracting(partnerPermission.getIhpContracting() == CCIConstants.ACTIVE ? true : false);
-                     ihpPermissions.setFlights(partnerPermission.getIhpFlights() == CCIConstants.ACTIVE ? true : false);
-                     ihpPermissions.setInsurance(partnerPermission.getIhpInsurance() == CCIConstants.ACTIVE ? true : false);
-                     ihpPermissions.setMonitoring(partnerPermission.getIhpMonitoring() == CCIConstants.ACTIVE ? true : false);
-                     ihpPermissions.setPlacementInfo(partnerPermission.getIhpPlacementInfo() == CCIConstants.ACTIVE ? true : false);
-                     ihpPermissions.setStudentsPreProgram(partnerPermission.getIhpStudentsPreProgram() == CCIConstants.ACTIVE ? true : false);
-                     ihpProgram.setPermissions(ihpPermissions);
-                     userProgramsAndPermissions.add(ihpProgram);
-
-                     Programs wntProgram = new Programs();
-                     wntProgram.setProgramName("W&T");
-                     Permissions wntPermissions = new Permissions();
-                     wntPermissions.setAccounting(partnerPermission.getWtAccountingInsurance() == CCIConstants.ACTIVE ? true : false);
-                     wntPermissions.setAdmin(partnerPermission.getWtAdmin() == CCIConstants.ACTIVE ? true : false);
-                     wntPermissions.setApplications(partnerPermission.getWtApplications() == CCIConstants.ACTIVE ? true : false);
-                     wntPermissions.setContracting(partnerPermission.getWtContracting() == CCIConstants.ACTIVE ? true : false);
-                     wntPermissions.setFlights(partnerPermission.getWtFlights() == CCIConstants.ACTIVE ? true : false);
-                     wntPermissions.setInsurance(partnerPermission.getWtInsurance() == CCIConstants.ACTIVE ? true : false);
-                     wntPermissions.setMonitoring(partnerPermission.getWtMonitoring() == CCIConstants.ACTIVE ? true : false);
-                     wntPermissions.setPlacementInfo(partnerPermission.getWtPlacementInfo() == CCIConstants.ACTIVE ? true : false);
-                     wntPermissions.setStudentsPreProgram(partnerPermission.getWtStudentsPreProgram() == CCIConstants.ACTIVE ? true : false);
-                     wntProgram.setPermissions(wntPermissions);
-                     userProgramsAndPermissions.add(wntProgram);
-
-                     Programs capProgram = new Programs();
-                     capProgram.setProgramName(CCIConstants.WP_WT_CAP);
-                     Permissions capPermissions = new Permissions();
-                     capPermissions.setAccounting(partnerPermission.getCapAccountingInsurance() == CCIConstants.ACTIVE ? true : false);
-                     capPermissions.setAdmin(partnerPermission.getCapAdmin() == CCIConstants.ACTIVE ? true : false);
-                     capPermissions.setApplications(partnerPermission.getCapApplications() == CCIConstants.ACTIVE ? true : false);
-                     capPermissions.setContracting(partnerPermission.getCapContracting() == CCIConstants.ACTIVE ? true : false);
-                     capPermissions.setFlights(partnerPermission.getCapFlights() == CCIConstants.ACTIVE ? true : false);
-                     capPermissions.setInsurance(partnerPermission.getCapInsurance() == CCIConstants.ACTIVE ? true : false);
-                     capPermissions.setMonitoring(partnerPermission.getCapMonitoring() == CCIConstants.ACTIVE ? true : false);
-                     capPermissions.setPlacementInfo(partnerPermission.getCapPlacementInfo() == CCIConstants.ACTIVE ? true : false);
-                     capPermissions.setStudentsPreProgram(partnerPermission.getCapStudentsPreProgram() == CCIConstants.ACTIVE ? true : false);
-                     capProgram.setPermissions(capPermissions);
-                     userProgramsAndPermissions.add(capProgram);
+                  Programs j1Program = new Programs();
+                  j1Program.setProgramName("J1HS");
+                  Permissions j1Permissions = new Permissions();
+                  Programs f1Program = new Programs();
+                  f1Program.setProgramName("F1");
+                  Permissions f1Permissions = new Permissions();
+                  Programs ihpProgram = new Programs();
+                  ihpProgram.setProgramName("IHP");
+                  Permissions ihpPermissions = new Permissions();
+                  Programs wtProgram = new Programs();
+                  wtProgram.setProgramName("W&T");
+                  Permissions wtPermissions = new Permissions();
+                  Programs capProgram = new Programs();
+                  capProgram.setProgramName("CAP");
+                  Permissions capPermissions = new Permissions();
+                  List<PartnerPermission> j1ProgramPermissions = partnerPermissionRepository.findByPartnerUserIdAndProgramId(partnerUser.getPartnerUserId(),
+                        CCIConstants.HSP_J1_HS_ID);
+                  if (j1ProgramPermissions != null && !(j1ProgramPermissions.isEmpty())) {
+                     for (PartnerPermission pp : j1ProgramPermissions) {
+                        if (pp.getPartnerPermissionsCategory().getPartnerPermissionsCategoryId() == CCIConstants.Admin) {
+                           j1Permissions.setAdmin(true);
+                        } else if (pp.getPartnerPermissionsCategory().getPartnerPermissionsCategoryId() == CCIConstants.Applications) {
+                           j1Permissions.setApplications(true);
+                        } else if (pp.getPartnerPermissionsCategory().getPartnerPermissionsCategoryId() == CCIConstants.Flights) {
+                           j1Permissions.setFlights(true);
+                        } else if (pp.getPartnerPermissionsCategory().getPartnerPermissionsCategoryId() == CCIConstants.PlacementInfo) {
+                           j1Permissions.setPlacementInfo(true);
+                        } else if (pp.getPartnerPermissionsCategory().getPartnerPermissionsCategoryId() == CCIConstants.Monitoring) {
+                           j1Permissions.setMonitoring(true);
+                        } else if (pp.getPartnerPermissionsCategory().getPartnerPermissionsCategoryId() == CCIConstants.AccountingInsurance) {
+                           j1Permissions.setAccounting(true);
+                        } else if (pp.getPartnerPermissionsCategory().getPartnerPermissionsCategoryId() == CCIConstants.StudentPreProgram) {
+                           j1Permissions.setStudentsPreProgram(true);
+                        } else if (pp.getPartnerPermissionsCategory().getPartnerPermissionsCategoryId() == CCIConstants.Contracting) {
+                           j1Permissions.setContracting(true);
+                        } else if (pp.getPartnerPermissionsCategory().getPartnerPermissionsCategoryId() == CCIConstants.Insurance) {
+                           j1Permissions.setInsurance(true);
+                        }
+                     }
+                  } else {
+                     j1Permissions.setAdmin(false);
+                     j1Permissions.setApplications(false);
+                     j1Permissions.setFlights(false);
+                     j1Permissions.setPlacementInfo(false);
+                     j1Permissions.setMonitoring(false);
+                     j1Permissions.setAccounting(false);
+                     j1Permissions.setStudentsPreProgram(false);
+                     j1Permissions.setContracting(false);
+                     j1Permissions.setInsurance(false);
                   }
-                  partnerDashboard.getUserProgramsAndPermissions().addAll(userProgramsAndPermissions);
 
+                  List<PartnerPermission> f1ProgramPermissions = partnerPermissionRepository
+                        .findByPartnerUserIdAndProgramId(partnerUser.getPartnerUserId(), CCIConstants.HSP_F1_ID);
+                  if (f1ProgramPermissions != null && !(f1ProgramPermissions.isEmpty())) {
+                     for (PartnerPermission pp : f1ProgramPermissions) {
+                        if (pp.getPartnerPermissionsCategory().getPartnerPermissionsCategoryId() == CCIConstants.Admin) {
+                           f1Permissions.setAdmin(true);
+                        } else if (pp.getPartnerPermissionsCategory().getPartnerPermissionsCategoryId() == CCIConstants.Applications) {
+                           f1Permissions.setApplications(true);
+                        } else if (pp.getPartnerPermissionsCategory().getPartnerPermissionsCategoryId() == CCIConstants.Flights) {
+                           f1Permissions.setFlights(true);
+                        } else if (pp.getPartnerPermissionsCategory().getPartnerPermissionsCategoryId() == CCIConstants.PlacementInfo) {
+                           f1Permissions.setPlacementInfo(true);
+                        } else if (pp.getPartnerPermissionsCategory().getPartnerPermissionsCategoryId() == CCIConstants.Monitoring) {
+                           f1Permissions.setMonitoring(true);
+                        } else if (pp.getPartnerPermissionsCategory().getPartnerPermissionsCategoryId() == CCIConstants.AccountingInsurance) {
+                           f1Permissions.setAccounting(true);
+                        } else if (pp.getPartnerPermissionsCategory().getPartnerPermissionsCategoryId() == CCIConstants.StudentPreProgram) {
+                           f1Permissions.setStudentsPreProgram(true);
+                        } else if (pp.getPartnerPermissionsCategory().getPartnerPermissionsCategoryId() == CCIConstants.Contracting) {
+                           f1Permissions.setContracting(true);
+                        } else if (pp.getPartnerPermissionsCategory().getPartnerPermissionsCategoryId() == CCIConstants.Insurance) {
+                           f1Permissions.setInsurance(true);
+                        }
+                     }
+                  } else {
+                     f1Permissions.setAdmin(false);
+                     f1Permissions.setApplications(false);
+                     f1Permissions.setFlights(false);
+                     f1Permissions.setPlacementInfo(false);
+                     f1Permissions.setMonitoring(false);
+                     f1Permissions.setAccounting(false);
+                     f1Permissions.setStudentsPreProgram(false);
+                     f1Permissions.setContracting(false);
+                     f1Permissions.setInsurance(false);
+                  }
+
+                  List<PartnerPermission> ihpProgramPermissions = partnerPermissionRepository.findByPartnerUserIdAndProgramId(partnerUser.getPartnerUserId(),
+                        CCIConstants.HSP_STP_IHP_ID);
+                  if (ihpProgramPermissions != null && !(ihpProgramPermissions.isEmpty())) {
+                     for (PartnerPermission pp : ihpProgramPermissions) {
+                        if (pp.getPartnerPermissionsCategory().getPartnerPermissionsCategoryId() == CCIConstants.Admin) {
+                           ihpPermissions.setAdmin(true);
+                        } else if (pp.getPartnerPermissionsCategory().getPartnerPermissionsCategoryId() == CCIConstants.Applications) {
+                           ihpPermissions.setApplications(true);
+                        } else if (pp.getPartnerPermissionsCategory().getPartnerPermissionsCategoryId() == CCIConstants.Flights) {
+                           ihpPermissions.setFlights(true);
+                        } else if (pp.getPartnerPermissionsCategory().getPartnerPermissionsCategoryId() == CCIConstants.PlacementInfo) {
+                           ihpPermissions.setPlacementInfo(true);
+                        } else if (pp.getPartnerPermissionsCategory().getPartnerPermissionsCategoryId() == CCIConstants.Monitoring) {
+                           ihpPermissions.setMonitoring(true);
+                        } else if (pp.getPartnerPermissionsCategory().getPartnerPermissionsCategoryId() == CCIConstants.AccountingInsurance) {
+                           ihpPermissions.setAccounting(true);
+                        } else if (pp.getPartnerPermissionsCategory().getPartnerPermissionsCategoryId() == CCIConstants.StudentPreProgram) {
+                           ihpPermissions.setStudentsPreProgram(true);
+                        } else if (pp.getPartnerPermissionsCategory().getPartnerPermissionsCategoryId() == CCIConstants.Contracting) {
+                           ihpPermissions.setContracting(true);
+                        } else if (pp.getPartnerPermissionsCategory().getPartnerPermissionsCategoryId() == CCIConstants.Insurance) {
+                           ihpPermissions.setInsurance(true);
+                        }
+                     }
+                  } else {
+                     ihpPermissions.setAdmin(false);
+                     ihpPermissions.setApplications(false);
+                     ihpPermissions.setFlights(false);
+                     ihpPermissions.setPlacementInfo(false);
+                     ihpPermissions.setMonitoring(false);
+                     ihpPermissions.setAccounting(false);
+                     ihpPermissions.setStudentsPreProgram(false);
+                     ihpPermissions.setContracting(false);
+                     ihpPermissions.setInsurance(false);
+                  }
+
+                  List<PartnerPermission> wtProgramPermissions = partnerPermissionRepository.findByPartnerUserIdAndProgramId(partnerUser.getPartnerUserId(), 6);
+                  if (wtProgramPermissions != null && !(wtProgramPermissions.isEmpty())) {
+                     for (PartnerPermission pp : wtProgramPermissions) {
+                        if (pp.getPartnerPermissionsCategory().getPartnerPermissionsCategoryId() == CCIConstants.Admin) {
+                           wtPermissions.setAdmin(true);
+                        } else if (pp.getPartnerPermissionsCategory().getPartnerPermissionsCategoryId() == CCIConstants.Applications) {
+                           wtPermissions.setApplications(true);
+                        } else if (pp.getPartnerPermissionsCategory().getPartnerPermissionsCategoryId() == CCIConstants.Flights) {
+                           wtPermissions.setFlights(true);
+                        } else if (pp.getPartnerPermissionsCategory().getPartnerPermissionsCategoryId() == CCIConstants.PlacementInfo) {
+                           wtPermissions.setPlacementInfo(true);
+                        } else if (pp.getPartnerPermissionsCategory().getPartnerPermissionsCategoryId() == CCIConstants.Monitoring) {
+                           wtPermissions.setMonitoring(true);
+                        } else if (pp.getPartnerPermissionsCategory().getPartnerPermissionsCategoryId() == CCIConstants.AccountingInsurance) {
+                           wtPermissions.setAccounting(true);
+                        } else if (pp.getPartnerPermissionsCategory().getPartnerPermissionsCategoryId() == CCIConstants.StudentPreProgram) {
+                           wtPermissions.setStudentsPreProgram(true);
+                        } else if (pp.getPartnerPermissionsCategory().getPartnerPermissionsCategoryId() == CCIConstants.Contracting) {
+                           wtPermissions.setContracting(true);
+                        } else if (pp.getPartnerPermissionsCategory().getPartnerPermissionsCategoryId() == CCIConstants.Insurance) {
+                           wtPermissions.setInsurance(true);
+                        }
+                     }
+                  } else {
+                     wtPermissions.setAdmin(false);
+                     wtPermissions.setApplications(false);
+                     wtPermissions.setFlights(false);
+                     wtPermissions.setPlacementInfo(false);
+                     wtPermissions.setMonitoring(false);
+                     wtPermissions.setAccounting(false);
+                     wtPermissions.setStudentsPreProgram(false);
+                     wtPermissions.setContracting(false);
+                     wtPermissions.setInsurance(false);
+                  }
+
+                  List<PartnerPermission> capProgramPermissions = partnerPermissionRepository.findByPartnerUserIdAndProgramId(partnerUser.getPartnerUserId(), 7);
+                  if (capProgramPermissions != null && !(capProgramPermissions.isEmpty())) {
+                     for (PartnerPermission pp : capProgramPermissions) {
+                        if (pp.getPartnerPermissionsCategory().getPartnerPermissionsCategoryId() == CCIConstants.Admin) {
+                           capPermissions.setAdmin(true);
+                        } else if (pp.getPartnerPermissionsCategory().getPartnerPermissionsCategoryId() == CCIConstants.Applications) {
+                           capPermissions.setApplications(true);
+                        } else if (pp.getPartnerPermissionsCategory().getPartnerPermissionsCategoryId() == CCIConstants.Flights) {
+                           capPermissions.setFlights(true);
+                        } else if (pp.getPartnerPermissionsCategory().getPartnerPermissionsCategoryId() == CCIConstants.PlacementInfo) {
+                           capPermissions.setPlacementInfo(true);
+                        } else if (pp.getPartnerPermissionsCategory().getPartnerPermissionsCategoryId() == CCIConstants.Monitoring) {
+                           capPermissions.setMonitoring(true);
+                        } else if (pp.getPartnerPermissionsCategory().getPartnerPermissionsCategoryId() == CCIConstants.AccountingInsurance) {
+                           capPermissions.setAccounting(true);
+                        } else if (pp.getPartnerPermissionsCategory().getPartnerPermissionsCategoryId() == CCIConstants.StudentPreProgram) {
+                           capPermissions.setStudentsPreProgram(true);
+                        } else if (pp.getPartnerPermissionsCategory().getPartnerPermissionsCategoryId() == CCIConstants.Contracting) {
+                           capPermissions.setContracting(true);
+                        } else if (pp.getPartnerPermissionsCategory().getPartnerPermissionsCategoryId() == CCIConstants.Insurance) {
+                           capPermissions.setInsurance(true);
+                        }
+                     }
+                  } else {
+                     capPermissions.setAdmin(false);
+                     capPermissions.setApplications(false);
+                     capPermissions.setFlights(false);
+                     capPermissions.setPlacementInfo(false);
+                     capPermissions.setMonitoring(false);
+                     capPermissions.setAccounting(false);
+                     capPermissions.setStudentsPreProgram(false);
+                     capPermissions.setContracting(false);
+                     capPermissions.setInsurance(false);
+                  }
+                  j1Program.setPermissions(j1Permissions);
+                  userProgramsAndPermissions.add(j1Program);
+                  f1Program.setPermissions(f1Permissions);
+                  userProgramsAndPermissions.add(f1Program);
+                  ihpProgram.setPermissions(ihpPermissions);
+                  userProgramsAndPermissions.add(ihpProgram);
+                  wtProgram.setPermissions(wtPermissions);
+                  userProgramsAndPermissions.add(wtProgram);
+                  capProgram.setPermissions(capPermissions);
+                  userProgramsAndPermissions.add(capProgram);
+                  partnerDashboard.getUserProgramsAndPermissions().addAll(userProgramsAndPermissions);
                } else {
                   LOGGER.info("NO Partner Seasons Exist! ");
                }
@@ -282,9 +401,8 @@ public class PartnerServiceImpl implements PartnerService {
                      messageUtil.getMessage(PartnerDashboardMessageConstants.FETCH_DATA_SUCCESSFULLY)));
             } else {
                // no partner found with the goid provided
-               partnerDashboard.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_PROGRAM_DETAILS_FOUND.getValue(),
+               partnerDashboard.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD_IN_DB, CCIConstants.TYPE_INFO, CCIConstants.NO_DATA_CODE,
                      messageUtil.getMessage(PartnerDashboardMessageConstants.NO_PROGRAM_DETAILS_FOUND)));
-               LOGGER.error(messageUtil.getMessage(PartnerDashboardMessageConstants.NO_PROGRAM_DETAILS_FOUND));
             }
          } catch (CcighgoException e) {
             partnerDashboard.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_PROGRAM_DETAILS_FOUND.getValue(),
@@ -300,7 +418,7 @@ public class PartnerServiceImpl implements PartnerService {
       LOGGER.info("Partner GoId : " + partnerGoId);
       PartnerJ1HSDashboard j1hsDashboard = new PartnerJ1HSDashboard();
       if (partnerGoId == null || Integer.valueOf(partnerGoId) == 0 || Integer.valueOf(partnerGoId) < 0) {
-         j1hsDashboard.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_PARTNER_ID.getValue(),
+         j1hsDashboard.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_J1_PARTNER_ID.getValue(),
                messageUtil.getMessage(PartnerDashboardMessageConstants.INVALID_PARTNER_ID)));
          LOGGER.error(messageUtil.getMessage(PartnerDashboardMessageConstants.INVALID_PARTNER_ID));
          return j1hsDashboard;
@@ -312,7 +430,6 @@ public class PartnerServiceImpl implements PartnerService {
                j1hsDashboard.setPartnerCompany(partner.getCompanyName());
                j1hsDashboard.setPartnerLogo(partner.getPartnerLogo());
 
-               // announcements
                List<PartnerJ1HSAnnouncement> partnerJ1HSAnnouncements = new ArrayList<PartnerJ1HSAnnouncement>();
                if (partner.getPartnerAnnouncements() != null && !partner.getPartnerAnnouncements().isEmpty()) {
                   for (PartnerAnnouncement ann : partner.getPartnerAnnouncements()) {
@@ -354,7 +471,8 @@ public class PartnerServiceImpl implements PartnerService {
                      j1wqType.setPartnerWorkQueueTypeName(pqType.getPartnerWQTypeName() != null ? pqType.getPartnerWQTypeName() : "");
                      PartnerWorkQueueTypeAggregate typeAgg = partnerWorkQueueTypeAggregateRepository.getWorkQueueTypeAggregateByDepartmentProgramId(pqType.getPartnerWQTypeId(),
                            partner.getPartnerGoId(), CCIConstants.HSP_J1_HS_ID);
-                     j1wqType.setPartnerWorkQueueTypeNo(typeAgg.getPartnerWQTypeAggregate() != null ? typeAgg.getPartnerWQTypeAggregate() : 0);
+                     if (typeAgg != null)
+                        j1wqType.setPartnerWorkQueueTypeNo(typeAgg.getPartnerWQTypeAggregate() != null ? typeAgg.getPartnerWQTypeAggregate() : 0);
                      List<PartnerWorkQueueCategory> caregoryList = partnerWorkQueueCategoryRepository.getWorkQueueCategoryForType(pqType.getPartnerWQTypeId());
                      if (caregoryList != null) {
                         List<PartnerJ1HSWorkQueueCategory> partnerWorkQueueCategories = new ArrayList<PartnerJ1HSWorkQueueCategory>();
@@ -363,7 +481,8 @@ public class PartnerServiceImpl implements PartnerService {
                            cat.setPartnerWorkQueueCategoryName(category.getPartnerWQCategoryName() != null ? category.getPartnerWQCategoryName() : "");
                            PartnerWorkQueueCategoryAggregate catAgg = partnerWorkQueueCategoryAggregateRepository.getCategoryAggregate(pqType.getPartnerWQTypeId(),
                                  category.getPartnerWQCategoryId(), partner.getPartnerGoId(), CCIConstants.HSP_J1_HS_ID);
-                           cat.setPartnerWorkQueueCategoryNo(catAgg.getPartnerWQCategoryAggregate() != null ? catAgg.getPartnerWQCategoryAggregate() : 0);
+                           if (catAgg != null)
+                              cat.setPartnerWorkQueueCategoryNo(catAgg.getPartnerWQCategoryAggregate() != null ? catAgg.getPartnerWQCategoryAggregate() : 0);
                            cat.setPartnerWorkQueueCategoryUrl("TBD");
                            partnerWorkQueueCategories.add(cat);
                         }
@@ -489,12 +608,11 @@ public class PartnerServiceImpl implements PartnerService {
                   }
                }
                j1hsDashboard.getPartnerJ1HSPrograms().addAll(partnerJ1HSProgramsList);
-               j1hsDashboard.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FETCH_DATA_SUCCESSFULLY.getValue(),
+               j1hsDashboard.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE,
                      messageUtil.getMessage(PartnerDashboardMessageConstants.FETCH_DATA_SUCCESSFULLY)));
             } else {
-               j1hsDashboard.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_PROGRAM_DETAILS_FOUND.getValue(),
+               j1hsDashboard.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD_IN_DB, CCIConstants.TYPE_INFO, CCIConstants.NO_DATA_CODE,
                      messageUtil.getMessage(PartnerDashboardMessageConstants.NO_PROGRAM_DETAILS_FOUND)));
-               LOGGER.error(messageUtil.getMessage(PartnerDashboardMessageConstants.NO_PROGRAM_DETAILS_FOUND));
                return j1hsDashboard;
             }
          } catch (CcighgoException e) {
@@ -508,10 +626,9 @@ public class PartnerServiceImpl implements PartnerService {
 
    @Override
    public PartnerF1Dashboard getF1Dashboard(String partnerGoId) {
-      LOGGER.info("Partner GoId : " + partnerGoId);
       PartnerF1Dashboard f1Dashboard = new PartnerF1Dashboard();
       if (partnerGoId == null || Integer.valueOf(partnerGoId) == 0 || Integer.valueOf(partnerGoId) < 0) {
-         f1Dashboard.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_PARTNER_ID.getValue(),
+         f1Dashboard.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_F1_PARTNER_ID.getValue(),
                messageUtil.getMessage(PartnerDashboardMessageConstants.INVALID_PARTNER_ID)));
          LOGGER.error(messageUtil.getMessage(PartnerDashboardMessageConstants.INVALID_PARTNER_ID));
          return f1Dashboard;
@@ -565,7 +682,8 @@ public class PartnerServiceImpl implements PartnerService {
                      f1wqType.setPartnerWorkQueueTypeName(pqType.getPartnerWQTypeName());
                      PartnerWorkQueueTypeAggregate typeAgg = partnerWorkQueueTypeAggregateRepository.getWorkQueueTypeAggregateByDepartmentProgramId(pqType.getPartnerWQTypeId(),
                            partner.getPartnerGoId(), CCIConstants.HSP_F1_ID);
-                     f1wqType.setPartnerWorkQueueTypeNo(typeAgg.getPartnerWQTypeAggregate());
+                     if (typeAgg != null)
+                        f1wqType.setPartnerWorkQueueTypeNo(typeAgg.getPartnerWQTypeAggregate());
                      List<PartnerWorkQueueCategory> caregoryList = partnerWorkQueueCategoryRepository.getWorkQueueCategoryForType(pqType.getPartnerWQTypeId());
                      if (caregoryList != null) {
                         List<PartnerF1WorkQueueCategory> partnerWorkQueueCategories = new ArrayList<PartnerF1WorkQueueCategory>();
@@ -574,7 +692,8 @@ public class PartnerServiceImpl implements PartnerService {
                            cat.setPartnerWorkQueueCategoryName(category.getPartnerWQCategoryName());
                            PartnerWorkQueueCategoryAggregate catAgg = partnerWorkQueueCategoryAggregateRepository.getCategoryAggregate(pqType.getPartnerWQTypeId(),
                                  category.getPartnerWQCategoryId(), partner.getPartnerGoId(), CCIConstants.HSP_F1_ID);
-                           cat.setPartnerWorkQueueCategoryNo(catAgg.getPartnerWQCategoryAggregate());
+                           if (catAgg != null)
+                              cat.setPartnerWorkQueueCategoryNo(catAgg.getPartnerWQCategoryAggregate());
                            cat.setPartnerWorkQueueCategoryUrl("TBD");
                            partnerWorkQueueCategories.add(cat);
                         }
@@ -677,12 +796,11 @@ public class PartnerServiceImpl implements PartnerService {
                   }
                }
                f1Dashboard.getPartnerF1Programs().addAll(partnerF1ProgramsList);
-               f1Dashboard.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FETCH_DATA_SUCCESSFULLY.getValue(),
+               f1Dashboard.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE,
                      messageUtil.getMessage(PartnerDashboardMessageConstants.FETCH_DATA_SUCCESSFULLY)));
             } else {
-               f1Dashboard.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_PROGRAM_DETAILS_FOUND.getValue(),
+               f1Dashboard.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD_IN_DB, CCIConstants.TYPE_INFO, CCIConstants.NO_DATA_CODE,
                      messageUtil.getMessage(PartnerDashboardMessageConstants.NO_PROGRAM_DETAILS_FOUND)));
-               LOGGER.error(messageUtil.getMessage(PartnerDashboardMessageConstants.NO_PROGRAM_DETAILS_FOUND));
                return f1Dashboard;
             }
          } catch (CcighgoException e) {
@@ -696,10 +814,9 @@ public class PartnerServiceImpl implements PartnerService {
 
    @Override
    public PartnerIHPDashboard getIHPDashboard(String partnerGoId) {
-      LOGGER.info("partner goId : " + partnerGoId);
       PartnerIHPDashboard ihpDashboard = new PartnerIHPDashboard();
       if (partnerGoId == null || Integer.valueOf(partnerGoId) == 0 || Integer.valueOf(partnerGoId) < 0) {
-         ihpDashboard.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_PARTNER_ID.getValue(),
+         ihpDashboard.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_IHP_PARTNER_ID.getValue(),
                messageUtil.getMessage(PartnerDashboardMessageConstants.INVALID_PARTNER_ID)));
          LOGGER.error(messageUtil.getMessage(PartnerDashboardMessageConstants.INVALID_PARTNER_ID));
          return ihpDashboard;
@@ -752,7 +869,8 @@ public class PartnerServiceImpl implements PartnerService {
                      ihpWqType.setPartnerWorkQueueTypeName(pqType.getPartnerWQTypeName());
                      PartnerWorkQueueTypeAggregate typeAgg = partnerWorkQueueTypeAggregateRepository.getWorkQueueTypeAggregateByDepartmentProgramId(pqType.getPartnerWQTypeId(),
                            partner.getPartnerGoId(), CCIConstants.HSP_STP_IHP_ID);
-                     ihpWqType.setPartnerWorkQueueTypeNo(typeAgg.getPartnerWQTypeAggregate());
+                     if (typeAgg != null)
+                        ihpWqType.setPartnerWorkQueueTypeNo(typeAgg.getPartnerWQTypeAggregate());
                      List<PartnerWorkQueueCategory> caregoryList = partnerWorkQueueCategoryRepository.getWorkQueueCategoryForType(pqType.getPartnerWQTypeId());
                      if (caregoryList != null) {
                         List<PartnerIHPWorkQueueCategory> partnerWorkQueueCategories = new ArrayList<PartnerIHPWorkQueueCategory>();
@@ -761,7 +879,8 @@ public class PartnerServiceImpl implements PartnerService {
                            cat.setPartnerWorkQueueCategoryName(category.getPartnerWQCategoryName());
                            PartnerWorkQueueCategoryAggregate catAgg = partnerWorkQueueCategoryAggregateRepository.getCategoryAggregate(pqType.getPartnerWQTypeId(),
                                  category.getPartnerWQCategoryId(), partner.getPartnerGoId(), CCIConstants.HSP_STP_IHP_ID);
-                           cat.setPartnerWorkQueueCategoryNo(catAgg.getPartnerWQCategoryAggregate());
+                           if (catAgg != null)
+                              cat.setPartnerWorkQueueCategoryNo(catAgg.getPartnerWQCategoryAggregate());
                            cat.setPartnerWorkQueueCategoryUrl("TBD");
                            partnerWorkQueueCategories.add(cat);
                         }
@@ -824,12 +943,11 @@ public class PartnerServiceImpl implements PartnerService {
                   }
                   ihpDashboard.getPartnerIHPPrograms().addAll(partnerIHPProgramsList);
                }
-               ihpDashboard.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.FETCH_DATA_SUCCESSFULLY.getValue(),
+               ihpDashboard.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE,
                      messageUtil.getMessage(PartnerDashboardMessageConstants.FETCH_DATA_SUCCESSFULLY)));
             } else {
-               ihpDashboard.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_PROGRAM_DETAILS_FOUND.getValue(),
+               ihpDashboard.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD_IN_DB, CCIConstants.TYPE_INFO, CCIConstants.NO_DATA_CODE,
                      messageUtil.getMessage(PartnerDashboardMessageConstants.NO_PROGRAM_DETAILS_FOUND)));
-               LOGGER.error(messageUtil.getMessage(PartnerDashboardMessageConstants.NO_PROGRAM_DETAILS_FOUND));
                return ihpDashboard;
             }
          } catch (CcighgoException e) {
@@ -873,10 +991,16 @@ public class PartnerServiceImpl implements PartnerService {
    }
 
    @Override
-   public PartnerRecruitmentLead getPartnerInquiryLeadData(int goId) {
-      LOGGER.info("GOID: " + goId);
+   public PartnerRecruitmentLead getPartnerInquiryLeadData(String id) {
       PartnerRecruitmentLead pwt = new PartnerRecruitmentLead();
       try {
+         if (id == null || Integer.valueOf(id) == 0 || Integer.valueOf(id) < 0) {
+            pwt.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_PARTNER_INQUIRY_LEAD_ID.getValue(),
+                  messageUtil.getMessage(PartnerDashboardMessageConstants.INVALID_PARTNER_ID)));
+            LOGGER.error(messageUtil.getMessage(PartnerDashboardMessageConstants.INVALID_PARTNER_ID));
+            return pwt;
+         }
+         int goId = Integer.parseInt(id);
          pwt.setGoId(goId);
          PartnerAgentInquiry partnerAgentInquiry = partnerAgentInquiryRepository.findPartnerByGoId(goId);
          if (partnerAgentInquiry == null) {
@@ -966,8 +1090,7 @@ public class PartnerServiceImpl implements PartnerService {
             ExceptionUtil.logException(e, LOGGER);
          }
 
-         pwt.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.PARTNER_INQUIURY_LEAD.getValue(),
-               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         pwt.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE, messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
          pwt.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.NO_WOEKQUEUE_PARTNER_INQUIRY_LEAD_DETAIL.getValue(),
@@ -976,5 +1099,4 @@ public class PartnerServiceImpl implements PartnerService {
       }
       return pwt;
    }
-
 }

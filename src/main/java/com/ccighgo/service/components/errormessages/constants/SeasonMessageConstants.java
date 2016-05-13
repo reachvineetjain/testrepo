@@ -6,154 +6,168 @@ package com.ccighgo.service.components.errormessages.constants;
  */
 public class SeasonMessageConstants {
 
-   // SEASON LIST
-   public static final String GET_SEASON_LIST_ERROR = "error.get.seasonlist";
-   public static final String FAILURE_VIEW_SEASON_SERVICE_CODE = "error.view.season";
+   // get list of seasons
+   public static final String INVALID_SEASON_ID = "error.get.season.list";
+   public static final String ERROR_GET_SEASON_LIST = "error.get.season.list";
 
-   // SeasonBean
-   public static final String FAILED_EDIT_SEASON_BEAN_SERVICE = "error.edit.seasonbean.service";
-   public static final String FAILED_TO_GET_SEASON_PROGRAMS = "error.get.season.programs";
-   public static final String FAILED_TO_GET_SEASON_STATUS = "error.get.season.status.value";
-   public static final String FAILED_TO_GET_HSP_J1_HS_SEASON_DETAILS = "error.get.hsp.j1.hs.season.details";
-   public static final String FAILED_TO_GET_J1_HS_SEASON_NAME_AND_STATUS = "error.get.j1.hs.season.name.status";
-   public static final String FAILED_TO_GET_J1_HS_SEASON_JAN_START_DETAILS = "error.get.j1.hs.season.jan.start.details";
-   public static final String FAILED_TO_GET_HSP_J1_HS_AUG_START = "error.get.j1.hs.season.aug.start.details";
-   public static final String FAILED_TO_GET_HSP_J1_HS_SEASON_FIELD_SETTINGS = "error.get.hsp.j1.hs.season.field.settings";
-   public static final String FAILED_TO_GET_HSP_J1_HS_PROGRAM_ALLOCATION = "error.get.hsp.j1.hs.program.allocation";
-   public static final String FAILED_UPDATE_HSP_J1_HS_SEASON_DETAILS = "error.get.hsp.j1.hs.season.details";
-   public static final String FAILED_UPDATE_HSP_J1_HS_SEASON_NAME_AND_STATUS = "error.get.hsp.j1.hs.season.name.and.status";
-   public static final String FAILED_TO_UPDATE_J1_HS_JAN_START = "error.update.hsp.j1.hs.jan.start";
-   public static final String FAILED_TO_UPDATE_HSP_J1_HS_AUG_START = "error.update.hsp.j1.hs.aug.start";
-   public static final String FAILED_TO_UPDATE_HSP_J1_HS_SEASON_FIELD_SETTINGS = "error.update.hsp.j1.hs.season.field.settings";
-   public static final String FAILED_TO_UPDATE_HSP_J1_HS_PROGRAM_ALLOCATION = "error.update.hsp.j1.hs.season.program.allocation";
-   public static final String FAILED_TO_GET_HSP_F1_SEASON_DETAILS = "error.get.hsp.f1.season.details";
-   public static final String FAILED_UPDATE_F1_DETAILS = "error.update.f1.details";
-   public static final String FAILED_TO_GET_HSP_F1_NAME_AND_STATUS = "error.get.hsp.f1.name.and.status";
-   public static final String FAILED_TO_UPDATE_HSP_F1_NAME_AND_STATUS = "error.update.hsp.f1.name.and.status";
-   public static final String FAILED_TO_GET_HSP_F1_ACCOUNTING = "error.get.hsp.f1.accounting";
-   public static final String FAILED_TO_UPDATE_HSP_F1_ACCOUNTING = "error.update.hsp.f1.accounting";
-   public static final String FAILED_TO_GET_HSP_F1_JAN_2ND_SEM_DETAILS = "error.get.hsp.f1.jan.2nd.sem.details";
-   public static final String FAILED_TO_UPDATE_HSP_F1_JAN_2ND_SEM_DETAILS = "error.update.hsp.f1.jan.2nd.sem.details";
-   public static final String FAILED_GET_HSP_F1_JAN_FULL_YEAR_START_DETAIL = "error.get.hsp.f1.jan.full.year.start.details";
-   public static final String FAILED_UPDATE_HSP_F1_JAN_FULL_YEAR_START_DETAIL = "error.update.hsp.f1.jan.full.year.start.details";
-   public static final String FAILED_GET_HSP_F1_AUGUST_1ST_SEMISTER = "error.get.hsp.f1.aug.1st.semister";
-   public static final String FAILED_UPDATE_HSP_F1_AUGUST_1ST_SEMISTER = "error.update.hsp.f1.aug.1st.semister";
-   public static final String FAILED_GET_HSP_F1_AUGUST_FULL_YEAR_DETAIL = "error.get.hsp.f1.aug.full.year.details";
-   public static final String UPDATE_HSP_F1_AUGUST_FULL_YEAR_DETAIL = "error.update.hsp.f1.aug.full.year.details";
-   public static final String FAILED_GET_HSP_F1_FIELD_SETTINGS = "error.get.hsp.f1.field.settings";
-   public static final String FAILED_UPDATE_HSP_F1_FIELD_SETTINGS = "error.update.hsp.f1.field.settings";
-   public static final String FAILED_GET_HSP_F1_PROGRAM_ALLOCATION = "error.get.hsp.f1.program.allocation";
-   public static final String FAILED_UPDATE_HSP_F1_PROGRAM_ALLOCATION = "error.update.hsp.f1.program.allocation";
-   public static final String FAILED_GET_SEASON_GHTVA_DETAILS = "error.get.season.ghtva.details";
-   public static final String FAILED_GET_GHTV_SEASON_NAME_STATUS = "error.get.ghtv.season.name.status";
-   public static final String FAILED_GET_GHTVA_SEASON_DATE_DEAILS = "error.get.ghtv.season.date.details";
-   public static final String FAILED_UPDATE_SEASON_GHT_DETAILS = "error.update.ghtv.season.date.details";
-   public static final String FAILED_UPDATE_GHTV_SEASON_NAME_STATUS = "error.update.ghtv.season.name.status";
-   public static final String FAILED_UPDATE_GHTVA_SEASON_DATE_DEAILS = "error.update.ghtv.season.date.details";
-   public static final String FAILED_GET_SEASON_GHTWA_SEASON_DETAILS = "error.get.ghtwa.season.season.details";
-   public static final String FAILED_get_GHTWA_SEASON_NAME_STATUS = "error.get.ghtwa.season.name.status";
-   public static final String FAILED_GET_GHTWA_SEASON_DATE_DEAILS = "error.get.ghtwa.season.date.details";
-   public static final String FAILED_UPDATE_GHTWA_SEASON_DEAILS = "error.update.ghtv.season.details";
-   public static final String FAILED_UPDATE_GHTWA_SEASON_NAME_STATUS = "error.update.ghtwa.season.name.status";
-   public static final String FAILED_UPDATE_GHTWA_SEASON_DATE_DEAILS = "error.update.ghtv.season.date.details";
-   public static final String FAILED_UPDATE_SEASON_GHT_DEAILS = "error.update.season.ght.details";
-   public static final String FAILED_GET_GHTHS_SECTION_ONE_BASE_ABROAD = "error.get.ghths.section.one.base.abroad";
-   public static final String FAILED_UPDATE_GHTHS_SECTION_ONE_BASE_ABROAD = "error.update.ghths.section.one.base.abroad";
+   // view and edit season
+   public static final String ERROR_GET_SEASON_DETAILS = "error.view.season";
 
-   public static final String FAILED_GET_GHTHS_SECTION_TWO_DATES_ABROAD = "error.get.ghths.section.two.dates.abroad";
-   public static final String FAILED_UPDATE_GHTHS_SECTION_ONE_TWO_DATES_ABROAD = "error.update.ghths.section.two.dates.abroad";
-   public static final String FAILED_GET_GHT_LANGUAGE_SCHOOL = "error.get.ghth.language.school";
-   public static final String FAILED_UPDATE_GHT_LANGUAGE_SCHOOL = "error.update.ghth.language.school";
-   public static final String FAILED_GET_GHT_LANGUAGE_SCHOOL_SECTION_ONE = "error.get.ghth.language.school.section.one";
-   public static final String FAILED_UPDATE_GHT_LANGUAGE_SCHOOL_SECTION_ONE = "error.update.ghth.language.school.section.one";
-   public static final String FAILED_GET_GHT_LANGUAGE_SCHOOL_SECTION_2DATES = "error.get.ght.language.school.section.2dates";
-   public static final String FAILED_UPDATE_GHT_LANGUAGE_SCHOOL_SECTION_2DATES = "error.update.ght.language.school.section.2dates";
-   public static final String FAILED_GET_GHT_TEACH_ABROAD = "error.get.ghth.teach.abroad";
-   public static final String FAILED_UPDATE_GHT_TEACH_ABROAD = "error.update.ghth.teach.abroad";
-   public static final String FAILED_GET_GHT_TEACH_ABROAD_SECTION_ONE = "error.get.ght.teach.abroad.section.one";
-   public static final String FAILED_UPDATE_GHT_TEACH_ABROAD_SECTION_ONE = "error.update.ght.teach.abroad.section.one";
-   public static final String FAILED_GET_GHT_TEACH_ABROAD_SECTION_2DATES = "error.get.ght.teach.abroad.section.2dates";
-   public static final String FAILED_UPDATE_GHT_TEACH_ABROAD_SECTION_2DATES = "error.update.ght.teach.abroad.section.2dates";
-   public static final String FAILED_GET_WPCAP_DETAILS = "error.get.wpcap.details";
-   public static final String FAILED_UPDATE_WPCAP_DETAILS = "error.update.wpcap.details";
-   public static final String FAILED_GET_WPCAP_BASIC_DETAILS = "error.get.wpcap.basic.details";
-   public static final String FAILED_UPDATE_WPCAP_BASIC_DETAILS = "error.update.wpcap.basic.details";
-   public static final String FAILED_GET_WPCAP_INTERNSHIP_DETAILS = "error.get.wpcap.internship.details";
-   public static final String FAILED_UPDATE_WPCAP_INTERNSHIP_DETAILS = "error.update.wpcap.internship.details";
-   public static final String FAILED_GET_WPCAP_TRAINEE_DETAILS = "error.get.wpcap.traine.details";
-   public static final String FAILED_UPDATE_WPCAP_TRAINEE_DETAILS = "error.update.wpcap.traine.details";
-   public static final String FAILED_GET_WPCAP_ALLOCATION_DETAILS = "error.get.wpcap.allocation.details";
-   public static final String FAILED_UPDATE_WPCAP_ALLOCATION_DETAILS = "error.update.wpcap.allocation.details";
-   public static final String FAILED_GET_SEASON_WP_SUM_DETAILS = "error.get.wpcap.season.sum.details";
-   public static final String FAILED_UPDATE_SEASON_WP_SUM_DETAILS = "error.update.wpcap.season.sum.details";
-   public static final String FAILED_GET_WP_SUM_BASE_DETAILS = "error.get.wp.sumbase.details";
-   public static final String FAILED_UPDATE_WP_SUM_BASE_DETAILS = "error.update.wp.sumbase.details";
-   public static final String FAILED_GET_WP_SUM_SECTION_ONE_DETAILS = "error.get.wp.sum.section.one.details";
-   public static final String FAILED_UPDATE_WP_SUM_SECTION_ONE_DETAILS = "error.update.wp.sum.section.one.details";
-   public static final String FAILED_GET_WP_PROGRAM_ALLOCATION = "error.get.wp.program.allocation";
-   public static final String FAILED_UPDATE_WP_PROGRAM_ALLOCATION = "error.update.wp.program.allocation";
-   public static final String FAILED_GET_SEASON_WP_SPRING_DETAILS = "error.get.wp.spring.details";
-   public static final String FAILED_UPDATE_SEASON_WP_SPRING_DETAILS = "error.update.wp.spring.details";
-   public static final String FAILED_GET_WP_SPRING_BASE_DETAILS = "error.get.wp.spring.base.details";
-   public static final String FAILED_UPDATE_WP_SPRING_BASE_DETAILS = "error.update.wp.spring.base.details";
-   public static final String FAILED_GET_WP_SPRING_SECTION_ONE_DETAILS = "error.get.wp.spring.section.one.details";
-   public static final String FAILED_UPDATE_WP_SPRING_SECTION_ONE_DETAILS = "error.update.wp.spring.section.one.details";
-   public static final String FAILED_GET_WP_SPRING_ALLOCATION_DETAILS = "error.get.wp.spring.allocation.details";
-   public static final String FAILED_UPDATE_WP_SPRING_ALLOCATION_DETAILS = "error.update.wp.spring.allocation.details";
-   public static final String FAILED_GET_WP_WINTER_DETAILS = "error.get.wp.winter.details";
-   public static final String FAILED_UPDATE_WP_WINTER_DETAILS = "error.update.wp.winter.details";
-   public static final String FAILED_EDIT_WP_WINTER_DETAILS = "error.edit.wp.winter.details";
-   public static final String FAILED_GET_WP_WINTER_BASE_DETAILS = "error.get.wp.winter.base.details";
-   public static final String FAILED_UPDATE_WP_WINTER_BASE_DETAILS = "error.update.wp.winter.base.details";
-   public static final String FAILED_EDIT_WP_WINTER_BASE_DETAILS = "error.edit.wp.winter.base.details";
-   public static final String FAILED_GET_WP_WINTER_SECTION_ONE_DETAILS = "error.get.wp.winter.section.one.details";
-   public static final String FAILED_EDIT_WP_WINTER_SECTION_ONE_DETAILS = "error.edit.wp.winter.section.one.details";
-   public static final String FAILED_UPDATE_WP_WINTER_SECTION_ONE_DETAILS = "error.update.wp.winter.section.one.details";
-   public static final String FAILED_GET_WP_WINTER_ALLOCATION_DETAILS = "error.get.wp.winter.allocatio.details";
-   public static final String FAILED_UPDATE_WP_WINTER_ALLOCATION_DETAILS = "error.update.wp.winter.allocatio.details";
-   public static final String FAILED_EDIT_WP_WINTER_ALLOCATION_DETAILS = "error.edit.wp.winter.allocatio.details";
-   public static final String FAILED_CLONE_SEASON = "error.clone.season";
-   public static final String FAILED_CREATE_SEASON_BEAN = "error.create.season.bean";
-   public static final String FAILED_UPDATE_SEASON = "error.update.season.bean";
-   public static final String FAILED_ADD_SEASON_DEPARTMENT_NOTE = "error.add.season.department.note";
-   public static final String FAILED_ADD_SEASON_DEPARTMENT_DOC = "error.add.season.department.doc";
-   public static final String FAILED_ADD_SEASON_PROGRAM_NOTE = "error.add.season.program.note";
-   public static final String FAILED_ADD_SEASON_PROGRAM_DOC = "error.add.season.program.doc";
-   public static final String FAILED_GET_DOCUMENT_TYPES = "error.get.document.types";
-   public static final String FAILED_GET_IHP_DETAILS = "error.get.ihp.details";
-   public static final String INVALID_PROGRAM_ID = "error.invalid.program.id";
-   public static final String FAILED_GET_IHP_NAME_AND_STATUS = "error.get.ihp.name.and.status";
-   public static final String FAILED_GET_IHP_DATES = "error.get.ihp.dates";
-   public static final String FAILED_GET_IHP_PROGRAM_CONFIGURATION_DETAIL = "error.get.ihp.program.configuration.details";
-   public static final String FAILED_UPDATE_IHP_DETAILS = "error.update.ihp.details";
-   public static final String DETAILS_NOT_NULL = "error.not.null";
-   public static final String FAILED_UPDATE_IHP_NAME_AND_STATUS = "error.update.ihp.name.and.status";
-   public static final String FAILED_UPDATE_DATES = "error.update.ihp.dates";
-   public static final String FAILED_UPDATE_IHP_PROGRAM_CONFIGURATION_DETAILS = "error.update.ihp.program.configuration.details";
-
-   public static final String FAILED_SEASON_NAME_ALREADY_EXIST = "error.season.name.already.exist";
-   public static final String FAILED_J1HS_AUG_START_NOT_NULL = "error.j1hs.aug.start.not.null";
-   public static final String FAILED_J1HS_FIELD_SETTINGS_NOT_NULL = "error.j1hs.field.settings.not.null";
-   public static final String FAILED_WP_BASIC_DETAILS = "error.get.wp.basic.details";
-   public static final String FAILED_GET_WP_SECTION_ONE_DETAILS = "error.get.wp.section.one.details";
-   public static final String FAILED_GET_SEASON_WP_DETAILS = "error.get.wp.section.details";
-   public static final String INVALID_SEASON_ID = "error.invalid.season.id";
-   public static final String INVALID_DEPARTMENT_ID = "error.invalid.department.id";
-   public static final String NO_SEASON_FOUND = "error.no.season.found";
-   public static final String FAILED_TO_GET_J1_HS_JAN_START = "error.get.j1.hs.jan.start";
-   public static final String SEASON_ID_ZERO_OR_NEG = "error.seasonid.zero.or.negative";
-   public static final String FAILED_TO_GET_J1_HS_BASIC_DETAILS = "error.get.j1.hs.basic.detils";
-   public static final String INVALID_SEASON_GHT_DETAILS = "error.invalid.season.ght.details";
-   public static final String FAILED_GET_SEASON_BEAN_DETAILS = "error.get.season.bean.details";
-   public static final String FAILED_TO_GET_DEPT_DETAILS = "error.get.dept.details";
-   public static final String INVALID_SEASON_ID_AND_PROGRAM_ID = "invalid.season.id.and.program.id";
-   public static final String FAILED_GET_SEASON_GHT_DETAILS = "error.get.season.ght.details";
-   public static final String FAILED_CREATE_SEASON_NAME = "error.create.season.name";
-   public static final String FAILED_GET_SEASSON_J1_DETAILS = "error.get.season.j1.detals";
-   public static final String FAILED_GET_SEASON_F1_DETAILS = "error.get.season.f1.detals";
-   public static final String FAILED_SEASON_HSP_F1_DETAILS = "error.get.season.hsp.f1.details";
-   public static final String FAILED_GET_SEASON_WP_CAP_DETAILS = "error.get.season.wp.cap.details";
-   public static final String FAILED_GET_SEASON_DETAILS = "error.get.season.details";
+   // create new season
    public static final String INVALID_SEASON_NAME = "invalid.season.name";
-   public static final String DUPLICATED_SEASON_NAME = "duplicated.season.name";
+   public static final String SEASON_ALREADY_EXISTS = "season.already.exists";
+   public static final String ERROR_CREATE_NEW_SEASON = "error.create.new.season";
+
+   // update season
+   public static final String ERROR_UPDATE_SEASON_VALUE_NULL = "error.update.season.value.null";
+   public static final String ERROR_UPDATE_SEASON = "error.update.season.details";
+
+   // Season Programs
+   public static final String ERROR_GET_SEASON_DEPARTMENT_DETAILS = "error.get.season.program.dept.details";
+   public static final String ERROR_GET_SEASON_PROGRAMS = "error.get.season.programs";
+   public static final String INVALD_SEASON_PROGRAM_ID = "error.invalid.season.program.id";
+   public static final String INVALID_SEASON_UPDATE_DATA = "error.invalid.season.program.update.object";
+
+   // Season status list
+   public static final String ERROR_GET_SEASON_STATUS = "error.get.season.status.list";
+
+   // Season J1HS
+   public static final String ERROR_GET_J1HS_SEASON_DETAILS = "error.get.j1hs.season.details";
+   public static final String ERROR_GET_HSPJ1_BASIC_DETAILS = "error.get.j1hs.season.basic.detail";
+   public static final String ERROR_GET_HSPJ1_JAN_START_DETAILS = "error.get.j1hs.season.jan.start.details";
+   public static final String ERROR_GET_HSPJ1_AUG_START_DETAILS = "error.get.j1hs.season.aug.start.details";
+   public static final String ERROR_GET_HSPJ1_FIELD_SETTINGS = "error.get.hsp.j1hs.season.field.settings";
+   public static final String ERROR_GET_HSPJ1_PROGRAM_ALLOCATION = "error.get.hsp.j1hs.program.allocation";
+   public static final String ERROR_UPDATE_J1HS_SEASON_DETAILS = "error.update.j1hs.season.details";
+   public static final String ERROR_UPDATE_BASIC_DATA = "error.update.j1hs.base.object";
+   public static final String ERROR_UPDATE_HSPJ1_JAN_START = "error.update.j1hs.jan.start";
+   public static final String ERROR_UPDATE_HSPJ1_AUG_START = "error.update.j1hs.aug.start";
+   public static final String ERROR_UPDATE_HSPJ1_FIELD_SETTINGS = "error.update.j1hs.season.field.settings";
+   public static final String ERROR_UPDATE_HSPJ1_PROGRAM_ALLOCATION = "error.update.hsp.j1.hs.season.program.allocation";
+
+   // Season F1
+   public static final String ERROR_GET_F1_DETAILS = "error.get.f1.season.details";
+   public static final String ERROR_GET_F1_BASIC_DETAILS = "error.get.f1.season.basic.detail";
+   public static final String ERROR_GET_F1_ACCOUNTING_DETAILS = "error.get.f1.season.accounting.detail";
+   public static final String ERROR_GET_F1_JAN_2ND_SEM_DETAILS = "error.get.f1.jan.2nd.sem.details";
+   public static final String ERROR_GET_F1_JAN_FULL_YR_DETAILS = "error.get.f1.jan.full.year.details";
+   public static final String ERROR_GET_F1_AUG_1ST_SEM_DETAILS = "error.get.f1.aug.1st.sem.details";
+   public static final String ERROR_GET_F1_AUG_FULL_YR_DETAILS = "error.get.f1.aug.full.year.details";
+   public static final String ERROR_GET_F1_FIELD_SETTING_DETAILS = "error.get.f1.field.settings";
+   public static final String ERROR_GET_F1_PROGRAM_ALLOCATION = "error.get.f1.program.allocation";
+   public static final String ERROR_UPDATE_F1_DETAILS = "error.update.f1.details";
+   public static final String ERROR_UPDATE_F1_BASE_DETAILS = "error.update.f1.base.object";
+   public static final String ERROR_UPDATE_F1_ACCOUNTING_DETAILS = "error.update.f1.accounting";
+   public static final String ERROR_UPDATE_F1_JAN_2ND_SEM = "error.update.f1.jan.2nd.sem";
+   public static final String ERROR_UPDATE_F1_JAN_FULL_YR = "error.update.f1.jan.full.year";
+   public static final String ERROR_UPDATE_F1_AUG_1ST_SEM = "error.update.f1.aug.1st.sem";
+   public static final String ERROR_UPDATE_F1_AUG_FULL_YR = "error.update.f1.aug.full.year";
+   public static final String ERROR_UPDATE_F1_FIELD_SETTINGS = "error.update.f1.field.settings";
+   public static final String ERROR_UPDATE_F1_ALLOCATIONS = "error.update.f1.allocations";
+   
+   //Season IHP
+   public static final String ERROR_GET_IHP_DETAILS = "error.get.ihp.details";
+   public static final String ERROR_GET_IHP_BASIC_DETAILS = "error.get.ihp.basic.details";
+   public static final String ERROR_GET_IHP_DATES = "error.get.ihp.dates";
+   public static final String ERROR_GET_IHP_CONFIG = "error.get.ihp.config";
+   public static final String ERROR_UPDATE_IHP_DETAILS = "error.update.ihp.details";
+   public static final String ERROR_UPDATE_IHP_BASIC_DETAILS = "error.update.basic.details";
+   public static final String ERROR_UPDATE_IHP_DATES = "error.update.ihp.dates";
+   public static final String ERROR_UPDATE_IHP_CONFIG = "error.update.ihp.config";
+   
+   //Season GHT
+   
+   //GHT VA
+   public static final String ERROR_GET_VA_DETAILS = "error.get.va.details";
+   public static final String ERROR_GET_VA_BASIC_DETAILS = "error.get.va.basic.details";
+   public static final String ERROR_GET_VA_DATES = "error.get.va.dates";
+   public static final String ERROR_UPDATE_VA_DETAILS = "error.update.va.details";
+   public static final String ERROR_UPDATE_VA_BASIC_DETAILS = "error.update.va.basic.details";
+   public static final String ERROR_UPDATE_VA_DATES = "error.update.va.dates";
+   
+   //GHT WA
+   public static final String ERROR_GET_WA_DETAILS = "error.get.wa.details";
+   public static final String ERROR_GET_WA_BASIC_DETAILS = "error.get.wa.basic.details";
+   public static final String ERROR_GET_WA_DATES = "error.get.wa.dates";
+   public static final String ERROR_UPDATE_WA_DETAILS = "error.update.wa.details";
+   public static final String ERROR_UPDATE_WA_BASIC_DETAILS = "error.update.wa.basic.details";
+   public static final String ERROR_UPDATE_WA_DATES = "error.update.wa.dates";
+   
+   //GHT HSA
+   public static final String ERROR_GET_HSA_DETAILS = "error.get.hsa.details";
+   public static final String ERROR_GET_HSA_BASIC_DETAILS = "error.get.hsa.basic.details";
+   public static final String ERROR_GET_HSA_DATES = "error.get.hsa.dates";
+   public static final String ERROR_UPDATE_HSA_DETAILS = "error.update.hsa.details";
+   public static final String ERROR_UPDATE_HSA_BASIC_DETAILS = "error.update.hsa.basic.details";
+   public static final String ERROR_UPDATE_HSA_DATES = "error.update.hsa.dates";
+   
+   //GHT LS
+   public static final String ERROR_GET_LS_DETAILS = "error.get.ls.details";
+   public static final String ERROR_GET_LS_BASIC_DETAILS = "error.get.ls.basic.details";
+   public static final String ERROR_GET_LS_DATES = "error.get.ls.dates";
+   public static final String ERROR_UPDATE_LS_DETAILS = "error.update.ls.details";
+   public static final String ERROR_UPDATE_LS_BASIC_DETAILS = "error.update.ls.basic.details";
+   public static final String ERROR_UPDATE_LS_DATES = "error.update.ls.dates";
+   
+   //GHT TA
+   public static final String ERROR_GET_TA_DETAILS = "error.get.ta.details";
+   public static final String ERROR_GET_TA_BASIC_DETAILS = "error.get.ta.basic.details";
+   public static final String ERROR_GET_TA_DATES = "error.get.ta.dates";
+   public static final String ERROR_UPDATE_TA_DETAILS = "error.update.ta.details";
+   public static final String ERROR_UPDATE_TA_BASIC_DETAILS = "error.update.ta.basic.details";
+   public static final String ERROR_UPDATE_TA_DATES = "error.update.ta.dates";
+   
+   //Season WP
+   
+   //WP CAP
+   public static final String ERROR_GET_CAP_DETAILS = "error.get.cap.details";
+   public static final String ERROR_GET_CAP_BASIC_DETAILS = "error.get.cap.basic.details";
+   public static final String ERROR_GET_CAP_INTERNESHIP_DETAILS = "error.get.cap.internship.details";
+   public static final String ERROR_GET_CAP_TRAINEE_DETAILS = "error.get.cap.trainee.details";
+   public static final String ERROR_GET_CAP_ALLOCATIONS = "error.get.cap.allocations";
+   public static final String ERROR_UPDATE_CAP_DETAILS = "error.update.cap.details";
+   public static final String ERROR_UPDATE_CAP_BASIC_DETAILS = "error.update.cap.basic.details";
+   public static final String ERROR_UPDATE_CAP_INTERNESHIP_DETAILS = "error.update.cap.internship.details";
+   public static final String ERROR_UPDATE_CAP_TRAINEE_DETAILS = "error.update.trainee.details";
+   public static final String ERROR_UPDATE_CAP_ALLOCATIONS = "error.update.cap.allocations";
+   
+   //WP Summer
+   public static final String ERROR_GET_WP_SUMMER_DETAILS = "error.get.summer.details";
+   public static final String ERROR_GET_WP_SUMMER_BASIC_DETAILS = "error.get.summer.basic.details";
+   public static final String ERROR_GET_WP_SUMMER_SECTION1 = "error.get.summer.section1.details";
+   public static final String ERROR_GET_WP_SUMMER_ALLOCATIONS = "error.get.summer.allocations";
+   public static final String ERROR_UPDATE_WP_SUMMER_DETAILS = "error.update.summer.details";
+   public static final String ERROR_UPDATE_WP_SUMMER_BASIC_DETAILS = "error.update.summer.basic.details";
+   public static final String ERROR_UPDATE_WP_SUMMER_SECTION1 = "error.update.summer.section1.details";
+   public static final String ERROR_UPDATE_WP_SUMMER_ALLOCATIONS = "error.update.summer.allocations";
+   
+   //WP Spring
+   public static final String ERROR_GET_WP_SPRING_DETAILS = "error.get.spring.details";
+   public static final String ERROR_GET_WP_SPRING_BASIC_DETAILS = "error.get.spring.basic.details";
+   public static final String ERROR_GET_WP_SPRING_SECTION1 = "error.get.spring.section1.details";
+   public static final String ERROR_GET_WP_SPRING_ALLOCATIONS = "error.get.spring.allocations";
+   public static final String ERROR_UPDATE_WP_SPRING_DETAILS = "error.update.spring.details";
+   public static final String ERROR_UPDATE_WP_SPRING_BASIC_DETAILS = "error.update.spring.basic.details";
+   public static final String ERROR_UPDATE_WP_SPRING_SECTION1 = "error.update.spring.section1.details";
+   public static final String ERROR_UPDATE_WP_SPRING_ALLOCATIONS = "error.update.spring.allocations";
+   
+   //WP Winter
+   public static final String ERROR_GET_WP_WINTER_DETAILS = "error.get.winter.details";
+   public static final String ERROR_GET_WP_WINTER_BASIC_DETAILS = "error.get.winter.basic.details";
+   public static final String ERROR_GET_WP_WINTER_SECTION1 = "error.get.winter.section1.details";
+   public static final String ERROR_GET_WP_WINTER_ALLOCATIONS = "error.get.winter.allocations";
+   public static final String ERROR_UPDATE_WP_WINTER_DETAILS = "error.update.winter.details";
+   public static final String ERROR_UPDATE_WP_WINTER_BASIC_DETAILS = "error.update.winter.basic.details";
+   public static final String ERROR_UPDATE_WP_WINTER_SECTION1 = "error.update.winter.section1.details";
+   public static final String ERROR_UPDATE_WP_WINTER_ALLOCATIONS = "error.update.winter.allocations";
+   
+   public static final String ERROR_CLONE_SEASON = "error.clone.season";
+   public static final String DUPLICATE_NAME_CLONE_SEASON = "error.clone.season.duplicate.check";
+   public static final String ERROR_ADD_SEASON_NOTE = "error.add.season.note";
+   public static final String ERROR_ADD_SEASON_DOCUMENT = "error.add.season.doc";
+   public static final String ERROR_ADD_SEASON_PROGRRAM_NOTE = "error.add.season.program.note";
+   public static final String ERROR_ADD_SEASON_PROGRAM_DOCUMENT = "error.add.season.program.doc";
+   public static final String ERROR_GET_DOCYPE_LIST = "error.get.document.type.list";
+   
+  
 }

@@ -22,7 +22,9 @@ import com.ccighgo.db.entities.LoginUserType;
 import com.ccighgo.db.entities.Participant;
 import com.ccighgo.db.entities.ParticipantStatus;
 import com.ccighgo.db.entities.Partner;
+import com.ccighgo.db.entities.PartnerReviewStatus;
 import com.ccighgo.db.entities.PartnerSeason;
+import com.ccighgo.db.entities.PartnerUser;
 import com.ccighgo.db.entities.Season;
 import com.ccighgo.db.entities.SeasonCAPDetail;
 import com.ccighgo.db.entities.SeasonF1Detail;
@@ -278,7 +280,11 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                         participant.setEndDate(ps.getPartnerSeasonEndDate());
                      }
                   }
-                  participant.setPartner1(partner);
+                  if (partner.getIsSubPartner() == CCIConstants.TRUE_BYTE) {
+                     participant.setPartner2(partner);
+                  } else {
+                     participant.setPartner1(partner);
+                  }
                   participant.setGuaranteed((byte) (p.isGuranteed() ? 1 : 0));
                   participant.setParticipantGoId(goIdSequence.getGoId());
                   participantRepository.saveAndFlush(participant);
@@ -501,7 +507,6 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
    public AddedParticipantsList getAddedParticipant(String partnerId) {
       AddedParticipantsList addedParticipants = new AddedParticipantsList();
       try {
-         // TODO
          List<Participant> participants = null;
          Partner partner = partnerRepository.findOne(Integer.parseInt(partnerId));
          if (partner.getIsSubPartner() == CCIConstants.TRUE_BYTE) {
@@ -538,17 +543,27 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
                   details.setParticipantCountry(participant.getLookupCountry().getCountryName());
                   details.setParticipantCountryId(participant.getLookupCountry().getCountryId());
                }
-               // details.setParticipantEmail(participant.getEmail());
-               if (participant.getEndDate() != null)
+               if (participant.getEndDate() != null) {
                   details.setParticipantEndDate(DateUtils.getDateAndTime(participant.getEndDate()));
+               }
+               // BUG 1382 participant listing the “first name” for created
+               // participant
                details.setParticipantFirstName(participant.getFirstName());
-               if (participant.getGuaranteed() != null)
+               if (participant.getGuaranteed() != null) {
                   details.setParticipantGuranteed(participant.getGuaranteed() == 1);
+               }
                details.setParticipantlastName(participant.getLastName());
-               if (participant.getPhoto() != null)
+               if (participant.getPhoto() != null) {
                   details.setParticipantPicUrl(participant.getPhoto());
+               }
                if (participant.getDepartmentProgram() != null) {
                   details.setParticipantProgramName(participant.getDepartmentProgram().getProgramName());
+               }
+               // BUG 1173 point 1. As per discussion we need to show both
+               // program option as well as available programs
+               if (participant.getDepartmentProgramOption() != null) {
+                  details.setParticipantProgramOptionId(participant.getDepartmentProgramOption().getDepartmentProgramOptionId());
+                  details.setParticipantProgramOption(participant.getDepartmentProgramOption().getProgramOptionName());
                }
                details.setParticipantSeasonId(participant.getSeason().getSeasonId());
                String programName = participant.getDepartmentProgram().getProgramName();
@@ -611,6 +626,9 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
             }
             addedParticipants.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         } else {
+            addedParticipants.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+                  messageUtil.getMessage(CCIConstants.NO_RECORD)));
          }
       } catch (Exception e) {
          addedParticipants.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(),
@@ -627,10 +645,17 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
          List<Partner> allPartners = partnerRepository.findByIsSubPartnerAndParentId(partnerId);
          if (allPartners != null) {
             for (Partner p : allPartners) {
-               SubPartnersForParticipantsDetails details = new SubPartnersForParticipantsDetails();
-               details.setSubPartnerId(p.getPartnerGoId());
-               details.setSubPartnerName(p.getCompanyName());
-               subPartners.getDetails().add(details);
+               //Bug : 1409, get only active sub-partners. crazy code but no other option
+               if(p.getPartnerReviewStatuses()!=null){
+                  if(p.getPartnerReviewStatuses().get(0)!=null){
+                     if(p.getPartnerReviewStatuses().get(0).getPartnerStatus2().getPartnerStatusId()!=CCIConstants.DELETED_STATUS){
+                        SubPartnersForParticipantsDetails details = new SubPartnersForParticipantsDetails();
+                        details.setSubPartnerId(p.getPartnerGoId());
+                        details.setSubPartnerName(p.getCompanyName());
+                        subPartners.getDetails().add(details);
+                     }
+                  }
+               }
             }
          }
          subPartners.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
@@ -935,12 +960,12 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
    }
 
    @Override
-   public SeasonsForParticipants getAllAvailableSeasons2(String partnerId) {
+   public SeasonsForParticipants getAllAvailableSeasons2(String partnerId,String participantId) {
       SeasonsForParticipants seasons = new SeasonsForParticipants();
       try {
 
          @SuppressWarnings("unchecked")
-         List<Object[]> result = em.createNativeQuery("call SPPartnerParticipantSeasons(:partnerId)").setParameter("partnerId", partnerId).getResultList();
+         List<Object[]> result = em.createNativeQuery("call SPPartnerParticipantSeasons(:partnerId,:participantId)").setParameter("partnerId", partnerId).setParameter("participantId", participantId).getResultList();
          if (result != null) {
             for (Object[] dt : result) {
                SeasonsForParticipantDetails seasonsForParticipantDetails = new SeasonsForParticipantDetails();
@@ -961,5 +986,23 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
          ExceptionUtil.logException(e, logger);
       }
       return seasons;
+   }
+
+   @Override
+   public WSDefaultResponse unAssignPartcipantSubPartner(String participantId) {
+      WSDefaultResponse wsDefaultResponse = new WSDefaultResponse();
+      try {
+         Participant p = participantRepository.findOne(Integer.parseInt(participantId));
+         p.setPartner2(null);
+         participantRepository.saveAndFlush(p);
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.CHANGE_PARTICIPANT_SUBPARTNER.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (Exception e) {
+         ExceptionUtil.logException(e, logger);
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.CANT_CHANGE_PARTICIPANT_SUBPARTNER.getValue(),
+               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_PATICIPANT_SUBPARTNER)));
+         logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_PATICIPANT_SUBPARTNER));
+      }
+      return wsDefaultResponse;
    }
 }

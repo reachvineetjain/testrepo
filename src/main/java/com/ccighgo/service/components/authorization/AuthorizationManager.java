@@ -114,7 +114,7 @@ public class AuthorizationManager implements AuthorizationManagerInterface {
                messageUtil.getMessage(AuthConstants.LOGIN_FAILED)));
          LOGGER.error(messageUtil.getMessage(AuthConstants.LOGIN_FAILED));
       }
-         
+
       return auth;
    }
 
@@ -142,7 +142,7 @@ public class AuthorizationManager implements AuthorizationManagerInterface {
    @Override
    @Transactional(readOnly = true)
    public PartnerRecruitmentLead getPartnerAgentDashboard(int partnerGoId) {
-      return partnerService.getPartnerInquiryLeadData(partnerGoId);
+      return partnerService.getPartnerInquiryLeadData(partnerGoId + "");
    }
 
    @Override

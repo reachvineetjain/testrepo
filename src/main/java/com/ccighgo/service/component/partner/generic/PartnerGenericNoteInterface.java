@@ -39,4 +39,15 @@ public interface PartnerGenericNoteInterface {
    public WSDefaultResponse tagTopic(Topic topic);
 
    public WSDefaultResponse createTopic(Topic topic);
+
+   public WSDefaultResponse addPartnerSeasonNote(com.ccighgo.service.transport.partner.beans.generic.partnerseason.notes.ScreenNote note);
+
+   public WSDefaultResponse deletePartnerSeasonNote(DeleteNote deleteNote);
+
+   public com.ccighgo.service.transport.partner.beans.generic.partnerseason.topic.Topics
+   viewPartnerSeasonTopics(int partnerId);
+
+   public WSDefaultResponse tagPartnerSeasonTopic(com.ccighgo.service.transport.partner.beans.generic.partnerseason.topic.Topic topic);
+
+   public WSDefaultResponse createPartnerSeasonTopic(com.ccighgo.service.transport.partner.beans.generic.partnerseason.topic.Topic topic);
 }

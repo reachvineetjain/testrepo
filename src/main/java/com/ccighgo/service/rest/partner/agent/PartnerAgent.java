@@ -49,6 +49,7 @@ public class PartnerAgent {
       return partnerAgentInterface.addSeasons(partnerSeasonApplicationList);
    }
 
+   @Deprecated
    @POST
    @Path("edit-partner-seasons")
    @Produces("application/json")
@@ -62,6 +63,7 @@ public class PartnerAgent {
    @Produces("application/json")
    public PartnerAgentSeasonDetails viewPartnerSeason(@PathParam("partnerSeasonId") String partnerSeasonId) {
       LOGGER.debug("calling PartnerAgent.viewPartnerSeason");
+      //TODO Not Compeleted 
       return partnerAgentInterface.viewPartnerSeason(partnerSeasonId);
    }
 }

@@ -1,5 +1,8 @@
-/**
- * 
+/*
+ * Copyright (c) 2015, 2016, Creospan Solutions PVT LTD. All rights reserved.
+ * CREOSPAN PROPRIETARY/CONFIDENTIAL.
+ *
+ *
  */
 package com.ccighgo.service.rest.authentication;
 
@@ -16,6 +19,9 @@ import com.ccighgo.service.auth.beans.Auth;
 import com.ccighgo.service.components.authentication.AuthenticationService;
 
 /**
+ * This class contains the methods used to authenticate the user and logout the
+ * user from the system
+ * 
  * @author ravimishra
  *
  */

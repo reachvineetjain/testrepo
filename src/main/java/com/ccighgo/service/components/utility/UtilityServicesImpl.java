@@ -6,6 +6,8 @@ package com.ccighgo.service.components.utility;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -55,6 +57,9 @@ import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.components.errormessages.constants.UtilityServiceMessageConstants;
 import com.ccighgo.service.transport.common.response.beans.Response;
+import com.ccighgo.service.transport.document.resources.DocumentResources;
+import com.ccighgo.service.transport.document.resources.ProgramResources;
+import com.ccighgo.service.transport.document.resources.ResourcesURLDetails;
 import com.ccighgo.service.transport.partner.beans.partnerseason.PartnerSeasonProgramStatus;
 import com.ccighgo.service.transport.partner.beans.partnerseasondetail.NoteTags;
 import com.ccighgo.service.transport.season.beans.seasonstatus.SeasonStatuses;
@@ -95,9 +100,11 @@ import com.ccighgo.utils.UuidUtils;
  *
  */
 @Component
+@SuppressWarnings("unchecked")
 public class UtilityServicesImpl implements UtilityServices {
 
    private static final Logger LOGGER = LoggerFactory.getLogger(UtilityServicesImpl.class);
+   private static final String SP_GET_RESOURCE_URL_LIST = "CALL SPGetResourceURL(?,?)";
 
    @Autowired CountryRepository countryRepository;
    @Autowired StateRepository stateRepository;
@@ -120,6 +127,7 @@ public class UtilityServicesImpl implements UtilityServices {
    @Autowired PartnerNoteTagRepository partnerNoteTagRepository;
    @Autowired DocumentTypeRepository documentTypeRepository;
    @Autowired CCIStaffUsersRepository cciStaffUsersRepository;
+   @Autowired EntityManager entityManager;
 
    @Override
    public com.ccighgo.service.transport.utility.beans.country.Countries getAllCountries() {
@@ -650,7 +658,7 @@ public class UtilityServicesImpl implements UtilityServices {
             String body = "<p>Ciao! </p>" + "<p>This email was sent automatically by Greenheart Online (GO) in response to your request for a new password. </p>" + "<p>"
                   + "Your username is : " + loginUser.getLoginName() + "</p>" + "<p>Please click on the link below to create a new password:</p> " + "<p>"
                   + formResetURL(request).concat(loginUser.getKeyValue()) + "</p>" + "<p>If you didn't request a new password, please let us know.</p>" + "<p>Thank you,</p>"
-                  + "<p>CCI Greenheart.</p>";
+                  + "<p>CCI Greenheart</p>";
             email.send(loginUser.getEmail(), CCIConstants.RESET_PASSWORD_SUBJECT, body, true);
             response.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
                   messageUtil.getMessage((CCIConstants.SERVICE_SUCCESS))));
@@ -918,4 +926,40 @@ public class UtilityServicesImpl implements UtilityServices {
       }
       return userTypes;
    }
+
+   @Override
+   public DocumentResources getResourcesList(Integer goId, Integer userTypeId) {
+      DocumentResources documentResources = new DocumentResources();
+      try {
+         // call to the stored procedure.
+         Query query = entityManager.createNativeQuery(SP_GET_RESOURCE_URL_LIST);
+         query.setParameter(1, goId);
+         query.setParameter(2, userTypeId);
+
+         List<Object[]> results = query.getResultList();
+         if (results != null && results.size() > 0) {
+            for (Object[] obj : results) {
+               /* The positions of the fields in the result set */
+               // 0.goId,1.ProgramName,2.ResourceUrl
+               ProgramResources programResources = new ProgramResources();
+               programResources.setProgramName(obj[1].toString());
+               programResources.setResourceUrl(obj[2].toString());
+               documentResources.getProgramResources().add(programResources);
+            }
+            documentResources.setGoId(goId);
+            documentResources.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE,
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         } else {
+            documentResources.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD_IN_DB, CCIConstants.TYPE_INFO, CCIConstants.NO_DATA_CODE,
+                  messageUtil.getMessage(CCIConstants.NO_RECORD)));
+            LOGGER.error(messageUtil.getMessage(CCIConstants.NO_RECORD));
+         }
+      } catch (CcighgoException e) {
+         documentResources.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_RESOURCES_LIST.getValue(),
+               messageUtil.getMessage(UtilityServiceMessageConstants.ERROR_GET_RESOURCES_LIST)));
+         LOGGER.error(messageUtil.getMessage(UtilityServiceMessageConstants.ERROR_GET_RESOURCES_LIST));
+      }
+      return documentResources;
+   }
+
 }

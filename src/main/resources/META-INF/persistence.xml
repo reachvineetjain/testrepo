@@ -3,8 +3,10 @@
 	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
 	<persistence-unit name="cci_gh_go" transaction-type="RESOURCE_LOCAL">
+
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<mapping-file>META-INF/orm.xml</mapping-file>
+
 		<class>com.ccighgo.db.entities.AddendumDocumentInformation</class>
 		<class>com.ccighgo.db.entities.AdminQuickStatsCategory</class>
 		<class>com.ccighgo.db.entities.AdminQuickStatsCategoryAggregate</class>
@@ -214,6 +216,10 @@
 		<class>com.ccighgo.db.entities.HostFamilyWorkQueueCategoryAggregate</class>
 		<class>com.ccighgo.db.entities.HostFamilyWorkQueueType</class>
 		<class>com.ccighgo.db.entities.HostFamilyWorkQueueTypeAggregate</class>
+
+		<class>com.ccighgo.db.entities.PartnerPermissionsCategory</class>
+		<class>com.ccighgo.db.entities.PartnerSeasonNoteTopic</class>
+		<class>com.ccighgo.db.entities.PartnerSeasonNote</class>
 		<properties>
 			<property name="connection.provider_class"
 				value="org.hibernate.connection.C3P0ConnectionProvider" />

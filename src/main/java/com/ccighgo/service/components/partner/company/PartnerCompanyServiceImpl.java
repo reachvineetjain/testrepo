@@ -18,6 +18,7 @@ import com.ccighgo.db.entities.Partner;
 import com.ccighgo.db.entities.PartnerUser;
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.ErrorCode;
+import com.ccighgo.exception.PartnerCodes;
 import com.ccighgo.jpa.repositories.CountryRepository;
 import com.ccighgo.jpa.repositories.LoginRepository;
 import com.ccighgo.jpa.repositories.PartnerOfficeRepository;
@@ -69,7 +70,7 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
    public PartnerCompanyDetail getPartnerCompanyDetails(String partnerGoId) {
       PartnerCompanyDetail partnerCompanyDetail = new PartnerCompanyDetail();
       if (partnerGoId == null) {
-         partnerCompanyDetail.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_PARTNER_ID.getValue(),
+         partnerCompanyDetail.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, CCIConstants.INVALID_PARTNER_ID,
                messageUtil.getMessage(PartnerSeasonMessageConstants.INVALID_PARTNER_ID)));
          LOGGER.error(messageUtil.getMessage(PartnerSeasonMessageConstants.INVALID_PARTNER_ID));
          return partnerCompanyDetail;
@@ -102,8 +103,8 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
          partnerCompanyDetails.setCCIAccountingDesignation(partner.getQuickbooksCode());
          partnerCompanyDetails.setDAndBNumber(partner.getDandBNumber() != null ? partner.getDandBNumber() : 0);
          partnerCompanyDetails.setPersonToSignContract(partner.getContractSigner());
-         partnerCompanyDetails.setSubscribeCCINewsletter(partner.getSubscribeToCCINewsletter() == CCIConstants.ACTIVE ? true : false);
-         partnerCompanyDetails.setRecieveHSPNotificationEmails(partner.getReceiveAYPMails() == CCIConstants.ACTIVE ? true : false);
+         partnerCompanyDetails.setSubscribeCCINewsletter(partner.getSubscribeToCCINewsletter()!=null&&partner.getSubscribeToCCINewsletter() == CCIConstants.ACTIVE ? true : false);
+         partnerCompanyDetails.setRecieveHSPNotificationEmails(partner.getReceiveAYPMails()!=null&&partner.getReceiveAYPMails() == CCIConstants.ACTIVE ? true : false);
          partnerCompanyDetails.setGeneralEmail(partner.getEmail());
 
          if (partnerLogin != null) {
@@ -132,7 +133,7 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
                partOffice.setOfficeAddressCountry(officeAddressCountry);
                partOffice.setOfficePhone(pOffice.getPhoneNumber());
                partOffice.setOfficeFax(pOffice.getFaxNumber());
-               partOffice.setOfficeEmail(pOffice.getEmail());
+               partOffice.setOfficeEmail(pOffice.getEmail()!=null?pOffice.getEmail():"");
                partOffice.setOfficeWebsite(pOffice.getWebsite());
                if (pOffice.getPartnerOfficeType().getPartnerOfficeType().equals(CCIConstants.PRIMARY_OFFICE)) {
                   partOffice.setIsPrimary(true);
@@ -206,10 +207,10 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
             partnerCompanyDetail.setPartnerMailingAddressSame(false);
          }
          partnerCompanyDetail.setPartnerMailingAddress(partnerMailingAddress);
-         partnerCompanyDetail.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
+         partnerCompanyDetail.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE,
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (CcighgoException e) {
-         partnerCompanyDetail.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_COMPANY_DETAIL.getValue(),
+         partnerCompanyDetail.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.ERROR_GET_PARTNER_COMPANY_DETAIL.getValue(),
                messageUtil.getMessage(PartnerCompanyDetailsMessageConstants.ERROR_GET_PARTNER_COMPANY_DETAIL)));
          LOGGER.error(messageUtil.getMessage(PartnerCompanyDetailsMessageConstants.ERROR_GET_PARTNER_COMPANY_DETAIL), e);
       }
@@ -221,7 +222,7 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
    public PartnerCompanyDetail updatePartnerCompanyDetails(PartnerCompanyDetail partnerCompanyDetail) {
       PartnerCompanyDetail updatedObject = new PartnerCompanyDetail();
       if (partnerCompanyDetail.getPartnerGoId() == 0 || partnerCompanyDetail.getPartnerGoId() < 0) {
-         partnerCompanyDetail.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_PARTNER_ID.getValue(),
+         partnerCompanyDetail.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, CCIConstants.INVALID_PARTNER_ID,
                messageUtil.getMessage(PartnerSeasonMessageConstants.INVALID_PARTNER_ID)));
          LOGGER.error(messageUtil.getMessage(PartnerSeasonMessageConstants.INVALID_PARTNER_ID));
          return partnerCompanyDetail;
@@ -250,7 +251,7 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
                   partnerLogin.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
                   loginRepository.saveAndFlush(partnerLogin);
                } else {
-                  updatedObject.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DUPLICATE_LOGINNAME.getValue(),
+                  updatedObject.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.DUPLICATE_LOGINNAME.getValue(),
                         messageUtil.getMessage(PartnerCompanyDetailsMessageConstants.ERROR_DUPLICATE_LOGIN_NAME)));
                   LOGGER.error(messageUtil.getMessage(PartnerCompanyDetailsMessageConstants.ERROR_DUPLICATE_LOGIN_NAME));
                   return updatedObject;
@@ -263,7 +264,11 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
                         // id 1 is of main office
                         poff.setPartnerOfficeType(partnerOfficeTypeRepository.findOne(1));
                         partnerOfficeRepository.saveAndFlush(poff);
-                        break;
+                     } else {
+                        com.ccighgo.db.entities.PartnerOffice poff = partnerOfficeRepository.findOne(po.getPartnerOfficeId());
+                        // id 3 is of other
+                        poff.setPartnerOfficeType(partnerOfficeTypeRepository.findOne(3));
+                        partnerOfficeRepository.saveAndFlush(poff);
                      }
                   }
                }
@@ -321,12 +326,12 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
                updatedObject = getPartnerCompanyDetails(String.valueOf(partner.getPartnerGoId()));
             }
          } else {
-            updatedObject.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
+            updatedObject.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD_IN_DB, CCIConstants.TYPE_INFO, CCIConstants.NO_DATA_CODE,
                   messageUtil.getMessage(CCIConstants.NO_RECORD)));
             LOGGER.error(messageUtil.getMessage(CCIConstants.NO_RECORD));
          }
       } catch (CcighgoException e) {
-         updatedObject.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_COMPANY_DETAIL.getValue(),
+         updatedObject.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.ERROR_UPDATE_PARTNER_COMPANY_DETAIL.getValue(),
                messageUtil.getMessage(PartnerCompanyDetailsMessageConstants.ERROR_GET_PARTNER_COMPANY_DETAIL)));
          LOGGER.error(messageUtil.getMessage(PartnerCompanyDetailsMessageConstants.ERROR_GET_PARTNER_COMPANY_DETAIL), e);
       }
@@ -338,7 +343,7 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
    public Response addNewPartnerOffice(String partnerGoId, NewPartnerOffice newPartnerOffice) {
       Response resp = new Response();
       if (partnerGoId == null || Integer.valueOf(partnerGoId) == 0 || Integer.valueOf(partnerGoId) < 0 || newPartnerOffice == null) {
-         resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_PARTNER_ID.getValue(),
+         resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, CCIConstants.INVALID_PARTNER_ID,
                messageUtil.getMessage(PartnerSeasonMessageConstants.INVALID_PARTNER_ID)));
          LOGGER.error(messageUtil.getMessage(PartnerSeasonMessageConstants.INVALID_PARTNER_ID));
          return resp;
@@ -367,10 +372,10 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
             partnerOffice.setWebsite(newPartnerOffice.getOfficeWebsite());
             partnerOffice.setPartnerOfficeType(newPartnerOffice.isIsPrimary() ? partnerOfficeTypeRepository.findOne(1) : partnerOfficeTypeRepository.findOne(3));
             partnerOfficeRepository.saveAndFlush(partnerOffice);
-            resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
+            resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE,
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          } catch (CcighgoException e) {
-            resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_COMPANY_DETAIL.getValue(),
+            resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.ERROR_ADDING_NEW_PARTNER_OFFICE.getValue(),
                   messageUtil.getMessage(PartnerCompanyDetailsMessageConstants.ERROR_GET_PARTNER_COMPANY_DETAIL)));
             LOGGER.error(messageUtil.getMessage(PartnerCompanyDetailsMessageConstants.ERROR_GET_PARTNER_COMPANY_DETAIL), e);
          }
@@ -384,7 +389,7 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
    public Response deletePartnerOffice(String partnerOfficeId) {
       Response resp = new Response();
       if (partnerOfficeId == null || Integer.valueOf(partnerOfficeId) == 0 || Integer.valueOf(partnerOfficeId) < 0 || partnerOfficeId == null) {
-         resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.INVALID_PARTNER_ID.getValue(),
+         resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, CCIConstants.INVALID_PARTNER_ID,
                messageUtil.getMessage(PartnerSeasonMessageConstants.INVALID_PARTNER_ID)));
          LOGGER.error(messageUtil.getMessage(PartnerSeasonMessageConstants.INVALID_PARTNER_ID));
          return resp;
@@ -420,11 +425,11 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
                      + "Please dissociate the users from this office from User tab and then try deleting later.");
             } else {
                partnerOfficeRepository.delete(partnerOffice.getPartnerOfficeId());
-               resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.REGION_SERVICE_CODE.getValue(),
+               resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE,
                      messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
             }
          } catch (CcighgoException e) {
-            resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.ERROR_GET_PARTNER_COMPANY_DETAIL.getValue(), e.getMessage()));
+            resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.ERROR_DELETE_PARTNER_OFFICE.getValue(), e.getMessage()));
             LOGGER.error(messageUtil.getMessage(PartnerCompanyDetailsMessageConstants.ERROR_GET_PARTNER_COMPANY_DETAIL), e);
          }
       }
