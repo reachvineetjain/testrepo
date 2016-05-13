@@ -591,6 +591,7 @@ public class PartnerGenericNote implements PartnerGenericNoteInterface {
          topicData.setPartnerSeasonNoteTopicName(topic.getPartnerSeasonNoteTopicName());
          topicData.setIsPublic(topic.isIsPublic() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
          topicData.setIsVisibleToPartner(CCIConstants.TRUE_BYTE);
+         topicData.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
          topicData.setCreatedBy(topic.getLoginId());
          topicData.setModifiedBy(topic.getLoginId());
          topicData.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
