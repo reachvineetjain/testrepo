@@ -23,6 +23,8 @@
 					<xsd:sequence>
 						<xsd:element name="goId" type="xsd:string" minOccurs="0"
 							maxOccurs="1" />
+						<xsd:element name="partnerGoId" type="xsd:int" minOccurs="0"
+							maxOccurs="1" />
 						<xsd:element name="active" type="xsd:boolean"
 							minOccurs="0" maxOccurs="1" />
 						<xsd:element name="partnerDetail" type="cd:Details"
