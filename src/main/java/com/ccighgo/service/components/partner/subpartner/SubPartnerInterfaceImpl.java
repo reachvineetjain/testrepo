@@ -512,7 +512,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             return responce;
          }
          //Bug-1253: check if parent partner info exists which can be used to inherit partner season and cci contacts. 
-         PartnerUser parentUser = partnerUserRepository.findByPartnerGoIdAndLoginId(Integer.valueOf(subPartner.getGoId()), subPartner.getLoginId());
+         PartnerUser parentUser = partnerUserRepository.findByPartnerGoIdAndLoginId(subPartner.getPartnerGoId(), subPartner.getLoginId());
          if(parentUser==null){
             responce.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.SUB_PARTNER_CREATE_USER_EMAIL_EXIST.getValue(),
                   messageUtil.getMessage(SubPartnerMessageConstants.ERROR_CREATE_SUBPARTNER)));
@@ -534,7 +534,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             GoIdSequence goIdSequence = new GoIdSequence();
             Login login = new Login();
             try {
-               subPartnerDetails.setParentPartnerGoId(Integer.valueOf(subPartner.getGoId()));
+               subPartnerDetails.setParentPartnerGoId(subPartner.getPartnerGoId());
                subPartnerDetails.setIsSubPartner(CCIConstants.ACTIVE);
 
                List<Login> loginList = new ArrayList<Login>();
