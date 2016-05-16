@@ -171,6 +171,7 @@ public class PartnerGenericNote implements PartnerGenericNoteInterface {
                tpc.setF1(partnerTopic.getF1() == CCIConstants.ACTIVE ? true : false);
                tpc.setIntern(partnerTopic.getIntern() == CCIConstants.ACTIVE ? true : false);
                tpc.setTrainee(partnerTopic.getTrainee() == CCIConstants.ACTIVE ? true : false);
+               tpc.setCreatedOn(DateUtils.getDateAndTime(partnerTopic.getCreatedOn()));
                List<PartnerNote> partnerNotes = partnerTopic.getPartnerNotes();
                if (partnerNotes != null) {
                   for (PartnerNote partnerNote : partnerNotes) {
