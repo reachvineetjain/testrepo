@@ -124,6 +124,7 @@ public class PartnerServiceImpl implements PartnerService {
       } else {
          try {
             Partner partner = partnerRepository.findOne(Integer.valueOf(partnerGoId));
+            
             PartnerUser partnerUser = null;
             if (partner != null) {
                partnerDashboard.setPartnerId(partner.getPartnerGoId());
@@ -393,6 +394,7 @@ public class PartnerServiceImpl implements PartnerService {
                   userProgramsAndPermissions.add(wtProgram);
                   capProgram.setPermissions(capPermissions);
                   userProgramsAndPermissions.add(capProgram);
+                  partnerDashboard.setPartnerStatus(partner.getPartnerReviewStatuses().get(0)!=null?partner.getPartnerReviewStatuses().get(0).getPartnerStatus2().getPartnerStatusName():"");
                   partnerDashboard.getUserProgramsAndPermissions().addAll(userProgramsAndPermissions);
                } else {
                   LOGGER.info("NO Partner Seasons Exist! ");
