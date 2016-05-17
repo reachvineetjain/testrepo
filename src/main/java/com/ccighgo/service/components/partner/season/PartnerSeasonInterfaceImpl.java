@@ -640,7 +640,7 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
             augustAllocation.setRequestedMaxGuaranteedPax(newPartnerSeasonAllocationRequest.getAugustStartRequestedMaxguaranteedParticipants());
             augustAllocation.setRequestedMaxPax(newPartnerSeasonAllocationRequest.getAugustStartRequestedMaxUnguaranteedParticipants());
             if (newPartnerSeasonAllocationRequest.getAugStatusId() > 0)
-               augustAllocation.setPartnerStatus(partnerStatusRepository.findOne(newPartnerSeasonAllocationRequest.getJanStatusId()));
+               augustAllocation.setPartnerStatus(partnerStatusRepository.findOne(newPartnerSeasonAllocationRequest.getAugStatusId()));
             partnerSeasonAllocationRepository.saveAndFlush(augustAllocation);
          }
          wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE,
