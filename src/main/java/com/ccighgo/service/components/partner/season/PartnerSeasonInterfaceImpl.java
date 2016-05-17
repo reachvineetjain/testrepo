@@ -324,14 +324,18 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
             dla.setAugStartDeadlineDate(DateUtils.getMMddyyDate(seasonDetail.getPartnerSeasonAppDeadlineDate()));
          if (seasonDetail.getPartnerSeasonExtAppDeadlineDate() != null)
             dla.setAugStartDeadlineDateRequested(DateUtils.getMMddyyDate(seasonDetail.getPartnerSeasonExtAppDeadlineDate()));
-         if (seasonDetail.getPartnerStatus2() != null)
+         if (seasonDetail.getPartnerStatus2() != null){
             dla.setAugStartDeadlineStatus(seasonDetail.getPartnerStatus2().getPartnerStatusName());
+            dla.setAugStartDeadlineStatusId(seasonDetail.getPartnerStatus2().getPartnerStatusId());
+         }
          if (seasonDetail.getPartnerSeasonSecSemDeadlineDate() != null)
             dla.setJanStartDeadlineDate(DateUtils.getMMddyyDate(seasonDetail.getPartnerSeasonSecSemDeadlineDate()));
          if (seasonDetail.getPartnerSeasonExtSecSemDeadlineDate() != null)
             dla.setJanStartDeadlineDateRequested(DateUtils.getMMddyyDate(seasonDetail.getPartnerSeasonExtSecSemDeadlineDate()));
-         if (seasonDetail.getPartnerStatus3() != null)
+         if (seasonDetail.getPartnerStatus3() != null){
             dla.setJanStartDeadlineStatus(seasonDetail.getPartnerStatus3().getPartnerStatusName());
+            dla.setJanStartDeadlineStatusId(seasonDetail.getPartnerStatus3().getPartnerStatusId());         
+         }
          partnersSeasonDetails.setApplicationDeadlineDatesAllocations(dla);
 
          PartnerSeasonJ1HSProgramAllocations programAllocations = new PartnerSeasonJ1HSProgramAllocations();
@@ -348,8 +352,10 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
                      programAllocations.setAugustStartMaxUnguaranteedParticipants(unGuaranteedAllocation.getMaxPax());
                      programAllocations.setAugustStartRequestedMaxUnguaranteedParticipants(unGuaranteedAllocation.getRequestedMaxPax());
                      programAllocations.setAugustStartAllocationId(unGuaranteedAllocation.getPartnerSeasonAllocationId());
-                     if (unGuaranteedAllocation.getPartnerStatus() != null)
+                     if (unGuaranteedAllocation.getPartnerStatus() != null){
                         programAllocations.setAugustStartStatus(unGuaranteedAllocation.getPartnerStatus().getPartnerStatusName());
+                        programAllocations.setAugustStartStatusId(unGuaranteedAllocation.getPartnerStatus().getPartnerStatusId());
+                     }
                      if (unGuaranteedAllocation.getPartnerSeason().getPartner() != null && unGuaranteedAllocation.getDepartmentProgramOption() != null
                            && unGuaranteedAllocation.getDepartmentProgramOption() != null) {
                         programAllocations.setAugustStartAcceptedParticipants(partnerStoredProcedure.partnerSeasonAcceptedPax(unGuaranteedAllocation.getPartnerSeason()
@@ -378,9 +384,10 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
                      programAllocations.setJanStartAllocationId(unGuaranteedAllocation.getPartnerSeasonAllocationId());
                      programAllocations.setJanuaryStartMaxUnguaranteedParticipants(unGuaranteedAllocation.getMaxPax());
                      programAllocations.setJanuaryStartRequestedMaxUnguaranteedParticipants(unGuaranteedAllocation.getRequestedMaxPax());
-                     if (unGuaranteedAllocation.getPartnerStatus() != null)
+                     if (unGuaranteedAllocation.getPartnerStatus() != null){
                         programAllocations.setJanuaryStartStatus(unGuaranteedAllocation.getPartnerStatus().getPartnerStatusName());
-
+                        programAllocations.setJanuaryStartStatusId(unGuaranteedAllocation.getPartnerStatus().getPartnerStatusId());
+                     }
                      if (unGuaranteedAllocation.getPartnerSeason().getPartner() != null && unGuaranteedAllocation.getDepartmentProgramOption().getDepartmentProgram() != null
                            && unGuaranteedAllocation.getDepartmentProgramOption().getDepartmentProgram() != null) {
                         programAllocations.setJanuaryStartAcceptedParticipants(partnerStoredProcedure.partnerSeasonAcceptedPax(unGuaranteedAllocation.getPartnerSeason()
@@ -623,6 +630,8 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
          if (janAllocation != null) {
             janAllocation.setRequestedMaxGuaranteedPax(newPartnerSeasonAllocationRequest.getJanuaryStartRequestedMaxguaranteedParticipants());
             janAllocation.setRequestedMaxPax(newPartnerSeasonAllocationRequest.getJanuaryStartRequestedMaxUnguaranteedParticipants());
+            if (newPartnerSeasonAllocationRequest.getStatusId() > 0)
+               janAllocation.setPartnerStatus(partnerStatusRepository.findOne(newPartnerSeasonAllocationRequest.getStatusId()));
             partnerSeasonAllocationRepository.saveAndFlush(janAllocation);
          }
 
@@ -630,6 +639,8 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
          if (augustAllocation != null) {
             augustAllocation.setRequestedMaxGuaranteedPax(newPartnerSeasonAllocationRequest.getAugustStartRequestedMaxguaranteedParticipants());
             augustAllocation.setRequestedMaxPax(newPartnerSeasonAllocationRequest.getAugustStartRequestedMaxUnguaranteedParticipants());
+            if (newPartnerSeasonAllocationRequest.getStatusId() > 0)
+               augustAllocation.setPartnerStatus(partnerStatusRepository.findOne(newPartnerSeasonAllocationRequest.getStatusId()));
             partnerSeasonAllocationRepository.saveAndFlush(augustAllocation);
          }
          wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE,
@@ -662,6 +673,9 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
             partnerSeason.setPartnerSeasonExtSecSemDeadlineDate(DateUtils.getDateFromString(newApplicationDeadlineDatesAllocations.getJanStartDeadlineDateRequested()));
             extSecSemDeadlineModified = true;
          }
+         if(newApplicationDeadlineDatesAllocations.getStatusId()>0)
+            partnerSeason.setPartnerStatus2(partnerStatusRepository.findOne(newApplicationDeadlineDatesAllocations.getStatusId()));
+   
          if (extAppDeadlineModified || extSecSemDeadlineModified) {
             partnerSeasonsRepository.saveAndFlush(partnerSeason);
             wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE,
@@ -684,8 +698,7 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
    public Response addNewSeasonsToPartner(PartnerSeasonApplicationList partnerSeasonApplicationList) {
       Response response = new Response();
       if (partnerSeasonApplicationList == null) {
-         response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, CCIConstants.NULL_PARAM,
-               "cannot add null values, please check the list"));
+         response.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, CCIConstants.NULL_PARAM, "cannot add null values, please check the list"));
          LOGGER.error("empty list to add seasons");
          return response;
       } else {
