@@ -630,8 +630,8 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
          if (janAllocation != null) {
             janAllocation.setRequestedMaxGuaranteedPax(newPartnerSeasonAllocationRequest.getJanuaryStartRequestedMaxguaranteedParticipants());
             janAllocation.setRequestedMaxPax(newPartnerSeasonAllocationRequest.getJanuaryStartRequestedMaxUnguaranteedParticipants());
-            if (newPartnerSeasonAllocationRequest.getStatusId() > 0)
-               janAllocation.setPartnerStatus(partnerStatusRepository.findOne(newPartnerSeasonAllocationRequest.getStatusId()));
+            if (newPartnerSeasonAllocationRequest.getJanStatusId() > 0)
+               janAllocation.setPartnerStatus(partnerStatusRepository.findOne(newPartnerSeasonAllocationRequest.getJanStatusId()));
             partnerSeasonAllocationRepository.saveAndFlush(janAllocation);
          }
 
@@ -639,8 +639,8 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
          if (augustAllocation != null) {
             augustAllocation.setRequestedMaxGuaranteedPax(newPartnerSeasonAllocationRequest.getAugustStartRequestedMaxguaranteedParticipants());
             augustAllocation.setRequestedMaxPax(newPartnerSeasonAllocationRequest.getAugustStartRequestedMaxUnguaranteedParticipants());
-            if (newPartnerSeasonAllocationRequest.getStatusId() > 0)
-               augustAllocation.setPartnerStatus(partnerStatusRepository.findOne(newPartnerSeasonAllocationRequest.getStatusId()));
+            if (newPartnerSeasonAllocationRequest.getAugStatusId() > 0)
+               augustAllocation.setPartnerStatus(partnerStatusRepository.findOne(newPartnerSeasonAllocationRequest.getJanStatusId()));
             partnerSeasonAllocationRepository.saveAndFlush(augustAllocation);
          }
          wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE,
@@ -673,8 +673,8 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
             partnerSeason.setPartnerSeasonExtSecSemDeadlineDate(DateUtils.getDateFromString(newApplicationDeadlineDatesAllocations.getJanStartDeadlineDateRequested()));
             extSecSemDeadlineModified = true;
          }
-         if(newApplicationDeadlineDatesAllocations.getStatusId()>0)
-            partnerSeason.setPartnerStatus2(partnerStatusRepository.findOne(newApplicationDeadlineDatesAllocations.getStatusId()));
+         if(newApplicationDeadlineDatesAllocations.getJanStatusId()>0)
+            partnerSeason.setPartnerStatus2(partnerStatusRepository.findOne(newApplicationDeadlineDatesAllocations.getJanStatusId()));
    
          if (extAppDeadlineModified || extSecSemDeadlineModified) {
             partnerSeasonsRepository.saveAndFlush(partnerSeason);
