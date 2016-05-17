@@ -26,6 +26,7 @@ import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.exception.PartnerCodes;
 import com.ccighgo.jpa.repositories.DepartmentProgramRepository;
 import com.ccighgo.jpa.repositories.DocumentInformationRepository;
+import com.ccighgo.db.entities.DocumentTypeDocumentCategoryProcess;
 import com.ccighgo.jpa.repositories.DocumentTypeDocumentCategoryProcessRepository;
 import com.ccighgo.jpa.repositories.LoginRepository;
 import com.ccighgo.jpa.repositories.PartnerNoteRepository;
@@ -656,7 +657,14 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
          documentInformation.setFileName(doc.getDocumentName() != null ? doc.getDocumentName() : null);
          documentInformation.setDocumentName(doc.getDocumentName() != null ? doc.getDocumentName() : null);
          documentInformation.setUrl(doc.getDocumentUrl());
-         documentInformation.setDocumentTypeDocumentCategoryProcess(documentTypeDocumentCategoryProcessRepository.findByDocumentType(doc.getDocumentType().getDocumentType()));
+          DocumentTypeDocumentCategoryProcess dcp = documentTypeDocumentCategoryProcessRepository.findByDocumentType(doc.getDocumentType().getDocumentType());
+         if(dcp!=null){
+        	 documentInformation.setDocumentTypeDocumentCategoryProcess(dcp); 
+         }else{
+        	 resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.ERROR_DOC_TYPE_NULL.getValue(), "Document type is invalid"));
+             LOGGER.error("Document type is invalid");
+             return resp;
+         }
          documentInformation.setCreatedBy(Integer.valueOf(loginId));
          documentInformation.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          documentInformation.setModifiedBy(Integer.valueOf(loginId));
