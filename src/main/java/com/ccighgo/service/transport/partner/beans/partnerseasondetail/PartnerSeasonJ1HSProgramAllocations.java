@@ -67,6 +67,7 @@ import javax.xml.bind.annotation.XmlType;
     "augustStartUnderCCIReview",
     "augustStartOpenings",
     "augustStartStatus",
+    "augustStartStatusId",
     "januaryStartMaxUnguaranteedParticipants",
     "januaryStartRequestedMaxUnguaranteedParticipants",
     "januaryStartMaxguaranteedParticipants",
@@ -75,6 +76,7 @@ import javax.xml.bind.annotation.XmlType;
     "januaryStartUnderCCIReview",
     "januaryStartOpenings",
     "januaryStartStatus",
+    "januaryStartStatusId",
     "totalMaxUnguaranteedParticipants",
     "totalMaxguaranteedParticipants",
     "totalAcceptedParticipants",
@@ -94,6 +96,7 @@ public class PartnerSeasonJ1HSProgramAllocations {
     protected int augustStartOpenings;
     @XmlElement(required = true)
     protected String augustStartStatus;
+    protected int augustStartStatusId;
     protected int januaryStartMaxUnguaranteedParticipants;
     protected int januaryStartRequestedMaxUnguaranteedParticipants;
     protected int januaryStartMaxguaranteedParticipants;
@@ -103,6 +106,7 @@ public class PartnerSeasonJ1HSProgramAllocations {
     protected int januaryStartOpenings;
     @XmlElement(required = true)
     protected String januaryStartStatus;
+    protected int januaryStartStatusId;
     protected int totalMaxUnguaranteedParticipants;
     protected int totalMaxguaranteedParticipants;
     protected int totalAcceptedParticipants;
@@ -493,4 +497,23 @@ public class PartnerSeasonJ1HSProgramAllocations {
         this.totalOpenings = value;
     }
 
+   public int getAugustStartStatusId() {
+      return augustStartStatusId;
+   }
+
+   public void setAugustStartStatusId(int augustStartStatusId) {
+      this.augustStartStatusId = augustStartStatusId;
+   }
+
+   public int getJanuaryStartStatusId() {
+      return januaryStartStatusId;
+   }
+
+   public void setJanuaryStartStatusId(int januaryStartStatusId) {
+      this.januaryStartStatusId = januaryStartStatusId;
+   }
+
+    
+
+    
 }

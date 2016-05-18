@@ -49,6 +49,7 @@ import com.ccighgo.service.transport.common.response.beans.Response;
 @XmlType(name = "PartnerDashboard", propOrder = {
     "partnerId",
     "partnerCompany",
+    "partnerStatus",
     "partnerCompanyLogo",
     "partnerEmail",
     "username",
@@ -67,6 +68,8 @@ public class PartnerDashboard
     protected int partnerId;
     @XmlElement(required = true)
     protected String partnerCompany;
+    @XmlElement(required = true)
+    protected String partnerStatus;
     @XmlElement(required = true)
     protected String partnerCompanyLogo;
     @XmlElement(required = true)
@@ -100,6 +103,30 @@ public class PartnerDashboard
      */
     public void setPartnerId(int value) {
         this.partnerId = value;
+    }
+    
+    /**
+     * Gets the value of the partnerStatus property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getPartnerStatus() {
+        return partnerStatus;
+    }
+
+    /**
+     * Sets the value of the partnerStatus property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setPartnerStatus(String value) {
+        this.partnerStatus = value;
     }
 
     /**

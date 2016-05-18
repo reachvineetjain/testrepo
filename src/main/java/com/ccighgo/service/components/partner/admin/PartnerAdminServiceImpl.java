@@ -590,11 +590,12 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                   office.setAddress2(partnerOffice.getAdressTwo());
                   office.setCity(partnerOffice.getCity());
                   office.setCountry(partnerOffice.getLookupCountry().getCountryName());
-                  office.setEmail(partnerOffice.getPartner().getEmail());
+                  office.setEmail(partnerOffice.getEmail());
                   office.setFax(partnerOffice.getFaxNumber());
                   office.setPhone(partnerOffice.getPhoneNumber());
                   office.setWebsite(partnerOffice.getWebsite());
                   office.setZipCode(partnerOffice.getPostalCode());
+                  
                   office.setOfficeType(partnerOffice.getPartnerOfficeType().getPartnerOfficeType());
                   pwt.getOffices().add(office);
                }
