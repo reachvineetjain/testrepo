@@ -226,6 +226,7 @@ public class PartnerAdminSeasonDetailsHelper {
             d.setDocumentDescription(doc.getDescription());
             d.setDocumentName(doc.getDocumentInformation().getDocumentName());
             d.setDocumentUrl(doc.getDocumentInformation().getUrl());
+            d.setUploadedOn(DateUtils.getTimestamp(doc.getDocumentInformation().getCreatedOn()));
             DocumentType documentType = new DocumentType();
             documentType.setDocumentTypeId(doc.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeId());
             documentType.setDocumentType(doc.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName());
@@ -497,6 +498,7 @@ public class PartnerAdminSeasonDetailsHelper {
             d.setDocumentDescription(doc.getDescription());
             d.setDocumentName(doc.getDocumentInformation().getDocumentName());
             d.setDocumentUrl(doc.getDocumentInformation().getUrl());
+            d.setUploadedOn(DateUtils.getTimestamp(doc.getDocumentInformation().getCreatedOn()));
             com.ccighgo.service.transport.partner.beans.partner.admin.f1season.detail.DocumentType documentType = new com.ccighgo.service.transport.partner.beans.partner.admin.f1season.detail.DocumentType();
             documentType.setDocumentTypeId(doc.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeId());
             documentType.setDocumentType(doc.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName());
@@ -691,6 +693,7 @@ public class PartnerAdminSeasonDetailsHelper {
             d.setDocumentDescription(doc.getDescription());
             d.setDocumentName(doc.getDocumentInformation().getDocumentName());
             d.setDocumentUrl(doc.getDocumentInformation().getUrl());
+            d.setUploadedOn(DateUtils.getTimestamp(doc.getDocumentInformation().getCreatedOn()));
             com.ccighgo.service.transport.partner.beans.partner.admin.ihpseason.detail.DocumentType documentType = new com.ccighgo.service.transport.partner.beans.partner.admin.ihpseason.detail.DocumentType();
             documentType.setDocumentTypeId(doc.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeId());
             documentType.setDocumentType(doc.getDocumentInformation().getDocumentTypeDocumentCategoryProcess().getDocumentType().getDocumentTypeName());
