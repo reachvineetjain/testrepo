@@ -548,6 +548,7 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
          LOGGER.error(messageUtil.getMessage(RegionManagementMessageConstants.REG_NAME_NULL));
          return rgn;
       }
+
       try {
          com.ccighgo.db.entities.Region regionExist = regionRepository.findByRegionName(region.getRegionName());
          if (regionExist != null) {
