@@ -121,7 +121,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
          subPartnerDetails.setCount(subPartnerList.size());
          for (Partner subPartner : subPartnerList) {
             PartnerReviewStatus reviewStatus = partnerReviewStatusRepository.findStatusByPartnerId(subPartner.getPartnerGoId());
-            if (!(reviewStatus.getPartnerStatus2().getPartnerStatusId() == CCIConstants.DELETED_STATUS)) {
+            if (reviewStatus.getPartnerStatus2()!=null && !(reviewStatus.getPartnerStatus2().getPartnerStatusId() == CCIConstants.DELETED_STATUS)) {
                SubPartners sp = new SubPartners();
                sp.setSubPartnerId(subPartner.getPartnerGoId());
                if (subPartner.getPartnerUsers() != null && subPartner.getPartnerUsers().size() > 0) {
