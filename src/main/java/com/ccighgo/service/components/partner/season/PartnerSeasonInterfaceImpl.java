@@ -424,7 +424,7 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
          partnersSeasonDetails.setInsuranceProvidedBy(seasonDetail.getInsuranceProvidedByCCI() == CCIConstants.ACTIVE ? true : false);
          partnersSeasonDetails.setSevisFeesPaidBy(seasonDetail.getSevisFeesPaidByCCI() == CCIConstants.ACTIVE ? true : false);
          partnersSeasonDetails.setSeasonStartDate(DateUtils.getMMddyyDate(seasonDetail.getPartnerSeasonStartDate()));
-         partnersSeasonDetails.setSeasonEndDate(DateUtils.getMMddyyDate(seasonDetail.getPartnerSeasonEndDate()));
+         partnersSeasonDetails.setSeasonEndDate(DateUtils.getMMddyyDate(seasonDetail.getPartnerSeasonEndDate())); 
 
          com.ccighgo.service.transport.partner.beans.partnerseasondetail.NoteTopics partnerSeasonNotes = partnerSeasonHelper.getJ1Notes(String.valueOf(seasonDetail.getPartner()
                .getPartnerGoId()));
