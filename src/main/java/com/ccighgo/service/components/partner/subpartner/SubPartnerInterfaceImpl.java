@@ -105,7 +105,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
    @Autowired CCIStaffUsersRepository cciStaffUsersRepository;
    @Autowired PartnerProgramRepository partnerProgramRepository;
    @Autowired PartnerSeasonsRepository partnerSeasonsRepository;
-   
+
    @Override
    @Transactional
    public PartnerSubPartners getSubPartnersOfpartners(String partnerId) {
@@ -121,7 +121,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
          subPartnerDetails.setCount(subPartnerList.size());
          for (Partner subPartner : subPartnerList) {
             PartnerReviewStatus reviewStatus = partnerReviewStatusRepository.findStatusByPartnerId(subPartner.getPartnerGoId());
-            if (reviewStatus.getPartnerStatus2()!=null && !(reviewStatus.getPartnerStatus2().getPartnerStatusId() == CCIConstants.DELETED_STATUS)) {
+            if (reviewStatus != null && reviewStatus.getPartnerStatus2() != null && !(reviewStatus.getPartnerStatus2().getPartnerStatusId() == CCIConstants.DELETED_STATUS)) {
                SubPartners sp = new SubPartners();
                sp.setSubPartnerId(subPartner.getPartnerGoId());
                if (subPartner.getPartnerUsers() != null && subPartner.getPartnerUsers().size() > 0) {
@@ -333,9 +333,9 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
                subPartnerPrimaryContact.setWebsite(partnerContact.getWebsite());
             }
          }
-         
-         //=====================Bug 1412===========
-         
+
+         // =====================Bug 1412===========
+
          // Partner Offices
          List<SubPartnerOffice> subPartnerOfficeList = null;
          int count = 0;
@@ -370,9 +370,9 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
          if (subPartnerOfficeList != null) {
             subPartnerDetail.getSubPartnerOffices().addAll(subPartnerOfficeList);
          }
-         
-         //=========================End of 1412
-                      
+
+         // =========================End of 1412
+
          SubPartnersPhysicalAddress subPartnerPhysicalAddress = new SubPartnersPhysicalAddress();
          subPartnerPhysicalAddress.setPhysicalAddress1(partnerSubPartner.getPhysicalAddressLineOne());
          subPartnerPhysicalAddress.setPhysicalAddress2(partnerSubPartner.getPhysicalAddressLineTwo());
@@ -511,14 +511,15 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             LOGGER.error(messageUtil.getMessage(SubPartnerMessageConstants.SUB_PARTNER_CREATE_USER_EMAIL_EXIST));
             return responce;
          }
-         //Bug-1253: check if parent partner info exists which can be used to inherit partner season and cci contacts. 
+         // Bug-1253: check if parent partner info exists which can be used to
+         // inherit partner season and cci contacts.
          PartnerUser parentUser = partnerUserRepository.findByPartnerGoIdAndLoginId(subPartner.getPartnerGoId(), subPartner.getLoginId());
-         if(parentUser==null){
+         if (parentUser == null) {
             responce.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.SUB_PARTNER_CREATE_USER_EMAIL_EXIST.getValue(),
                   messageUtil.getMessage(SubPartnerMessageConstants.ERROR_CREATE_SUBPARTNER)));
             LOGGER.error(messageUtil.getMessage(SubPartnerMessageConstants.ERROR_CREATE_SUBPARTNER));
             return responce;
-         }else{
+         } else {
             Partner subPartnerDetails = new Partner();
             Details subPartnerDetailInfo = subPartner.getPartnerDetail();
             if (subPartnerDetailInfo != null) {
@@ -607,13 +608,13 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
                }
             }
             subPartnerDetails.setPartnerGoId(goIdSequence.getGoId());
-            subPartnerDetails= partnerRepository.saveAndFlush(subPartnerDetails);
-            
-            //Bug 1253: assign all cci contacts of partner to sub-partner
+            subPartnerDetails = partnerRepository.saveAndFlush(subPartnerDetails);
+
+            // Bug 1253: assign all cci contacts of partner to sub-partner
             List<PartnerProgram> parentPartnerProgramContactsList = partnerProgramRepository.findAllPartnerProgramsByPartnerId(parentUser.getPartner().getPartnerGoId());
-            if(parentPartnerProgramContactsList!=null){
+            if (parentPartnerProgramContactsList != null) {
                List<PartnerProgram> subpartnerProgramContactsList = new ArrayList<PartnerProgram>();
-               for(PartnerProgram pp:parentPartnerProgramContactsList){
+               for (PartnerProgram pp : parentPartnerProgramContactsList) {
                   PartnerProgram inherited = pp;
                   inherited.setPartner(subPartnerDetails);
                   subpartnerProgramContactsList.add(inherited);
@@ -621,11 +622,11 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
                partnerProgramRepository.save(subpartnerProgramContactsList);
                partnerProgramRepository.flush();
             }
-           //Bug 1253: assign all programs of partner to sub-partner
+            // Bug 1253: assign all programs of partner to sub-partner
             List<PartnerSeason> partnerSeasons = parentUser.getPartner().getPartnerSeasons();
-            if(partnerSeasons!=null && !(partnerSeasons.isEmpty())){
+            if (partnerSeasons != null && !(partnerSeasons.isEmpty())) {
                List<PartnerSeason> subPartnerSeasons = new ArrayList<PartnerSeason>();
-               for(PartnerSeason ps:partnerSeasons){
+               for (PartnerSeason ps : partnerSeasons) {
                   PartnerSeason inherited = ps;
                   inherited.setPartner(subPartnerDetails);
                   subPartnerSeasons.add(inherited);
@@ -673,7 +674,8 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             reviewStatus.setPartner(subPartnerDetails);
             // set the default partnerLeadStatus to Valid
             reviewStatus.setPartnerStatus1(partnerStatusRepository.findOne(CCIConstants.VALID));
-            // set the partnerAgentStatusId to Approved i.e in case of Sub partner
+            // set the partnerAgentStatusId to Approved i.e in case of Sub
+            // partner
             reviewStatus.setPartnerStatus2(partnerStatusRepository.findOne(CCIConstants.APPROVED_STATUS));
             partnerReviewStatusRepository.saveAndFlush(reviewStatus);
 
@@ -719,12 +721,11 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             }
             Login login = partnerUser.getLogin();
             if (login != null) {
-               if(!(login.getEmail().equals(subPartner.getSubPartnerPrimaryContact().getEmail()))){
+               if (!(login.getEmail().equals(subPartner.getSubPartnerPrimaryContact().getEmail()))) {
                   Login duplicateExists = loginRepository.findByEmail(subPartner.getSubPartnerPrimaryContact().getEmail());
-                  if(duplicateExists==null){
+                  if (duplicateExists == null) {
                      login.setEmail(subPartner.getSubPartnerPrimaryContact().getEmail());
-                  }
-                  else{
+                  } else {
                      responce.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_UPDATE_SUB_PARTNER.getValue(),
                            messageUtil.getMessage(SubPartnerMessageConstants.DUPLICATE_EMAIL_ID)));
                      return responce;
