@@ -612,7 +612,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
 
             // Bug 1253: assign all cci contacts of partner to sub-partner
             List<PartnerProgram> parentPartnerProgramContactsList = partnerProgramRepository.findAllPartnerProgramsByPartnerId(parentUser.getPartner().getPartnerGoId());
-            if (parentPartnerProgramContactsList != null) {
+            if(parentPartnerProgramContactsList!=null && !(parentPartnerProgramContactsList.isEmpty())){
                List<PartnerProgram> subpartnerProgramContactsList = new ArrayList<PartnerProgram>();
                for (PartnerProgram pp : parentPartnerProgramContactsList) {
                   PartnerProgram inherited = pp;
@@ -714,7 +714,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
          PartnerUser partnerUser = new PartnerUser();
          if (partnerUsers != null && partnerUsers.size() > 0) {
             for (PartnerUser puser : partnerUsers) {
-               if (puser.getPartner() != null && puser.getPartner().getPartnerGoId() == Integer.valueOf(subPartner.getGoId())) {
+               if (puser.getPartner() != null && puser.getPartner().getPartnerGoId().equals(Integer.valueOf(subPartner.getGoId()))) {
                   partnerUser = puser;
                   break;
                }

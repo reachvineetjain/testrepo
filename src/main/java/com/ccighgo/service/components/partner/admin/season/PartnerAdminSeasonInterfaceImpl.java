@@ -16,7 +16,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ccighgo.db.entities.DocumentInformation;
-import com.ccighgo.db.entities.DocumentTypeDocumentCategoryProcess;
 import com.ccighgo.db.entities.PartnerSeason;
 import com.ccighgo.db.entities.PartnerSeasonAllocation;
 import com.ccighgo.db.entities.PartnerSeasonContract;
@@ -27,6 +26,7 @@ import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.exception.PartnerCodes;
 import com.ccighgo.jpa.repositories.DepartmentProgramRepository;
 import com.ccighgo.jpa.repositories.DocumentInformationRepository;
+import com.ccighgo.db.entities.DocumentTypeDocumentCategoryProcess;
 import com.ccighgo.jpa.repositories.DocumentTypeDocumentCategoryProcessRepository;
 import com.ccighgo.jpa.repositories.LoginRepository;
 import com.ccighgo.jpa.repositories.PartnerNoteRepository;
