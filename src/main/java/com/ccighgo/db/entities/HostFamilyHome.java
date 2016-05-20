@@ -25,6 +25,9 @@ public class HostFamilyHome implements Serializable {
 	@Column(length=1000)
 	private String amenities;
 
+	@Column(length=1000)
+	private String aspectsOfAmericanLife;
+
 	private Integer bathroomNumber;
 
 	private Integer bedroomNumber;
@@ -140,6 +143,14 @@ public class HostFamilyHome implements Serializable {
 
 	public void setAmenities(String amenities) {
 		this.amenities = amenities;
+	}
+
+	public String getAspectsOfAmericanLife() {
+		return this.aspectsOfAmericanLife;
+	}
+
+	public void setAspectsOfAmericanLife(String aspectsOfAmericanLife) {
+		this.aspectsOfAmericanLife = aspectsOfAmericanLife;
 	}
 
 	public Integer getBathroomNumber() {

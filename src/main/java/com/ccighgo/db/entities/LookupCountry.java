@@ -40,12 +40,8 @@ public class LookupCountry implements Serializable {
 	private List<CCIStaffUser> ccistaffUsers;
 
 	//bi-directional many-to-one association to HostFamily
-	@OneToMany(mappedBy="lookupCountry1")
-	private List<HostFamily> hostFamilies1;
-
-	//bi-directional many-to-one association to HostFamily
-	@OneToMany(mappedBy="lookupCountry2")
-	private List<HostFamily> hostFamilies2;
+	@OneToMany(mappedBy="lookupCountry")
+	private List<HostFamily> hostFamilies;
 
 	//bi-directional many-to-one association to Participant
 	@OneToMany(mappedBy="lookupCountry")
@@ -140,48 +136,26 @@ public class LookupCountry implements Serializable {
 		return ccistaffUser;
 	}
 
-	public List<HostFamily> getHostFamilies1() {
-		return this.hostFamilies1;
+	public List<HostFamily> getHostFamilies() {
+		return this.hostFamilies;
 	}
 
-	public void setHostFamilies1(List<HostFamily> hostFamilies1) {
-		this.hostFamilies1 = hostFamilies1;
+	public void setHostFamilies(List<HostFamily> hostFamilies) {
+		this.hostFamilies = hostFamilies;
 	}
 
-	public HostFamily addHostFamilies1(HostFamily hostFamilies1) {
-		getHostFamilies1().add(hostFamilies1);
-		hostFamilies1.setLookupCountry1(this);
+	public HostFamily addHostFamily(HostFamily hostFamily) {
+		getHostFamilies().add(hostFamily);
+		hostFamily.setLookupCountry(this);
 
-		return hostFamilies1;
+		return hostFamily;
 	}
 
-	public HostFamily removeHostFamilies1(HostFamily hostFamilies1) {
-		getHostFamilies1().remove(hostFamilies1);
-		hostFamilies1.setLookupCountry1(null);
+	public HostFamily removeHostFamily(HostFamily hostFamily) {
+		getHostFamilies().remove(hostFamily);
+		hostFamily.setLookupCountry(null);
 
-		return hostFamilies1;
-	}
-
-	public List<HostFamily> getHostFamilies2() {
-		return this.hostFamilies2;
-	}
-
-	public void setHostFamilies2(List<HostFamily> hostFamilies2) {
-		this.hostFamilies2 = hostFamilies2;
-	}
-
-	public HostFamily addHostFamilies2(HostFamily hostFamilies2) {
-		getHostFamilies2().add(hostFamilies2);
-		hostFamilies2.setLookupCountry2(this);
-
-		return hostFamilies2;
-	}
-
-	public HostFamily removeHostFamilies2(HostFamily hostFamilies2) {
-		getHostFamilies2().remove(hostFamilies2);
-		hostFamilies2.setLookupCountry2(null);
-
-		return hostFamilies2;
+		return hostFamily;
 	}
 
 	public List<Participant> getParticipants() {

@@ -140,6 +140,10 @@ public class LookupDepartmentProgram implements Serializable {
 	@OneToMany(mappedBy="lookupDepartmentProgram")
 	private List<PartnerHelpRequest> partnerHelpRequests;
 
+	//bi-directional many-to-one association to PartnerPermission
+	@OneToMany(mappedBy="lookupDepartmentProgram")
+	private List<PartnerPermission> partnerPermissions;
+
 	//bi-directional many-to-one association to PartnerProgram
 	@OneToMany(mappedBy="lookupDepartmentProgram")
 	private List<PartnerProgram> partnerPrograms;
@@ -769,6 +773,28 @@ public class LookupDepartmentProgram implements Serializable {
 		partnerHelpRequest.setLookupDepartmentProgram(null);
 
 		return partnerHelpRequest;
+	}
+
+	public List<PartnerPermission> getPartnerPermissions() {
+		return this.partnerPermissions;
+	}
+
+	public void setPartnerPermissions(List<PartnerPermission> partnerPermissions) {
+		this.partnerPermissions = partnerPermissions;
+	}
+
+	public PartnerPermission addPartnerPermission(PartnerPermission partnerPermission) {
+		getPartnerPermissions().add(partnerPermission);
+		partnerPermission.setLookupDepartmentProgram(this);
+
+		return partnerPermission;
+	}
+
+	public PartnerPermission removePartnerPermission(PartnerPermission partnerPermission) {
+		getPartnerPermissions().remove(partnerPermission);
+		partnerPermission.setLookupDepartmentProgram(null);
+
+		return partnerPermission;
 	}
 
 	public List<PartnerProgram> getPartnerPrograms() {

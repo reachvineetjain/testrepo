@@ -6,7 +6,6 @@
 
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<mapping-file>META-INF/orm.xml</mapping-file>
-
 		<class>com.ccighgo.db.entities.AddendumDocumentInformation</class>
 		<class>com.ccighgo.db.entities.AdminQuickStatsCategory</class>
 		<class>com.ccighgo.db.entities.AdminQuickStatsCategoryAggregate</class>
@@ -103,6 +102,10 @@
 		<class>com.ccighgo.db.entities.HostFamilyPhoto</class>
 		<class>com.ccighgo.db.entities.HostFamilyPhotosType</class>
 		<class>com.ccighgo.db.entities.HostFamilyPotentialReference</class>
+		<class>com.ccighgo.db.entities.HostFamilyQuickStatsCategory</class>
+		<class>com.ccighgo.db.entities.HostFamilyQuickStatsCategoryAggregate</class>
+		<class>com.ccighgo.db.entities.HostFamilyQuickStatsType</class>
+		<class>com.ccighgo.db.entities.HostFamilyQuickStatsTypeAggregate</class>
 		<class>com.ccighgo.db.entities.HostFamilyReference</class>
 		<class>com.ccighgo.db.entities.HostFamilyResource</class>
 		<class>com.ccighgo.db.entities.HostFamilySeason</class>
@@ -111,6 +114,11 @@
 		<class>com.ccighgo.db.entities.HostFamilySeasonNoteTopic</class>
 		<class>com.ccighgo.db.entities.HostFamilyStatus</class>
 		<class>com.ccighgo.db.entities.HostFamilyUpdateLog</class>
+		<class>com.ccighgo.db.entities.HostFamilyWorkQueue</class>
+		<class>com.ccighgo.db.entities.HostFamilyWorkQueueCategory</class>
+		<class>com.ccighgo.db.entities.HostFamilyWorkQueueCategoryAggregate</class>
+		<class>com.ccighgo.db.entities.HostFamilyWorkQueueType</class>
+		<class>com.ccighgo.db.entities.HostFamilyWorkQueueTypeAggregate</class>
 		<class>com.ccighgo.db.entities.Login</class>
 		<class>com.ccighgo.db.entities.LoginHistory</class>
 		<class>com.ccighgo.db.entities.LoginUserType</class>
@@ -140,6 +148,7 @@
 		<class>com.ccighgo.db.entities.PartnerOffice</class>
 		<class>com.ccighgo.db.entities.PartnerOfficeType</class>
 		<class>com.ccighgo.db.entities.PartnerPermission</class>
+		<class>com.ccighgo.db.entities.PartnerPermissionsCategory</class>
 		<class>com.ccighgo.db.entities.PartnerProgram</class>
 		<class>com.ccighgo.db.entities.PartnerQuickStatsCategory</class>
 		<class>com.ccighgo.db.entities.PartnerQuickStatsCategoryAggregate</class>
@@ -152,6 +161,8 @@
 		<class>com.ccighgo.db.entities.PartnerSeasonAllocation</class>
 		<class>com.ccighgo.db.entities.PartnerSeasonContract</class>
 		<class>com.ccighgo.db.entities.PartnerSeasonDocument</class>
+		<class>com.ccighgo.db.entities.PartnerSeasonNoteTopic</class>
+		<class>com.ccighgo.db.entities.PartnerSeasonNote</class>
 		<class>com.ccighgo.db.entities.PartnerStatus</class>
 		<class>com.ccighgo.db.entities.PartnerUpdateLog</class>
 		<class>com.ccighgo.db.entities.PartnerUser</class>
@@ -166,6 +177,7 @@
 		<class>com.ccighgo.db.entities.Region</class>
 		<class>com.ccighgo.db.entities.RegionIHP</class>
 		<class>com.ccighgo.db.entities.Relationship</class>
+		<class>com.ccighgo.db.entities.Resource</class>
 		<class>com.ccighgo.db.entities.ResourceAction</class>
 		<class>com.ccighgo.db.entities.ResourcePermission</class>
 		<class>com.ccighgo.db.entities.ResourceType</class>
@@ -207,25 +219,14 @@
 		<class>com.ccighgo.db.entities.USSchool</class>
 		<class>com.ccighgo.db.entities.USSchoolSeason</class>
 		<class>com.ccighgo.db.entities.UserType</class>
-		<class>com.ccighgo.db.entities.HostFamilyQuickStatsCategory</class>
-		<class>com.ccighgo.db.entities.HostFamilyQuickStatsCategoryAggregate</class>
-		<class>com.ccighgo.db.entities.HostFamilyQuickStatsType</class>
-		<class>com.ccighgo.db.entities.HostFamilyQuickStatsTypeAggregate</class>
-		<class>com.ccighgo.db.entities.HostFamilyWorkQueue</class>
-		<class>com.ccighgo.db.entities.HostFamilyWorkQueueCategory</class>
-		<class>com.ccighgo.db.entities.HostFamilyWorkQueueCategoryAggregate</class>
-		<class>com.ccighgo.db.entities.HostFamilyWorkQueueType</class>
-		<class>com.ccighgo.db.entities.HostFamilyWorkQueueTypeAggregate</class>
 
-		<class>com.ccighgo.db.entities.PartnerPermissionsCategory</class>
-		<class>com.ccighgo.db.entities.PartnerSeasonNoteTopic</class>
-		<class>com.ccighgo.db.entities.PartnerSeasonNote</class>
+		
 		<properties>
 			<property name="connection.provider_class"
 				value="org.hibernate.connection.C3P0ConnectionProvider" />
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect" />
 			<property name="javax.persistence.jdbc.url"
-				value="jdbc:mysql://52.2.191.63:3306/cci_gh_go_dev?autoReconnect=true" />
+				value="jdbc:mysql://52.2.191.63:3306/cci_gh_go_devE?autoReconnect=true" />
 			<property name="javax.persistence.jdbc.user" value="creomobile" />
 			<property name="javax.persistence.jdbc.password" value="creodev" />
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
