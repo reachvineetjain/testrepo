@@ -898,4 +898,29 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
       return seasonStatusList;
    }
 
+   @Override
+   public Response changeAgreementSignedStatus(String statusVal, String partnerSeasonContractId) {
+      Response resp = new Response();
+      if (partnerSeasonContractId == null || statusVal==null) {
+         resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, CCIConstants.NULL_PARAM, "partnerSeasonContractId is required"));
+         LOGGER.error("cannot update document without proper values");
+         return resp;
+      }
+      try {
+         PartnerSeasonContract contract = partnerSeasonContractRepository.findOne(Integer.valueOf(partnerSeasonContractId));
+         if(contract!=null){
+            contract.setIsSigned(Byte.valueOf(statusVal));
+            partnerSeasonContractRepository.saveAndFlush(contract);
+         }else{
+            resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE, messageUtil.getMessage(CCIConstants.NO_RECORD)));
+         }
+         resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE, messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (CcighgoException e) {
+         resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.EXCEPTION_WHEN_DELETEING_ADMIN_SEASON_AGREEMENT.getValue(),
+               "error occured while changing signed status "));
+         LOGGER.error("error occured while changing signed status");
+      }
+      return resp;
+   }
+
 }
