@@ -7,7 +7,7 @@
 
 	<appender name="dailyRollingFileAppender" class="org.apache.log4j.DailyRollingFileAppender">
 		<param name="File"
-			value="/home/ubuntu/tomcat/apache-tomcat-7.0.63/logs/ccighgo.log" />
+			value="../../logs/ccighgo.log" />
 		<param name="DatePattern" value="'_'yyyy-MM-dd'.log'" />
 		<param name="MaxFileSize" value="100MB" />
 		<param name="MaxBackupIndex" value="10" />

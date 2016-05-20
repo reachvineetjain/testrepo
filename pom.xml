@@ -311,10 +311,10 @@
       </dependency>
 
       <dependency>
-         <groupId>com.google.gdata</groupId>
-         <artifactId>gdata-core-1.0</artifactId>
-         <version>1.41.3</version>
-      </dependency>
+	    <groupId>com.google.gdata</groupId>
+	    <artifactId>core</artifactId>
+	    <version>1.47.1</version>
+	</dependency>
 
       <dependency>
          <groupId>oauth.signpost</groupId>
@@ -411,5 +411,6 @@
             <enabled>true</enabled>
          </snapshots>
       </repository>
+      
    </repositories>
 </project>
