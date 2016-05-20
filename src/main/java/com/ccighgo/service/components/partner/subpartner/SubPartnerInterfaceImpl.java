@@ -656,10 +656,10 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
                   inherited.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
                   inherited.setOriginalsReceivedDate(ps.getOriginalsReceivedDate());
                   inherited.setParticipantPaysDeposit(ps.getParticipantPaysDeposit());
-                  inherited.setPartnerSeasonAllocations(ps.getPartnerSeasonAllocations());
+                  
                   inherited.setPartnerSeasonAppDeadlineDate(ps.getPartnerSeasonAppDeadlineDate());
-                  inherited.setPartnerSeasonContracts(ps.getPartnerSeasonContracts());
-                  inherited.setPartnerSeasonDocuments(ps.getPartnerSeasonDocuments());
+                 
+                  
                   inherited.setPartnerSeasonEndDate(ps.getPartnerSeasonEndDate());
                   inherited.setPartnerSeasonExtAppDeadlineDate(ps.getPartnerSeasonExtAppDeadlineDate());
                   inherited.setPartnerSeasonExtSecSemDeadlineDate(ps.getPartnerSeasonExtSecSemDeadlineDate());
