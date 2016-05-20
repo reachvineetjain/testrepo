@@ -92,6 +92,7 @@ public class PartnerRecruitmentAdmin
     protected List<PartnerRecruitmentAdminScreeningDocuments> documents;
     @XmlElement(required = true)
     protected List<PartnerRecruitmentAdminScreeningNotes> notes;
+    protected int partnerLoginId ;
 
     /**
      * Gets the value of the goId property.
@@ -419,4 +420,13 @@ public class PartnerRecruitmentAdmin
         return this.notes;
     }
 
+   public int getPartnerLoginId() {
+      return partnerLoginId;
+   }
+
+   public void setPartnerLoginId(int partnerLoginId) {
+      this.partnerLoginId = partnerLoginId;
+   }
+
+    
 }
