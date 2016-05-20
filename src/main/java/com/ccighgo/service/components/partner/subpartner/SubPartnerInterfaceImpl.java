@@ -620,8 +620,6 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
                   inherited.setHasApplied(pp.getHasApplied());
                   inherited.setIsEligible(pp.getIsEligible());
                   inherited.setLookupDepartmentProgram(pp.getLookupDepartmentProgram());
-                  inherited.setPartnerDocuments(pp.getPartnerDocuments());
-                  inherited.setCcistaffUser(pp.getCcistaffUser());
                   subpartnerProgramContactsList.add(inherited);
                }
                partnerProgramRepository.save(subpartnerProgramContactsList);
