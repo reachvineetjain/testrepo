@@ -614,8 +614,13 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             if(parentPartnerProgramContactsList!=null){
                List<PartnerProgram> subpartnerProgramContactsList = new ArrayList<PartnerProgram>();
                for(PartnerProgram pp:parentPartnerProgramContactsList){
-                  PartnerProgram inherited = pp;
+                  PartnerProgram inherited = new PartnerProgram();
                   inherited.setPartner(subPartnerDetails);
+                  inherited.setHasApplied(pp.getHasApplied());
+                  inherited.setIsEligible(pp.getIsEligible());
+                  inherited.setLookupDepartmentProgram(pp.getLookupDepartmentProgram());
+                  inherited.setPartnerDocuments(pp.getPartnerDocuments());
+                  inherited.setCcistaffUser(pp.getCcistaffUser());
                   subpartnerProgramContactsList.add(inherited);
                }
                partnerProgramRepository.save(subpartnerProgramContactsList);
@@ -626,7 +631,50 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             if(partnerSeasons!=null && !(partnerSeasons.isEmpty())){
                List<PartnerSeason> subPartnerSeasons = new ArrayList<PartnerSeason>();
                for(PartnerSeason ps:partnerSeasons){
-                  PartnerSeason inherited = ps;
+                  PartnerSeason inherited = new PartnerSeason();
+                  inherited.setActive(ps.getActive());
+                  inherited.setAppDeadlineFollowupDate(ps.getAppDeadlineFollowupDate());
+                  inherited.setAppSecSemDeadlineFollowupDate(ps.getAppSecSemDeadlineFollowupDate());
+                  inherited.setCanAccessJobBoard(ps.getCanAccessJobBoard());
+                  inherited.setCanCreateSubPartner(ps.getCanCreateSubPartner());
+                  inherited.setCcistaffUser1(ps.getCcistaffUser1());
+                  inherited.setCcistaffUser2(ps.getCcistaffUser2());
+                  inherited.setContractScheduleId(ps.getContractScheduleId());
+                  inherited.setCreatedBy(subPartner.getLoginId());
+                  inherited.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+                  inherited.setDeadlineRequestedOn(ps.getDeadlineRequestedOn());
+                  inherited.setDeadlineRequestReviewedOn(ps.getDeadlineRequestReviewedOn());
+                  inherited.setDepartmentProgram(ps.getDepartmentProgram());
+                  inherited.setDisableAddParticipant(ps.getDisableAddParticipant());
+                  inherited.setExceptionComments(ps.getExceptionComments());
+                  inherited.setInsuranceCarrierName(ps.getInsuranceCarrierName());
+                  inherited.setInsurancePhoneNumber(ps.getInsurancePhoneNumber());
+                  inherited.setInsurancePolicyNumber(ps.getInsurancePolicyNumber());
+                  inherited.setInsuranceProvidedByCCI(ps.getInsuranceProvidedByCCI());
+                  inherited.setIsSignedContract(ps.getIsSignedContract());
+                  inherited.setLogin(login);
+                  inherited.setModifiedBy(subPartner.getLoginId());
+                  inherited.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+                  inherited.setOriginalsReceivedDate(ps.getOriginalsReceivedDate());
+                  inherited.setParticipantPaysDeposit(ps.getParticipantPaysDeposit());
+                  inherited.setPartnerSeasonAllocations(ps.getPartnerSeasonAllocations());
+                  inherited.setPartnerSeasonAppDeadlineDate(ps.getPartnerSeasonAppDeadlineDate());
+                  inherited.setPartnerSeasonContracts(ps.getPartnerSeasonContracts());
+                  inherited.setPartnerSeasonDocuments(ps.getPartnerSeasonDocuments());
+                  inherited.setPartnerSeasonEndDate(ps.getPartnerSeasonEndDate());
+                  inherited.setPartnerSeasonExtAppDeadlineDate(ps.getPartnerSeasonExtAppDeadlineDate());
+                  inherited.setPartnerSeasonExtSecSemDeadlineDate(ps.getPartnerSeasonExtSecSemDeadlineDate());
+                  inherited.setPartnerSeasonSecSemDeadlineDate(ps.getPartnerSeasonSecSemDeadlineDate());
+                  inherited.setPartnerSeasonStartDate(ps.getPartnerSeasonStartDate());
+                  inherited.setPartnerStatus1(ps.getPartnerStatus1());
+                  inherited.setPartnerStatus2(ps.getPartnerStatus2());
+                  inherited.setPartnerStatus3(ps.getPartnerStatus3());
+                  inherited.setPartnerTaxCompanyId(ps.getPartnerTaxCompanyId());
+                  inherited.setQuestionaireRequired(ps.getQuestionaireRequired());
+                  inherited.setQuestionnaireSubmittedOn(ps.getQuestionnaireSubmittedOn());
+                  inherited.setSeason(ps.getSeason());
+                  inherited.setSevisFeesPaidByCCI(ps.getSevisFeesPaidByCCI());
+                  inherited.setTimelyReturnReportReceivedDate(ps.getTimelyReturnReportReceivedDate());
                   inherited.setPartner(subPartnerDetails);
                   subPartnerSeasons.add(inherited);
                }
