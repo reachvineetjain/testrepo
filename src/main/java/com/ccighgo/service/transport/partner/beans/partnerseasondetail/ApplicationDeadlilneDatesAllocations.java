@@ -43,9 +43,11 @@ import javax.xml.bind.annotation.XmlType;
     "augStartDeadlineDateRequested",
     "augStartDeadlineDate",
     "augStartDeadlineStatus",
+    "augStartDeadlineStatusId",
     "janStartDeadlineDateRequested",
     "janStartDeadlineDate",
-    "janStartDeadlineStatus"
+    "janStartDeadlineStatus",
+    "janStartDeadlineStatusId"
 })
 public class ApplicationDeadlilneDatesAllocations {
 
@@ -55,12 +57,14 @@ public class ApplicationDeadlilneDatesAllocations {
     protected String augStartDeadlineDate;
     @XmlElement(required = true)
     protected String augStartDeadlineStatus;
+    protected int augStartDeadlineStatusId;
     @XmlElement(required = true)
     protected String janStartDeadlineDateRequested;
     @XmlElement(required = true)
     protected String janStartDeadlineDate;
     @XmlElement(required = true)
     protected String janStartDeadlineStatus;
+    protected int janStartDeadlineStatusId;
 
     /**
      * Gets the value of the augStartDeadlineDateRequested property.
@@ -206,4 +210,23 @@ public class ApplicationDeadlilneDatesAllocations {
         this.janStartDeadlineStatus = value;
     }
 
+   public int getAugStartDeadlineStatusId() {
+      return augStartDeadlineStatusId;
+   }
+
+   public void setAugStartDeadlineStatusId(int augStartDeadlineStatusId) {
+      this.augStartDeadlineStatusId = augStartDeadlineStatusId;
+   }
+
+   public int getJanStartDeadlineStatusId() {
+      return janStartDeadlineStatusId;
+   }
+
+   public void setJanStartDeadlineStatusId(int janStartDeadlineStatusId) {
+      this.janStartDeadlineStatusId = janStartDeadlineStatusId;
+   }
+
+  
+
+    
 }

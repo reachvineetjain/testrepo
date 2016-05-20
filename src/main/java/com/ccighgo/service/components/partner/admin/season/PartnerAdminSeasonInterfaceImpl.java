@@ -764,7 +764,7 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
          return resp;
       }
       try {
-         partnerSeasonDocumentRepository.delete(Integer.valueOf(partnerSeasonContractId));
+         partnerSeasonContractRepository.delete(Integer.valueOf(partnerSeasonContractId));
          resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE, messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (CcighgoException e) {
          resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.EXCEPTION_WHEN_DELETEING_ADMIN_SEASON_AGREEMENT.getValue(),
