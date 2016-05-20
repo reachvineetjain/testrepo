@@ -32,13 +32,8 @@ public class MoveReason implements Serializable {
 	private String reasonDescription;
 
 	//bi-directional many-to-one association to HostFamilyParticipant
-	@OneToMany(mappedBy="moveReason1")
+	@OneToMany(mappedBy="moveReason")
 	private List<HostFamilyParticipant> hostFamilyParticipants;
-
-	//bi-directional one-to-one association to HostFamilyParticipant
-	@OneToOne
-	@JoinColumn(name="moveReasonId", nullable=false, insertable=false, updatable=false)
-	private HostFamilyParticipant hostFamilyParticipant;
 
 	public MoveReason() {
 	}
@@ -93,24 +88,16 @@ public class MoveReason implements Serializable {
 
 	public HostFamilyParticipant addHostFamilyParticipant(HostFamilyParticipant hostFamilyParticipant) {
 		getHostFamilyParticipants().add(hostFamilyParticipant);
-		hostFamilyParticipant.setMoveReason1(this);
+		hostFamilyParticipant.setMoveReason(this);
 
 		return hostFamilyParticipant;
 	}
 
 	public HostFamilyParticipant removeHostFamilyParticipant(HostFamilyParticipant hostFamilyParticipant) {
 		getHostFamilyParticipants().remove(hostFamilyParticipant);
-		hostFamilyParticipant.setMoveReason1(null);
+		hostFamilyParticipant.setMoveReason(null);
 
 		return hostFamilyParticipant;
-	}
-
-	public HostFamilyParticipant getHostFamilyParticipant() {
-		return this.hostFamilyParticipant;
-	}
-
-	public void setHostFamilyParticipant(HostFamilyParticipant hostFamilyParticipant) {
-		this.hostFamilyParticipant = hostFamilyParticipant;
 	}
 
 }

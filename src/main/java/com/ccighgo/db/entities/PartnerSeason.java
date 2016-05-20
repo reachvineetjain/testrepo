@@ -165,6 +165,14 @@ public class PartnerSeason implements Serializable {
 	@OneToMany(mappedBy="partnerSeason")
 	private List<PartnerSeasonDocument> partnerSeasonDocuments;
 
+	//bi-directional many-to-one association to PartnerSeasonNoteTopic
+	@OneToMany(mappedBy="partnerSeason")
+	private List<PartnerSeasonNoteTopic> partnerSeasonNoteTopics;
+
+	//bi-directional many-to-one association to PartnerSeasonNote
+	@OneToMany(mappedBy="partnerSeason")
+	private List<PartnerSeasonNote> partnerSeasonNotes;
+
 	public PartnerSeason() {
 	}
 
@@ -568,6 +576,50 @@ public class PartnerSeason implements Serializable {
 		partnerSeasonDocument.setPartnerSeason(null);
 
 		return partnerSeasonDocument;
+	}
+
+	public List<PartnerSeasonNoteTopic> getPartnerSeasonNoteTopics() {
+		return this.partnerSeasonNoteTopics;
+	}
+
+	public void setPartnerSeasonNoteTopics(List<PartnerSeasonNoteTopic> partnerSeasonNoteTopics) {
+		this.partnerSeasonNoteTopics = partnerSeasonNoteTopics;
+	}
+
+	public PartnerSeasonNoteTopic addPartnerSeasonNoteTopic(PartnerSeasonNoteTopic partnerSeasonNoteTopic) {
+		getPartnerSeasonNoteTopics().add(partnerSeasonNoteTopic);
+		partnerSeasonNoteTopic.setPartnerSeason(this);
+
+		return partnerSeasonNoteTopic;
+	}
+
+	public PartnerSeasonNoteTopic removePartnerSeasonNoteTopic(PartnerSeasonNoteTopic partnerSeasonNoteTopic) {
+		getPartnerSeasonNoteTopics().remove(partnerSeasonNoteTopic);
+		partnerSeasonNoteTopic.setPartnerSeason(null);
+
+		return partnerSeasonNoteTopic;
+	}
+
+	public List<PartnerSeasonNote> getPartnerSeasonNotes() {
+		return this.partnerSeasonNotes;
+	}
+
+	public void setPartnerSeasonNotes(List<PartnerSeasonNote> partnerSeasonNotes) {
+		this.partnerSeasonNotes = partnerSeasonNotes;
+	}
+
+	public PartnerSeasonNote addPartnerSeasonNote(PartnerSeasonNote partnerSeasonNote) {
+		getPartnerSeasonNotes().add(partnerSeasonNote);
+		partnerSeasonNote.setPartnerSeason(this);
+
+		return partnerSeasonNote;
+	}
+
+	public PartnerSeasonNote removePartnerSeasonNote(PartnerSeasonNote partnerSeasonNote) {
+		getPartnerSeasonNotes().remove(partnerSeasonNote);
+		partnerSeasonNote.setPartnerSeason(null);
+
+		return partnerSeasonNote;
 	}
 
 }

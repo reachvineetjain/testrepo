@@ -22,8 +22,7 @@ public class HostFamilyResource implements Serializable {
 
 	private Byte active;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date createdBy;
+	private Integer createdBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdOn;
@@ -55,11 +54,11 @@ public class HostFamilyResource implements Serializable {
 		this.active = active;
 	}
 
-	public Date getCreatedBy() {
+	public Integer getCreatedBy() {
 		return this.createdBy;
 	}
 
-	public void setCreatedBy(Date createdBy) {
+	public void setCreatedBy(Integer createdBy) {
 		this.createdBy = createdBy;
 	}
 

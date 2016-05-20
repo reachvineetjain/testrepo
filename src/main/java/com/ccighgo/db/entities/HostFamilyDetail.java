@@ -70,8 +70,12 @@ public class HostFamilyDetail implements Serializable {
 	@Column(length=1000)
 	private String favouriteWeekend;
 
+	private Byte happyToInviteStudent;
+
 	@Column(length=50)
 	private String hasAutoInsurance;
+
+	private Byte homeLanguage;
 
 	@Column(length=25)
 	private String houseHoldType;
@@ -89,6 +93,9 @@ public class HostFamilyDetail implements Serializable {
 	private Integer modifiedBy;
 
 	private Timestamp modifiedOn;
+
+	@Column(length=30)
+	private String otherLaungage;
 
 	@Column(length=100)
 	private String otherReligiousDetails;
@@ -293,12 +300,28 @@ public class HostFamilyDetail implements Serializable {
 		this.favouriteWeekend = favouriteWeekend;
 	}
 
+	public Byte getHappyToInviteStudent() {
+		return this.happyToInviteStudent;
+	}
+
+	public void setHappyToInviteStudent(Byte happyToInviteStudent) {
+		this.happyToInviteStudent = happyToInviteStudent;
+	}
+
 	public String getHasAutoInsurance() {
 		return this.hasAutoInsurance;
 	}
 
 	public void setHasAutoInsurance(String hasAutoInsurance) {
 		this.hasAutoInsurance = hasAutoInsurance;
+	}
+
+	public Byte getHomeLanguage() {
+		return this.homeLanguage;
+	}
+
+	public void setHomeLanguage(Byte homeLanguage) {
+		this.homeLanguage = homeLanguage;
 	}
 
 	public String getHouseHoldType() {
@@ -355,6 +378,14 @@ public class HostFamilyDetail implements Serializable {
 
 	public void setModifiedOn(Timestamp modifiedOn) {
 		this.modifiedOn = modifiedOn;
+	}
+
+	public String getOtherLaungage() {
+		return this.otherLaungage;
+	}
+
+	public void setOtherLaungage(String otherLaungage) {
+		this.otherLaungage = otherLaungage;
 	}
 
 	public String getOtherReligiousDetails() {
