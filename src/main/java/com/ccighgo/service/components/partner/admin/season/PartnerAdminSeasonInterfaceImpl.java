@@ -26,6 +26,7 @@ import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.exception.PartnerCodes;
 import com.ccighgo.jpa.repositories.DepartmentProgramRepository;
 import com.ccighgo.jpa.repositories.DocumentInformationRepository;
+import com.ccighgo.db.entities.DocumentTypeDocumentCategoryProcess;
 import com.ccighgo.jpa.repositories.DocumentTypeDocumentCategoryProcessRepository;
 import com.ccighgo.jpa.repositories.LoginRepository;
 import com.ccighgo.jpa.repositories.PartnerNoteRepository;
@@ -656,7 +657,14 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
          documentInformation.setFileName(doc.getDocumentName() != null ? doc.getDocumentName() : null);
          documentInformation.setDocumentName(doc.getDocumentName() != null ? doc.getDocumentName() : null);
          documentInformation.setUrl(doc.getDocumentUrl());
-         documentInformation.setDocumentTypeDocumentCategoryProcess(documentTypeDocumentCategoryProcessRepository.findByDocumentType(doc.getDocumentType().getDocumentType()));
+          DocumentTypeDocumentCategoryProcess dcp = documentTypeDocumentCategoryProcessRepository.findByDocumentType(doc.getDocumentType().getDocumentType());
+         if(dcp!=null){
+        	 documentInformation.setDocumentTypeDocumentCategoryProcess(dcp); 
+         }else{
+        	 resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.ERROR_DOC_TYPE_NULL.getValue(), "Document type is invalid"));
+             LOGGER.error("Document type is invalid");
+             return resp;
+         }
          documentInformation.setCreatedBy(Integer.valueOf(loginId));
          documentInformation.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
          documentInformation.setModifiedBy(Integer.valueOf(loginId));
@@ -756,7 +764,7 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
          return resp;
       }
       try {
-         partnerSeasonDocumentRepository.delete(Integer.valueOf(partnerSeasonContractId));
+         partnerSeasonContractRepository.delete(Integer.valueOf(partnerSeasonContractId));
          resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE, messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (CcighgoException e) {
          resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.EXCEPTION_WHEN_DELETEING_ADMIN_SEASON_AGREEMENT.getValue(),
@@ -888,6 +896,31 @@ public class PartnerAdminSeasonInterfaceImpl implements PartnerAdminSeasonInterf
                "error occured while getting status list"));
       }
       return seasonStatusList;
+   }
+
+   @Override
+   public Response changeAgreementSignedStatus(String statusVal, String partnerSeasonContractId) {
+      Response resp = new Response();
+      if (partnerSeasonContractId == null || statusVal==null) {
+         resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, CCIConstants.NULL_PARAM, "partnerSeasonContractId is required"));
+         LOGGER.error("cannot update document without proper values");
+         return resp;
+      }
+      try {
+         PartnerSeasonContract contract = partnerSeasonContractRepository.findOne(Integer.valueOf(partnerSeasonContractId));
+         if(contract!=null){
+            contract.setIsSigned(Byte.valueOf(statusVal));
+            partnerSeasonContractRepository.saveAndFlush(contract);
+         }else{
+            resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE, messageUtil.getMessage(CCIConstants.NO_RECORD)));
+         }
+         resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE, messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      } catch (CcighgoException e) {
+         resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.EXCEPTION_WHEN_DELETEING_ADMIN_SEASON_AGREEMENT.getValue(),
+               "error occured while changing signed status "));
+         LOGGER.error("error occured while changing signed status");
+      }
+      return resp;
    }
 
 }

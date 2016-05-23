@@ -371,13 +371,15 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
          if (subPartners != null && !subPartners.isEmpty()) {
             logins = new ArrayList<Login>();
             for (Partner partner : subPartners) {
-               partnerLogin = loginRepository.findAllByGoId(partner.getGoIdSequence().getGoId());
-               for (Login user : partnerLogin) {
-                  user.setActive(activeStatus);
-                  user.setModifiedBy(Integer.parseInt(loggedinUserLoginId));
-                  logins.add(user);
+               if(partner.getNeedPartnerReview().equals(CCIConstants.INACTIVE)){
+                  partnerLogin = loginRepository.findAllByGoId(partner.getGoIdSequence().getGoId());
+                  for (Login user : partnerLogin) {
+                     user.setActive(activeStatus);
+                     user.setModifiedBy(Integer.parseInt(loggedinUserLoginId));
+                     logins.add(user);
+                  }
+                  loginRepository.save(logins);
                }
-               loginRepository.save(logins);
             }
          }
 

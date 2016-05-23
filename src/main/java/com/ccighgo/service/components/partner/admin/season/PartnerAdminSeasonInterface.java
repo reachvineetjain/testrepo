@@ -125,4 +125,11 @@ public interface PartnerAdminSeasonInterface {
     * @return
     */
    public PartnerSeasonStatus getPartnerSeasonStatuses();
+
+   /**
+    * @param statusVal
+    * @param partnerSeasonContractId
+    * @return
+    */
+   public Response changeAgreementSignedStatus(String statusVal, String partnerSeasonContractId);
 }

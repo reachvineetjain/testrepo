@@ -77,7 +77,9 @@ import com.ccighgo.service.transport.common.response.beans.Response;
     "wt",
     "partnerNotes",
     "createdBy",
-    "partnerSeasonId"
+    "partnerSeasonId",
+    "createdOn"
+    
 })
 public class Topic
     extends Response
@@ -106,6 +108,7 @@ public class Topic
     protected List<SubPartnerScreeningNotes> partnerNotes;
     protected TopicUserCreator createdBy;
     protected Integer partnerSeasonId;
+    protected String createdOn;
     /**
      * Gets the value of the loginId property.
      * 
@@ -573,6 +576,14 @@ public class Topic
 
    public void setPartnerSeasonId(Integer partnerSeasonId) {
       this.partnerSeasonId = partnerSeasonId;
+   }
+
+   public String getCreatedOn() {
+      return createdOn;
+   }
+
+   public void setCreatedOn(String createdOn) {
+      this.createdOn = createdOn;
    }
 
     

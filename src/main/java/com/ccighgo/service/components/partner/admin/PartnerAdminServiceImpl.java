@@ -484,13 +484,17 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
       try {
          pwt.setGoId(goId);
          Partner partner = partnerRepository.findOne(goId);
-
-         List<PartnerProgram> partnerPrograms = partnerProgramRepository.findAllPartnerProgramsByPartnerId(goId);
          if (partner == null) {
             pwt.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD_IN_DB, CCIConstants.TYPE_INFO, CCIConstants.NO_DATA_CODE,
                   messageUtil.getMessage(PartnerAdminMessageConstants.NO_WORKQUEUE_PARTNER_INQUIRY_OVERVIEW_DETAIL)));
             return pwt;
          }
+
+         List<PartnerProgram> partnerPrograms = null;
+         if (partner.getIsSubPartner().equals(CCIConstants.ACTIVE)) {
+            partnerPrograms = partnerProgramRepository.findAllPartnerProgramsByPartnerParentGoId(partner.getParentPartnerGoId());
+         } else
+            partnerPrograms = partnerProgramRepository.findAllPartnerProgramsByPartnerId(goId);
          Login partnerLogin = null;
          for (Login login : partner.getGoIdSequence().getLogins()) {
             for (PartnerUser partUser : login.getPartnerUsers()) {
@@ -500,8 +504,10 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                }
             }
          }
-         if (partnerLogin != null)
+         if (partnerLogin != null){
             pwt.setActive(partnerLogin.getActive() != null && partnerLogin.getActive().equals(CCIConstants.ACTIVE));
+            pwt.setPartnerLoginId(partnerLogin.getLoginId());
+         }
          try {
             PartnerReviewStatus partnerReviewStatus = partnerReviewStatusRepository.findStatusByPartnerId(goId);
             if (partnerReviewStatus != null && partnerReviewStatus.getPartnerStatus2() != null)
@@ -590,11 +596,12 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                   office.setAddress2(partnerOffice.getAdressTwo());
                   office.setCity(partnerOffice.getCity());
                   office.setCountry(partnerOffice.getLookupCountry().getCountryName());
-                  office.setEmail(partnerOffice.getPartner().getEmail());
+                  office.setEmail(partnerOffice.getEmail());
                   office.setFax(partnerOffice.getFaxNumber());
                   office.setPhone(partnerOffice.getPhoneNumber());
                   office.setWebsite(partnerOffice.getWebsite());
                   office.setZipCode(partnerOffice.getPostalCode());
+
                   office.setOfficeType(partnerOffice.getPartnerOfficeType().getPartnerOfficeType());
                   pwt.getOffices().add(office);
                }
@@ -965,8 +972,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
-         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.CANT_UPDATE_PARTNER_APPLICATION_FOLLOW_UP_DATE.getValue(),
-               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_FOLLOW_UP_DATE)));
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR,
+               PartnerCodes.CANT_UPDATE_PARTNER_APPLICATION_FOLLOW_UP_DATE.getValue(), messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_FOLLOW_UP_DATE)));
          logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_FOLLOW_UP_DATE));
       }
       return wsDefaultResponse;
@@ -1016,8 +1023,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          pwt.getQuickLinks().add(details3);
          pwt.getQuickLinks().add(details4);
 
-         pwt.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE,
-               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         pwt.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE, messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
          pwt.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.NO_WORK_QUEUE_QUICK_LINKS.getValue(),
@@ -1590,7 +1596,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
    @Deprecated
    @Override
    public WSDefaultResponse sendLogin() {
-      
+
       return null;
    }
 
@@ -1694,7 +1700,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
-         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.CANT_UPDATE_PARTNER_APPLICATION_STATUS_AND_NOTES.getValue(),
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR,
+               PartnerCodes.CANT_UPDATE_PARTNER_APPLICATION_STATUS_AND_NOTES.getValue(),
                messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_PARTNER_REQUEST_STATUS)));
          logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_PARTNER_REQUEST_STATUS));
       }
@@ -1795,8 +1802,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
          ExceptionUtil.logException(e, logger);
-         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.CANT_UPDATE_PARTNER_NOTES_REVIEW_FOLLOW_UP_DATE.getValue(),
-               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_FOLLOW_UP_DATE)));
+         wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR,
+               PartnerCodes.CANT_UPDATE_PARTNER_NOTES_REVIEW_FOLLOW_UP_DATE.getValue(), messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_FOLLOW_UP_DATE)));
          logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATEING_FOLLOW_UP_DATE));
       }
       return wsDefaultResponse;
@@ -2072,11 +2079,13 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                   }
             }
          }
-//         seasons.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, PartnerCodes.DEFAULT_CODE.getValue(),
-//               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         // seasons.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS,
+         // CCIConstants.TYPE_INFO, PartnerCodes.DEFAULT_CODE.getValue(),
+         // messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (Exception e) {
-//         seasons.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.DEFAULT_CODE.getValue(),
-//               messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
+         // seasons.setStatus(componentUtils.getStatus(CCIConstants.FAILURE,
+         // CCIConstants.TYPE_ERROR, PartnerCodes.DEFAULT_CODE.getValue(),
+         // messageUtil.getMessage(CCIConstants.SERVICE_FAILURE)));
          ExceptionUtil.logException(e, logger);
       }
       return seasons;
