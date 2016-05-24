@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ccighgo.com/hfparticipantlist" elementFormDefault="unqualified" attributeFormDefault="unqualified"
+   jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:pll="http://www.ccighgo.com/hfparticipantlist"
+   xmlns:Q1="http://www.ccighgo.com" xmlns:common="http://www.ccighgo.com/common">
+   <xsd:annotation>
+      <xsd:appinfo>
+         <jaxb:schemaBindings>
+            <jaxb:package name="com.ccighgo.service.transport.participant.beans.hfparticipantlist" />
+         </jaxb:schemaBindings>
+      </xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import schemaLocation="../../Common.xsd" namespace="http://www.ccighgo.com/common"/>
+
+   <xsd:element name="HFParticipantDetail" type="pll:HFParticipantDetail"/>
+
+   <xsd:complexType name="HFParticipantDetail">
+      <xsd:complexContent>
+         <xsd:extension base="common:Response">
+            <xsd:sequence>
+                <xsd:element name="participantGoId" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="photo" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="firstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="lastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="ranking" type="xsd:int" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="program" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="programOption" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="programStartDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="programEndDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="age" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="countryId" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="countryName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="countryFlag" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="genderId" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="gender" type="xsd:string" minOccurs="1" maxOccurs="1" />
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+
+
+   
+</xsd:schema>
