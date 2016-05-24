@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ccighgo.com/genericquicklink"
+	elementFormDefault="unqualified" attributeFormDefault="unqualified"
+	jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:pdl="http://www.ccighgo.com/genericquicklink"
+	xmlns:Q1="http://www.ccighgo.com" xmlns:common="http://www.ccighgo.com/common">
+	<xsd:annotation>
+		<xsd:appinfo>
+			<jaxb:schemaBindings>
+				<jaxb:package
+					name="com.ccighgo.service.transport.partner.beans.genericquicklink.quicklinks" />
+			</jaxb:schemaBindings>
+		</xsd:appinfo>
+	</xsd:annotation>
+	<xsd:import schemaLocation="../../Common.xsd" namespace="http://www.ccighgo.com/common" />
+
+	<xsd:element name="GenericQuickLinks" type="pdl:GenericQuickLinks" />
+
+	<xsd:complexType name="GenericQuickLinks">
+		<xsd:complexContent>
+			<xsd:extension base="common:Response">
+				<xsd:sequence>
+					<xsd:element name="quickLinks"
+						type="pdl:GenericQuickLinksDetails" minOccurs="1"
+						maxOccurs="unbounded" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+
+	<xsd:complexType name="GenericQuickLinksDetails">
+		<xsd:sequence>
+			<xsd:element name="value" type="xsd:string" minOccurs="1"
+				maxOccurs="1" />
+				<xsd:element name="key" type="xsd:string" minOccurs="1"
+				maxOccurs="1" />
+				
+		</xsd:sequence>
+	</xsd:complexType>
+
+
+
+</xsd:schema>
