@@ -512,7 +512,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
             pwt.setActive(partnerLogin.getActive() != null && partnerLogin.getActive().equals(CCIConstants.ACTIVE));
             pwt.setPartnerLoginId(partnerLogin.getLoginId());
             Timestamp  lostLoginDate = loginHistoryRepository.findLastLogin(partnerLogin.getLoginId());
-            pwt.setLastLoginDate(Long.toString(lostLoginDate.getTime()));
+            if(lostLoginDate!=null)
+            	pwt.setLastLoginDate(Long.toString(lostLoginDate.getTime()));
          }
          try {
             PartnerReviewStatus partnerReviewStatus = partnerReviewStatusRepository.findStatusByPartnerId(goId);
