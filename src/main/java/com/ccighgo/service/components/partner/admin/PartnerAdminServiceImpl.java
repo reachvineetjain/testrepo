@@ -507,7 +507,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          if (partnerLogin != null){
             pwt.setActive(partnerLogin.getActive() != null && partnerLogin.getActive().equals(CCIConstants.ACTIVE));
             pwt.setPartnerLoginId(partnerLogin.getLoginId());
-            pwt.setLastLoginDate(partnerLogin.getModifiedOn().toString());
+            pwt.setLastLoginDate(Long.toString(partnerLogin.getModifiedOn().getTime()));
          }
          try {
             PartnerReviewStatus partnerReviewStatus = partnerReviewStatusRepository.findStatusByPartnerId(goId);
