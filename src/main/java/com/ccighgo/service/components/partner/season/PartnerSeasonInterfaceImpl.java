@@ -103,8 +103,6 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
 
    private static final String SP_PARTNER_SEASON_APPLICATION_LIST = "call SPPartnerSeasonAplication(?)";
    private static final String SP_PARTNER_SEASON_ALLOCATION = "call SPPartnerSeasonPaxAllocated(?,?,?)";
-   private static final String PENDING_STATUS = "Pending";
-
 
    @Override
    public PartnerSeasons getPartnerSeasons(String partnerId) {
@@ -326,7 +324,7 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
             dla.setAugStartDeadlineDate(DateUtils.getMMddyyDate(seasonDetail.getPartnerSeasonAppDeadlineDate()));
          if (seasonDetail.getPartnerSeasonExtAppDeadlineDate() != null)
             dla.setAugStartDeadlineDateRequested(DateUtils.getMMddyyDate(seasonDetail.getPartnerSeasonExtAppDeadlineDate()));
-         if (seasonDetail.getPartnerStatus2() != null){
+         if (seasonDetail.getPartnerStatus2() != null) {
             dla.setAugStartDeadlineStatus(seasonDetail.getPartnerStatus2().getPartnerStatusName());
             dla.setAugStartDeadlineStatusId(seasonDetail.getPartnerStatus2().getPartnerStatusId());
          }
@@ -334,9 +332,9 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
             dla.setJanStartDeadlineDate(DateUtils.getMMddyyDate(seasonDetail.getPartnerSeasonSecSemDeadlineDate()));
          if (seasonDetail.getPartnerSeasonExtSecSemDeadlineDate() != null)
             dla.setJanStartDeadlineDateRequested(DateUtils.getMMddyyDate(seasonDetail.getPartnerSeasonExtSecSemDeadlineDate()));
-         if (seasonDetail.getPartnerStatus3() != null){
+         if (seasonDetail.getPartnerStatus3() != null) {
             dla.setJanStartDeadlineStatus(seasonDetail.getPartnerStatus3().getPartnerStatusName());
-            dla.setJanStartDeadlineStatusId(seasonDetail.getPartnerStatus3().getPartnerStatusId());         
+            dla.setJanStartDeadlineStatusId(seasonDetail.getPartnerStatus3().getPartnerStatusId());
          }
          partnersSeasonDetails.setApplicationDeadlineDatesAllocations(dla);
 
@@ -354,7 +352,7 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
                      programAllocations.setAugustStartMaxUnguaranteedParticipants(unGuaranteedAllocation.getMaxPax());
                      programAllocations.setAugustStartRequestedMaxUnguaranteedParticipants(unGuaranteedAllocation.getRequestedMaxPax());
                      programAllocations.setAugustStartAllocationId(unGuaranteedAllocation.getPartnerSeasonAllocationId());
-                     if (unGuaranteedAllocation.getPartnerStatus() != null){
+                     if (unGuaranteedAllocation.getPartnerStatus() != null) {
                         programAllocations.setAugustStartStatus(unGuaranteedAllocation.getPartnerStatus().getPartnerStatusName());
                         programAllocations.setAugustStartStatusId(unGuaranteedAllocation.getPartnerStatus().getPartnerStatusId());
                      }
@@ -386,7 +384,7 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
                      programAllocations.setJanStartAllocationId(unGuaranteedAllocation.getPartnerSeasonAllocationId());
                      programAllocations.setJanuaryStartMaxUnguaranteedParticipants(unGuaranteedAllocation.getMaxPax());
                      programAllocations.setJanuaryStartRequestedMaxUnguaranteedParticipants(unGuaranteedAllocation.getRequestedMaxPax());
-                     if (unGuaranteedAllocation.getPartnerStatus() != null){
+                     if (unGuaranteedAllocation.getPartnerStatus() != null) {
                         programAllocations.setJanuaryStartStatus(unGuaranteedAllocation.getPartnerStatus().getPartnerStatusName());
                         programAllocations.setJanuaryStartStatusId(unGuaranteedAllocation.getPartnerStatus().getPartnerStatusId());
                      }
@@ -426,7 +424,7 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
          partnersSeasonDetails.setInsuranceProvidedBy(seasonDetail.getInsuranceProvidedByCCI() == CCIConstants.ACTIVE ? true : false);
          partnersSeasonDetails.setSevisFeesPaidBy(seasonDetail.getSevisFeesPaidByCCI() == CCIConstants.ACTIVE ? true : false);
          partnersSeasonDetails.setSeasonStartDate(DateUtils.getMMddyyDate(seasonDetail.getPartnerSeasonStartDate()));
-         partnersSeasonDetails.setSeasonEndDate(DateUtils.getMMddyyDate(seasonDetail.getPartnerSeasonEndDate())); 
+         partnersSeasonDetails.setSeasonEndDate(DateUtils.getMMddyyDate(seasonDetail.getPartnerSeasonEndDate()));
 
          com.ccighgo.service.transport.partner.beans.partnerseasondetail.NoteTopics partnerSeasonNotes = partnerSeasonHelper.getJ1Notes(String.valueOf(seasonDetail.getPartner()
                .getPartnerGoId()));
@@ -552,20 +550,14 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
             dla.setAugStartDeadlineDate(DateUtils.getMMddyyDate(seasonDetail.getPartnerSeasonAppDeadlineDate()));
          if (seasonDetail.getPartnerSeasonExtAppDeadlineDate() != null)
             dla.setAugStartDeadlineDateRequested(DateUtils.getMMddyyDate(seasonDetail.getPartnerSeasonExtAppDeadlineDate()));
-         if (seasonDetail.getPartnerStatus2() != null){
+         if (seasonDetail.getPartnerStatus2() != null)
             dla.setAugStartDeadlineStatus(seasonDetail.getPartnerStatus2().getPartnerStatusName());
-         }else{
-            dla.setAugStartDeadlineStatus(PENDING_STATUS);
-         }
          if (seasonDetail.getPartnerSeasonSecSemDeadlineDate() != null)
             dla.setJanStartDeadlineDate(DateUtils.getMMddyyDate(seasonDetail.getPartnerSeasonSecSemDeadlineDate()));
          if (seasonDetail.getPartnerSeasonExtSecSemDeadlineDate() != null)
             dla.setJanStartDeadlineDateRequested(DateUtils.getMMddyyDate(seasonDetail.getPartnerSeasonExtSecSemDeadlineDate()));
-         if (seasonDetail.getPartnerStatus3() != null){
+         if (seasonDetail.getPartnerStatus3() != null)
             dla.setJanStartDeadlineStatus(seasonDetail.getPartnerStatus3().getPartnerStatusName());
-         }else{
-            dla.setJanStartDeadlineStatus(PENDING_STATUS);
-         }
          partnersSeasonDetails.setApplicationDeadlineDatesAllocations(dla);
 
          PartnerSeasonF1ProgramAllocations programAllocations = new PartnerSeasonF1ProgramAllocations();
@@ -580,11 +572,9 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
                      programAllocations.setAugustStartRequestedMaxguaranteedParticipants(guaranteedAllocation.getRequestedMaxGuaranteedPax());
 
                      programAllocations.setAugustStartAllocationId(guaranteedAllocation.getPartnerSeasonAllocationId());
-                     if (guaranteedAllocation.getPartnerStatus() != null){
+                     if (guaranteedAllocation.getPartnerStatus() != null)
                         programAllocations.setAugustStartStatus(guaranteedAllocation.getPartnerStatus().getPartnerStatusName());
-                     }else{
-                        programAllocations.setAugustStartStatus(PENDING_STATUS);
-                     }
+
                      programAllocations.setTotalMaxguaranteedParticipants(programAllocations.getTotalMaxguaranteedParticipants()
                            + programAllocations.getAugustStartMaxguaranteedParticipants());
 
@@ -593,11 +583,9 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
                      programAllocations.setJanuaryStartMaxguaranteedParticipants(guaranteedAllocation.getMaxGuaranteedPax());
                      programAllocations.setJanuaryStartRequestedMaxguaranteedParticipants(guaranteedAllocation.getRequestedMaxGuaranteedPax());
                      programAllocations.setJanStartAllocationId(guaranteedAllocation.getPartnerSeasonAllocationId());
-                     if (guaranteedAllocation.getPartnerStatus() != null){
+                     if (guaranteedAllocation.getPartnerStatus() != null)
                         programAllocations.setJanuaryStartStatus(guaranteedAllocation.getPartnerStatus().getPartnerStatusName());
-                     }else{
-                        programAllocations.setJanuaryStartStatus(PENDING_STATUS);
-                     }
+
                      programAllocations.setTotalMaxguaranteedParticipants(programAllocations.getTotalMaxguaranteedParticipants()
                            + programAllocations.getJanuaryStartMaxguaranteedParticipants());
 
@@ -678,16 +666,18 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
                && !newApplicationDeadlineDatesAllocations.getAugStartDeadlineDateRequested().isEmpty()) {
             partnerSeason.setPartnerSeasonExtAppDeadlineDate(DateUtils.getDateFromString(newApplicationDeadlineDatesAllocations.getAugStartDeadlineDateRequested()));
             extAppDeadlineModified = true;
+            partnerSeason.setPartnerStatus2(partnerStatusRepository.findOne(CCIConstants.PENDING_STATUS));
+
          }
 
          if (newApplicationDeadlineDatesAllocations.getJanStartDeadlineDateRequested() != null
                && !newApplicationDeadlineDatesAllocations.getJanStartDeadlineDateRequested().isEmpty()) {
             partnerSeason.setPartnerSeasonExtSecSemDeadlineDate(DateUtils.getDateFromString(newApplicationDeadlineDatesAllocations.getJanStartDeadlineDateRequested()));
             extSecSemDeadlineModified = true;
+            partnerSeason.setPartnerStatus3(partnerStatusRepository.findOne(CCIConstants.PENDING_STATUS));
+
          }
-         if(newApplicationDeadlineDatesAllocations.getJanStatusId()>0)
-            partnerSeason.setPartnerStatus2(partnerStatusRepository.findOne(newApplicationDeadlineDatesAllocations.getJanStatusId()));
-   
+
          if (extAppDeadlineModified || extSecSemDeadlineModified) {
             partnerSeasonsRepository.saveAndFlush(partnerSeason);
             wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE,
