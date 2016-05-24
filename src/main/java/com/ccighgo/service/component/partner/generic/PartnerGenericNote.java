@@ -305,7 +305,7 @@ public class PartnerGenericNote implements PartnerGenericNoteInterface {
          topicData.setCreatedBy(topic.getLoginId());
          topicData.setModifiedBy(topic.getLoginId());
          topicData.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
-
+         topicData.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
          if (topic.isCompetitorInfo() != null) {
             topicData.setCompetitorInfo(topic.isCompetitorInfo() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
          }
