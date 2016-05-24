@@ -4,6 +4,7 @@
 package com.ccighgo.service.components.partner.admin;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +26,7 @@ import com.ccighgo.db.entities.DepartmentProgram;
 import com.ccighgo.db.entities.DocumentInformation;
 import com.ccighgo.db.entities.GoIdSequence;
 import com.ccighgo.db.entities.Login;
+import com.ccighgo.db.entities.LoginHistory;
 import com.ccighgo.db.entities.LoginUserType;
 import com.ccighgo.db.entities.LookupCountry;
 import com.ccighgo.db.entities.Partner;
@@ -71,6 +73,7 @@ import com.ccighgo.jpa.repositories.DepartmentProgramRepository;
 import com.ccighgo.jpa.repositories.DocumentInformationRepository;
 import com.ccighgo.jpa.repositories.DocumentTypeDocumentCategoryProcessRepository;
 import com.ccighgo.jpa.repositories.GoIdSequenceRepository;
+import com.ccighgo.jpa.repositories.LoginHistoryRepository;
 import com.ccighgo.jpa.repositories.LoginRepository;
 import com.ccighgo.jpa.repositories.LoginUserTypeRepository;
 import com.ccighgo.jpa.repositories.LookupDepartmentProgramRepository;
@@ -207,6 +210,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
    @Autowired UserTypeRepository userTypeRepository;
    @Autowired LoginUserTypeRepository loginUserTypeRepository;
    @Autowired CCIStaffUsersRepository cciStaffUsersRepository;
+   @Autowired LoginHistoryRepository loginHistoryRepository;
 
    @Override
    public PartnerRecruitmentAdminLead getPartnerInquiryLeadData(int goId) {
@@ -507,7 +511,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          if (partnerLogin != null){
             pwt.setActive(partnerLogin.getActive() != null && partnerLogin.getActive().equals(CCIConstants.ACTIVE));
             pwt.setPartnerLoginId(partnerLogin.getLoginId());
-            pwt.setLastLoginDate(Long.toString(partnerLogin.getModifiedOn().getTime()));
+            Timestamp  lostLoginDate = loginHistoryRepository.findLastLogin(partnerLogin.getLoginId());
+            pwt.setLastLoginDate(Long.toString(lostLoginDate.getTime()));
          }
          try {
             PartnerReviewStatus partnerReviewStatus = partnerReviewStatusRepository.findStatusByPartnerId(goId);
