@@ -67,15 +67,15 @@ public class WordPressFormsImpl implements IWordPressForms {
          LOGGER.info("Inquiry partner Is Called !!d!");
          System.out.println("Partner Inquiry Called !! ");
          if (InternationalPartners != null) {
-            Login user = loginRepository.findByEmail(InternationalPartners.getEmail());
-            if (user != null) {
+            List<Login> user = loginRepository.findListByEmail(InternationalPartners.getEmail());
+            if (user != null&&!user.isEmpty()) {
                String message = "400:Duplicate Row (User Already Exist ):400:Duplicate Row (User Already Exist) [Login Table ]";
                System.out.println(message);
                LOGGER.info(message);
                return message;
             }
-            PartnerAgentInquiry pa = partnerAgentInquiryRepository.findByEmail(InternationalPartners.getEmail());
-            if (pa != null) {
+            List<PartnerAgentInquiry> pa = partnerAgentInquiryRepository.findListByEmail(InternationalPartners.getEmail());
+            if (pa != null&&!pa.isEmpty()) {
                String message = "400:Duplicate Row (User Already Exist ):400:Duplicate Row (User Already Exist) [PartnerAgentInquiry Table ]";
                System.out.println(message);
                LOGGER.info(message);
@@ -87,8 +87,8 @@ public class WordPressFormsImpl implements IWordPressForms {
                   secondFormatOfWebSite = InternationalPartners.getWebsite().replaceAll("^www\\.", "");
                else
                   secondFormatOfWebSite = "www." + InternationalPartners.getWebsite();
-               PartnerAgentInquiry webSiteDuplicate = partnerAgentInquiryRepository.findByWebSite(InternationalPartners.getWebsite(), secondFormatOfWebSite);
-               if (webSiteDuplicate != null) {
+               List<PartnerAgentInquiry> webSiteDuplicate = partnerAgentInquiryRepository.findListByWebSite(InternationalPartners.getWebsite(), secondFormatOfWebSite);
+               if (webSiteDuplicate != null&& !webSiteDuplicate.isEmpty()) {
                   String message = "400:Duplicate Row (WebSite Already Exist):400:Duplicate Row (WebSite Already Exist)";
                   System.out.println(message);
                   LOGGER.info(message);
