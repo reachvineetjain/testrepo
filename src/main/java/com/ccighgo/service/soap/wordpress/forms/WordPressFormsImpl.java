@@ -69,12 +69,14 @@ public class WordPressFormsImpl implements IWordPressForms {
             Login user = loginRepository.findByEmail(InternationalPartners.getEmail());
             if (user != null) {
                String message = "400:Duplicate Row (User Already Exist ):400:Duplicate Row (User Already Exist) [Login Table ]";
+               System.out.println(message);
                LOGGER.info(message);
                return message;
             }
             PartnerAgentInquiry pa = partnerAgentInquiryRepository.findByEmail(InternationalPartners.getEmail());
             if (pa != null) {
                String message = "400:Duplicate Row (User Already Exist ):400:Duplicate Row (User Already Exist) [PartnerAgentInquiry Table ]";
+               System.out.println(message);
                LOGGER.info(message);
                return message;
             }
@@ -87,6 +89,7 @@ public class WordPressFormsImpl implements IWordPressForms {
                PartnerAgentInquiry webSiteDuplicate = partnerAgentInquiryRepository.findByWebSite(InternationalPartners.getWebsite(), secondFormatOfWebSite);
                if (webSiteDuplicate != null) {
                   String message = "400:Duplicate Row (WebSite Already Exist):400:Duplicate Row (WebSite Already Exist)";
+                  System.out.println(message);
                   LOGGER.info(message);
                   return message;
                }
@@ -95,6 +98,7 @@ public class WordPressFormsImpl implements IWordPressForms {
             PartnerAgentInquiry legalNameDuplicate = partnerAgentInquiryRepository.findByLegalName(InternationalPartners.getLegalBusinessName());
             if (legalNameDuplicate != null) {
                String message = "400:Duplicate Row (LegalName is Already Exist):400:Duplicate Row (LegalName Already Exist)";
+               System.out.println(message);
                LOGGER.info(message);
                return message;
             }
@@ -432,14 +436,17 @@ public class WordPressFormsImpl implements IWordPressForms {
          System.out.println("IsEmailExist is Called !!! ");
          System.out.println("Email : " + Email);
          Login user = loginRepository.findByEmail(Email.trim());
-         System.out.println(user);
+         
          if (user != null) {
+        	 System.out.println( Email + " : exist");
             return true;
          }
       } catch (Exception e) {
+    	  System.out.println( Email + " : not exist");
          ExceptionUtil.logException(e, LOGGER);
          return false;
       }
+      System.out.println( Email + " : not exist");
       return false;
    }
 
@@ -450,15 +457,15 @@ public class WordPressFormsImpl implements IWordPressForms {
          System.out.println("Legal Name:" + LegalName);
          PartnerAgentInquiry legalNameDuplicate = partnerAgentInquiryRepository.findByLegalName(LegalName.trim());
          if (legalNameDuplicate != null) {
-            System.out.println("TRUE");
+            System.out.println(LegalName + ": exist");
             return true;
          }
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
-         System.out.println("FALSE");
+         System.out.println(LegalName + ": not exist");
          return false;
       }
-      System.out.println("FALSE");
+      System.out.println(LegalName + ": not exist");
       return false;
    }
 
@@ -474,15 +481,15 @@ public class WordPressFormsImpl implements IWordPressForms {
             secondFormatOfWebSite = "www." + WebSite;
          PartnerAgentInquiry webSiteDuplicate = partnerAgentInquiryRepository.findByWebSite(WebSite.toLowerCase().trim(), secondFormatOfWebSite.toLowerCase().trim());
          if (webSiteDuplicate != null) {
-            System.out.println("TRUE");
+        	 System.out.println(WebSite + ": exist");
             return true;
          }
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
-         System.out.println("FALSE");
+         System.out.println(WebSite + ": not exist");
          return false;
       }
-      System.out.println("FALSE");
+      System.out.println(WebSite + ": not exist");
       return false;
    }
 
