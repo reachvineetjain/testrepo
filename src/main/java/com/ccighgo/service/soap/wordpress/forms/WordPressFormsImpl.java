@@ -81,6 +81,7 @@ public class WordPressFormsImpl implements IWordPressForms {
                LOGGER.info(message);
                return message;
             }
+            InternationalPartners.setWebsite(InternationalPartners.getWebsite().replaceAll("http://|https://|/$", ""));
             String secondFormatOfWebSite = "";
             if (InternationalPartners.getWebsite() != null) {
                if (InternationalPartners.getWebsite().toLowerCase().startsWith("www"))
@@ -480,7 +481,7 @@ public class WordPressFormsImpl implements IWordPressForms {
          if (WebSite.toLowerCase().startsWith("www"))
             secondFormatOfWebSite = WebSite.replaceAll("^www\\.", "");
          else
-            secondFormatOfWebSite = "www." + WebSite;
+            secondFormatOfWebSite = "www." + WebSite.toLowerCase();
          PartnerAgentInquiry webSiteDuplicate = partnerAgentInquiryRepository.findByWebSite(WebSite.toLowerCase().trim(), secondFormatOfWebSite.toLowerCase().trim());
          if (webSiteDuplicate != null) {
         	 System.out.println(WebSite + ": exist");
