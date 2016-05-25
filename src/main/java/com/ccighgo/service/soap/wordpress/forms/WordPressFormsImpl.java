@@ -97,8 +97,8 @@ public class WordPressFormsImpl implements IWordPressForms {
                }
             }
 
-            PartnerAgentInquiry legalNameDuplicate = partnerAgentInquiryRepository.findByLegalName(InternationalPartners.getLegalBusinessName());
-            if (legalNameDuplicate != null) {
+            List<PartnerAgentInquiry> legalNameDuplicate = partnerAgentInquiryRepository.findListByLegalName(InternationalPartners.getLegalBusinessName());
+            if (legalNameDuplicate != null&&!legalNameDuplicate.isEmpty() ) {
                String message = "400:Duplicate Row (LegalName is Already Exist):400:Duplicate Row (LegalName Already Exist)";
                System.out.println(message);
                LOGGER.info(message);
@@ -438,9 +438,9 @@ public class WordPressFormsImpl implements IWordPressForms {
       try {
          System.out.println("IsEmailExist is Called !!! ");
          System.out.println("Email : " + Email);
-         Login user = loginRepository.findByEmail(Email.trim());
+         List<Login> user = loginRepository.findListByEmail(Email.trim());
          
-         if (user != null) {
+         if (user != null&&!user.isEmpty()) {
         	 System.out.println( Email + " : exist");
             return true;
          }
@@ -458,8 +458,8 @@ public class WordPressFormsImpl implements IWordPressForms {
       try {
          System.out.println("IsLegalNameExist is Called !!! ");
          System.out.println("Legal Name:" + LegalName);
-         PartnerAgentInquiry legalNameDuplicate = partnerAgentInquiryRepository.findByLegalName(LegalName.trim());
-         if (legalNameDuplicate != null) {
+         List<PartnerAgentInquiry> legalNameDuplicate = partnerAgentInquiryRepository.findListByLegalName(LegalName.trim());
+         if (legalNameDuplicate != null&&!legalNameDuplicate.isEmpty()) {
             System.out.println(LegalName + ": exist");
             return true;
          }
@@ -482,13 +482,14 @@ public class WordPressFormsImpl implements IWordPressForms {
             secondFormatOfWebSite = WebSite.replaceAll("^www\\.", "");
          else
             secondFormatOfWebSite = "www." + WebSite.toLowerCase();
-         PartnerAgentInquiry webSiteDuplicate = partnerAgentInquiryRepository.findByWebSite(WebSite.toLowerCase().trim(), secondFormatOfWebSite.toLowerCase().trim());
-         if (webSiteDuplicate != null) {
+         List<PartnerAgentInquiry> webSiteDuplicate = partnerAgentInquiryRepository.findListByWebSite(WebSite.toLowerCase().trim(), secondFormatOfWebSite.toLowerCase().trim());
+         if (webSiteDuplicate != null&& !webSiteDuplicate.isEmpty()) {
         	 System.out.println(WebSite + ": exist");
             return true;
          }
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
+         e.printStackTrace();
          System.out.println(WebSite + ": not exist");
          return false;
       }
