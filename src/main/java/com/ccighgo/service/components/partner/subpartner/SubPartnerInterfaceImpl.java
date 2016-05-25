@@ -625,8 +625,9 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
                partnerProgramRepository.save(subpartnerProgramContactsList);
                partnerProgramRepository.flush();
             }
+            /*   Commenting the Code for time being.Sub-Partner should not inherit the seasons */
             // Bug 1253: assign all programs of partner to sub-partner
-            List<PartnerSeason> partnerSeasons = parentUser.getPartner().getPartnerSeasons();
+           /* List<PartnerSeason> partnerSeasons = parentUser.getPartner().getPartnerSeasons();
             if (partnerSeasons != null && !(partnerSeasons.isEmpty())) {
                List<PartnerSeason> subPartnerSeasons = new ArrayList<PartnerSeason>();
                for(PartnerSeason ps:partnerSeasons){
@@ -679,7 +680,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
                }
                partnerSeasonsRepository.save(subPartnerSeasons);
                partnerSeasonsRepository.flush();
-            }
+            }*/
 
             try {
                PartnerUser partnerContact = null;
