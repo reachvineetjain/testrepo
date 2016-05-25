@@ -86,8 +86,8 @@ public class WordPressFormsImpl implements IWordPressForms {
                if (InternationalPartners.getWebsite().toLowerCase().startsWith("www"))
                   secondFormatOfWebSite = InternationalPartners.getWebsite().replaceAll("^www\\.", "");
                else
-                  secondFormatOfWebSite = "www." + InternationalPartners.getWebsite();
-               List<PartnerAgentInquiry> webSiteDuplicate = partnerAgentInquiryRepository.findListByWebSite(InternationalPartners.getWebsite(), secondFormatOfWebSite);
+                  secondFormatOfWebSite = "www." + InternationalPartners.getWebsite().toLowerCase();
+               List<PartnerAgentInquiry> webSiteDuplicate = partnerAgentInquiryRepository.findListByWebSite(InternationalPartners.getWebsite().toLowerCase(), secondFormatOfWebSite);
                if (webSiteDuplicate != null&& !webSiteDuplicate.isEmpty()) {
                   String message = "400:Duplicate Row (WebSite Already Exist):400:Duplicate Row (WebSite Already Exist)";
                   System.out.println(message);
