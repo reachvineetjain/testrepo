@@ -65,6 +65,7 @@ public class WordPressFormsImpl implements IWordPressForms {
    public String inquiryPartner(InternationalPartners InternationalPartners) {
       try {
          LOGGER.info("Inquiry partner Is Called !!d!");
+         System.out.println("Partner Inquiry Called !! ");
          if (InternationalPartners != null) {
             Login user = loginRepository.findByEmail(InternationalPartners.getEmail());
             if (user != null) {
@@ -264,6 +265,7 @@ public class WordPressFormsImpl implements IWordPressForms {
          }
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
+         e.printStackTrace();
          String string = "700:Internal Error:700:" + e.getMessage();
          LOGGER.info(string);
          return string;
