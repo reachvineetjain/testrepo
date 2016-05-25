@@ -107,7 +107,11 @@ public class WordPressFormsImpl implements IWordPressForms {
             partnerAgentInquiry.setCity(InternationalPartners.getCity());
             partnerAgentInquiry.setEmail(InternationalPartners.getEmail());
             partnerAgentInquiry.setFirstName(InternationalPartners.getFirstName());
-            partnerAgentInquiry.setHowDidYouHearAboutCCI(InternationalPartners.getHearedAboutUs());
+            if(InternationalPartners.getHearedAboutUs().contains("|"))
+            	partnerAgentInquiry.setHowDidYouHearAboutCCI(InternationalPartners.getHearedAboutUs().split("\\|")[0]);
+            else 
+            	partnerAgentInquiry.setHowDidYouHearAboutCCI(InternationalPartners.getHearedAboutUs());
+            
             partnerAgentInquiry.setLastName(InternationalPartners.getLastName());
             partnerAgentInquiry.setState(InternationalPartners.getStateOrProvince());
             partnerAgentInquiry.setCompanyName(InternationalPartners.getLegalBusinessName());
