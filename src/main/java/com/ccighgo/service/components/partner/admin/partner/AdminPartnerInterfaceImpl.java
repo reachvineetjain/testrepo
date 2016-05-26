@@ -466,12 +466,14 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
                lp.setGoId(p.getPartner() != null ? p.getPartner().getPartnerGoId() : 0);
                // Feature enhancement, allow user to search based on status
                lp.setLeadStatus(prs.getPartnerStatus1().getPartnerStatusName());
-               LeadCountry pCountry = new LeadCountry();
-               pCountry.setCountryId(p.getLookupCountry().getCountryId());
-               pCountry.setCountryCode(p.getLookupCountry().getCountryCode());
-               pCountry.setCountryName(p.getLookupCountry().getCountryName());
-               pCountry.setCountryFlagUrl(p.getLookupCountry().getCountryFlag());
-               lp.setLeadCountry(pCountry);
+               if(p.getLookupCountry()!=null){
+	            	   LeadCountry pCountry = new LeadCountry();
+	               pCountry.setCountryId(p.getLookupCountry().getCountryId());
+	               pCountry.setCountryCode(p.getLookupCountry().getCountryCode());
+	               pCountry.setCountryName(p.getLookupCountry().getCountryName());
+	               pCountry.setCountryFlagUrl(p.getLookupCountry().getCountryFlag());
+	               lp.setLeadCountry(pCountry);
+               }
                if (p.getPartner() != null && p.getPartner().getPartnerPrograms() != null) {
                   List<PartnerProgram> partnerProgramList = p.getPartner().getPartnerPrograms();
                   List<com.ccighgo.service.transport.partner.beans.admin.lead.partner.PartnerProgram> programs = null;
