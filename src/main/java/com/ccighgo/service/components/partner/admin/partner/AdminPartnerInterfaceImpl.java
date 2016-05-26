@@ -627,6 +627,8 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
             pUser.setLastName(p.getLastName());
             pUser.setActive(CCIConstants.ACTIVE);
             pUser.setIsPrimary(CCIConstants.ACTIVE);
+            pUser.setPhone(p.getPhone());
+            
             pUser = partnerUserRepository.saveAndFlush(pUser);
 
             PartnerReviewStatus partnerReviewStatus = partnerReviewStatusRepository.findApplicationStatusByGoId(Integer.valueOf(partnerGoId));
