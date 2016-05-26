@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ccighgo.com/hfp2workqueuetype" elementFormDefault="unqualified" attributeFormDefault="unqualified" jaxb:version="2.0"
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:pdl="http://www.ccighgo.com/hfp2workqueuetype" xmlns:Q1="http://www.ccighgo.com"
+   xmlns:common="http://www.ccighgo.com/common">
+   <xsd:annotation>
+      <xsd:appinfo>
+         <jaxb:schemaBindings>
+            <jaxb:package name="com.ccighgo.service.transport.partner.beans.hfp2workqueuetype" />
+         </jaxb:schemaBindings>
+      </xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import schemaLocation="../../../Common.xsd" namespace="http://www.ccighgo.com/common" />
+
+   <xsd:element name="HFP2WorkQueueType" type="pdl:HFP2WorkQueueType" />
+   
+   <xsd:complexType name="HFP2WorkQueueType">
+      <xsd:complexContent>
+         <xsd:extension base="common:Response">
+            <xsd:sequence>
+               <xsd:element name="workQueueType" type="pdl:HFP2WorkQueueTypeDetail" minOccurs="1"   maxOccurs="unbounded" />
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+
+   <xsd:complexType name="HFP2WorkQueueTypeDetail">
+            <xsd:sequence>
+   				<xsd:element name="typeId" type="xsd:int" minOccurs="1"   maxOccurs="1" />
+   				<xsd:element name="departmentProgramId" type="xsd:int" minOccurs="1"   maxOccurs="1" />
+               <xsd:element name="typeName" type="xsd:string" minOccurs="1"   maxOccurs="1" />                           
+            </xsd:sequence>
+   </xsd:complexType>
+   
+</xsd:schema>

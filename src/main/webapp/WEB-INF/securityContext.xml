@@ -73,6 +73,8 @@
             /services/hf/application/**=anon
             /services/GenericUpdateLog/**=anon
             /services/greenheartclub/**=anon
+            /services/genericQuicklink/**=anon
+            /services/genericAnnouncement/**=anon
             /services/partnerSeasonGenericNotes/**=anon
             /services/**=authc
          </value>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ccighgo.com/genericannouncement" elementFormDefault="unqualified" attributeFormDefault="unqualified" jaxb:version="2.0"
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:pu="http://www.ccighgo.com/genericannouncement" xmlns:Q1="http://www.ccighgo.com"
+   xmlns:common="http://www.ccighgo.com/common">
+   <xsd:annotation>
+      <xsd:appinfo>
+         <jaxb:schemaBindings>
+            <jaxb:package name="com.ccighgo.service.transport.partner.beans.genericannouncement.announcements" />
+         </jaxb:schemaBindings>
+      </xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import schemaLocation="../../Common.xsd" namespace="http://www.ccighgo.com/common" />
+
+   <xsd:element name="GenericAnnoucement" type="pu:GenericAnnoucement" />
+
+
+<xsd:complexType name="GenericAnnoucement">
+      <xsd:complexContent>
+         <xsd:extension base="common:Response">
+            <xsd:sequence>
+               <xsd:element name="loginId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="applicantName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="seasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="departmentProgramId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="goId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="announcements" type="pu:GenericAnnouncementsDetails" minOccurs="1" maxOccurs="unbounded" />
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   
+     <xsd:complexType name="GenericAnnouncementsDetails">
+      <xsd:sequence>
+         <xsd:sequence>
+            <xsd:element name="announcementValue" type="xsd:string" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="announcementDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         </xsd:sequence>
+      </xsd:sequence>
+   </xsd:complexType>
+</xsd:schema>

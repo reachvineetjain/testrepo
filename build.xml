@@ -1819,5 +1819,38 @@
 			<arg value="${xsd.dir}/resources/DocumentResources.xsd" />
 		</java>
 	</target>
+	
+	<target name="Generic QuickLinks">
+			<java classname="com.sun.tools.internal.xjc.XJCFacade">
+				<arg value="-d" />
+				<arg value="${java.dir}" />
+				<arg value="${xsd.dir}/generic/quicklink/GenericQuickLinks.xsd" />
+			</java>
+		</target>
+	
+	<target name="HF2Category">
+				<java classname="com.sun.tools.internal.xjc.XJCFacade">
+					<arg value="-d" />
+					<arg value="${java.dir}" />
+					<arg value="${xsd.dir}/hostfamily/application_part2/page2/HFP2Category.xsd" />
+				</java>
+			</target>
+	
+	<target name="HF2QueueType">
+				<java classname="com.sun.tools.internal.xjc.XJCFacade">
+					<arg value="-d" />
+					<arg value="${java.dir}" />
+					<arg value="${xsd.dir}/hostfamily/application_part2/page2/HFP2QueueTypes.xsd" />
+				</java>
+			</target>
+	
+	<target name="GenericAnnouncement">
+					<java classname="com.sun.tools.internal.xjc.XJCFacade">
+						<arg value="-d" />
+						<arg value="${java.dir}" />
+						<arg value="${xsd.dir}/generic/announcement/HFAnnouncement.xsd" />
+					</java>
+				</target>
+	
 
 </project>
