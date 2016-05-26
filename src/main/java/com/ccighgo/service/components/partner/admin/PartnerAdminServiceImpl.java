@@ -578,11 +578,13 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                   }
                   contact.setCciContact(cciContact);
                   pwt.getProgramEligibilityAndCCIContact().add(contact);
-                  if(moreThanProgram)
+                  if(moreThanProgram){
                 	  strPartnerPrograms.append(",");
+                      strPartnerPrograms.append(partnerProgram.getLookupDepartmentProgram().getProgramName());
+                  }
                   else{
                 	  strPartnerPrograms.append(partnerProgram.getLookupDepartmentProgram().getProgramName());
-                  moreThanProgram =true;
+                     moreThanProgram =true;
                   }
                   
                }
