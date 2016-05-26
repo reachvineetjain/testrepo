@@ -64,5 +64,13 @@ public class PartnerCompany {
       LOGGER.info("calling PartnerCompany.deletePartnerOffice");
       return partnerCompanyService.deletePartnerOffice(partnerOfficeId);
    }
+   
+   @GET
+   @Path("markOfficePrimary/{partnerOfficeId}/{primaryOrNot}")
+   @Produces("application/json")
+   public Response markOfficePrimary(@PathParam("partnerOfficeId") String partnerOfficeId,@PathParam("primaryOrNot") String primaryOrNot) {
+      LOGGER.info("calling markOfficePrimary");
+      return partnerCompanyService.makePartnerOfficePrimary(partnerOfficeId,primaryOrNot);
+   }
 
 }
