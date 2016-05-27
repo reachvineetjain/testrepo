@@ -439,8 +439,9 @@ public class WordPressFormsImpl implements IWordPressForms {
          System.out.println("IsEmailExist is Called !!! ");
          System.out.println("Email : " + Email);
          List<Login> user = loginRepository.findListByEmail(Email.trim());
-         
-         if (user != null&&!user.isEmpty()) {
+         List<PartnerAgentInquiry> pa = partnerAgentInquiryRepository.findListByEmail(Email.trim());
+          
+         if ((user != null&&!user.isEmpty()) || (pa != null&&!pa.isEmpty())) {
         	 System.out.println( Email + " : exist");
             return true;
          }
