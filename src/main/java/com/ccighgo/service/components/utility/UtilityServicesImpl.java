@@ -866,9 +866,11 @@ public class UtilityServicesImpl implements UtilityServices {
                user.setCciUserId(cciuser.getCciStaffUserId());
                user.setCciUserFirstName(cciuser.getFirstName());
                user.setCciUserLastName(cciuser.getLastName());
-               // TODO: not all users have designation and it is throwing
-               // exception
-               user.setCciUserDesignation("TODO");
+               String role = "";
+               if(cciuser.getCcistaffUsersCcistaffRoles()!=null){
+                  role = cciuser.getCcistaffUsersCcistaffRoles().get(0)!=null?cciuser.getCcistaffUsersCcistaffRoles().get(0).getCcistaffRole().getCciStaffRoleName():"";
+               }
+               user.setCciUserDesignation(role); 
                user.setCciUserPhotoUrl(cciuser.getPhoto());
                cciUsers.add(user);
             }
