@@ -682,39 +682,37 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             }
 
             try {
-               PartnerUser partnerContact = null;
+               PartnerUser partnerUserData = new PartnerUser();;
                if (subPartnerPrimaryContact != null) {
-                  partnerContact = new PartnerUser();
                   com.ccighgo.service.transport.partner.beans.subpartnerdetail.Salutation slt = subPartnerPrimaryContact.getSalutation();
                   if (slt != null) {
                      Salutation s = salutationRepository.findBySalutationName(slt.getSalutationName());
-                     partnerContact.setSalutation(s);
+                     partnerUserData.setSalutation(s);
                   }
-                  partnerContact.setTitle(subPartnerPrimaryContact.getTitle());
-                  partnerContact.setFirstName(subPartnerPrimaryContact.getFirstName());
-                  partnerContact.setLastName(subPartnerPrimaryContact.getLastName());
-                  partnerContact.setPhone(subPartnerPrimaryContact.getPhone());
-                  partnerContact.setEmergencyPhone(subPartnerPrimaryContact.getEmergencyPhone());
-                  partnerContact.setFax(subPartnerPrimaryContact.getFax());
+                  partnerUserData.setTitle(subPartnerPrimaryContact.getTitle());
+                  partnerUserData.setFirstName(subPartnerPrimaryContact.getFirstName());
+                  partnerUserData.setLastName(subPartnerPrimaryContact.getLastName());
+                  partnerUserData.setPhone(subPartnerPrimaryContact.getPhone());
+                  partnerUserData.setEmergencyPhone(subPartnerPrimaryContact.getEmergencyPhone());
+                  partnerUserData.setFax(subPartnerPrimaryContact.getFax());
                   if (subPartnerPrimaryContact.isReciveNotificationemailfromcc() != null)
-                     partnerContact.setRecieveNotificationEmails((byte) (subPartnerPrimaryContact.isReciveNotificationemailfromcc() ? 1 : 0));
-                  partnerContact.setSkypeId(subPartnerPrimaryContact.getSkypeId());
-                  partnerContact.setWebsite(subPartnerPrimaryContact.getWebsite());
-                  partnerContact.setIsPrimary((byte) 1);
-                  partnerContact.setPartner(subPartnerDetails);
-                  partnerContact.setLogin(login);
-                  partnerUserRepository.saveAndFlush(partnerContact);
+                     partnerUserData.setRecieveNotificationEmails((byte) (subPartnerPrimaryContact.isReciveNotificationemailfromcc() ? 1 : 0));
+                  partnerUserData.setSkypeId(subPartnerPrimaryContact.getSkypeId());
+                  partnerUserData.setWebsite(subPartnerPrimaryContact.getWebsite());
+                  partnerUserData.setIsPrimary((byte) 1);
+                  partnerUserData.setPartner(subPartnerDetails);
+                  partnerUserData.setLogin(login);
                }
+               partnerUserData.setActive(CCIConstants.ACTIVE);
+               partnerUserData.setIsPrimary(CCIConstants.ACTIVE);
+               partnerUserData.setPartner(subPartnerDetails);
+               partnerUserData.setLogin(login);
+               partnerUserRepository.saveAndFlush(partnerUserData);
             } catch (Exception e) {
                ExceptionUtil.logException(e, LOGGER);
             }
 
-            PartnerUser partnerUser = new PartnerUser();
-            partnerUser.setActive(CCIConstants.ACTIVE);
-            partnerUser.setIsPrimary(CCIConstants.ACTIVE);
-            partnerUser.setPartner(subPartnerDetails);
-            partnerUser.setLogin(login);
-            partnerUserRepository.saveAndFlush(partnerUser);
+           
 
             PartnerReviewStatus reviewStatus = new PartnerReviewStatus();
             reviewStatus.setPartner(subPartnerDetails);
