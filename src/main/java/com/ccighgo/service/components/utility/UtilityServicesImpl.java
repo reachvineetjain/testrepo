@@ -867,10 +867,10 @@ public class UtilityServicesImpl implements UtilityServices {
                user.setCciUserFirstName(cciuser.getFirstName());
                user.setCciUserLastName(cciuser.getLastName());
                String role = "";
-               if(cciuser.getCcistaffUsersCcistaffRoles()!=null && !(cciuser.getCcistaffUsersCcistaffRoles().isEmpty())){
-                 if(cciuser.getCcistaffUsersCcistaffRoles().get(0)!=null && cciuser.getCcistaffUsersCcistaffRoles().get(0).getCcistaffRole()!=null)
-            	   role = cciuser.getCcistaffUsersCcistaffRoles().get(0).getCcistaffRole().getCciStaffRoleName();
-               }
+//               if(cciuser.getCcistaffUsersCcistaffRoles()!=null && !(cciuser.getCcistaffUsersCcistaffRoles().isEmpty())){
+//                 if(cciuser.getCcistaffUsersCcistaffRoles().get(0)!=null && cciuser.getCcistaffUsersCcistaffRoles().get(0).getCcistaffRole()!=null)
+//            	   role = cciuser.getCcistaffUsersCcistaffRoles().get(0).getCcistaffRole().getCciStaffRoleName();
+//               }
                user.setCciUserDesignation(role);
                user.setCciUserPhotoUrl(cciuser.getPhoto());
                cciUsers.add(user);
