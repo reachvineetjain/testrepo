@@ -312,4 +312,6 @@ public interface PartnerAdminService {
     */
    public SeasonsForPartners getAllAvailableSeasons2(String partnerId);
 
+   public WSDefaultResponse setPrimaryContact(String contactId, String primaryValue);
+
 }
