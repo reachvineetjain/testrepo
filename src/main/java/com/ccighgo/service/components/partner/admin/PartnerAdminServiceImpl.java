@@ -22,6 +22,7 @@ import com.ccighgo.db.entities.AdminQuickStatsTypeAggregate;
 import com.ccighgo.db.entities.AdminWorkQueueCategory;
 import com.ccighgo.db.entities.AdminWorkQueueCategoryAggregate;
 import com.ccighgo.db.entities.AdminWorkQueueType;
+import com.ccighgo.db.entities.CCIStaffUser;
 import com.ccighgo.db.entities.DepartmentProgram;
 import com.ccighgo.db.entities.DocumentInformation;
 import com.ccighgo.db.entities.GoIdSequence;
@@ -430,6 +431,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
             partner.setMultiCountrySender((byte) (detail.isMultiCountrySender() ? 1 : 0));
             partner.setQuickbooksCode(detail.getQuickbooksCode());
             partner.setAcronym(detail.getAcronym());
+			if(detail.getGeneralContact()!=null && !detail.getGeneralContact().isEmpty())
+             partner.setCcistaffUser(cciStaffUsersRepository.findOne(Integer.parseInt(detail.getGeneralContact())));
             Login partnerLogin = null;
             for (Login login : partner.getGoIdSequence().getLogins()) {
                for (PartnerUser partUser : login.getPartnerUsers()) {
@@ -535,6 +538,9 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                partnerRecruitmentAdminScreeningDetail.setMultiCountrySender(partner.getMultiCountrySender() == CCIConstants.ACTIVE ? true : false);
             partnerRecruitmentAdminScreeningDetail.setQuickbooksCode(partner.getQuickbooksCode());
             partnerRecruitmentAdminScreeningDetail.setAcronym(partner.getAcronym());
+          
+            if(  partner.getCcistaffUser()!=null)
+            	partnerRecruitmentAdminScreeningDetail.setGeneralContact( ""+partner.getCcistaffUser().getCciStaffUserId());
             try {
                if (partner != null) {
                   CCIInquiryFormPerson cciContact = new CCIInquiryFormPerson();
