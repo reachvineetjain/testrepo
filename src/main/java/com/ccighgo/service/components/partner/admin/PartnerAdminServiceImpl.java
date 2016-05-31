@@ -660,7 +660,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                   Login login = partnerContact.getLogin();
                   PartnerRecruitmentAdminScreeningContacts contact = new PartnerRecruitmentAdminScreeningContacts();
                   contact.setPartnerContactId(partnerContact.getPartnerUserId());
-                  contact.setActive(partnerContact.getActive() == 1);
+                  contact.setActive(partnerContact.getActive()!=null &&partnerContact.getActive() == 1);
                   if (login != null) {
                      contact.setEmail(login.getEmail());
                      contact.setActive(login.getActive() == 1);
@@ -675,8 +675,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                      contact.setSalutation(partnerContact.getSalutation().getSalutationName());
                   contact.setSkypeId(partnerContact.getSkypeId());
                   contact.setTitile(partnerContact.getTitle());
-                  contact.setPrimaryContact(partnerContact.getIsPrimary() == 1);
-                  contact.setPrograms(strPartnerPrograms.toString());
+                  contact.setPrimaryContact(partnerContact.getIsPrimary() !=null &&partnerContact.getIsPrimary() == 1);
+                  contact.setPrograms(strPartnerPrograms!=null ?strPartnerPrograms.toString():"");
                   pwt.getContacts().add(contact);
                }
             }
@@ -2219,5 +2219,23 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
       }
       return seasons;
    }
+
+	@Override
+	public WSDefaultResponse setPrimaryContact(String contactId, String primaryValue) {
+		 WSDefaultResponse wsDefaultResponse = new WSDefaultResponse();
+	      try {
+	    	  PartnerUser contact = partnerUserRepository.findOne(Integer.parseInt(contactId));
+	    	  contact.setIsPrimary(primaryValue.equalsIgnoreCase("true")?CCIConstants.TRUE_BYTE:CCIConstants.FALSE_BYTE);
+	    	  partnerUserRepository.saveAndFlush(contact);
+	    	  
+	    	  wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE,
+	               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+	      } catch (Exception e) {
+	    	  ExceptionUtil.logException(e, logger);
+	    	  wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.UPDATE_PARTNER_CONTACTS.getValue(),
+	                messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_UPDATING_PARTNER_CONTACT)));
+	      }
+	      return wsDefaultResponse;
+	}
 
 }
