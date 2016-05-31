@@ -57,7 +57,7 @@ import javax.xml.bind.annotation.XmlType;
     "multiCountrySender",
     "cciContact",
     "billingNotes",
-    "acronym"
+    "acronym","generalContact"
 })
 public class AdminPartnerRecruitmentScreeningDetail {
 
@@ -82,6 +82,7 @@ public class AdminPartnerRecruitmentScreeningDetail {
     protected String billingNotes;
     @XmlElement(required = true)
     protected String acronym;
+    protected String generalContact;
 
     /**
      * Gets the value of the rating property.
@@ -347,5 +348,14 @@ public class AdminPartnerRecruitmentScreeningDetail {
         this.acronym = value;
     }
 
+	public String getGeneralContact() {
+		return generalContact;
+	}
+
+	public void setGeneralContact(String generalContact) {
+		this.generalContact = generalContact;
+	}
+
+    
     
 }
