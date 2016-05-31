@@ -699,8 +699,7 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
          return stateRegions;
       }
       try {
-         List<SeasonGeographyConfiguration> stateRegionList = seasonGeographyConfigurationRepository.findBySuperRegionIdAndSeasonId(Integer.valueOf(superRegionId),
-               Integer.valueOf(seasonId));
+         List<SeasonGeographyConfiguration> stateRegionList = seasonGeographyConfigurationRepository.findBySeasonId(Integer.valueOf(seasonId));
          if (stateRegionList != null) {
             stateRegions.setSeasonId(Integer.valueOf(seasonId));
             stateRegions.setSuperRegionId(Integer.valueOf(superRegionId));
@@ -760,8 +759,7 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
          return stRegions;
       }
       try {
-         List<SeasonGeographyConfiguration> stateRegionList = seasonGeographyConfigurationRepository.findBySuperRegionIdAndSeasonId(stateRegions.getSuperRegionId(),
-               stateRegions.getSeasonId());
+         List<SeasonGeographyConfiguration> stateRegionList = seasonGeographyConfigurationRepository.findBySeasonId(stateRegions.getSeasonId());
          if (stateRegionList != null) {
             List<SeasonGeographyConfiguration> updateList = new ArrayList<SeasonGeographyConfiguration>();
             seasonGeographyConfigurationRepository.delete(stateRegionList);
