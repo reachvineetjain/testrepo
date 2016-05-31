@@ -435,4 +435,33 @@ public class PartnerCompanyServiceImpl implements PartnerCompanyService {
       }
       return resp;
    }
+   
+   @Override
+   @Modifying
+   @Transactional
+   public Response makePartnerOfficePrimary(String partnerOfficeId,String primaryValue) {
+      Response resp = new Response();
+      if (partnerOfficeId == null || Integer.valueOf(partnerOfficeId) == 0 || Integer.valueOf(partnerOfficeId) < 0 || partnerOfficeId == null) {
+         resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, CCIConstants.INVALID_PARTNER_ID,
+               messageUtil.getMessage(PartnerSeasonMessageConstants.INVALID_PARTNER_ID)));
+         LOGGER.error(messageUtil.getMessage(PartnerSeasonMessageConstants.INVALID_PARTNER_ID));
+         return resp;
+      } else {
+         try {
+            com.ccighgo.db.entities.PartnerOffice partnerOffice = partnerOfficeRepository.findOne(Integer.valueOf(partnerOfficeId));
+            partnerOffice.setPartnerOfficeType(primaryValue.equals("true") ? partnerOfficeTypeRepository.findOne(1) : partnerOfficeTypeRepository.findOne(3));
+            
+            partnerOfficeRepository.saveAndFlush(partnerOffice);
+            resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE,
+                     messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+            
+         } catch (CcighgoException e) {
+            resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.ERROR_UPDATING_PARTNER_OFFICE.getValue(), e.getMessage()));
+            LOGGER.error(messageUtil.getMessage(PartnerCompanyDetailsMessageConstants.ERROR_UPDATING_PARTNER_OFFICE), e);
+         }
+      }
+      return resp;
+   }
+   
+   
 }

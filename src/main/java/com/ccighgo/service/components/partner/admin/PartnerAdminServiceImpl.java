@@ -22,6 +22,7 @@ import com.ccighgo.db.entities.AdminQuickStatsTypeAggregate;
 import com.ccighgo.db.entities.AdminWorkQueueCategory;
 import com.ccighgo.db.entities.AdminWorkQueueCategoryAggregate;
 import com.ccighgo.db.entities.AdminWorkQueueType;
+import com.ccighgo.db.entities.CCIStaffUser;
 import com.ccighgo.db.entities.DepartmentProgram;
 import com.ccighgo.db.entities.DocumentInformation;
 import com.ccighgo.db.entities.GoIdSequence;
@@ -304,6 +305,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                additional.setInterestedInTeachAbroad(partnerAgentInquiry.getTeachAbroad() == 1);
             if (partnerAgentInquiry.getVolunteerAbroad() != null)
                additional.setInterestedInVolunteerAbroad(partnerAgentInquiry.getVolunteerAbroad() == 1);
+            if(partnerAgentInquiry.getOther() != null)
+               additional.setInterestedInOther(partnerAgentInquiry.getOther() == 1);
 
             // additional.setProgramsYouOffer(partnerAgentInquiry.getCurrentlyOfferingPrograms());
             pwt.setAdditionalInformation(additional);
@@ -430,6 +433,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
             partner.setMultiCountrySender((byte) (detail.isMultiCountrySender() ? 1 : 0));
             partner.setQuickbooksCode(detail.getQuickbooksCode());
             partner.setAcronym(detail.getAcronym());
+			if(detail.getGeneralContact()!=null && !detail.getGeneralContact().isEmpty())
+             partner.setCcistaffUser(cciStaffUsersRepository.findOne(Integer.parseInt(detail.getGeneralContact())));
             Login partnerLogin = null;
             for (Login login : partner.getGoIdSequence().getLogins()) {
                for (PartnerUser partUser : login.getPartnerUsers()) {
@@ -535,6 +540,9 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                partnerRecruitmentAdminScreeningDetail.setMultiCountrySender(partner.getMultiCountrySender() == CCIConstants.ACTIVE ? true : false);
             partnerRecruitmentAdminScreeningDetail.setQuickbooksCode(partner.getQuickbooksCode());
             partnerRecruitmentAdminScreeningDetail.setAcronym(partner.getAcronym());
+          
+            if(  partner.getCcistaffUser()!=null)
+            	partnerRecruitmentAdminScreeningDetail.setGeneralContact( ""+partner.getCcistaffUser().getCciStaffUserId());
             try {
                if (partner != null) {
                   CCIInquiryFormPerson cciContact = new CCIInquiryFormPerson();
@@ -561,6 +569,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
             ExceptionUtil.logException(e, logger);
          }
 
+         StringBuffer strPartnerPrograms = new StringBuffer();
+         boolean moreThanProgram=false;
          try {
             if (partnerPrograms != null) {
                for (PartnerProgram partnerProgram : partnerPrograms) {
@@ -576,6 +586,15 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                   }
                   contact.setCciContact(cciContact);
                   pwt.getProgramEligibilityAndCCIContact().add(contact);
+                  if(moreThanProgram){
+                	  strPartnerPrograms.append(",");
+                      strPartnerPrograms.append(partnerProgram.getLookupDepartmentProgram().getProgramName());
+                  }
+                  else{
+                	  strPartnerPrograms.append(partnerProgram.getLookupDepartmentProgram().getProgramName());
+                     moreThanProgram =true;
+                  }
+                  
                }
             }
          } catch (Exception e) {
@@ -618,6 +637,23 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          }
 
          try {
+        	 /**
+        	  * 
+        	  *    if (p.getPartner() != null && p.getPartner().getPartnerPrograms() != null) {
+                  List<PartnerProgram> partnerProgramList = p.getPartner().getPartnerPrograms();
+                  List<com.ccighgo.service.transport.partner.beans.admin.lead.partner.PartnerProgram> programs = null;
+                  if (partnerProgramList != null) {
+                     programs = new ArrayList<com.ccighgo.service.transport.partner.beans.admin.lead.partner.PartnerProgram>();
+                     for (PartnerProgram pp : partnerProgramList) {
+                        com.ccighgo.service.transport.partner.beans.admin.lead.partner.PartnerProgram ppr = new com.ccighgo.service.transport.partner.beans.admin.lead.partner.PartnerProgram();
+                        ppr.setProgramId(pp.getLookupDepartmentProgram().getLookupDepartmentProgramId());
+                        ppr.setProgramName(pp.getLookupDepartmentProgram().getProgramName());
+                        programs.add(ppr);
+                     }
+                  }
+                  lp.getPrograms().addAll(programs);
+               }
+        	  */
             List<PartnerUser> contacts = partnerUserRepository.findByPartnerGoId(goId);
             if (contacts != null) {
                for (PartnerUser partnerContact : contacts) {
@@ -640,6 +676,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                   contact.setSkypeId(partnerContact.getSkypeId());
                   contact.setTitile(partnerContact.getTitle());
                   contact.setPrimaryContact(partnerContact.getIsPrimary() == 1);
+                  contact.setPrograms(strPartnerPrograms.toString());
                   pwt.getContacts().add(contact);
                }
             }
