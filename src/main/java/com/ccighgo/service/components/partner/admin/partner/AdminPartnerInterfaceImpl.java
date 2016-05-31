@@ -371,7 +371,7 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
          if (subPartners != null && !subPartners.isEmpty()) {
             logins = new ArrayList<Login>();
             for (Partner partner : subPartners) {
-               if(partner.getNeedPartnerReview().equals(CCIConstants.INACTIVE)){
+               if(partner.getNeedPartnerReview().equals(CCIConstants.ACTIVE)){
                   partnerLogin = loginRepository.findAllByGoId(partner.getGoIdSequence().getGoId());
                   for (Login user : partnerLogin) {
                      user.setActive(activeStatus);
