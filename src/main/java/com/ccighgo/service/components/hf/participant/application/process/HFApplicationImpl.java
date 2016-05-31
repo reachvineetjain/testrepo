@@ -219,8 +219,8 @@ public class HFApplicationImpl implements HFApplication {
             hostFamilySeasonCategoryRepository.saveAndFlush(hostFamilySeasonCategory);
             HostFamilyHome hfHome = new HostFamilyHome();
             hfHome.setHostingReason(whyHost.getWhyFamilyInterestedInHosting());
-            hfHome.setHopeToLearn(whyHost.getAspectsOfAmericanCultureYouWillShare());
-            hfHome.setExtraActivities(whyHost.getActivitiesPlanned());
+            hfHome.setHopeToLearn(whyHost.getHopingToLearn());
+            hfHome.setExtraActivities(whyHost.getAspectsOfAmericanCultureYouWillShare());
             hfHome.setLocalCoordinatorOther(whyHost.isWillYouBeWorkingasLCForAnotherOrg() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
             hfHome.setLocalCoordinatorDetails(whyHost.getForWhomYouWillBeWorkingasLCForAnotherOrg());
             hfHome.setHostedOther(whyHost.isHaveYouHostedForAnotherOrg() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
@@ -259,8 +259,8 @@ public class HFApplicationImpl implements HFApplication {
             whyHost.setHostfamilySeasonId(hfHome.getHostFamilySeason().getHostFamilySeasonId());
             whyHost.setHostFamilyHomeId(hfHome.getHostFamilyHomeId());
             whyHost.setWhyFamilyInterestedInHosting(hfHome.getHostingReason());
-            whyHost.setAspectsOfAmericanCultureYouWillShare(hfHome.getHopeToLearn());
-            whyHost.setActivitiesPlanned(hfHome.getExtraActivities());
+            whyHost.setHopingToLearn(hfHome.getHopeToLearn());
+            whyHost.setAspectsOfAmericanCultureYouWillShare(hfHome.getExtraActivities());
             whyHost.setWillYouBeWorkingasLCForAnotherOrg(hfHome.getLocalCoordinatorOther().equals(CCIConstants.ACTIVE) ? true : false);
             whyHost.setForWhomYouWillBeWorkingasLCForAnotherOrg(hfHome.getLocalCoordinatorDetails());
             whyHost.setHaveYouHostedForAnotherOrg(hfHome.getHostedOther().equals(CCIConstants.ACTIVE) ? true : false);
@@ -301,8 +301,8 @@ public class HFApplicationImpl implements HFApplication {
             hostFamilySeasonCategory.setFilledMandatoryFields(whyHost.getFieldsFilled());
             hostFamilySeasonCategoryRepository.saveAndFlush(hostFamilySeasonCategory);
             hfHome.setHostingReason(whyHost.getWhyFamilyInterestedInHosting());
-            hfHome.setHopeToLearn(whyHost.getAspectsOfAmericanCultureYouWillShare());
-            hfHome.setExtraActivities(whyHost.getActivitiesPlanned());
+            hfHome.setHopeToLearn(whyHost.getHopingToLearn());
+            hfHome.setExtraActivities(whyHost.getAspectsOfAmericanCultureYouWillShare());
             hfHome.setLocalCoordinatorOther(whyHost.isWillYouBeWorkingasLCForAnotherOrg() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
             hfHome.setLocalCoordinatorDetails(whyHost.getForWhomYouWillBeWorkingasLCForAnotherOrg());
             hfHome.setHostedOther(whyHost.isHaveYouHostedForAnotherOrg() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);

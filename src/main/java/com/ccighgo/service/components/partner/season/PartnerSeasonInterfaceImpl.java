@@ -630,8 +630,7 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
          if (janAllocation != null) {
             janAllocation.setRequestedMaxGuaranteedPax(newPartnerSeasonAllocationRequest.getJanuaryStartRequestedMaxguaranteedParticipants());
             janAllocation.setRequestedMaxPax(newPartnerSeasonAllocationRequest.getJanuaryStartRequestedMaxUnguaranteedParticipants());
-            if (newPartnerSeasonAllocationRequest.getJanStatusId() > 0)
-               janAllocation.setPartnerStatus(partnerStatusRepository.findOne(newPartnerSeasonAllocationRequest.getJanStatusId()));
+            janAllocation.setPartnerStatus(partnerStatusRepository.findOne(CCIConstants.PENDING_STATUS));
             partnerSeasonAllocationRepository.saveAndFlush(janAllocation);
          }
 
@@ -639,8 +638,7 @@ public class PartnerSeasonInterfaceImpl implements PartnerSeasonInterface {
          if (augustAllocation != null) {
             augustAllocation.setRequestedMaxGuaranteedPax(newPartnerSeasonAllocationRequest.getAugustStartRequestedMaxguaranteedParticipants());
             augustAllocation.setRequestedMaxPax(newPartnerSeasonAllocationRequest.getAugustStartRequestedMaxUnguaranteedParticipants());
-            if (newPartnerSeasonAllocationRequest.getAugStatusId() > 0)
-               augustAllocation.setPartnerStatus(partnerStatusRepository.findOne(newPartnerSeasonAllocationRequest.getAugStatusId()));
+            augustAllocation.setPartnerStatus(partnerStatusRepository.findOne(CCIConstants.PENDING_STATUS));
             partnerSeasonAllocationRepository.saveAndFlush(augustAllocation);
          }
          wsDefaultResponse.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE,

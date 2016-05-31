@@ -305,6 +305,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                additional.setInterestedInTeachAbroad(partnerAgentInquiry.getTeachAbroad() == 1);
             if (partnerAgentInquiry.getVolunteerAbroad() != null)
                additional.setInterestedInVolunteerAbroad(partnerAgentInquiry.getVolunteerAbroad() == 1);
+            if(partnerAgentInquiry.getOther() != null)
+               additional.setInterestedInOther(partnerAgentInquiry.getOther() == 1);
 
             // additional.setProgramsYouOffer(partnerAgentInquiry.getCurrentlyOfferingPrograms());
             pwt.setAdditionalInformation(additional);

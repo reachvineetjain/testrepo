@@ -1,56 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema targetNamespace="http://www.ccighgo.com/whyhost"
-	elementFormDefault="unqualified" attributeFormDefault="unqualified"
-	jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:pu="http://www.ccighgo.com/whyhost"
-	xmlns:Q1="http://www.ccighgo.com" xmlns:common="http://www.ccighgo.com/common">
-	<xsd:annotation>
-		<xsd:appinfo>
-			<jaxb:schemaBindings>
-				<jaxb:package
-					name="com.ccighgo.service.transport.hostfamily.beans.application.whyhost" />
-			</jaxb:schemaBindings>
-		</xsd:appinfo>
-	</xsd:annotation>
-	<xsd:import schemaLocation="../../Common.xsd" namespace="http://www.ccighgo.com/common" />
+<xsd:schema targetNamespace="http://www.ccighgo.com/whyhost" elementFormDefault="unqualified" attributeFormDefault="unqualified" jaxb:version="2.0"
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:pu="http://www.ccighgo.com/whyhost" xmlns:Q1="http://www.ccighgo.com"
+   xmlns:common="http://www.ccighgo.com/common">
+   <xsd:annotation>
+      <xsd:appinfo>
+         <jaxb:schemaBindings>
+            <jaxb:package name="com.ccighgo.service.transport.hostfamily.beans.application.whyhost" />
+         </jaxb:schemaBindings>
+      </xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import schemaLocation="../../Common.xsd" namespace="http://www.ccighgo.com/common" />
 
-	<xsd:element name="WhyHost" type="pu:WhyHost" />
+   <xsd:element name="WhyHost" type="pu:WhyHost" />
 
-	<xsd:complexType name="WhyHost">
-		<xsd:complexContent>
-			<xsd:extension base="common:Response">
-				<xsd:sequence>
-					<xsd:element name="loginId" type="xsd:int" minOccurs="1"
-						maxOccurs="1" />
-					<xsd:element name="goId" type="xsd:int" minOccurs="1"
-						maxOccurs="1" />
-					<xsd:element name="hostfamilySeasonId" type="xsd:int"
-						minOccurs="1" maxOccurs="1" />
-					<xsd:element name="hostFamilyHomeId" type="xsd:int"
-						minOccurs="1" maxOccurs="1" />
-					<xsd:element name="fieldsFilled" type="xsd:int"
-						minOccurs="1" maxOccurs="1" />
-					<xsd:element name="percentUpdate" type="xsd:double"
-						minOccurs="1" maxOccurs="1" />
-					<xsd:element name="whyFamilyInterestedInHosting" type="xsd:string"
-						minOccurs="1" maxOccurs="1" />
-					<xsd:element name="aspectsOfAmericanCultureYouWillShare"
-						type="xsd:string" minOccurs="1" maxOccurs="1" />
-					<xsd:element name="activitiesPlanned" type="xsd:string"
-						minOccurs="1" maxOccurs="1" />
-					<xsd:element name="willYouBeWorkingasLCForAnotherOrg"
-						type="xsd:boolean" minOccurs="1" maxOccurs="1" />
-					<xsd:element name="forWhomYouWillBeWorkingasLCForAnotherOrg"
-						type="xsd:string" minOccurs="1" maxOccurs="1" />
-					<xsd:element name="haveYouHostedForAnotherOrg" type="xsd:boolean"
-						minOccurs="1" maxOccurs="1" />
-					<xsd:element name="ifYesForWhomAndHowManyYears" type="xsd:string"
-						minOccurs="1" maxOccurs="1" />
-					<xsd:element name="familyExpectationOnStudentResponsibility"
-						type="xsd:string" minOccurs="1" maxOccurs="1" />
-				</xsd:sequence>
-			</xsd:extension>
-		</xsd:complexContent>
-	</xsd:complexType>
+   <xsd:complexType name="WhyHost">
+      <xsd:complexContent>
+         <xsd:extension base="common:Response">
+            <xsd:sequence>
+               <xsd:element name="loginId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="goId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="hostfamilySeasonId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="hostFamilyHomeId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="fieldsFilled" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="percentUpdate" type="xsd:double" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="whyFamilyInterestedInHosting" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="hopingToLearn" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="aspectsOfAmericanCultureYouWillShare" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="willYouBeWorkingasLCForAnotherOrg" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="forWhomYouWillBeWorkingasLCForAnotherOrg" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="haveYouHostedForAnotherOrg" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="ifYesForWhomAndHowManyYears" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="familyExpectationOnStudentResponsibility" type="xsd:string" minOccurs="1" maxOccurs="1" />
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
 
 </xsd:schema>

@@ -562,7 +562,7 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
          if (p != null) {
             // create login
             Login login = new Login();
-            login.setActive(CCIConstants.ACTIVE);
+            login.setActive(Integer.valueOf(loginVal).equals(CCIConstants.SEND_LOGIN) ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
             GoIdSequence goIdSequence = new GoIdSequence();
             goIdSequence.setGoId(Integer.valueOf(partnerGoId));
             login.setGoIdSequence(goIdSequence);
