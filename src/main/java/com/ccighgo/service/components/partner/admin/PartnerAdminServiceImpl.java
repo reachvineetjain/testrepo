@@ -374,8 +374,8 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
          }
          try {
             // TODO
-            PartnerRecruitmentAdminScreeningAdditionalInfo additionalInformation = pwt.getAdditionalInformation();
-            partnerAgentInquiry.setCurrentlyOfferingPrograms(additionalInformation.getProgramsYouOffer());
+            PartnerRecruitmentAdminScreeningAdditionalInfo additionalInformation = pwt.getAdditionalInformation();            
+            partnerAgentInquiry.setCurrentlyOfferingPrograms(additionalInformation.getDescribeProgramsOrganizationOffers());
             partnerAgentInquiry.setCurrentlySendingParticipantToUS((byte) (additionalInformation.isIsYourOrganizationSendingParticipantstoUSA() ? 1 : 0));
             partnerAgentInquiry.setBusinessYears(additionalInformation.getYearsInBusiness() + "");
             partnerAgentInquiry.setHowDidYouHearAboutCCI(additionalInformation.getHearAboutUsFrom());
