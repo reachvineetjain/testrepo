@@ -65,14 +65,17 @@ VALUES
 ('California',1,1,CURRENT_TIMESTAMP,1),
 ('South',1,1,CURRENT_TIMESTAMP,1),
 ('Non-Contiguous',1,1,CURRENT_TIMESTAMP,1);
+
 /*-------------------------------------------------------------------------------------------------------------------------------------------------------------
           Inserting data in SuperRegion Table
 -------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
 INSERT INTO `SuperRegion` (`superRegionId`, `superRegionName`, `active`, `createdOn`, `createdBy`, `modifiedOn`, `modifiedBy`) 
 VALUES
 (1,'West',1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
 (2,'Central',1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
 (3,'East',1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
+
 /*-------------------------------------------------------------------------------------------------------------------------------------------------------------
           Inserting data in Region Table
 -------------------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -93,9 +96,9 @@ VALUES
 /* ------------------------------------------------------------------------------------------------------------------------------------------------------------
 --------------------- Migrate FieldStaffType table-------
 ---------------------------------------------------------------------------------------------------------------------------------------------------------- */
-
+/*
 INSERT INTO FieldStaffType (fieldStaffTypeId,fieldStaffType)
-SELECT FieldStaffTypeID,FieldStaffTypeName FROM cci_go.FieldStaffType WHERE FieldStaffTypeID <>0;
+SELECT FieldStaffTypeID,FieldStaffTypeName FROM cci_go.FieldStaffType WHERE FieldStaffTypeID <> 0;
 
 INSERT INTO FieldStaffType (fieldStaffTypeId,fieldStaffTypeCode,fieldStaffType)
 VALUES (6,'UD','Undefined');
@@ -119,12 +122,11 @@ WHERE fieldStaffTypeId = 4;
 UPDATE FieldStaffType 
 SET fieldStaffTypeCode = 'ERD'
 WHERE fieldStaffTypeId = 5;
-
-
+*/
 /* ------------------------------------------------------------------------------------------------------------------------------------------------------------
 --------------------- Migrate FieldStaff table-------
 ---------------------------------------------------------------------------------------------------------------------------------------------------------*/
-
+/*
 INSERT INTO FieldStaff (fieldStaffId,fieldStaffTypeId,firstName,lastName)
 SELECT fs.FieldStaffId,fss.FieldStaffTypeId,fs.FirstName,fs.LastName
 FROM cci_go.FieldStaffSeason  fss
@@ -132,13 +134,11 @@ INNER JOIN cci_go.FieldStaff fs ON fss.FieldStaffId= fs.FieldStaffId
 AND fss.seasonId = 92;
 
 UPDATE FieldStaff SET fieldStaffTypeId = 6 WHERE fieldStaffTypeId = 0;
-
-
-
+*/
 /* ------------------------------------------------------------------------------------------------------------------------------------------------------------
 --------------------- Migrate FieldStaffLeadershipSeason table-------
 ------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-
+/*
 INSERT INTO `FieldStaffLeadershipSeason` (`fieldStaffLeadershipSeasonId`,`fieldStaffId`,`seasonId`,`seasonGeographyConfigurationId`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)  
 VALUES 
 (1,2,22,1,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
@@ -164,6 +164,6 @@ VALUES
 (21,17,22,21,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
 (22,59,22,22,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
 (23,3063,22,23,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1),
-(24,3377,22,24,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);
+(24,3377,22,24,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);*/
 
-
+SET FOREIGN_KEY_CHECKS= 1;

@@ -316,7 +316,7 @@ VALUES (111,20,'GHT - Work Abroad 2014','9999-09-09 00:00:00','9999-09-09 00:00:
 INSERT INTO `SeasonWADetails`(`seasonWADetailsId`,`seasonId`,`programName`,`startDate`,`endDate`,`programStatusId`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`) 
 VALUES (112,21,'GHT - Work Abroad 2015','9999-09-09 00:00:00','9999-09-09 00:00:00',2,CURRENT_TIMESTAMP,1,CURRENT_TIMESTAMP,1);  
   
-  
+SET FOREIGN_KEY_CHECKS= 1;
   
   
  
