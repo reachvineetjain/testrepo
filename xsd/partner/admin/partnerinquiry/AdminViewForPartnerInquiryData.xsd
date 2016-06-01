@@ -29,6 +29,8 @@
 				<xsd:sequence>
 					<xsd:element name="goId" type="xsd:int" minOccurs="1"
 						maxOccurs="1" />
+						<xsd:element name="partnerLoginId" type="xsd:int" minOccurs="1"
+						maxOccurs="1" />
 					<xsd:element name="LeadStatus" type="xsd:string"
 						minOccurs="1" maxOccurs="1" />
 					<xsd:element name="active" type="xsd:boolean"
@@ -95,6 +97,9 @@
 				minOccurs="1" maxOccurs="1" />
 			<xsd:element name="acronym" type="xsd:string" minOccurs="1"
 				maxOccurs="1" />
+				<xsd:element name="generalContact" type="xsd:string" minOccurs="1"
+				maxOccurs="1" />
+				
 
 		</xsd:sequence>
 	</xsd:complexType>
