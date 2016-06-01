@@ -622,17 +622,17 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
             /**
              * Bug 1581 - disable adding partner contact 
              */
-//            PartnerUser pUser = new PartnerUser();
-//            pUser.setPartner(newPartner);
-//            pUser.setLogin(login);
-//            pUser.setSalutation(salutationRepositotry.findOne(p.getSalutation().getSalutationId()));
-//            pUser.setFirstName(p.getFirstName());
-//            pUser.setLastName(p.getLastName());
-//            pUser.setActive(CCIConstants.ACTIVE);
-//            pUser.setIsPrimary(CCIConstants.ACTIVE);
-//            pUser.setPhone(p.getPhone());
-//            
-//            pUser = partnerUserRepository.saveAndFlush(pUser);
+            PartnerUser pUser = new PartnerUser();
+            pUser.setPartner(newPartner);
+            pUser.setLogin(login);
+            pUser.setSalutation(salutationRepositotry.findOne(p.getSalutation().getSalutationId()));
+            pUser.setFirstName(p.getFirstName());
+            pUser.setLastName(p.getLastName());
+            pUser.setActive(CCIConstants.ACTIVE);
+            pUser.setIsPrimary(CCIConstants.ACTIVE);
+            pUser.setPhone(p.getPhone());
+            
+            pUser = partnerUserRepository.saveAndFlush(pUser);
 
             PartnerReviewStatus partnerReviewStatus = partnerReviewStatusRepository.findApplicationStatusByGoId(Integer.valueOf(partnerGoId));
             if (Integer.valueOf(loginVal).equals(CCIConstants.SEND_LOGIN)) {
