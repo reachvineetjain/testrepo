@@ -1,6 +1,5 @@
-
-
 SET FOREIGN_KEY_CHECKS = 0;
+
 TRUNCATE TABLE GoIdSequence;
 TRUNCATE TABLE UserType;
 TRUNCATE TABLE Login;
@@ -54,13 +53,16 @@ SET `createdOn` = CURRENT_TIMESTAMP,
 /* ---------------------------------------------------------------------------------------------------------------------------------------------------------
 ---------------------  Inserting data into Login table -----------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------------------------------*/
-INSERT INTO `Login` (`loginId`,`loginName`,`password`,`keyValue`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`)
-SELECT `LoginID`,`LoginName`,`Password`,`PasswordSalt`,`CreatedOn`,`CreatedBy`,`ModifiedOn`,`ModifiedBy`
-FROM `cci_go`.`UserLogin` WHERE `LoginID` <> 0 AND `LoginTypeID` = 1;
+INSERT INTO `Login` (`loginId`,`loginName`,email,`password`,`keyValue`,`createdOn`,`createdBy`,`modifiedOn`,`modifiedBy`,active)
+SELECT l.`LoginID`,l.`LoginName`,ca.Email,l.`Password`,l.`PasswordSalt`,l.`CreatedOn`,l.`CreatedBy`,l.`ModifiedOn`,l.`ModifiedBy`,ca.Active
+FROM `cci_go`.`UserLogin` l 
+INNER JOIN `cci_go`.`CCIAdmin` ca ON l.LoginId = ca.LoginID
+WHERE l.`LoginID` <> 0 AND l.`LoginTypeID` = 1;
 
-UPDATE `Login` l,`cci_go`.`CCIAdmin` ca
-SET l.`email` = ca.`Email`
-WHERE l.`loginId` = ca.`LoginID`;
+/*UPDATE `Login` l,`cci_go`.`CCIAdmin` ca
+SET l.`email` = ca.`Email`,
+    l.active = ca.Active
+WHERE l.`loginId` = ca.`LoginID`;*/
 
 UPDATE `Login` l,`cci_go`.`GoMapping` gm
 SET l.`goId` = gm.`goId`
@@ -78,21 +80,26 @@ UPDATE `LoginUserType`
 SET `defaultUserType` = 1,
     `active` = 1,
     `createdOn` = CURRENT_TIMESTAMP,
-    `createdBy` = 1,
+    `createdBy` = 18,
     `modifiedOn` = CURRENT_TIMESTAMP,
-    `modifiedBy` = 1;
+    `modifiedBy` = 18;
 
 	
 /* ---------------------------------------------------------------------------------------------------------------------------------------------------------
 ---------------------  Inserting data into CCIStaffUsers table  --------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
- ALTER TABLE CCIStaffUsers DROP INDEX cciAdminGuid;
+-- ALTER TABLE CCIStaffUsers DROP INDEX cciAdminGuid;
 	
-INSERT INTO `CCIStaffUsers` (`cciStaffUserId`) 
-SELECT `goId` FROM `cci_go`.`GoMapping` WHERE `LoginTypeId` = 1;
+INSERT INTO `CCIStaffUsers` (`cciStaffUserId`,cciAdminGuid,firstName,lastName,primaryPhone,emergencyPhone,homeAddressLineOne,homeAddressLineTwo,city,usStatesId,
+                             zip,countryId,sevisId,createdOn,createdBy,modifiedOn,modifiedBy) 
+SELECT gm.`goId`,ca.CCIAdminGuid,ca.FirstName,ca.LastName,ca.Phone,ca.EmergencyPhone,ca.HomeAddressLineOne,ca.HomeAddressLineTwo,ca.City,ca.StateID,ca.Zip,
+       ca.CountryID,ca.SevisID,ca.CreatedOn,ca.CreatedBy,ca.ModifiedOn,ca.ModifiedBy
+ FROM `cci_go`.`GoMapping` gm 
+ INNER JOIN `cci_go`.`CCIAdmin` ca ON gm.cciId = ca.CCIAdminID AND gm.loginId = ca.`LoginID`
+ WHERE gm.`LoginTypeId` = 1;
 
-
+/*
 UPDATE `CCIStaffUsers` csu,`cci_go`.`GoMapping` gm,`cci_go`.`CCIAdmin` ca
 SET csu.`cciAdminGuid` = ca.CCIAdminGuid,
     csu.`firstName` = ca.FirstName,
@@ -109,11 +116,11 @@ SET csu.`cciAdminGuid` = ca.CCIAdminGuid,
 	csu.`createdOn` = ca.CreatedOn,
 	csu.`createdBy` = ca.CreatedBy,
 	csu.`modifiedOn` = ca.ModifiedOn,
-	csu.`modifiedBy` = ca.ModifiedBy,
-	csu.`active` = ca.Active
+	csu.`modifiedBy` = ca.ModifiedBy
+	-- csu.`active` = ca.Active
 WHERE csu.`cciStaffUserId` = gm.goId
 AND   gm.loginId = ca.`LoginID`
-AND   gm.cciId = ca.`CCIAdminID`;
+AND   gm.cciId = ca.`CCIAdminID`;*/
 									  
 
 UPDATE `CCIStaffUsers` 
@@ -138,16 +145,25 @@ SET csu.`genderId` = lg.`genderId`
 WHERE csu.`cciStaffUserId` = urc.`cciStaffUserId` 
 AND SUBSTR(urc.`Gender`,1,1)=lg.`genderName`;
 
-ALTER TABLE CCIStaffUsers ADD UNIQUE INDEX cciAdminGuid (cciAdminGuid) ;
+-- ALTER TABLE CCIStaffUsers ADD UNIQUE INDEX KEY_cciAdminGuid (cciAdminGuid) ;
 
 /* ---------------------------------------------------------------------------------------------------------------------------------------------------------
 ---------------------  Inserting data into CCIStaffUserProgram table -----------------------------------------------------------------------------------------
 --------------------------------------------------------------------------------------------------------------------------------------------------------- */
-INSERT INTO `CCIStaffUserProgram` (cciStaffUserId)
-SELECT cciStaffUserId FROM CCIStaffUsers;
+-- Only for WnT and CAP USERS
+INSERT INTO `CCIStaffUserProgram` (cciStaffUserId,`lookupDepartmentProgramId`,createdBy,modifiedBy)
+SELECT csu.cciStaffUserId,6,1,1 FROM CCIStaffUsers csu 
+INNER JOIN cci_go.UserRolesByCCI urc ON csu.cciStaffUserId = urc.cciStaffUserId AND urc.program = 'W&T' ;
+
+INSERT INTO `CCIStaffUserProgram` (cciStaffUserId,`lookupDepartmentProgramId`,createdBy,modifiedBy)
+SELECT csu.cciStaffUserId,7,1,1 FROM CCIStaffUsers csu 
+INNER JOIN cci_go.UserRolesByCCI urc1 ON csu.cciStaffUserId = urc1.cciStaffUserId AND urc1.program = 'CAP';
+/*
+INSERT INTO `CCIStaffUserProgram` (cciStaffUserId,createdBy,modifiedBy)
+SELECT cciStaffUserId,1,1 FROM CCIStaffUsers;
 
 UPDATE CCIStaffUserProgram csp, cci_go.UserRolesByCCI urc
-SET lookupDepartmentProgramId = 6 
+SET csp.lookupDepartmentProgramId = 6 
 WHERE urc.program = 'W&T' 
 AND csp.cciStaffUserId = urc.cciStaffUserId;
 
@@ -156,13 +172,16 @@ SET lookupDepartmentProgramId = 7
 WHERE urc.program = 'CAP' 
 AND csp.cciStaffUserId = urc.cciStaffUserId;
 
+UPDATE CCIStaffUserProgram 
+SET lookupDepartmentProgramId = NULL
+WHERE lookupDepartmentProgramId = 0; */ -- If All Users having Programs
 
 /* ---------------------------------------------------------------------------------------------------------------------------------------------------------
 ---------------------  Inserting data into CCIStaffUserNotes table -----------------------------------------------------------------------------------------
 --------------------------------------------------------------------------------------------------------------------------------------------------------- */
 
 INSERT INTO `CCIStaffUserNotes` (`cciStaffUserId`)
-SELECT `goId` FROM `cci_go`.`GoMapping` gm,`cci_go`.`CCIAdminNote` cn WHERE gm.cciId = cn.cciAdminID;
+SELECT `goId` FROM `cci_go`.`GoMapping` gm INNER JOIN cci_go.`CCIAdminNote` cn ON gm.cciId = cn.cciAdminID WHERE loginTypeId = 1 ;
 
 UPDATE CCIStaffUserNotes csn,cci_go.GoMapping gm,cci_go.CCIAdminNote cn 
 SET csn.note = cn.note,
@@ -176,7 +195,7 @@ AND   gm.cciId = cn.`CCIAdminID`;
 /* ---------------------------------------------------------------------------------------------------------------------------------------------------------
 ---------------------  Inserting data into CCIStaffUsersCCIStaffRoles table ----------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------------------------------*/
-
+ALTER TABLE `cci`.`CCIStaffUsersCCIStaffRoles` CHANGE `cciStaffRoleId` `cciStaffRoleId` INT(11) NULL,DROP PRIMARY KEY, ADD PRIMARY KEY (`cciStaffUserId`);
 INSERT INTO `CCIStaffUsersCCIStaffRoles` (`cciStaffUserId`) 
 SELECT `cciStaffUserId` FROM `CCIStaffUsers`;
 
@@ -187,12 +206,13 @@ AND csu.`cciStaffUserId` = urc.`cciStaffUserId`;
 
 UPDATE CCIStaffUsersCCIStaffRoles csu
 SET csu.createdOn = CURRENT_TIMESTAMP,
+csu.modifiedOn = CURRENT_TIMESTAMP,
 csu.createdBy = 1000,
 csu.modifiedBy = 1000;
 
-/*UPDATE CCIStaffUsersCCIStaffRoles csu
-SET csu.cciStaffRoleId = NULL
-WHERE csu.cciStaffRoleId = 0; */
+UPDATE CCIStaffUsersCCIStaffRoles csu
+SET csu.cciStaffRoleId = 1
+WHERE csu.cciStaffRoleId = 0; 
 
 
 /* ---------------------------------------------------------------------------------------------------------------------------------------------------------

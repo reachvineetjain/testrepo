@@ -66,3 +66,4 @@ VALUES
 (19, 9,'Int-SP', 'Internship - Self Placed'),
 (20, 9,'Trn-SP', 'Trainee - Self Placed');
 
+SET FOREIGN_KEY_CHECKS= 1;
