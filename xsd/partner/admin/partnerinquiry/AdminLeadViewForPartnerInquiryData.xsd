@@ -91,6 +91,8 @@
 				minOccurs="1" maxOccurs="1" />
 			<xsd:element name="interestedInHighSchoolAbroad" type="xsd:boolean"
 				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="interestedInOther" type="xsd:boolean"
+				minOccurs="1" maxOccurs="1" />
 			<xsd:element name="programsYouOffer" type="xsd:string"
 				minOccurs="1" maxOccurs="1" />
 

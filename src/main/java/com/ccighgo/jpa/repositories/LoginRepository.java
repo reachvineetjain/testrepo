@@ -42,4 +42,7 @@ public interface LoginRepository extends JpaRepository<Login, Integer> {
 
    @Query("SELECT l FROM Login l where l.goIdSequence.goId = ?1")
    public List<Login> findAllByGoId(Integer goId);
+   
+   @Query("SELECT l FROM Login l where l.email = ?1")
+   public List<Login> findListByEmail(String email);
 }

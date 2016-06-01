@@ -65,36 +65,42 @@ public class WordPressFormsImpl implements IWordPressForms {
    public String inquiryPartner(InternationalPartners InternationalPartners) {
       try {
          LOGGER.info("Inquiry partner Is Called !!d!");
+         System.out.println("Partner Inquiry Called !! ");
          if (InternationalPartners != null) {
-            Login user = loginRepository.findByEmail(InternationalPartners.getEmail());
-            if (user != null) {
+            List<Login> user = loginRepository.findListByEmail(InternationalPartners.getEmail());
+            if (user != null&&!user.isEmpty()) {
                String message = "400:Duplicate Row (User Already Exist ):400:Duplicate Row (User Already Exist) [Login Table ]";
+               System.out.println(message);
                LOGGER.info(message);
                return message;
             }
-            PartnerAgentInquiry pa = partnerAgentInquiryRepository.findByEmail(InternationalPartners.getEmail());
-            if (pa != null) {
+            List<PartnerAgentInquiry> pa = partnerAgentInquiryRepository.findListByEmail(InternationalPartners.getEmail());
+            if (pa != null&&!pa.isEmpty()) {
                String message = "400:Duplicate Row (User Already Exist ):400:Duplicate Row (User Already Exist) [PartnerAgentInquiry Table ]";
+               System.out.println(message);
                LOGGER.info(message);
                return message;
             }
+            InternationalPartners.setWebsite(InternationalPartners.getWebsite().replaceAll("http://|https://|/$", ""));
             String secondFormatOfWebSite = "";
             if (InternationalPartners.getWebsite() != null) {
                if (InternationalPartners.getWebsite().toLowerCase().startsWith("www"))
                   secondFormatOfWebSite = InternationalPartners.getWebsite().replaceAll("^www\\.", "");
                else
-                  secondFormatOfWebSite = "www." + InternationalPartners.getWebsite();
-               PartnerAgentInquiry webSiteDuplicate = partnerAgentInquiryRepository.findByWebSite(InternationalPartners.getWebsite(), secondFormatOfWebSite);
-               if (webSiteDuplicate != null) {
+                  secondFormatOfWebSite = "www." + InternationalPartners.getWebsite().toLowerCase();
+               List<PartnerAgentInquiry> webSiteDuplicate = partnerAgentInquiryRepository.findListByWebSite(InternationalPartners.getWebsite().toLowerCase(), secondFormatOfWebSite);
+               if (webSiteDuplicate != null&& !webSiteDuplicate.isEmpty()) {
                   String message = "400:Duplicate Row (WebSite Already Exist):400:Duplicate Row (WebSite Already Exist)";
+                  System.out.println(message);
                   LOGGER.info(message);
                   return message;
                }
             }
 
-            PartnerAgentInquiry legalNameDuplicate = partnerAgentInquiryRepository.findByLegalName(InternationalPartners.getLegalBusinessName());
-            if (legalNameDuplicate != null) {
+            List<PartnerAgentInquiry> legalNameDuplicate = partnerAgentInquiryRepository.findListByLegalName(InternationalPartners.getLegalBusinessName());
+            if (legalNameDuplicate != null&&!legalNameDuplicate.isEmpty() ) {
                String message = "400:Duplicate Row (LegalName is Already Exist):400:Duplicate Row (LegalName Already Exist)";
+               System.out.println(message);
                LOGGER.info(message);
                return message;
             }
@@ -107,7 +113,11 @@ public class WordPressFormsImpl implements IWordPressForms {
             partnerAgentInquiry.setCity(InternationalPartners.getCity());
             partnerAgentInquiry.setEmail(InternationalPartners.getEmail());
             partnerAgentInquiry.setFirstName(InternationalPartners.getFirstName());
-            partnerAgentInquiry.setHowDidYouHearAboutCCI(InternationalPartners.getHearedAboutUs());
+            if(InternationalPartners.getHearedAboutUs().contains("|"))
+            	partnerAgentInquiry.setHowDidYouHearAboutCCI(InternationalPartners.getHearedAboutUs().split("\\|")[0]);
+            else 
+            	partnerAgentInquiry.setHowDidYouHearAboutCCI(InternationalPartners.getHearedAboutUs());
+            
             partnerAgentInquiry.setLastName(InternationalPartners.getLastName());
             partnerAgentInquiry.setState(InternationalPartners.getStateOrProvince());
             partnerAgentInquiry.setCompanyName(InternationalPartners.getLegalBusinessName());
@@ -256,6 +266,7 @@ public class WordPressFormsImpl implements IWordPressForms {
          }
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
+         e.printStackTrace();
          String string = "700:Internal Error:700:" + e.getMessage();
          LOGGER.info(string);
          return string;
@@ -427,15 +438,19 @@ public class WordPressFormsImpl implements IWordPressForms {
       try {
          System.out.println("IsEmailExist is Called !!! ");
          System.out.println("Email : " + Email);
-         Login user = loginRepository.findByEmail(Email.trim());
-         System.out.println(user);
-         if (user != null) {
+         List<Login> user = loginRepository.findListByEmail(Email.trim());
+         List<PartnerAgentInquiry> pa = partnerAgentInquiryRepository.findListByEmail(Email.trim());
+          
+         if ((user != null&&!user.isEmpty()) || (pa != null&&!pa.isEmpty())) {
+        	 System.out.println( Email + " : exist");
             return true;
          }
       } catch (Exception e) {
+    	  System.out.println( Email + " : not exist");
          ExceptionUtil.logException(e, LOGGER);
          return false;
       }
+      System.out.println( Email + " : not exist");
       return false;
    }
 
@@ -444,17 +459,17 @@ public class WordPressFormsImpl implements IWordPressForms {
       try {
          System.out.println("IsLegalNameExist is Called !!! ");
          System.out.println("Legal Name:" + LegalName);
-         PartnerAgentInquiry legalNameDuplicate = partnerAgentInquiryRepository.findByLegalName(LegalName.trim());
-         if (legalNameDuplicate != null) {
-            System.out.println("TRUE");
+         List<PartnerAgentInquiry> legalNameDuplicate = partnerAgentInquiryRepository.findListByLegalName(LegalName.trim());
+         if (legalNameDuplicate != null&&!legalNameDuplicate.isEmpty()) {
+            System.out.println(LegalName + ": exist");
             return true;
          }
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
-         System.out.println("FALSE");
+         System.out.println(LegalName + ": not exist");
          return false;
       }
-      System.out.println("FALSE");
+      System.out.println(LegalName + ": not exist");
       return false;
    }
 
@@ -467,18 +482,19 @@ public class WordPressFormsImpl implements IWordPressForms {
          if (WebSite.toLowerCase().startsWith("www"))
             secondFormatOfWebSite = WebSite.replaceAll("^www\\.", "");
          else
-            secondFormatOfWebSite = "www." + WebSite;
-         PartnerAgentInquiry webSiteDuplicate = partnerAgentInquiryRepository.findByWebSite(WebSite.toLowerCase().trim(), secondFormatOfWebSite.toLowerCase().trim());
-         if (webSiteDuplicate != null) {
-            System.out.println("TRUE");
+            secondFormatOfWebSite = "www." + WebSite.toLowerCase();
+         List<PartnerAgentInquiry> webSiteDuplicate = partnerAgentInquiryRepository.findListByWebSite(WebSite.toLowerCase().trim(), secondFormatOfWebSite.toLowerCase().trim());
+         if (webSiteDuplicate != null&& !webSiteDuplicate.isEmpty()) {
+        	 System.out.println(WebSite + ": exist");
             return true;
          }
       } catch (Exception e) {
          ExceptionUtil.logException(e, LOGGER);
-         System.out.println("FALSE");
+         e.printStackTrace();
+         System.out.println(WebSite + ": not exist");
          return false;
       }
-      System.out.println("FALSE");
+      System.out.println(WebSite + ": not exist");
       return false;
    }
 

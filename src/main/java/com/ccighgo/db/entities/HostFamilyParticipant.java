@@ -115,7 +115,7 @@ public class HostFamilyParticipant implements Serializable {
 	//bi-directional many-to-one association to MoveReason
 	@ManyToOne
 	@JoinColumn(name="moveReasonId")
-	private MoveReason moveReason1;
+	private MoveReason moveReason;
 
 	//bi-directional many-to-one association to Participant
 	@ManyToOne
@@ -126,10 +126,6 @@ public class HostFamilyParticipant implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="usHighSchoolId")
 	private USSchool usschool;
-
-	//bi-directional one-to-one association to MoveReason
-	@OneToOne(mappedBy="hostFamilyParticipant")
-	private MoveReason moveReason2;
 
 	public HostFamilyParticipant() {
 	}
@@ -398,12 +394,12 @@ public class HostFamilyParticipant implements Serializable {
 		this.hostFamilyStatus = hostFamilyStatus;
 	}
 
-	public MoveReason getMoveReason1() {
-		return this.moveReason1;
+	public MoveReason getMoveReason() {
+		return this.moveReason;
 	}
 
-	public void setMoveReason1(MoveReason moveReason1) {
-		this.moveReason1 = moveReason1;
+	public void setMoveReason(MoveReason moveReason) {
+		this.moveReason = moveReason;
 	}
 
 	public Participant getParticipant() {
@@ -420,14 +416,6 @@ public class HostFamilyParticipant implements Serializable {
 
 	public void setUsschool(USSchool usschool) {
 		this.usschool = usschool;
-	}
-
-	public MoveReason getMoveReason2() {
-		return this.moveReason2;
-	}
-
-	public void setMoveReason2(MoveReason moveReason2) {
-		this.moveReason2 = moveReason2;
 	}
 
 }

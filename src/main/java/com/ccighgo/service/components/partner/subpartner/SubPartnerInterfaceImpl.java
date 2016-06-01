@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import sun.util.logging.resources.logging;
+
 import com.ccighgo.db.entities.GoIdSequence;
 import com.ccighgo.db.entities.Login;
 import com.ccighgo.db.entities.LoginUserType;
@@ -18,6 +20,7 @@ import com.ccighgo.db.entities.LookupCountry;
 import com.ccighgo.db.entities.Partner;
 import com.ccighgo.db.entities.PartnerNote;
 import com.ccighgo.db.entities.PartnerNoteTopic;
+import com.ccighgo.db.entities.PartnerOffice;
 import com.ccighgo.db.entities.PartnerProgram;
 import com.ccighgo.db.entities.PartnerReviewStatus;
 import com.ccighgo.db.entities.PartnerSeason;
@@ -26,6 +29,7 @@ import com.ccighgo.db.entities.PartnerUser;
 import com.ccighgo.db.entities.Salutation;
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.ErrorCode;
+import com.ccighgo.exception.PartnerCodes;
 import com.ccighgo.jpa.repositories.CCIStaffUsersRepository;
 import com.ccighgo.jpa.repositories.CountryRepository;
 import com.ccighgo.jpa.repositories.GoIdSequenceRepository;
@@ -48,6 +52,7 @@ import com.ccighgo.service.component.emailing.EmailServiceImpl;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.components.errormessages.constants.PartnerAdminMessageConstants;
+import com.ccighgo.service.components.errormessages.constants.PartnerCompanyDetailsMessageConstants;
 import com.ccighgo.service.components.errormessages.constants.SubPartnerMessageConstants;
 import com.ccighgo.service.components.utility.UtilityServices;
 import com.ccighgo.service.transport.partner.beans.allsalutation.AllSalutations;
@@ -105,7 +110,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
    @Autowired CCIStaffUsersRepository cciStaffUsersRepository;
    @Autowired PartnerProgramRepository partnerProgramRepository;
    @Autowired PartnerSeasonsRepository partnerSeasonsRepository;
-   
+
    @Override
    @Transactional
    public PartnerSubPartners getSubPartnersOfpartners(String partnerId) {
@@ -121,7 +126,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
          subPartnerDetails.setCount(subPartnerList.size());
          for (Partner subPartner : subPartnerList) {
             PartnerReviewStatus reviewStatus = partnerReviewStatusRepository.findStatusByPartnerId(subPartner.getPartnerGoId());
-            if (!(reviewStatus.getPartnerStatus2().getPartnerStatusId() == CCIConstants.DELETED_STATUS)) {
+            if (reviewStatus != null && reviewStatus.getPartnerStatus2() != null && !(reviewStatus.getPartnerStatus2().getPartnerStatusId() == CCIConstants.DELETED_STATUS)) {
                SubPartners sp = new SubPartners();
                sp.setSubPartnerId(subPartner.getPartnerGoId());
                if (subPartner.getPartnerUsers() != null && subPartner.getPartnerUsers().size() > 0) {
@@ -149,7 +154,8 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
                   }
                   Login login = partnerUser.getLogin();
                   if (login != null) {
-                     subPartnerStatus.setSubPartnerStatus(login.getActive() == 1 ? "Active" : "Inactive");
+                     // Bug: 1610
+                     subPartnerStatus.setSubPartnerStatus(login.getActive().equals(CCIConstants.ACTIVE) ? "Active" : "Inactive");
                      subPartnerStatus.setSubPartnerStatusId(login.getLoginId());
                      sp.setSubPartnerEmail(login.getEmail());
                      sp.setSubPartnerUserName(login.getLoginName());
@@ -333,9 +339,9 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
                subPartnerPrimaryContact.setWebsite(partnerContact.getWebsite());
             }
          }
-         
-         //=====================Bug 1412===========
-         
+
+         // =====================Bug 1412===========
+
          // Partner Offices
          List<SubPartnerOffice> subPartnerOfficeList = null;
          int count = 0;
@@ -370,9 +376,9 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
          if (subPartnerOfficeList != null) {
             subPartnerDetail.getSubPartnerOffices().addAll(subPartnerOfficeList);
          }
-         
-         //=========================End of 1412
-                      
+
+         // =========================End of 1412
+
          SubPartnersPhysicalAddress subPartnerPhysicalAddress = new SubPartnersPhysicalAddress();
          subPartnerPhysicalAddress.setPhysicalAddress1(partnerSubPartner.getPhysicalAddressLineOne());
          subPartnerPhysicalAddress.setPhysicalAddress2(partnerSubPartner.getPhysicalAddressLineTwo());
@@ -511,14 +517,15 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             LOGGER.error(messageUtil.getMessage(SubPartnerMessageConstants.SUB_PARTNER_CREATE_USER_EMAIL_EXIST));
             return responce;
          }
-         //Bug-1253: check if parent partner info exists which can be used to inherit partner season and cci contacts. 
-         PartnerUser parentUser = partnerUserRepository.findByPartnerGoIdAndLoginId(Integer.valueOf(subPartner.getGoId()), subPartner.getLoginId());
-         if(parentUser==null){
+         // Bug-1253: check if parent partner info exists which can be used to
+         // inherit partner season and cci contacts.
+         PartnerUser parentUser = partnerUserRepository.findByPartnerGoIdAndLoginId(subPartner.getPartnerGoId(), subPartner.getLoginId());
+         if (parentUser == null) {
             responce.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.SUB_PARTNER_CREATE_USER_EMAIL_EXIST.getValue(),
                   messageUtil.getMessage(SubPartnerMessageConstants.ERROR_CREATE_SUBPARTNER)));
             LOGGER.error(messageUtil.getMessage(SubPartnerMessageConstants.ERROR_CREATE_SUBPARTNER));
             return responce;
-         }else{
+         } else {
             Partner subPartnerDetails = new Partner();
             Details subPartnerDetailInfo = subPartner.getPartnerDetail();
             if (subPartnerDetailInfo != null) {
@@ -534,7 +541,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             GoIdSequence goIdSequence = new GoIdSequence();
             Login login = new Login();
             try {
-               subPartnerDetails.setParentPartnerGoId(Integer.valueOf(subPartner.getGoId()));
+               subPartnerDetails.setParentPartnerGoId(subPartner.getPartnerGoId());
                subPartnerDetails.setIsSubPartner(CCIConstants.ACTIVE);
 
                List<Login> loginList = new ArrayList<Login>();
@@ -607,73 +614,64 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
                }
             }
             subPartnerDetails.setPartnerGoId(goIdSequence.getGoId());
-            subPartnerDetails= partnerRepository.saveAndFlush(subPartnerDetails);
-            
-            //Bug 1253: assign all cci contacts of partner to sub-partner
+            subPartnerDetails = partnerRepository.saveAndFlush(subPartnerDetails);
+
+            // Bug 1253: assign all cci contacts of partner to sub-partner
             List<PartnerProgram> parentPartnerProgramContactsList = partnerProgramRepository.findAllPartnerProgramsByPartnerId(parentUser.getPartner().getPartnerGoId());
-            if(parentPartnerProgramContactsList!=null){
+            if (parentPartnerProgramContactsList != null && !(parentPartnerProgramContactsList.isEmpty())) {
                List<PartnerProgram> subpartnerProgramContactsList = new ArrayList<PartnerProgram>();
-               for(PartnerProgram pp:parentPartnerProgramContactsList){
-                  PartnerProgram inherited = pp;
+               for (PartnerProgram pp : parentPartnerProgramContactsList) {
+                  PartnerProgram inherited = new PartnerProgram();
                   inherited.setPartner(subPartnerDetails);
+                  // Bug:1606
+                  inherited.setCcistaffUser(pp.getCcistaffUser() != null ? pp.getCcistaffUser() : cciStaffUsersRepository.findOne(1000));
+                  inherited.setHasApplied(pp.getHasApplied());
+                  inherited.setIsEligible(pp.getIsEligible());
+                  inherited.setLookupDepartmentProgram(pp.getLookupDepartmentProgram());
                   subpartnerProgramContactsList.add(inherited);
                }
                partnerProgramRepository.save(subpartnerProgramContactsList);
                partnerProgramRepository.flush();
             }
-           //Bug 1253: assign all programs of partner to sub-partner
-            List<PartnerSeason> partnerSeasons = parentUser.getPartner().getPartnerSeasons();
-            if(partnerSeasons!=null && !(partnerSeasons.isEmpty())){
-               List<PartnerSeason> subPartnerSeasons = new ArrayList<PartnerSeason>();
-               for(PartnerSeason ps:partnerSeasons){
-                  PartnerSeason inherited = ps;
-                  inherited.setPartner(subPartnerDetails);
-                  subPartnerSeasons.add(inherited);
-               }
-               partnerSeasonsRepository.save(subPartnerSeasons);
-               partnerSeasonsRepository.flush();
-            }
 
             try {
-               PartnerUser partnerContact = null;
+               PartnerUser partnerUserData = new PartnerUser();
+               ;
                if (subPartnerPrimaryContact != null) {
-                  partnerContact = new PartnerUser();
                   com.ccighgo.service.transport.partner.beans.subpartnerdetail.Salutation slt = subPartnerPrimaryContact.getSalutation();
                   if (slt != null) {
                      Salutation s = salutationRepository.findBySalutationName(slt.getSalutationName());
-                     partnerContact.setSalutation(s);
+                     partnerUserData.setSalutation(s);
                   }
-                  partnerContact.setTitle(subPartnerPrimaryContact.getTitle());
-                  partnerContact.setFirstName(subPartnerPrimaryContact.getFirstName());
-                  partnerContact.setLastName(subPartnerPrimaryContact.getLastName());
-                  partnerContact.setPhone(subPartnerPrimaryContact.getPhone());
-                  partnerContact.setEmergencyPhone(subPartnerPrimaryContact.getEmergencyPhone());
-                  partnerContact.setFax(subPartnerPrimaryContact.getFax());
+                  partnerUserData.setTitle(subPartnerPrimaryContact.getTitle());
+                  partnerUserData.setFirstName(subPartnerPrimaryContact.getFirstName());
+                  partnerUserData.setLastName(subPartnerPrimaryContact.getLastName());
+                  partnerUserData.setPhone(subPartnerPrimaryContact.getPhone());
+                  partnerUserData.setEmergencyPhone(subPartnerPrimaryContact.getEmergencyPhone());
+                  partnerUserData.setFax(subPartnerPrimaryContact.getFax());
                   if (subPartnerPrimaryContact.isReciveNotificationemailfromcc() != null)
-                     partnerContact.setRecieveNotificationEmails((byte) (subPartnerPrimaryContact.isReciveNotificationemailfromcc() ? 1 : 0));
-                  partnerContact.setSkypeId(subPartnerPrimaryContact.getSkypeId());
-                  partnerContact.setWebsite(subPartnerPrimaryContact.getWebsite());
-                  partnerContact.setIsPrimary((byte) 1);
-                  partnerContact.setPartner(subPartnerDetails);
-                  partnerContact.setLogin(login);
-                  partnerUserRepository.saveAndFlush(partnerContact);
+                     partnerUserData.setRecieveNotificationEmails((byte) (subPartnerPrimaryContact.isReciveNotificationemailfromcc() ? 1 : 0));
+                  partnerUserData.setSkypeId(subPartnerPrimaryContact.getSkypeId());
+                  partnerUserData.setWebsite(subPartnerPrimaryContact.getWebsite());
+                  partnerUserData.setIsPrimary((byte) 1);
+                  partnerUserData.setPartner(subPartnerDetails);
+                  partnerUserData.setLogin(login);
                }
+               partnerUserData.setActive(CCIConstants.ACTIVE);
+               partnerUserData.setIsPrimary(CCIConstants.ACTIVE);
+               partnerUserData.setPartner(subPartnerDetails);
+               partnerUserData.setLogin(login);
+               partnerUserRepository.saveAndFlush(partnerUserData);
             } catch (Exception e) {
                ExceptionUtil.logException(e, LOGGER);
             }
-
-            PartnerUser partnerUser = new PartnerUser();
-            partnerUser.setActive(CCIConstants.ACTIVE);
-            partnerUser.setIsPrimary(CCIConstants.ACTIVE);
-            partnerUser.setPartner(subPartnerDetails);
-            partnerUser.setLogin(login);
-            partnerUserRepository.saveAndFlush(partnerUser);
 
             PartnerReviewStatus reviewStatus = new PartnerReviewStatus();
             reviewStatus.setPartner(subPartnerDetails);
             // set the default partnerLeadStatus to Valid
             reviewStatus.setPartnerStatus1(partnerStatusRepository.findOne(CCIConstants.VALID));
-            // set the partnerAgentStatusId to Approved i.e in case of Sub partner
+            // set the partnerAgentStatusId to Approved i.e in case of Sub
+            // partner
             reviewStatus.setPartnerStatus2(partnerStatusRepository.findOne(CCIConstants.APPROVED_STATUS));
             partnerReviewStatusRepository.saveAndFlush(reviewStatus);
 
@@ -712,19 +710,18 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
          PartnerUser partnerUser = new PartnerUser();
          if (partnerUsers != null && partnerUsers.size() > 0) {
             for (PartnerUser puser : partnerUsers) {
-               if (puser.getPartner() != null && puser.getPartner().getPartnerGoId() == Integer.valueOf(subPartner.getGoId())) {
+               if (puser.getPartner() != null && puser.getPartner().getPartnerGoId().equals(Integer.valueOf(subPartner.getGoId()))) {
                   partnerUser = puser;
                   break;
                }
             }
             Login login = partnerUser.getLogin();
             if (login != null) {
-               if(!(login.getEmail().equals(subPartner.getSubPartnerPrimaryContact().getEmail()))){
+               if (!(login.getEmail().equals(subPartner.getSubPartnerPrimaryContact().getEmail()))) {
                   Login duplicateExists = loginRepository.findByEmail(subPartner.getSubPartnerPrimaryContact().getEmail());
-                  if(duplicateExists==null){
+                  if (duplicateExists == null) {
                      login.setEmail(subPartner.getSubPartnerPrimaryContact().getEmail());
-                  }
-                  else{
+                  } else {
                      responce.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FAILED_UPDATE_SUB_PARTNER.getValue(),
                            messageUtil.getMessage(SubPartnerMessageConstants.DUPLICATE_EMAIL_ID)));
                      return responce;
@@ -799,6 +796,22 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             partnerContact.setSkypeId(subPartnerPrimaryContact.getSkypeId());
             partnerContact.setWebsite(subPartnerPrimaryContact.getWebsite());
             partnerUserRepository.saveAndFlush(partnerContact);
+         }
+         try {
+            if (subPartner.getSubPartnerOffices() != null && !subPartner.getSubPartnerOffices().isEmpty()) {
+               List<PartnerOffice> officesList = new ArrayList<PartnerOffice>();
+               for (SubPartnerOffice office : subPartner.getSubPartnerOffices()) {
+                  if (office.getPartnerOfficeId() > 0) {
+                     com.ccighgo.db.entities.PartnerOffice partnerOffice = partnerOfficeRepository.findOne(Integer.valueOf(office.getPartnerOfficeId()));
+                     partnerOffice.setPartnerOfficeType(office.isIsPrimary() ? partnerOfficeTypeRepository.findOne(1) : partnerOfficeTypeRepository.findOne(3));
+                     officesList.add(partnerOffice);
+                  }
+               }
+               partnerOfficeRepository.save(officesList);
+               partnerOfficeRepository.flush();
+            }
+         } catch (CcighgoException e) {
+            LOGGER.error(e);
          }
 
          responce.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.SUB_PARTNER_CODE.getValue(),

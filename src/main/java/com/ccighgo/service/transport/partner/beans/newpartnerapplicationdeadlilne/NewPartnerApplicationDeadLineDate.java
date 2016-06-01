@@ -53,6 +53,9 @@ public class NewPartnerApplicationDeadLineDate
     protected String augStartDeadlineDateRequested;
     @XmlElement(required = true)
     protected String janStartDeadlineDateRequested;
+    protected int janStatusId;
+    protected int augStatusId;
+
 
     /**
      * Gets the value of the partnerSeasonId property.
@@ -117,5 +120,24 @@ public class NewPartnerApplicationDeadLineDate
     public void setJanStartDeadlineDateRequested(String value) {
         this.janStartDeadlineDateRequested = value;
     }
+
+   public int getJanStatusId() {
+      return janStatusId;
+   }
+
+   public void setJanStatusId(int janStatusId) {
+      this.janStatusId = janStatusId;
+   }
+
+   public int getAugStatusId() {
+      return augStatusId;
+   }
+
+   public void setAugStatusId(int augStatusId) {
+      this.augStatusId = augStatusId;
+   }
+
+    
+    
 
 }

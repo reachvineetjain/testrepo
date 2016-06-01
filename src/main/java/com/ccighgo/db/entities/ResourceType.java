@@ -20,7 +20,7 @@ public class ResourceType implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer resourceTypeId;
 
-	@Column(length=50)
+	@Column(length=500)
 	private String displayName;
 
 	@Column(length=50)

@@ -225,4 +225,11 @@ public class PartnerAdminSeason {
       return partnerAdminSeasonInterface.getPartnerSeasonStatuses();
    }
 
+   @GET
+   @Path("change/signed/status/{statusVal}/{partnerSeasonContractId}")
+   @Produces("application/json")
+   public Response changeAgreementSignedStatus(@PathParam("statusVal") String statusVal, @PathParam("partnerSeasonContractId") String partnerSeasonContractId) {
+      return partnerAdminSeasonInterface.changeAgreementSignedStatus(statusVal, partnerSeasonContractId);
+   }
+
 }

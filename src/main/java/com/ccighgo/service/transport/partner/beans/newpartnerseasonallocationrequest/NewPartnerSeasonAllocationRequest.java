@@ -47,7 +47,8 @@ import com.ccighgo.service.transport.common.response.beans.Response;
     "augustStartRequestedMaxUnguaranteedParticipants",
     "augustStartRequestedMaxguaranteedParticipants",
     "januaryStartRequestedMaxUnguaranteedParticipants",
-    "januaryStartRequestedMaxguaranteedParticipants"
+    "januaryStartRequestedMaxguaranteedParticipants",
+    "statusId"
 })
 public class NewPartnerSeasonAllocationRequest
     extends Response
@@ -59,6 +60,8 @@ public class NewPartnerSeasonAllocationRequest
     protected int augustStartRequestedMaxguaranteedParticipants;
     protected int januaryStartRequestedMaxUnguaranteedParticipants;
     protected int januaryStartRequestedMaxguaranteedParticipants;
+    protected int janStatusId;
+    protected int augStatusId;
 
     /**
      * Gets the value of the janAllocationId property.
@@ -155,5 +158,24 @@ public class NewPartnerSeasonAllocationRequest
     public void setJanuaryStartRequestedMaxguaranteedParticipants(int value) {
         this.januaryStartRequestedMaxguaranteedParticipants = value;
     }
+
+   public int getJanStatusId() {
+      return janStatusId;
+   }
+
+   public void setJanStatusId(int janStatusId) {
+      this.janStatusId = janStatusId;
+   }
+
+   public int getAugStatusId() {
+      return augStatusId;
+   }
+
+   public void setAugStatusId(int augStatusId) {
+      this.augStatusId = augStatusId;
+   }
+
+
+    
 
 }

@@ -31,6 +31,8 @@ import com.ccighgo.service.transport.hostfamily.beans.application.submit.HFSubmi
 import com.ccighgo.service.transport.hostfamily.beans.application.whyhost.WhyHost;
 import com.ccighgo.service.transport.participant.beans.hfparticipantlist.HFParticipantDetail;
 import com.ccighgo.service.transport.participant.beans.hfparticipantlist.HFParticipantList;
+import com.ccighgo.service.transport.partner.beans.hfp2workqueuecategory.HFP2WorkQueueCategory;
+import com.ccighgo.service.transport.partner.beans.hfp2workqueuetype.HFP2WorkQueueType;
 import com.ccighgo.utils.WSDefaultResponse;
 
 /**
@@ -279,5 +281,9 @@ public interface HFApplication {
     * @return
     */
    public HFApplicationUploadPhotos uploadOptionalHFPhotos(HFApplicationUploadPhotos hfApplicationUploadPhotos);
+
+	public HFP2WorkQueueType getWorkQueueType(String roleType);
+	
+	public HFP2WorkQueueCategory getWorkQueueCategory(int parseInt, int parseInt2);
 
 }

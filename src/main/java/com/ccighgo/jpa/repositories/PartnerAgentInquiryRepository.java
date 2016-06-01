@@ -14,7 +14,7 @@ public interface PartnerAgentInquiryRepository extends JpaRepository<PartnerAgen
    PartnerAgentInquiry findByWebSite(String website, String secondFormat);
 
    @Query("SELECT p FROM PartnerAgentInquiry p WHERE p.businessName =?1")
-   PartnerAgentInquiry findByLegalName(String website);
+   PartnerAgentInquiry findByLegalName(String legalName);
 
    @Query("SELECT p FROM PartnerAgentInquiry p WHERE p.partner.partnerGoId =?1")
    List<PartnerAgentInquiry> findPartnerByPartnerId(int partnerId);
@@ -24,4 +24,13 @@ public interface PartnerAgentInquiryRepository extends JpaRepository<PartnerAgen
 
    @Query("SELECT p FROM PartnerAgentInquiry p WHERE p.email =?1")
    PartnerAgentInquiry findByEmail(String email);
+   
+   @Query("SELECT p FROM PartnerAgentInquiry p WHERE p.email =?1")
+   List<PartnerAgentInquiry> findListByEmail(String email);
+   
+   @Query("SELECT p FROM PartnerAgentInquiry p WHERE p.website =?1 OR p.website=?2")
+   List<PartnerAgentInquiry> findListByWebSite(String website, String secondFormatOfWebSite);
+
+   @Query("SELECT p FROM PartnerAgentInquiry p WHERE p.businessName =?1")
+   List<PartnerAgentInquiry> findListByLegalName(String legalBusinessName);
 }

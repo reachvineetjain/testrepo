@@ -24,4 +24,6 @@ public interface PartnerCompanyService {
 
    Response deletePartnerOffice(String partnerOfficeId);
 
+   Response makePartnerOfficePrimary(String partnerOfficeId, String primaryValue);
+
 }

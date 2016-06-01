@@ -19,6 +19,9 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ccighgo.db.entities.AdminWorkQueueCategory;
+import com.ccighgo.db.entities.AdminWorkQueueCategoryAggregate;
+import com.ccighgo.db.entities.AdminWorkQueueType;
 import com.ccighgo.db.entities.Airport;
 import com.ccighgo.db.entities.HostFamily;
 import com.ccighgo.db.entities.HostFamilyAirport;
@@ -36,11 +39,13 @@ import com.ccighgo.db.entities.HostFamilyPotentialReference;
 import com.ccighgo.db.entities.HostFamilyReference;
 import com.ccighgo.db.entities.HostFamilySeason;
 import com.ccighgo.db.entities.HostFamilySeasonCategory;
+import com.ccighgo.db.entities.Login;
 import com.ccighgo.db.entities.LookupGender;
 import com.ccighgo.db.entities.LookupUSState;
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.exception.HostFamilyCodes;
+import com.ccighgo.exception.PartnerCodes;
 import com.ccighgo.jpa.repositories.AirportRepository;
 import com.ccighgo.jpa.repositories.GenderRepository;
 import com.ccighgo.jpa.repositories.HostFamilyAirportRepository;
@@ -67,6 +72,7 @@ import com.ccighgo.jpa.repositories.UserTypeRepository;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.components.errormessages.constants.HostFamilyMessageConstants;
+import com.ccighgo.service.components.errormessages.constants.PartnerAdminMessageConstants;
 import com.ccighgo.service.components.hf.participant.application.process.util.ChangeHostFamilyProfilePicParam;
 import com.ccighgo.service.components.hf.participant.application.process.util.FamilyBasicsPageParam;
 import com.ccighgo.service.components.hf.participant.application.process.util.FamilyStylePageParam;
@@ -121,9 +127,16 @@ import com.ccighgo.service.transport.hostfamily.beans.application.whyhost.WhyHos
 import com.ccighgo.service.transport.participant.beans.hfparticipantlist.HFParticipantDetail;
 import com.ccighgo.service.transport.participant.beans.hfparticipantlist.HFParticipantList;
 import com.ccighgo.service.transport.participant.beans.hfparticipantlist.ParticipantDetails;
+import com.ccighgo.service.transport.partner.beans.hfp2workqueuecategory.HFP2WorkQueueCategory;
+import com.ccighgo.service.transport.partner.beans.hfp2workqueuetype.HFP2WorkQueueType;
+import com.ccighgo.service.transport.partner.beans.partnerworkqueuecategory.AdminPartnerWorkQueueCategory;
+import com.ccighgo.service.transport.partner.beans.partnerworkqueuecategory.AdminPartnerWorkQueueCategoryDetail;
+import com.ccighgo.service.transport.partner.beans.partnerworkqueuetype.AdminPartnerWorkQueueType;
+import com.ccighgo.service.transport.partner.beans.partnerworkqueuetype.AdminPartnerWorkQueueTypeDetail;
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.CCIUtils;
 import com.ccighgo.utils.DateUtils;
+import com.ccighgo.utils.ExceptionUtil;
 import com.ccighgo.utils.WSDefaultResponse;
 
 /**
@@ -206,8 +219,8 @@ public class HFApplicationImpl implements HFApplication {
             hostFamilySeasonCategoryRepository.saveAndFlush(hostFamilySeasonCategory);
             HostFamilyHome hfHome = new HostFamilyHome();
             hfHome.setHostingReason(whyHost.getWhyFamilyInterestedInHosting());
-            hfHome.setHopeToLearn(whyHost.getAspectsOfAmericanCultureYouWillShare());
-            hfHome.setExtraActivities(whyHost.getActivitiesPlanned());
+            hfHome.setHopeToLearn(whyHost.getHopingToLearn());
+            hfHome.setExtraActivities(whyHost.getAspectsOfAmericanCultureYouWillShare());
             hfHome.setLocalCoordinatorOther(whyHost.isWillYouBeWorkingasLCForAnotherOrg() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
             hfHome.setLocalCoordinatorDetails(whyHost.getForWhomYouWillBeWorkingasLCForAnotherOrg());
             hfHome.setHostedOther(whyHost.isHaveYouHostedForAnotherOrg() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
@@ -246,8 +259,8 @@ public class HFApplicationImpl implements HFApplication {
             whyHost.setHostfamilySeasonId(hfHome.getHostFamilySeason().getHostFamilySeasonId());
             whyHost.setHostFamilyHomeId(hfHome.getHostFamilyHomeId());
             whyHost.setWhyFamilyInterestedInHosting(hfHome.getHostingReason());
-            whyHost.setAspectsOfAmericanCultureYouWillShare(hfHome.getHopeToLearn());
-            whyHost.setActivitiesPlanned(hfHome.getExtraActivities());
+            whyHost.setHopingToLearn(hfHome.getHopeToLearn());
+            whyHost.setAspectsOfAmericanCultureYouWillShare(hfHome.getExtraActivities());
             whyHost.setWillYouBeWorkingasLCForAnotherOrg(hfHome.getLocalCoordinatorOther().equals(CCIConstants.ACTIVE) ? true : false);
             whyHost.setForWhomYouWillBeWorkingasLCForAnotherOrg(hfHome.getLocalCoordinatorDetails());
             whyHost.setHaveYouHostedForAnotherOrg(hfHome.getHostedOther().equals(CCIConstants.ACTIVE) ? true : false);
@@ -288,8 +301,8 @@ public class HFApplicationImpl implements HFApplication {
             hostFamilySeasonCategory.setFilledMandatoryFields(whyHost.getFieldsFilled());
             hostFamilySeasonCategoryRepository.saveAndFlush(hostFamilySeasonCategory);
             hfHome.setHostingReason(whyHost.getWhyFamilyInterestedInHosting());
-            hfHome.setHopeToLearn(whyHost.getAspectsOfAmericanCultureYouWillShare());
-            hfHome.setExtraActivities(whyHost.getActivitiesPlanned());
+            hfHome.setHopeToLearn(whyHost.getHopingToLearn());
+            hfHome.setExtraActivities(whyHost.getAspectsOfAmericanCultureYouWillShare());
             hfHome.setLocalCoordinatorOther(whyHost.isWillYouBeWorkingasLCForAnotherOrg() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
             hfHome.setLocalCoordinatorDetails(whyHost.getForWhomYouWillBeWorkingasLCForAnotherOrg());
             hfHome.setHostedOther(whyHost.isHaveYouHostedForAnotherOrg() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
@@ -2210,5 +2223,72 @@ public class HFApplicationImpl implements HFApplication {
       // TODO Auto-generated method stub
       return null;
    }
+
+	@Override
+	public HFP2WorkQueueType getWorkQueueType(String roleType) {
+		HFP2WorkQueueType pwt = new HFP2WorkQueueType();
+//	      try {
+//	         List<AdminWorkQueueType> types = adminWorkQueueTypeRepository.findTypesByPartnerRole(roleType);
+//	         if (types != null) {
+//	            for (AdminWorkQueueType adminWorkQueueType : types) {
+//	               AdminPartnerWorkQueueTypeDetail newType = new AdminPartnerWorkQueueTypeDetail();
+//	               newType.setTypeId(adminWorkQueueType.getAdminWQTypeId());
+//	               newType.setTypeName(adminWorkQueueType.getAdminWQTypeName());
+//	               pwt.getWorkQueueType().add(newType);
+//	            }
+//	            pwt.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE, messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+//	         } else {
+//	            pwt.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD_IN_DB, CCIConstants.TYPE_INFO, CCIConstants.NO_DATA_CODE, messageUtil.getMessage(CCIConstants.NO_RECORD)));
+//	         }
+//	      } catch (Exception e) {
+//	         ExceptionUtil.logException(e, LOGGER);
+//	         pwt.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.NO_WOEKQUEUE_TYPE.getValue(),
+//	               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_TYPE)));
+//	         LOGGER.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_TYPE));
+//	      }
+	      return pwt;
+	}
+	
+	@Override
+	public HFP2WorkQueueCategory getWorkQueueCategory(int parseInt, int parseInt2) {
+		HFP2WorkQueueCategory pwqc = new HFP2WorkQueueCategory();
+//	      try {
+//	         List<AdminWorkQueueCategory> categories = adminWorkQueueCategoryRepository.findAllCategoriesByTypeId(adminWorkQueueTypeId);
+//	         if (categories != null) {
+//	            for (AdminWorkQueueCategory adminWorkQueueCategory : categories) {
+//	               AdminPartnerWorkQueueCategoryDetail newCategory = new AdminPartnerWorkQueueCategoryDetail();
+//	               newCategory.setAdminWorkQueueTypeId(adminWorkQueueCategory.getAdminWorkQueueType().getAdminWQTypeId());
+//	               newCategory.setCategoryId(adminWorkQueueCategory.getAdminWorkQueueCategoryId());
+//	               newCategory.setCategoryName(adminWorkQueueCategory.getAdminWorkQueueCategoryName());
+//	               if (adminWorkQueueCategory.getAdminWorkQueueType().getAdminWQTypeName().equalsIgnoreCase(WORK_QUEUE_TYPE_APPLICATION)) {
+//	                  if (newCategory.getCategoryName().equals(CATEGORY_NAME_SUBMITTED)) {
+//	                     newCategory.setServiceUrl(CCIConstants.SERVICE_URL_WORK_QUEUE_CATEGORY_SUBMITTED_TYPE_APPLICATION_1);
+//	                  } else {
+//	                     newCategory.setServiceUrl(CCIConstants.SERVICE_URL_NDY);
+//	                  }
+//	               } else {
+//	                  newCategory.setServiceUrl(CCIConstants.SERVICE_URL_NDY);
+//	               }
+//	               Login login = loginRepository.findByLoginId(Integer.valueOf(userId));
+//	               int goId = login.getGoIdSequence().getGoId().intValue();
+//	               AdminWorkQueueCategoryAggregate categoryAggregate = adminWorkQueueCategoryAggregateRepository.findAggregateValueForCategory(adminWorkQueueTypeId,
+//	                     adminWorkQueueCategory.getAdminWorkQueueCategoryId(), goId);
+//	               if (categoryAggregate != null) {
+//	                  newCategory.setCategoryAggregate(categoryAggregate.getAdminWQCategoryAggregate());
+//	               }
+//	               pwqc.getAdminWorkQueueCategory().add(newCategory);
+//	            }
+//	            pwqc.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE, messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+//	         } else {
+//	            pwqc.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD_IN_DB, CCIConstants.TYPE_INFO, CCIConstants.NO_DATA_CODE, messageUtil.getMessage(CCIConstants.NO_RECORD)));
+//	         }
+//	      } catch (Exception e) {
+//	         ExceptionUtil.logException(e, logger);
+//	         pwqc.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.NO_WOEKQUEUE_CATEGORY.getValue(),
+//	               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_CATEGORY)));
+//	         logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_CATEGORY));
+//	      }
+	      return pwqc;
+	}
 
 }

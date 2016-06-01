@@ -368,8 +368,8 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
             // Check that whether given Region is not associated with other
             // Super Region
             boolean regionAssociatedOtherSuperR = false;
-            List<SeasonGeographyConfiguration> regionSuperRList = seasonGeographyConfigurationRepository.checkRegionsAssociatedToOtherSuperRegionInSeason(Integer.valueOf(regionId),
-                  Integer.valueOf(seasonId), Integer.valueOf(superRegionId));
+            List<SeasonGeographyConfiguration> regionSuperRList = seasonGeographyConfigurationRepository.checkRegionsAssociatedToOtherSuperRegionInSeason(
+                  Integer.valueOf(regionId), Integer.valueOf(seasonId), Integer.valueOf(superRegionId));
             int regionSuperRListCnt = regionSuperRList.size();
             if (regionSuperRListCnt == 0 || regionSuperRListCnt < 0) {
                regionAssociatedOtherSuperR = true;
@@ -639,8 +639,6 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
          for (Integer seasonGeographyConfigurationId : seasonGeographyConfigurationIds) {
             fieldStaffLeadershipSeasonRepository.deleteRowBySeasonGeographyConfigurationId(seasonGeographyConfigurationId);
          }
-         seasonGeographyConfigurationRepository.deleteRegionByIdSeasonIdAndSupRegId(Integer.valueOf(superRegionId), Integer.valueOf(seasonId), Integer.valueOf(regionId));
-         seasonGeographyConfigurationRepository.flush();
 
          /*
           * If Region is deleted from a season and Region is not associated to
@@ -650,8 +648,8 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
          boolean regionAssociated = false;
          // Check that whether given Region is not associated with other
          // seasons
-         List<SeasonGeographyConfiguration> list = seasonGeographyConfigurationRepository.checkRegionsAssociatedToOtherSeasons(Integer.valueOf(regionId),
-               Integer.valueOf(seasonId));
+         List<SeasonGeographyConfiguration> list = seasonGeographyConfigurationRepository
+               .checkRegionsAssociatedToOtherSeasons(Integer.valueOf(regionId), Integer.valueOf(seasonId));
          int count = list.size();
          if (count == 0 || count < 0) {
             regionAssociated = true;
@@ -668,6 +666,11 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
          if (regionAssociated == true && regionAssociatedOtherSuperR == true) {
             regionRepository.delete(Integer.valueOf(regionId));
          }
+         // After deleting all the records from child tables ,delete form
+         // SeasonGeographyConfiguration Table.
+         seasonGeographyConfigurationRepository.deleteRegionByIdSeasonIdAndSupRegId(Integer.valueOf(superRegionId), Integer.valueOf(seasonId), Integer.valueOf(regionId));
+         seasonGeographyConfigurationRepository.flush();
+
          request.setObjectName(RegionManagementMessageConstants.REGION);
          request.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, RegionManagementErrorCode.REGION_SERVICE_CODE.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
@@ -921,8 +924,8 @@ public class RegionManagementServicesImpl implements RegionManagementServices {
          return request;
       }
       try {
-         List<Integer> seasonGeographyConfigurationIds = seasonGeographyConfigurationRepository.findStateRowByIdSuperRegionIdRegionIdStateIdSeasonId(Integer.valueOf(superRegionId),
-               Integer.valueOf(regionId), Integer.valueOf(stateId), Integer.valueOf(seasonId));
+         List<Integer> seasonGeographyConfigurationIds = seasonGeographyConfigurationRepository.findStateRowByIdSuperRegionIdRegionIdStateIdSeasonId(
+               Integer.valueOf(superRegionId), Integer.valueOf(regionId), Integer.valueOf(stateId), Integer.valueOf(seasonId));
          for (Integer seasonGeographyConfigurationId : seasonGeographyConfigurationIds) {
             fieldStaffLeadershipSeasonRepository.deleteRowBySeasonGeographyConfigurationId(seasonGeographyConfigurationId);
          }

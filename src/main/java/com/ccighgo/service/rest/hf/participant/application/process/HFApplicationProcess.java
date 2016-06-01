@@ -41,6 +41,10 @@ import com.ccighgo.service.transport.hostfamily.beans.application.submit.HFSubmi
 import com.ccighgo.service.transport.hostfamily.beans.application.whyhost.WhyHost;
 import com.ccighgo.service.transport.participant.beans.hfparticipantlist.HFParticipantDetail;
 import com.ccighgo.service.transport.participant.beans.hfparticipantlist.HFParticipantList;
+import com.ccighgo.service.transport.partner.beans.hfp2workqueuecategory.HFP2WorkQueueCategory;
+import com.ccighgo.service.transport.partner.beans.hfp2workqueuetype.HFP2WorkQueueType;
+import com.ccighgo.service.transport.partner.beans.partnerworkqueuecategory.AdminPartnerWorkQueueCategory;
+import com.ccighgo.service.transport.partner.beans.partnerworkqueuetype.AdminPartnerWorkQueueType;
 import com.ccighgo.utils.WSDefaultResponse;
 
 /**
@@ -368,6 +372,22 @@ public class HFApplicationProcess {
    public HFApplicationUploadPhotos hfCreateMandatoryPhotos(@PathParam("hfSeasonId") String hfSeasonId, @PathParam("loginId") String loginId) {
       LOGGER.info("Calling service HFApplicationProcess.hfCreateMandatoryPhotos");
       return hfApplication.hfCreateMandatoryPhotos(Integer.valueOf(hfSeasonId), Integer.valueOf(loginId));
+   }
+   
+   @GET
+   @Path("workQueueType/{roleType}")
+   @Produces("application/json")
+   public HFP2WorkQueueType getWorkQueueType(@PathParam("roleType") String roleType) {
+      LOGGER.debug("fun : getWorkQueueType []  roleType : " + roleType);
+      return hfApplication.getWorkQueueType(roleType);
+   }
+
+   @GET
+   @Path("workQueueCategory/{workQueueTypeId}/{loginId}")
+   @Produces("application/json")
+   public HFP2WorkQueueCategory getWorkQueueCategory(@PathParam("workQueueTypeId") String workQueueTypeId, @PathParam("loginId") String loginId) {
+      LOGGER.debug("fun : getWorkQueueCategory [] type id: " + workQueueTypeId + " loginId: " + loginId);
+      return hfApplication.getWorkQueueCategory(Integer.parseInt(workQueueTypeId), Integer.parseInt(loginId));
    }
 
 }

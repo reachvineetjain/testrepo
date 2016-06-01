@@ -171,6 +171,7 @@ public class PartnerGenericNote implements PartnerGenericNoteInterface {
                tpc.setF1(partnerTopic.getF1() == CCIConstants.ACTIVE ? true : false);
                tpc.setIntern(partnerTopic.getIntern() == CCIConstants.ACTIVE ? true : false);
                tpc.setTrainee(partnerTopic.getTrainee() == CCIConstants.ACTIVE ? true : false);
+               tpc.setCreatedOn(DateUtils.getDateAndTime(partnerTopic.getCreatedOn()));
                List<PartnerNote> partnerNotes = partnerTopic.getPartnerNotes();
                if (partnerNotes != null) {
                   for (PartnerNote partnerNote : partnerNotes) {
@@ -303,8 +304,11 @@ public class PartnerGenericNote implements PartnerGenericNoteInterface {
          topicData.setIsVisibleToPartner(CCIConstants.TRUE_BYTE);
          topicData.setCreatedBy(topic.getLoginId());
          topicData.setModifiedBy(topic.getLoginId());
+         if (topic.getCreatedOn() == null) {
+            topic.setCreatedOn(DateUtils.getDateAndTime2(new Date()));
+         }
+         topicData.setCreatedOn(new java.sql.Timestamp(DateUtils.getMysqlDateFromStringFormatwithSlash(topic.getCreatedOn()).getTime()));
          topicData.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
-
          if (topic.isCompetitorInfo() != null) {
             topicData.setCompetitorInfo(topic.isCompetitorInfo() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
          }
@@ -443,7 +447,7 @@ public class PartnerGenericNote implements PartnerGenericNoteInterface {
             LOGGER.error(messageUtil.getMessage(GenericMessageConstants.FAILED_TO_VIEW_GENERIC_NOTE));
             return topicsList;
          }
-         if (partnerTopics != null) {
+         if (partnerTopics != null && !(partnerTopics.isEmpty())) {
             for (PartnerSeasonNoteTopic partnerTopic : partnerTopics) {
                com.ccighgo.service.transport.partner.beans.generic.partnerseason.topic.Topic tpc = new com.ccighgo.service.transport.partner.beans.generic.partnerseason.topic.Topic();
                tpc.setLoginId(partnerTopic.getCreatedBy());
@@ -462,6 +466,7 @@ public class PartnerGenericNote implements PartnerGenericNoteInterface {
                tpc.setF1(partnerTopic.getF1() == CCIConstants.ACTIVE ? true : false);
                tpc.setIntern(partnerTopic.getIntern() == CCIConstants.ACTIVE ? true : false);
                tpc.setTrainee(partnerTopic.getTrainee() == CCIConstants.ACTIVE ? true : false);
+               tpc.setCreatedOn(DateUtils.getDateAndTime(partnerTopic.getCreatedOn()));
                List<PartnerSeasonNote> partnerSeasonNotes = partnerTopic.getPartnerSeasonNotes();
                if (partnerSeasonNotes != null) {
                   for (PartnerSeasonNote partnerSeasonNote : partnerSeasonNotes) {
