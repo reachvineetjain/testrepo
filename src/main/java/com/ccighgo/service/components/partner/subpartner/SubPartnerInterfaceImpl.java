@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import sun.util.logging.resources.logging;
+
 import com.ccighgo.db.entities.GoIdSequence;
 import com.ccighgo.db.entities.Login;
 import com.ccighgo.db.entities.LoginUserType;
@@ -18,6 +20,7 @@ import com.ccighgo.db.entities.LookupCountry;
 import com.ccighgo.db.entities.Partner;
 import com.ccighgo.db.entities.PartnerNote;
 import com.ccighgo.db.entities.PartnerNoteTopic;
+import com.ccighgo.db.entities.PartnerOffice;
 import com.ccighgo.db.entities.PartnerProgram;
 import com.ccighgo.db.entities.PartnerReviewStatus;
 import com.ccighgo.db.entities.PartnerSeason;
@@ -26,6 +29,7 @@ import com.ccighgo.db.entities.PartnerUser;
 import com.ccighgo.db.entities.Salutation;
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.ErrorCode;
+import com.ccighgo.exception.PartnerCodes;
 import com.ccighgo.jpa.repositories.CCIStaffUsersRepository;
 import com.ccighgo.jpa.repositories.CountryRepository;
 import com.ccighgo.jpa.repositories.GoIdSequenceRepository;
@@ -48,6 +52,7 @@ import com.ccighgo.service.component.emailing.EmailServiceImpl;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.components.errormessages.constants.PartnerAdminMessageConstants;
+import com.ccighgo.service.components.errormessages.constants.PartnerCompanyDetailsMessageConstants;
 import com.ccighgo.service.components.errormessages.constants.SubPartnerMessageConstants;
 import com.ccighgo.service.components.utility.UtilityServices;
 import com.ccighgo.service.transport.partner.beans.allsalutation.AllSalutations;
@@ -149,7 +154,7 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
                   }
                   Login login = partnerUser.getLogin();
                   if (login != null) {
-                     //Bug: 1610
+                     // Bug: 1610
                      subPartnerStatus.setSubPartnerStatus(login.getActive().equals(CCIConstants.ACTIVE) ? "Active" : "Inactive");
                      subPartnerStatus.setSubPartnerStatusId(login.getLoginId());
                      sp.setSubPartnerEmail(login.getEmail());
@@ -613,13 +618,13 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
 
             // Bug 1253: assign all cci contacts of partner to sub-partner
             List<PartnerProgram> parentPartnerProgramContactsList = partnerProgramRepository.findAllPartnerProgramsByPartnerId(parentUser.getPartner().getPartnerGoId());
-            if(parentPartnerProgramContactsList!=null && !(parentPartnerProgramContactsList.isEmpty())){
+            if (parentPartnerProgramContactsList != null && !(parentPartnerProgramContactsList.isEmpty())) {
                List<PartnerProgram> subpartnerProgramContactsList = new ArrayList<PartnerProgram>();
-               for(PartnerProgram pp:parentPartnerProgramContactsList){
+               for (PartnerProgram pp : parentPartnerProgramContactsList) {
                   PartnerProgram inherited = new PartnerProgram();
                   inherited.setPartner(subPartnerDetails);
-                  //Bug:1606
-                  inherited.setCcistaffUser(pp.getCcistaffUser()!=null?pp.getCcistaffUser():cciStaffUsersRepository.findOne(1000));
+                  // Bug:1606
+                  inherited.setCcistaffUser(pp.getCcistaffUser() != null ? pp.getCcistaffUser() : cciStaffUsersRepository.findOne(1000));
                   inherited.setHasApplied(pp.getHasApplied());
                   inherited.setIsEligible(pp.getIsEligible());
                   inherited.setLookupDepartmentProgram(pp.getLookupDepartmentProgram());
@@ -630,7 +635,8 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             }
 
             try {
-               PartnerUser partnerUserData = new PartnerUser();;
+               PartnerUser partnerUserData = new PartnerUser();
+               ;
                if (subPartnerPrimaryContact != null) {
                   com.ccighgo.service.transport.partner.beans.subpartnerdetail.Salutation slt = subPartnerPrimaryContact.getSalutation();
                   if (slt != null) {
@@ -659,8 +665,6 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             } catch (Exception e) {
                ExceptionUtil.logException(e, LOGGER);
             }
-
-           
 
             PartnerReviewStatus reviewStatus = new PartnerReviewStatus();
             reviewStatus.setPartner(subPartnerDetails);
@@ -792,6 +796,22 @@ public class SubPartnerInterfaceImpl implements SubPartnerInterface {
             partnerContact.setSkypeId(subPartnerPrimaryContact.getSkypeId());
             partnerContact.setWebsite(subPartnerPrimaryContact.getWebsite());
             partnerUserRepository.saveAndFlush(partnerContact);
+         }
+         try {
+            if (subPartner.getSubPartnerOffices() != null && !subPartner.getSubPartnerOffices().isEmpty()) {
+               List<PartnerOffice> officesList = new ArrayList<PartnerOffice>();
+               for (SubPartnerOffice office : subPartner.getSubPartnerOffices()) {
+                  if (office.getPartnerOfficeId() > 0) {
+                     com.ccighgo.db.entities.PartnerOffice partnerOffice = partnerOfficeRepository.findOne(Integer.valueOf(office.getPartnerOfficeId()));
+                     partnerOffice.setPartnerOfficeType(office.isIsPrimary() ? partnerOfficeTypeRepository.findOne(1) : partnerOfficeTypeRepository.findOne(3));
+                     officesList.add(partnerOffice);
+                  }
+               }
+               partnerOfficeRepository.save(officesList);
+               partnerOfficeRepository.flush();
+            }
+         } catch (CcighgoException e) {
+            LOGGER.error(e);
          }
 
          responce.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.SUB_PARTNER_CODE.getValue(),
