@@ -6,7 +6,9 @@ package com.ccighgo.service.components.partner.admin;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -37,6 +39,7 @@ import com.ccighgo.db.entities.PartnerNote;
 import com.ccighgo.db.entities.PartnerNoteTopic;
 import com.ccighgo.db.entities.PartnerOffice;
 import com.ccighgo.db.entities.PartnerOfficeType;
+import com.ccighgo.db.entities.PartnerPermission;
 import com.ccighgo.db.entities.PartnerProgram;
 import com.ccighgo.db.entities.PartnerReferenceCheck;
 import com.ccighgo.db.entities.PartnerReviewStatus;
@@ -85,6 +88,7 @@ import com.ccighgo.jpa.repositories.PartnerNoteRepository;
 import com.ccighgo.jpa.repositories.PartnerNoteTopicRepository;
 import com.ccighgo.jpa.repositories.PartnerOfficeRepository;
 import com.ccighgo.jpa.repositories.PartnerOfficeTypeRepository;
+import com.ccighgo.jpa.repositories.PartnerPermissionRepository;
 import com.ccighgo.jpa.repositories.PartnerProgramRepository;
 import com.ccighgo.jpa.repositories.PartnerReferenceCheckRepository;
 import com.ccighgo.jpa.repositories.PartnerRepository;
@@ -212,6 +216,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
    @Autowired LoginUserTypeRepository loginUserTypeRepository;
    @Autowired CCIStaffUsersRepository cciStaffUsersRepository;
    @Autowired LoginHistoryRepository loginHistoryRepository;
+   @Autowired PartnerPermissionRepository partnerPermissionRepository;
 
    @Override
    public PartnerRecruitmentAdminLead getPartnerInquiryLeadData(int goId) {
@@ -469,7 +474,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                program.setCcistaffUser(cciStaffUsersRepository.findOne(contact.getCciContact().getCciUserId()));
                program.setLookupDepartmentProgram(lookupDepartmentProgramRepository.findDepartmentProgramByProgramName(contact.getCciContactProgramName()));
                if (partner.getIsSubPartner() != null && partner.getIsSubPartner().equals(CCIConstants.TRUE_BYTE)) {
-                 Partner partnerProgramsPartner = partnerRepository.findOne(partner.getParentPartnerGoId());
+                  Partner partnerProgramsPartner = partnerRepository.findOne(partner.getParentPartnerGoId());
                   program.setPartner(partnerProgramsPartner);
                } else {
                   program.setPartner(partner);
@@ -687,6 +692,28 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                   contact.setTitile(partnerContact.getTitle());
                   contact.setPrimaryContact(partnerContact.getIsPrimary() != null && partnerContact.getIsPrimary() == 1);
                   contact.setPrograms(strPartnerPrograms != null ? strPartnerPrograms.toString() : "");
+                  /**
+                   * Contacts Programs should be fetch from partnerPermissions
+                   */
+                  moreThanProgram=false;
+                 strPartnerPrograms.setLength(0);
+                 Map<String, Boolean> vis = new HashMap<String, Boolean>();
+                  if(partnerContact.getPartnerPermissions()!=null && !partnerContact.getPartnerPermissions().isEmpty() )
+                  {
+                     for (PartnerPermission partnerPermission : partnerContact.getPartnerPermissions()) {
+                        
+                        if(vis.get(partnerPermission.getLookupDepartmentProgram().getProgramName())==null){
+                           vis.put(partnerPermission.getLookupDepartmentProgram().getProgramName(), true);
+                        if (moreThanProgram) {
+                           strPartnerPrograms.append(",");
+                           strPartnerPrograms.append(partnerPermission.getLookupDepartmentProgram().getProgramName());
+                        } else {
+                           strPartnerPrograms.append(partnerPermission.getLookupDepartmentProgram().getProgramName());
+                           moreThanProgram = true;
+                        }
+                        }
+                     }
+                  }
                   pwt.getContacts().add(contact);
                }
             }

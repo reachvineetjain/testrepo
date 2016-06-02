@@ -716,11 +716,10 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
                      permissions.add(pp9);
                   
                   partnerPermissionRepository.save(permissions);
+                  partnerPermissionRepository.flush();
                }
             }
          
-         
-
             PartnerReviewStatus partnerReviewStatus = partnerReviewStatusRepository.findApplicationStatusByGoId(Integer.valueOf(partnerGoId));
             if (Integer.valueOf(loginVal).equals(CCIConstants.SEND_LOGIN)) {
                sendLogin(String.valueOf(newPartner.getPartnerGoId()), request);
