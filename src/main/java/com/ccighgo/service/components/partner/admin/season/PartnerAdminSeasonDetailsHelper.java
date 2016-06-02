@@ -797,4 +797,19 @@ public class PartnerAdminSeasonDetailsHelper {
       return partnerSeasonNotes;
    }
 
+   public com.ccighgo.service.transport.partner.beans.partner.admin.ihpseason.detail.Dates getIHPDates(PartnerSeason partnerSeason) {
+      com.ccighgo.service.transport.partner.beans.partner.admin.ihpseason.detail.Dates dates = new com.ccighgo.service.transport.partner.beans.partner.admin.ihpseason.detail.Dates();
+      // season defaults
+      dates.setSeasonDefaultStartDate(DateUtils.getTimestamp(partnerSeason.getSeason().getSeasonIhpdetails().get(0).getStartDate()));
+      dates.setSeasonDefaultEndDate(DateUtils.getTimestamp(partnerSeason.getSeason().getSeasonIhpdetails().get(0).getEndDate()));
+      dates.setSeasonDefaultAppDeadlineDate(DateUtils.getTimestamp(DateUtils.subtractWeeksFromDate(partnerSeason.getSeason().getSeasonIhpdetails().get(0).getStartDate(), partnerSeason.getSeason().getSeasonIhpdetails().get(0).getApplicationDeadLineWeeks())));
+      dates.setSeasonDefaultExtAppDeadlineDate(null);
+      // partner requested/defaults
+      dates.setPartValStartDate(DateUtils.getTimestamp(partnerSeason.getPartnerSeasonStartDate()));
+      dates.setPartValEndDate(DateUtils.getTimestamp(partnerSeason.getPartnerSeasonEndDate()));
+      dates.setPartValAppDeadlineDate(DateUtils.getTimestamp(partnerSeason.getPartnerSeasonAppDeadlineDate()));
+      dates.setPartValExtAppDeadlineDate(DateUtils.getTimestamp(partnerSeason.getPartnerSeasonExtAppDeadlineDate()));
+      return dates;
+   }
+
 }

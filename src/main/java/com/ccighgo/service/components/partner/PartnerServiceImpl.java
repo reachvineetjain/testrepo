@@ -1,6 +1,7 @@
 package com.ccighgo.service.components.partner;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -938,7 +939,10 @@ public class PartnerServiceImpl implements PartnerService {
                      if (partSeason.getDepartmentProgram().getDepartmentProgramId() == CCIConstants.HSP_STP_IHP_ID) {
                         PartnerIHPProgram prg = new PartnerIHPProgram();
                         prg.setProgramName(partSeason.getSeason().getSeasonIhpdetails().get(0).getProgramName());
-                        prg.setApplicationDeadlineDate(DateUtils.getMMddyyDate((partSeason.getPartnerSeasonAppDeadlineDate())));
+                        if(partSeason.getSeason().getSeasonIhpdetails()!=null && !(partSeason.getSeason().getSeasonIhpdetails().isEmpty())){
+                           String appDeadlinedate = DateUtils.getUSDate(DateUtils.subtractWeeksFromDate(partSeason.getSeason().getSeasonIhpdetails().get(0).getStartDate(), partSeason.getSeason().getSeasonIhpdetails().get(0).getApplicationDeadLineWeeks()));
+                           prg.setApplicationDeadlineDate(appDeadlinedate);
+                        }
                         prg.setSeasonStatus(partSeason.getSeason().getSeasonStatus().getStatus());
                         partnerIHPProgramsList.add(prg);
                      }

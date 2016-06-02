@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
@@ -268,5 +269,12 @@ public class DateUtils {
             ExceptionUtil.logException(e, logger);
          }
       return "";
+   }
+   
+   public static Date subtractWeeksFromDate(Date dt, int numberOfWeeks){
+      Calendar cal = Calendar.getInstance();
+      cal.setTime(dt);
+      cal.add(Calendar.DATE, -(numberOfWeeks*7));
+      return cal.getTime();
    }
 }
