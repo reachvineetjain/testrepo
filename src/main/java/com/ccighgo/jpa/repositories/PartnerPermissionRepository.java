@@ -17,6 +17,8 @@ public interface PartnerPermissionRepository extends JpaRepository<PartnerPermis
 
    @Query("SELECT p FROM PartnerPermission p WHERE p.partnerUser.partnerUserId = ?1 AND p.lookupDepartmentProgram.lookupDepartmentProgramId = ?2")
    public List<PartnerPermission> findByPartnerUserIdAndProgramId(Integer partnerUserId, Integer lookupDepartmentProgramId);
-
+   
+   @Query("SELECT p FROM PartnerPermission p WHERE p.partnerUser.partnerUserId = ?1")
+   public List<PartnerPermission> findPermissionsListByPartnerUserId(Integer partnerUser);
 
 }

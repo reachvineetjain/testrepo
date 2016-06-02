@@ -636,7 +636,7 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
                   }
                }
                PartnerUser partnerUser = partnerUserRepository.saveAndFlush(pUser);
-               // save permissions
+               // save permissions  ???
                PartnerPermission partnerUserPermission = new PartnerPermission();
                partnerUserPermission.setPartnerUser(partnerUser);
                if (partnerUserDetails.getUserProgramsAndPermissions() != null) {
