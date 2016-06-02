@@ -802,13 +802,15 @@ public class PartnerAdminSeasonDetailsHelper {
       // season defaults
       dates.setSeasonDefaultStartDate(DateUtils.getTimestamp(partnerSeason.getSeason().getSeasonIhpdetails().get(0).getStartDate()));
       dates.setSeasonDefaultEndDate(DateUtils.getTimestamp(partnerSeason.getSeason().getSeasonIhpdetails().get(0).getEndDate()));
-      dates.setSeasonDefaultAppDeadlineDate(DateUtils.getTimestamp(DateUtils.subtractWeeksFromDate(partnerSeason.getSeason().getSeasonIhpdetails().get(0).getStartDate(), partnerSeason.getSeason().getSeasonIhpdetails().get(0).getApplicationDeadLineWeeks())));
+      dates.setSeasonDefaultAppDeadlineDate(DateUtils.getTimestamp(DateUtils.subtractWeeksFromDate(partnerSeason.getSeason().getSeasonIhpdetails().get(0).getStartDate(),
+            partnerSeason.getSeason().getSeasonIhpdetails().get(0).getApplicationDeadLineWeeks())));
       dates.setSeasonDefaultExtAppDeadlineDate(null);
       // partner requested/defaults
-      dates.setPartValStartDate(DateUtils.getTimestamp(partnerSeason.getPartnerSeasonStartDate()));
-      dates.setPartValEndDate(DateUtils.getTimestamp(partnerSeason.getPartnerSeasonEndDate()));
-      dates.setPartValAppDeadlineDate(DateUtils.getTimestamp(partnerSeason.getPartnerSeasonAppDeadlineDate()));
-      dates.setPartValExtAppDeadlineDate(DateUtils.getTimestamp(partnerSeason.getPartnerSeasonExtAppDeadlineDate()));
+      dates.setPartValStartDate(partnerSeason.getPartnerSeasonStartDate() != null ? DateUtils.getTimestamp(partnerSeason.getPartnerSeasonStartDate()) : "");
+      dates.setPartValEndDate(partnerSeason.getPartnerSeasonEndDate() != null ? DateUtils.getTimestamp(partnerSeason.getPartnerSeasonEndDate()) : "");
+      dates.setPartValAppDeadlineDate(partnerSeason.getPartnerSeasonAppDeadlineDate() != null ? DateUtils.getTimestamp(partnerSeason.getPartnerSeasonAppDeadlineDate()) : "");
+      dates.setPartValExtAppDeadlineDate(partnerSeason.getPartnerSeasonExtAppDeadlineDate() != null ? DateUtils.getTimestamp(partnerSeason.getPartnerSeasonExtAppDeadlineDate())
+            : "");
       return dates;
    }
 
