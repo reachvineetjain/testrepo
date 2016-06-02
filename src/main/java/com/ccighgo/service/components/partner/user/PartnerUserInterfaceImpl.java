@@ -261,7 +261,7 @@ public class PartnerUserInterfaceImpl implements PartnerUserInterface {
 
                   usrOffice.setOfficePhone(pOffice.getPhoneNumber());
                   usrOffice.setOfficeFax(pOffice.getFaxNumber());
-                  usrOffice.setOfficeEmail(pOffice.getPartner().getEmail());
+                  usrOffice.setOfficeEmail(pOffice.getEmail());
                   usrOffice.setOfficeWebsite(pOffice.getWebsite());
                   if (partnerUser.getPartnerOffice() != null) {
                      if (partnerUser.getPartnerOffice().getPartnerOfficeId() == pOffice.getPartnerOfficeId()) {
