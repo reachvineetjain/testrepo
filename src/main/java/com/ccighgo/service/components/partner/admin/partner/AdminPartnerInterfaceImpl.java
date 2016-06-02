@@ -20,8 +20,11 @@ import com.ccighgo.db.entities.CCIStaffUser;
 import com.ccighgo.db.entities.GoIdSequence;
 import com.ccighgo.db.entities.Login;
 import com.ccighgo.db.entities.LoginUserType;
+import com.ccighgo.db.entities.LookupDepartmentProgram;
 import com.ccighgo.db.entities.Partner;
 import com.ccighgo.db.entities.PartnerAgentInquiry;
+import com.ccighgo.db.entities.PartnerPermission;
+import com.ccighgo.db.entities.PartnerPermissionsCategory;
 import com.ccighgo.db.entities.PartnerProgram;
 import com.ccighgo.db.entities.PartnerReviewStatus;
 import com.ccighgo.db.entities.PartnerSeason;
@@ -37,6 +40,8 @@ import com.ccighgo.jpa.repositories.LoginRepository;
 import com.ccighgo.jpa.repositories.LoginUserTypeRepository;
 import com.ccighgo.jpa.repositories.LookupDepartmentProgramRepository;
 import com.ccighgo.jpa.repositories.PartnerAgentInquiryRepository;
+import com.ccighgo.jpa.repositories.PartnerPermissionCategoryRepository;
+import com.ccighgo.jpa.repositories.PartnerPermissionRepository;
 import com.ccighgo.jpa.repositories.PartnerProgramRepository;
 import com.ccighgo.jpa.repositories.PartnerRepository;
 import com.ccighgo.jpa.repositories.PartnerReviewStatusRepository;
@@ -59,6 +64,7 @@ import com.ccighgo.service.transport.partner.beans.admin.lead.partner.LeadPartne
 import com.ccighgo.service.transport.partner.beans.admin.lead.partner.LeadPartners;
 import com.ccighgo.service.transport.partner.beans.admin.lead.partner.status.LeadStatus;
 import com.ccighgo.service.transport.partner.beans.admin.lead.partner.status.PartnerLeadStatus;
+import com.ccighgo.service.transport.partner.beans.partner.user.details.Programs;
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.PasscodeGenerator;
 import com.ccighgo.utils.PasswordUtil;
@@ -93,6 +99,9 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
    @Autowired PartnerReviewStatusRepository partnerReviewStatusRepository;
    @Autowired PartnerStatusRepository partnerStatusRepository;
    @Autowired EntityManager entityManager;
+   @Autowired LookupDepartmentProgramRepository lookupDepartmentProgramRepository;
+   @Autowired PartnerPermissionCategoryRepository partnerPermissionCategoryRepository;
+   @Autowired PartnerPermissionRepository partnerPermissionRepository;
 
    public static final String SPPartnerWQCategoryAggregate = "call SPPartnerWQCategoryAggregate()";
    public static final String SPPartnerWQTypeAggregate = "call SPPartnerWQTypeAggregate()";
@@ -633,6 +642,84 @@ public class AdminPartnerInterfaceImpl implements AdminPartnerInterface {
             pUser.setPhone(p.getPhone());
             
             pUser = partnerUserRepository.saveAndFlush(pUser);
+            
+            /**
+             * Adding partner Permissions
+             */
+            List<PartnerProgram> partnerProgramList = p.getPartner().getPartnerPrograms();
+            if(partnerProgramList!=null  &&! partnerProgramList.isEmpty())
+            for (PartnerProgram partnerProgram : partnerProgramList) {
+               LookupDepartmentProgram lookup = partnerProgram.getLookupDepartmentProgram();
+               List<PartnerPermission> permissions = new ArrayList<PartnerPermission>();
+               if (lookup != null) {
+                     PartnerPermission pp1 = new PartnerPermission();
+                     PartnerPermissionsCategory pc1 = partnerPermissionCategoryRepository.findOne(CCIConstants.Admin);
+                     pp1.setLookupDepartmentProgram(lookup);
+                     pp1.setPartnerPermissionsCategory(pc1);
+                     pp1.setPartnerUser(pUser);
+                     permissions.add(pp1);
+                  
+                     PartnerPermission pp2 = new PartnerPermission();
+                     PartnerPermissionsCategory pc2= partnerPermissionCategoryRepository.findOne(CCIConstants.AccountingInsurance);
+                     pp2.setLookupDepartmentProgram(lookup);
+                     pp2.setPartnerPermissionsCategory(pc2);
+                     pp2.setPartnerUser(pUser);
+                     permissions.add(pp2);
+                
+                     PartnerPermission pp3 = new PartnerPermission();
+                     PartnerPermissionsCategory pc3 = partnerPermissionCategoryRepository.findOne(CCIConstants.Applications);
+                     pp3.setLookupDepartmentProgram(lookup);
+                     pp3.setPartnerPermissionsCategory(pc3);
+                     pp3.setPartnerUser(pUser);
+                     permissions.add(pp3);
+                  
+                     PartnerPermission pp4 = new PartnerPermission();
+                     PartnerPermissionsCategory pc4 = partnerPermissionCategoryRepository.findOne(CCIConstants.Contracting);
+                     pp4.setLookupDepartmentProgram(lookup);
+                     pp4.setPartnerPermissionsCategory(pc4);
+                     pp4.setPartnerUser(pUser);
+                     permissions.add(pp4);
+                 
+                     PartnerPermission pp5 = new PartnerPermission();
+                     PartnerPermissionsCategory pc5 = partnerPermissionCategoryRepository.findOne(CCIConstants.Flights);
+                     pp5.setLookupDepartmentProgram(lookup);
+                     pp5.setPartnerPermissionsCategory(pc5);
+                     pp5.setPartnerUser(pUser);
+                     permissions.add(pp5);
+                 
+                     PartnerPermission pp6 = new PartnerPermission();
+                     PartnerPermissionsCategory pc6 = partnerPermissionCategoryRepository.findOne(CCIConstants.Insurance);
+                     pp6.setLookupDepartmentProgram(lookup);
+                     pp6.setPartnerPermissionsCategory(pc6);
+                     pp6.setPartnerUser(pUser);
+                     permissions.add(pp6);
+                 
+                     PartnerPermission pp7 = new PartnerPermission();
+                     PartnerPermissionsCategory pc7 = partnerPermissionCategoryRepository.findOne(CCIConstants.Monitoring);
+                     pp7.setLookupDepartmentProgram(lookup);
+                     pp7.setPartnerPermissionsCategory(pc7);
+                     pp7.setPartnerUser(pUser);
+                     permissions.add(pp7);
+                 
+                     PartnerPermission pp8 = new PartnerPermission();
+                     PartnerPermissionsCategory pc8 = partnerPermissionCategoryRepository.findOne(CCIConstants.PlacementInfo);
+                     pp8.setLookupDepartmentProgram(lookup);
+                     pp8.setPartnerPermissionsCategory(pc8);
+                     pp8.setPartnerUser(pUser);
+                     permissions.add(pp8);
+                  
+                     PartnerPermission pp9 = new PartnerPermission();
+                     PartnerPermissionsCategory pc9 = partnerPermissionCategoryRepository.findOne(CCIConstants.StudentPreProgram);
+                     pp9.setLookupDepartmentProgram(lookup);
+                     pp9.setPartnerPermissionsCategory(pc9);
+                     pp9.setPartnerUser(pUser);
+                     permissions.add(pp9);
+                  
+                  partnerPermissionRepository.save(permissions);
+               }
+            }
+         
+         
 
             PartnerReviewStatus partnerReviewStatus = partnerReviewStatusRepository.findApplicationStatusByGoId(Integer.valueOf(partnerGoId));
             if (Integer.valueOf(loginVal).equals(CCIConstants.SEND_LOGIN)) {

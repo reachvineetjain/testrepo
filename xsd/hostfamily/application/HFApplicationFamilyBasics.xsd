@@ -29,8 +29,9 @@
 						maxOccurs="1" />
 					<xsd:element name="hostFamilyId" type="xsd:int"
 						minOccurs="1" maxOccurs="1" />
-					<xsd:element name="singleHost" type="xsd:boolean"
-						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="singleHost" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="singleHostDetail" type="pu:HFSingleHostDetails" minOccurs="1" maxOccurs="1" />
+					
 					<xsd:element name="photo" type="pu:Photo" minOccurs="1"
 						maxOccurs="1" />
 					<xsd:element name="adults" type="pu:HFAdultDetails"
@@ -62,6 +63,21 @@
 		</xsd:complexContent>
 	</xsd:complexType>
 
+	<xsd:complexType name="HFSingleHostDetails">
+		<xsd:sequence>
+			<xsd:element name="hostfamilyMemberId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+			<xsd:element name="firstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+			<xsd:element name="lastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+			<xsd:element name="streetAddress" type="xsd:string" minOccurs="1" maxOccurs="1" />
+			
+			<xsd:element name="city" type="xsd:string" minOccurs="1" maxOccurs="1" />
+			<xsd:element name="state" type="xsd:string" minOccurs="1" maxOccurs="1" />
+			<xsd:element name="zipCode" type="xsd:string" minOccurs="1" maxOccurs="1" />
+			<xsd:element name="phone" type="xsd:string" minOccurs="1" maxOccurs="1" />
+			<xsd:element name="relationshipToFamily" type="xsd:string" minOccurs="1" maxOccurs="1" />
+			
+		</xsd:sequence>
+	</xsd:complexType>
 	<xsd:complexType name="HFPets">
 		<xsd:sequence>
 			<xsd:element name="hostFamilyPetId" type="xsd:int"
