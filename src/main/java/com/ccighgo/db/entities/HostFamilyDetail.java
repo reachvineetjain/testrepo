@@ -75,7 +75,7 @@ public class HostFamilyDetail implements Serializable {
 	@Column(length=50)
 	private String hasAutoInsurance;
 
-	private Byte homeLanguage;
+	private String homeLanguage;
 
 	@Column(length=25)
 	private String houseHoldType;
@@ -316,11 +316,11 @@ public class HostFamilyDetail implements Serializable {
 		this.hasAutoInsurance = hasAutoInsurance;
 	}
 
-	public Byte getHomeLanguage() {
+	public String getHomeLanguage() {
 		return this.homeLanguage;
 	}
 
-	public void setHomeLanguage(Byte homeLanguage) {
+	public void setHomeLanguage(String homeLanguage) {
 		this.homeLanguage = homeLanguage;
 	}
 

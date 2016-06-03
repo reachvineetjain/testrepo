@@ -643,6 +643,8 @@ public class HFApplicationImpl implements HFApplication {
                familyDay.setTypicalWeekdayAtHome(String.valueOf(obj[7]));
                familyDay.setTypicalWeekendAtHome(String.valueOf(obj[8]));
                familyDay.setFavouriteThingsToDoAsFamily(String.valueOf(obj[9]));
+               familyDay.setFamilyHomeLanguage(String.valueOf(obj[37]));
+               familyDay.setFamilyOtherLanguage(String.valueOf(obj[38]));
                hfl.setFamilyDay(familyDay);
 
                HFFamilyReligious religious = new HFFamilyReligious();
@@ -1407,6 +1409,9 @@ public class HFApplicationImpl implements HFApplication {
          hfd.setTypicalWeekday(hfApplicationFamilyDetails.getFamilyDay().getTypicalWeekdayAtHome());
          hfd.setTypicalWeekend(hfApplicationFamilyDetails.getFamilyDay().getTypicalWeekendAtHome());
          hfd.setFavouriteWeekend(hfApplicationFamilyDetails.getFamilyDay().getFavouriteThingsToDoAsFamily());
+         hfd.setHomeLanguage(hfApplicationFamilyDetails.getFamilyDay().getFamilyHomeLanguage());
+         hfd.setOtherLaungage(hfApplicationFamilyDetails.getFamilyDay().getFamilyOtherLanguage());
+
 
          // Religion
          hfd.setReligiousAffiliation(hfApplicationFamilyDetails.getReligious().getReligious());
