@@ -21,4 +21,6 @@ public interface HostFamilyReferenceRepository extends JpaRepository<HostFamilyR
    @Query("SELECT h FROM HostFamilyReference h WHERE h.hostFamilySeason.hostFamilySeasonId = ?1")
    List<HostFamilyReference> findBySeasonId(Integer SeasonId);
 
+   @Query("SELECT h FROM HostFamilyReference h WHERE h.hostFamilySeason.hostFamilySeasonId = ?1 AND h.isThirdReferenceForSingleHost=1")
+   HostFamilyReference findBySeasonIdAndThirdReferenceForSingleHost(Integer SeasonId);
 }
