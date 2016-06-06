@@ -13,174 +13,174 @@ import java.util.List;
 @Table(name="ResourceType")
 @NamedQuery(name="ResourceType.findAll", query="SELECT r FROM ResourceType r")
 public class ResourceType implements Serializable {
-	private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
-	private Integer resourceTypeId;
+   @Id
+   @GeneratedValue(strategy=GenerationType.IDENTITY)
+   @Column(unique=true, nullable=false)
+   private Integer resourceTypeId;
 
-	@Column(length=500)
-	private String displayName;
+   @Column(length=500)
+   private String displayName;
 
-	@Column(length=50)
-	private String resourceTypeName;
+   @Column(length=50)
+   private String resourceTypeName;
 
-	//bi-directional many-to-one association to EmployerResource
-	@OneToMany(mappedBy="resourceType")
-	private List<EmployerResource> employerResources;
+   //bi-directional many-to-one association to EmployerResource
+   @OneToMany(mappedBy="resourceType")
+   private List<EmployerResource> employerResources;
 
-	//bi-directional many-to-one association to FieldStaffResource
-	@OneToMany(mappedBy="resourceType")
-	private List<FieldStaffResource> fieldStaffResources;
+   //bi-directional many-to-one association to FieldStaffResource
+   @OneToMany(mappedBy="resourceType")
+   private List<FieldStaffResource> fieldStaffResources;
 
-	//bi-directional many-to-one association to HostFamilyResource
-	@OneToMany(mappedBy="resourceType")
-	private List<HostFamilyResource> hostFamilyResources;
+   //bi-directional many-to-one association to HostFamilyResource
+   @OneToMany(mappedBy="resourceType")
+   private List<HostFamilyResource> hostFamilyResources;
 
-	//bi-directional many-to-one association to ParticipantResource
-	@OneToMany(mappedBy="resourceType")
-	private List<ParticipantResource> participantResources;
+   //bi-directional many-to-one association to ParticipantResource
+   @OneToMany(mappedBy="resourceType")
+   private List<ParticipantResource> participantResources;
 
-	//bi-directional many-to-one association to PartnerResource
-	@OneToMany(mappedBy="resourceType")
-	private List<PartnerResource> partnerResources;
+   //bi-directional many-to-one association to PartnerResource
+   @OneToMany(mappedBy="resourceType")
+   private List<PartnerResource> partnerResources;
 
-	public ResourceType() {
-	}
+   public ResourceType() {
+   }
 
-	public Integer getResourceTypeId() {
-		return this.resourceTypeId;
-	}
+   public Integer getResourceTypeId() {
+      return this.resourceTypeId;
+   }
 
-	public void setResourceTypeId(Integer resourceTypeId) {
-		this.resourceTypeId = resourceTypeId;
-	}
+   public void setResourceTypeId(Integer resourceTypeId) {
+      this.resourceTypeId = resourceTypeId;
+   }
 
-	public String getDisplayName() {
-		return this.displayName;
-	}
+   public String getDisplayName() {
+      return this.displayName;
+   }
 
-	public void setDisplayName(String displayName) {
-		this.displayName = displayName;
-	}
+   public void setDisplayName(String displayName) {
+      this.displayName = displayName;
+   }
 
-	public String getResourceTypeName() {
-		return this.resourceTypeName;
-	}
+   public String getResourceTypeName() {
+      return this.resourceTypeName;
+   }
 
-	public void setResourceTypeName(String resourceTypeName) {
-		this.resourceTypeName = resourceTypeName;
-	}
+   public void setResourceTypeName(String resourceTypeName) {
+      this.resourceTypeName = resourceTypeName;
+   }
 
-	public List<EmployerResource> getEmployerResources() {
-		return this.employerResources;
-	}
+   public List<EmployerResource> getEmployerResources() {
+      return this.employerResources;
+   }
 
-	public void setEmployerResources(List<EmployerResource> employerResources) {
-		this.employerResources = employerResources;
-	}
+   public void setEmployerResources(List<EmployerResource> employerResources) {
+      this.employerResources = employerResources;
+   }
 
-	public EmployerResource addEmployerResource(EmployerResource employerResource) {
-		getEmployerResources().add(employerResource);
-		employerResource.setResourceType(this);
+   public EmployerResource addEmployerResource(EmployerResource employerResource) {
+      getEmployerResources().add(employerResource);
+      employerResource.setResourceType(this);
 
-		return employerResource;
-	}
+      return employerResource;
+   }
 
-	public EmployerResource removeEmployerResource(EmployerResource employerResource) {
-		getEmployerResources().remove(employerResource);
-		employerResource.setResourceType(null);
+   public EmployerResource removeEmployerResource(EmployerResource employerResource) {
+      getEmployerResources().remove(employerResource);
+      employerResource.setResourceType(null);
 
-		return employerResource;
-	}
+      return employerResource;
+   }
 
-	public List<FieldStaffResource> getFieldStaffResources() {
-		return this.fieldStaffResources;
-	}
+   public List<FieldStaffResource> getFieldStaffResources() {
+      return this.fieldStaffResources;
+   }
 
-	public void setFieldStaffResources(List<FieldStaffResource> fieldStaffResources) {
-		this.fieldStaffResources = fieldStaffResources;
-	}
+   public void setFieldStaffResources(List<FieldStaffResource> fieldStaffResources) {
+      this.fieldStaffResources = fieldStaffResources;
+   }
 
-	public FieldStaffResource addFieldStaffResource(FieldStaffResource fieldStaffResource) {
-		getFieldStaffResources().add(fieldStaffResource);
-		fieldStaffResource.setResourceType(this);
+   public FieldStaffResource addFieldStaffResource(FieldStaffResource fieldStaffResource) {
+      getFieldStaffResources().add(fieldStaffResource);
+      fieldStaffResource.setResourceType(this);
 
-		return fieldStaffResource;
-	}
+      return fieldStaffResource;
+   }
 
-	public FieldStaffResource removeFieldStaffResource(FieldStaffResource fieldStaffResource) {
-		getFieldStaffResources().remove(fieldStaffResource);
-		fieldStaffResource.setResourceType(null);
+   public FieldStaffResource removeFieldStaffResource(FieldStaffResource fieldStaffResource) {
+      getFieldStaffResources().remove(fieldStaffResource);
+      fieldStaffResource.setResourceType(null);
 
-		return fieldStaffResource;
-	}
+      return fieldStaffResource;
+   }
 
-	public List<HostFamilyResource> getHostFamilyResources() {
-		return this.hostFamilyResources;
-	}
+   public List<HostFamilyResource> getHostFamilyResources() {
+      return this.hostFamilyResources;
+   }
 
-	public void setHostFamilyResources(List<HostFamilyResource> hostFamilyResources) {
-		this.hostFamilyResources = hostFamilyResources;
-	}
+   public void setHostFamilyResources(List<HostFamilyResource> hostFamilyResources) {
+      this.hostFamilyResources = hostFamilyResources;
+   }
 
-	public HostFamilyResource addHostFamilyResource(HostFamilyResource hostFamilyResource) {
-		getHostFamilyResources().add(hostFamilyResource);
-		hostFamilyResource.setResourceType(this);
+   public HostFamilyResource addHostFamilyResource(HostFamilyResource hostFamilyResource) {
+      getHostFamilyResources().add(hostFamilyResource);
+      hostFamilyResource.setResourceType(this);
 
-		return hostFamilyResource;
-	}
+      return hostFamilyResource;
+   }
 
-	public HostFamilyResource removeHostFamilyResource(HostFamilyResource hostFamilyResource) {
-		getHostFamilyResources().remove(hostFamilyResource);
-		hostFamilyResource.setResourceType(null);
+   public HostFamilyResource removeHostFamilyResource(HostFamilyResource hostFamilyResource) {
+      getHostFamilyResources().remove(hostFamilyResource);
+      hostFamilyResource.setResourceType(null);
 
-		return hostFamilyResource;
-	}
+      return hostFamilyResource;
+   }
 
-	public List<ParticipantResource> getParticipantResources() {
-		return this.participantResources;
-	}
+   public List<ParticipantResource> getParticipantResources() {
+      return this.participantResources;
+   }
 
-	public void setParticipantResources(List<ParticipantResource> participantResources) {
-		this.participantResources = participantResources;
-	}
+   public void setParticipantResources(List<ParticipantResource> participantResources) {
+      this.participantResources = participantResources;
+   }
 
-	public ParticipantResource addParticipantResource(ParticipantResource participantResource) {
-		getParticipantResources().add(participantResource);
-		participantResource.setResourceType(this);
+   public ParticipantResource addParticipantResource(ParticipantResource participantResource) {
+      getParticipantResources().add(participantResource);
+      participantResource.setResourceType(this);
 
-		return participantResource;
-	}
+      return participantResource;
+   }
 
-	public ParticipantResource removeParticipantResource(ParticipantResource participantResource) {
-		getParticipantResources().remove(participantResource);
-		participantResource.setResourceType(null);
+   public ParticipantResource removeParticipantResource(ParticipantResource participantResource) {
+      getParticipantResources().remove(participantResource);
+      participantResource.setResourceType(null);
 
-		return participantResource;
-	}
+      return participantResource;
+   }
 
-	public List<PartnerResource> getPartnerResources() {
-		return this.partnerResources;
-	}
+   public List<PartnerResource> getPartnerResources() {
+      return this.partnerResources;
+   }
 
-	public void setPartnerResources(List<PartnerResource> partnerResources) {
-		this.partnerResources = partnerResources;
-	}
+   public void setPartnerResources(List<PartnerResource> partnerResources) {
+      this.partnerResources = partnerResources;
+   }
 
-	public PartnerResource addPartnerResource(PartnerResource partnerResource) {
-		getPartnerResources().add(partnerResource);
-		partnerResource.setResourceType(this);
+   public PartnerResource addPartnerResource(PartnerResource partnerResource) {
+      getPartnerResources().add(partnerResource);
+      partnerResource.setResourceType(this);
 
-		return partnerResource;
-	}
+      return partnerResource;
+   }
 
-	public PartnerResource removePartnerResource(PartnerResource partnerResource) {
-		getPartnerResources().remove(partnerResource);
-		partnerResource.setResourceType(null);
+   public PartnerResource removePartnerResource(PartnerResource partnerResource) {
+      getPartnerResources().remove(partnerResource);
+      partnerResource.setResourceType(null);
 
-		return partnerResource;
-	}
+      return partnerResource;
+   }
 
 }

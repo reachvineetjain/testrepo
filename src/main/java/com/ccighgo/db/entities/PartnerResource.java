@@ -13,77 +13,77 @@ import java.util.Date;
 @Table(name="PartnerResources")
 @NamedQuery(name="PartnerResource.findAll", query="SELECT p FROM PartnerResource p")
 public class PartnerResource implements Serializable {
-	private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
-	private Integer partnerResourcesId;
+   @Id
+   @GeneratedValue(strategy=GenerationType.IDENTITY)
+   @Column(unique=true, nullable=false)
+   private Integer partnerResourcesId;
 
-	private Byte active;
+   private Byte active;
 
-	private Integer createdBy;
+   private Integer createdBy;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date createdOn;
+   @Temporal(TemporalType.TIMESTAMP)
+   private Date createdOn;
 
-	@Column(length=200)
-	private String resourceURL;
+   @Column(length=200)
+   private String resourceURL;
 
-	//bi-directional many-to-one association to ResourceType
-	@ManyToOne
-	@JoinColumn(name="resourceTypeId")
-	private ResourceType resourceType;
+   //bi-directional many-to-one association to ResourceType
+   @ManyToOne
+   @JoinColumn(name="resourceTypeId")
+   private ResourceType resourceType;
 
-	public PartnerResource() {
-	}
+   public PartnerResource() {
+   }
 
-	public Integer getPartnerResourcesId() {
-		return this.partnerResourcesId;
-	}
+   public Integer getPartnerResourcesId() {
+      return this.partnerResourcesId;
+   }
 
-	public void setPartnerResourcesId(Integer partnerResourcesId) {
-		this.partnerResourcesId = partnerResourcesId;
-	}
+   public void setPartnerResourcesId(Integer partnerResourcesId) {
+      this.partnerResourcesId = partnerResourcesId;
+   }
 
-	public Byte getActive() {
-		return this.active;
-	}
+   public Byte getActive() {
+      return this.active;
+   }
 
-	public void setActive(Byte active) {
-		this.active = active;
-	}
+   public void setActive(Byte active) {
+      this.active = active;
+   }
 
-	public Integer getCreatedBy() {
-		return this.createdBy;
-	}
+   public Integer getCreatedBy() {
+      return this.createdBy;
+   }
 
-	public void setCreatedBy(Integer createdBy) {
-		this.createdBy = createdBy;
-	}
+   public void setCreatedBy(Integer createdBy) {
+      this.createdBy = createdBy;
+   }
 
-	public Date getCreatedOn() {
-		return this.createdOn;
-	}
+   public Date getCreatedOn() {
+      return this.createdOn;
+   }
 
-	public void setCreatedOn(Date createdOn) {
-		this.createdOn = createdOn;
-	}
+   public void setCreatedOn(Date createdOn) {
+      this.createdOn = createdOn;
+   }
 
-	public String getResourceURL() {
-		return this.resourceURL;
-	}
+   public String getResourceURL() {
+      return this.resourceURL;
+   }
 
-	public void setResourceURL(String resourceURL) {
-		this.resourceURL = resourceURL;
-	}
+   public void setResourceURL(String resourceURL) {
+      this.resourceURL = resourceURL;
+   }
 
-	public ResourceType getResourceType() {
-		return this.resourceType;
-	}
+   public ResourceType getResourceType() {
+      return this.resourceType;
+   }
 
-	public void setResourceType(ResourceType resourceType) {
-		this.resourceType = resourceType;
-	}
+   public void setResourceType(ResourceType resourceType) {
+      this.resourceType = resourceType;
+   }
 
 }

@@ -13,87 +13,87 @@ import java.util.Date;
 @Table(name="FieldStaffResources")
 @NamedQuery(name="FieldStaffResource.findAll", query="SELECT f FROM FieldStaffResource f")
 public class FieldStaffResource implements Serializable {
-	private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
-	private Integer fleldStaffResources;
+   @Id
+   @GeneratedValue(strategy=GenerationType.IDENTITY)
+   @Column(unique=true, nullable=false)
+   private Integer fleldStaffResources;
 
-	private Byte active;
+   private Byte active;
 
-	private Integer createdBy;
+   private Integer createdBy;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date createdOn;
+   @Temporal(TemporalType.TIMESTAMP)
+   private Date createdOn;
 
-	private Integer fieldStaffTypeId;
+   private Integer fieldStaffTypeId;
 
-	@Column(length=200)
-	private String resourceURL;
+   @Column(length=200)
+   private String resourceURL;
 
-	//bi-directional many-to-one association to ResourceType
-	@ManyToOne
-	@JoinColumn(name="resourceTypeId")
-	private ResourceType resourceType;
+   //bi-directional many-to-one association to ResourceType
+   @ManyToOne
+   @JoinColumn(name="resourceTypeId")
+   private ResourceType resourceType;
 
-	public FieldStaffResource() {
-	}
+   public FieldStaffResource() {
+   }
 
-	public Integer getFleldStaffResources() {
-		return this.fleldStaffResources;
-	}
+   public Integer getFleldStaffResources() {
+      return this.fleldStaffResources;
+   }
 
-	public void setFleldStaffResources(Integer fleldStaffResources) {
-		this.fleldStaffResources = fleldStaffResources;
-	}
+   public void setFleldStaffResources(Integer fleldStaffResources) {
+      this.fleldStaffResources = fleldStaffResources;
+   }
 
-	public Byte getActive() {
-		return this.active;
-	}
+   public Byte getActive() {
+      return this.active;
+   }
 
-	public void setActive(Byte active) {
-		this.active = active;
-	}
+   public void setActive(Byte active) {
+      this.active = active;
+   }
 
-	public Integer getCreatedBy() {
-		return this.createdBy;
-	}
+   public Integer getCreatedBy() {
+      return this.createdBy;
+   }
 
-	public void setCreatedBy(Integer createdBy) {
-		this.createdBy = createdBy;
-	}
+   public void setCreatedBy(Integer createdBy) {
+      this.createdBy = createdBy;
+   }
 
-	public Date getCreatedOn() {
-		return this.createdOn;
-	}
+   public Date getCreatedOn() {
+      return this.createdOn;
+   }
 
-	public void setCreatedOn(Date createdOn) {
-		this.createdOn = createdOn;
-	}
+   public void setCreatedOn(Date createdOn) {
+      this.createdOn = createdOn;
+   }
 
-	public Integer getFieldStaffTypeId() {
-		return this.fieldStaffTypeId;
-	}
+   public Integer getFieldStaffTypeId() {
+      return this.fieldStaffTypeId;
+   }
 
-	public void setFieldStaffTypeId(Integer fieldStaffTypeId) {
-		this.fieldStaffTypeId = fieldStaffTypeId;
-	}
+   public void setFieldStaffTypeId(Integer fieldStaffTypeId) {
+      this.fieldStaffTypeId = fieldStaffTypeId;
+   }
 
-	public String getResourceURL() {
-		return this.resourceURL;
-	}
+   public String getResourceURL() {
+      return this.resourceURL;
+   }
 
-	public void setResourceURL(String resourceURL) {
-		this.resourceURL = resourceURL;
-	}
+   public void setResourceURL(String resourceURL) {
+      this.resourceURL = resourceURL;
+   }
 
-	public ResourceType getResourceType() {
-		return this.resourceType;
-	}
+   public ResourceType getResourceType() {
+      return this.resourceType;
+   }
 
-	public void setResourceType(ResourceType resourceType) {
-		this.resourceType = resourceType;
-	}
+   public void setResourceType(ResourceType resourceType) {
+      this.resourceType = resourceType;
+   }
 
 }

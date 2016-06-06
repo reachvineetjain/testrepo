@@ -13,92 +13,92 @@ import java.sql.Timestamp;
 @Table(name="HostFamilyQuickStatsTypeAggregate")
 @NamedQuery(name="HostFamilyQuickStatsTypeAggregate.findAll", query="SELECT h FROM HostFamilyQuickStatsTypeAggregate h")
 public class HostFamilyQuickStatsTypeAggregate implements Serializable {
-	private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
-	private Integer hostFamilyQuickStatsTypeAggregateId;
+   @Id
+   @GeneratedValue(strategy=GenerationType.IDENTITY)
+   @Column(unique=true, nullable=false)
+   private Integer hostFamilyQuickStatsTypeAggregateId;
 
-	@Column(length=50)
-	private String hostFamilyQSTypeName;
+   @Column(length=50)
+   private String hostFamilyQSTypeName;
 
-	private Integer hostFamlyQSTypeAggregate;
+   private Integer hostFamlyQSTypeAggregate;
 
-	private Timestamp modifiedDate;
+   private Timestamp modifiedDate;
 
-	//bi-directional many-to-one association to HostFamily
-	@ManyToOne
-	@JoinColumn(name="hostfamilyGoId")
-	private HostFamily hostFamily;
+   //bi-directional many-to-one association to HostFamily
+   @ManyToOne
+   @JoinColumn(name="hostfamilyGoId")
+   private HostFamily hostFamily;
 
-	//bi-directional many-to-one association to HostFamilyQuickStatsType
-	@ManyToOne
-	@JoinColumn(name="hostFamilyQSTypeId")
-	private HostFamilyQuickStatsType hostFamilyQuickStatsType;
+   //bi-directional many-to-one association to HostFamilyQuickStatsType
+   @ManyToOne
+   @JoinColumn(name="hostFamilyQSTypeId")
+   private HostFamilyQuickStatsType hostFamilyQuickStatsType;
 
-	//bi-directional many-to-one association to LookupDepartmentProgram
-	@ManyToOne
-	@JoinColumn(name="lookupDepartmentProgramId")
-	private LookupDepartmentProgram lookupDepartmentProgram;
+   //bi-directional many-to-one association to LookupDepartmentProgram
+   @ManyToOne
+   @JoinColumn(name="lookupDepartmentProgramId")
+   private LookupDepartmentProgram lookupDepartmentProgram;
 
-	public HostFamilyQuickStatsTypeAggregate() {
-	}
+   public HostFamilyQuickStatsTypeAggregate() {
+   }
 
-	public Integer getHostFamilyQuickStatsTypeAggregateId() {
-		return this.hostFamilyQuickStatsTypeAggregateId;
-	}
+   public Integer getHostFamilyQuickStatsTypeAggregateId() {
+      return this.hostFamilyQuickStatsTypeAggregateId;
+   }
 
-	public void setHostFamilyQuickStatsTypeAggregateId(Integer hostFamilyQuickStatsTypeAggregateId) {
-		this.hostFamilyQuickStatsTypeAggregateId = hostFamilyQuickStatsTypeAggregateId;
-	}
+   public void setHostFamilyQuickStatsTypeAggregateId(Integer hostFamilyQuickStatsTypeAggregateId) {
+      this.hostFamilyQuickStatsTypeAggregateId = hostFamilyQuickStatsTypeAggregateId;
+   }
 
-	public String getHostFamilyQSTypeName() {
-		return this.hostFamilyQSTypeName;
-	}
+   public String getHostFamilyQSTypeName() {
+      return this.hostFamilyQSTypeName;
+   }
 
-	public void setHostFamilyQSTypeName(String hostFamilyQSTypeName) {
-		this.hostFamilyQSTypeName = hostFamilyQSTypeName;
-	}
+   public void setHostFamilyQSTypeName(String hostFamilyQSTypeName) {
+      this.hostFamilyQSTypeName = hostFamilyQSTypeName;
+   }
 
-	public Integer getHostFamlyQSTypeAggregate() {
-		return this.hostFamlyQSTypeAggregate;
-	}
+   public Integer getHostFamlyQSTypeAggregate() {
+      return this.hostFamlyQSTypeAggregate;
+   }
 
-	public void setHostFamlyQSTypeAggregate(Integer hostFamlyQSTypeAggregate) {
-		this.hostFamlyQSTypeAggregate = hostFamlyQSTypeAggregate;
-	}
+   public void setHostFamlyQSTypeAggregate(Integer hostFamlyQSTypeAggregate) {
+      this.hostFamlyQSTypeAggregate = hostFamlyQSTypeAggregate;
+   }
 
-	public Timestamp getModifiedDate() {
-		return this.modifiedDate;
-	}
+   public Timestamp getModifiedDate() {
+      return this.modifiedDate;
+   }
 
-	public void setModifiedDate(Timestamp modifiedDate) {
-		this.modifiedDate = modifiedDate;
-	}
+   public void setModifiedDate(Timestamp modifiedDate) {
+      this.modifiedDate = modifiedDate;
+   }
 
-	public HostFamily getHostFamily() {
-		return this.hostFamily;
-	}
+   public HostFamily getHostFamily() {
+      return this.hostFamily;
+   }
 
-	public void setHostFamily(HostFamily hostFamily) {
-		this.hostFamily = hostFamily;
-	}
+   public void setHostFamily(HostFamily hostFamily) {
+      this.hostFamily = hostFamily;
+   }
 
-	public HostFamilyQuickStatsType getHostFamilyQuickStatsType() {
-		return this.hostFamilyQuickStatsType;
-	}
+   public HostFamilyQuickStatsType getHostFamilyQuickStatsType() {
+      return this.hostFamilyQuickStatsType;
+   }
 
-	public void setHostFamilyQuickStatsType(HostFamilyQuickStatsType hostFamilyQuickStatsType) {
-		this.hostFamilyQuickStatsType = hostFamilyQuickStatsType;
-	}
+   public void setHostFamilyQuickStatsType(HostFamilyQuickStatsType hostFamilyQuickStatsType) {
+      this.hostFamilyQuickStatsType = hostFamilyQuickStatsType;
+   }
 
-	public LookupDepartmentProgram getLookupDepartmentProgram() {
-		return this.lookupDepartmentProgram;
-	}
+   public LookupDepartmentProgram getLookupDepartmentProgram() {
+      return this.lookupDepartmentProgram;
+   }
 
-	public void setLookupDepartmentProgram(LookupDepartmentProgram lookupDepartmentProgram) {
-		this.lookupDepartmentProgram = lookupDepartmentProgram;
-	}
+   public void setLookupDepartmentProgram(LookupDepartmentProgram lookupDepartmentProgram) {
+      this.lookupDepartmentProgram = lookupDepartmentProgram;
+   }
 
 }

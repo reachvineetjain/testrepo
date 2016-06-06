@@ -14,132 +14,132 @@ import java.sql.Timestamp;
 @Table(name="AddendumDocumentInformation")
 @NamedQuery(name="AddendumDocumentInformation.findAll", query="SELECT a FROM AddendumDocumentInformation a")
 public class AddendumDocumentInformation implements Serializable {
-	private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
-	private Integer addendumDocumentInformationId;
+   @Id
+   @GeneratedValue(strategy=GenerationType.IDENTITY)
+   @Column(unique=true, nullable=false)
+   private Integer addendumDocumentInformationId;
 
-	private Byte active;
+   private Byte active;
 
-	@Column(nullable=false)
-	private Integer createdBy;
+   @Column(nullable=false)
+   private Integer createdBy;
 
-	@Column(nullable=false)
-	private Timestamp createdOn;
+   @Column(nullable=false)
+   private Timestamp createdOn;
 
-	@Column(length=50)
-	private String documentName;
+   @Column(length=50)
+   private String documentName;
 
-	@Column(length=50)
-	private String fileName;
+   @Column(length=50)
+   private String fileName;
 
-	@Column(nullable=false)
-	private Integer modifiedBy;
+   @Column(nullable=false)
+   private Integer modifiedBy;
 
-	private Timestamp modifiedOn;
+   private Timestamp modifiedOn;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date updateDate;
+   @Temporal(TemporalType.TIMESTAMP)
+   private Date updateDate;
 
-	@Column(length=1000)
-	private String url;
+   @Column(length=1000)
+   private String url;
 
-	//bi-directional many-to-one association to DocumentInformation
-	@ManyToOne
-	@JoinColumn(name="documentInformationId", nullable=false)
-	private DocumentInformation documentInformation;
+   //bi-directional many-to-one association to DocumentInformation
+   @ManyToOne
+   @JoinColumn(name="documentInformationId", nullable=false)
+   private DocumentInformation documentInformation;
 
-	public AddendumDocumentInformation() {
-	}
+   public AddendumDocumentInformation() {
+   }
 
-	public Integer getAddendumDocumentInformationId() {
-		return this.addendumDocumentInformationId;
-	}
+   public Integer getAddendumDocumentInformationId() {
+      return this.addendumDocumentInformationId;
+   }
 
-	public void setAddendumDocumentInformationId(Integer addendumDocumentInformationId) {
-		this.addendumDocumentInformationId = addendumDocumentInformationId;
-	}
+   public void setAddendumDocumentInformationId(Integer addendumDocumentInformationId) {
+      this.addendumDocumentInformationId = addendumDocumentInformationId;
+   }
 
-	public Byte getActive() {
-		return this.active;
-	}
+   public Byte getActive() {
+      return this.active;
+   }
 
-	public void setActive(Byte active) {
-		this.active = active;
-	}
+   public void setActive(Byte active) {
+      this.active = active;
+   }
 
-	public Integer getCreatedBy() {
-		return this.createdBy;
-	}
+   public Integer getCreatedBy() {
+      return this.createdBy;
+   }
 
-	public void setCreatedBy(Integer createdBy) {
-		this.createdBy = createdBy;
-	}
+   public void setCreatedBy(Integer createdBy) {
+      this.createdBy = createdBy;
+   }
 
-	public Timestamp getCreatedOn() {
-		return this.createdOn;
-	}
+   public Timestamp getCreatedOn() {
+      return this.createdOn;
+   }
 
-	public void setCreatedOn(Timestamp createdOn) {
-		this.createdOn = createdOn;
-	}
+   public void setCreatedOn(Timestamp createdOn) {
+      this.createdOn = createdOn;
+   }
 
-	public String getDocumentName() {
-		return this.documentName;
-	}
+   public String getDocumentName() {
+      return this.documentName;
+   }
 
-	public void setDocumentName(String documentName) {
-		this.documentName = documentName;
-	}
+   public void setDocumentName(String documentName) {
+      this.documentName = documentName;
+   }
 
-	public String getFileName() {
-		return this.fileName;
-	}
+   public String getFileName() {
+      return this.fileName;
+   }
 
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-	}
+   public void setFileName(String fileName) {
+      this.fileName = fileName;
+   }
 
-	public Integer getModifiedBy() {
-		return this.modifiedBy;
-	}
+   public Integer getModifiedBy() {
+      return this.modifiedBy;
+   }
 
-	public void setModifiedBy(Integer modifiedBy) {
-		this.modifiedBy = modifiedBy;
-	}
+   public void setModifiedBy(Integer modifiedBy) {
+      this.modifiedBy = modifiedBy;
+   }
 
-	public Timestamp getModifiedOn() {
-		return this.modifiedOn;
-	}
+   public Timestamp getModifiedOn() {
+      return this.modifiedOn;
+   }
 
-	public void setModifiedOn(Timestamp modifiedOn) {
-		this.modifiedOn = modifiedOn;
-	}
+   public void setModifiedOn(Timestamp modifiedOn) {
+      this.modifiedOn = modifiedOn;
+   }
 
-	public Date getUpdateDate() {
-		return this.updateDate;
-	}
+   public Date getUpdateDate() {
+      return this.updateDate;
+   }
 
-	public void setUpdateDate(Date updateDate) {
-		this.updateDate = updateDate;
-	}
+   public void setUpdateDate(Date updateDate) {
+      this.updateDate = updateDate;
+   }
 
-	public String getUrl() {
-		return this.url;
-	}
+   public String getUrl() {
+      return this.url;
+   }
 
-	public void setUrl(String url) {
-		this.url = url;
-	}
+   public void setUrl(String url) {
+      this.url = url;
+   }
 
-	public DocumentInformation getDocumentInformation() {
-		return this.documentInformation;
-	}
+   public DocumentInformation getDocumentInformation() {
+      return this.documentInformation;
+   }
 
-	public void setDocumentInformation(DocumentInformation documentInformation) {
-		this.documentInformation = documentInformation;
-	}
+   public void setDocumentInformation(DocumentInformation documentInformation) {
+      this.documentInformation = documentInformation;
+   }
 
 }

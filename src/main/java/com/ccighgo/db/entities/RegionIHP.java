@@ -14,139 +14,139 @@ import java.util.List;
 @Table(name="RegionIHP")
 @NamedQuery(name="RegionIHP.findAll", query="SELECT r FROM RegionIHP r")
 public class RegionIHP implements Serializable {
-	private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
-	private Integer regionIHPId;
+   @Id
+   @GeneratedValue(strategy=GenerationType.IDENTITY)
+   @Column(unique=true, nullable=false)
+   private Integer regionIHPId;
 
-	private Byte active;
+   private Byte active;
 
-	@Column(nullable=false)
-	private Integer createdBy;
+   @Column(nullable=false)
+   private Integer createdBy;
 
-	@Column(nullable=false)
-	private Timestamp createdOn;
+   @Column(nullable=false)
+   private Timestamp createdOn;
 
-	@Column(nullable=false)
-	private Integer modifiedBy;
+   @Column(nullable=false)
+   private Integer modifiedBy;
 
-	@Column(nullable=false)
-	private Timestamp modifiedOn;
+   @Column(nullable=false)
+   private Timestamp modifiedOn;
 
-	@Column(length=45)
-	private String regionName;
+   @Column(length=45)
+   private String regionName;
 
-	//bi-directional many-to-one association to SeasonIHPDetailsRegionApplication
-	@OneToMany(mappedBy="regionIhp")
-	private List<SeasonIHPDetailsRegionApplication> seasonIhpdetailsRegionApplications;
+   //bi-directional many-to-one association to SeasonIHPDetailsRegionApplication
+   @OneToMany(mappedBy="regionIhp")
+   private List<SeasonIHPDetailsRegionApplication> seasonIhpdetailsRegionApplications;
 
-	//bi-directional many-to-one association to SeasonIHPGeographyConfiguration
-	@OneToMany(mappedBy="regionIhp")
-	private List<SeasonIHPGeographyConfiguration> seasonIhpgeographyConfigurations;
+   //bi-directional many-to-one association to SeasonIHPGeographyConfiguration
+   @OneToMany(mappedBy="regionIhp")
+   private List<SeasonIHPGeographyConfiguration> seasonIhpgeographyConfigurations;
 
-	public RegionIHP() {
-	}
+   public RegionIHP() {
+   }
 
-	public Integer getRegionIHPId() {
-		return this.regionIHPId;
-	}
+   public Integer getRegionIHPId() {
+      return this.regionIHPId;
+   }
 
-	public void setRegionIHPId(Integer regionIHPId) {
-		this.regionIHPId = regionIHPId;
-	}
+   public void setRegionIHPId(Integer regionIHPId) {
+      this.regionIHPId = regionIHPId;
+   }
 
-	public Byte getActive() {
-		return this.active;
-	}
+   public Byte getActive() {
+      return this.active;
+   }
 
-	public void setActive(Byte active) {
-		this.active = active;
-	}
+   public void setActive(Byte active) {
+      this.active = active;
+   }
 
-	public Integer getCreatedBy() {
-		return this.createdBy;
-	}
+   public Integer getCreatedBy() {
+      return this.createdBy;
+   }
 
-	public void setCreatedBy(Integer createdBy) {
-		this.createdBy = createdBy;
-	}
+   public void setCreatedBy(Integer createdBy) {
+      this.createdBy = createdBy;
+   }
 
-	public Timestamp getCreatedOn() {
-		return this.createdOn;
-	}
+   public Timestamp getCreatedOn() {
+      return this.createdOn;
+   }
 
-	public void setCreatedOn(Timestamp createdOn) {
-		this.createdOn = createdOn;
-	}
+   public void setCreatedOn(Timestamp createdOn) {
+      this.createdOn = createdOn;
+   }
 
-	public Integer getModifiedBy() {
-		return this.modifiedBy;
-	}
+   public Integer getModifiedBy() {
+      return this.modifiedBy;
+   }
 
-	public void setModifiedBy(Integer modifiedBy) {
-		this.modifiedBy = modifiedBy;
-	}
+   public void setModifiedBy(Integer modifiedBy) {
+      this.modifiedBy = modifiedBy;
+   }
 
-	public Timestamp getModifiedOn() {
-		return this.modifiedOn;
-	}
+   public Timestamp getModifiedOn() {
+      return this.modifiedOn;
+   }
 
-	public void setModifiedOn(Timestamp modifiedOn) {
-		this.modifiedOn = modifiedOn;
-	}
+   public void setModifiedOn(Timestamp modifiedOn) {
+      this.modifiedOn = modifiedOn;
+   }
 
-	public String getRegionName() {
-		return this.regionName;
-	}
+   public String getRegionName() {
+      return this.regionName;
+   }
 
-	public void setRegionName(String regionName) {
-		this.regionName = regionName;
-	}
+   public void setRegionName(String regionName) {
+      this.regionName = regionName;
+   }
 
-	public List<SeasonIHPDetailsRegionApplication> getSeasonIhpdetailsRegionApplications() {
-		return this.seasonIhpdetailsRegionApplications;
-	}
+   public List<SeasonIHPDetailsRegionApplication> getSeasonIhpdetailsRegionApplications() {
+      return this.seasonIhpdetailsRegionApplications;
+   }
 
-	public void setSeasonIhpdetailsRegionApplications(List<SeasonIHPDetailsRegionApplication> seasonIhpdetailsRegionApplications) {
-		this.seasonIhpdetailsRegionApplications = seasonIhpdetailsRegionApplications;
-	}
+   public void setSeasonIhpdetailsRegionApplications(List<SeasonIHPDetailsRegionApplication> seasonIhpdetailsRegionApplications) {
+      this.seasonIhpdetailsRegionApplications = seasonIhpdetailsRegionApplications;
+   }
 
-	public SeasonIHPDetailsRegionApplication addSeasonIhpdetailsRegionApplication(SeasonIHPDetailsRegionApplication seasonIhpdetailsRegionApplication) {
-		getSeasonIhpdetailsRegionApplications().add(seasonIhpdetailsRegionApplication);
-		seasonIhpdetailsRegionApplication.setRegionIhp(this);
+   public SeasonIHPDetailsRegionApplication addSeasonIhpdetailsRegionApplication(SeasonIHPDetailsRegionApplication seasonIhpdetailsRegionApplication) {
+      getSeasonIhpdetailsRegionApplications().add(seasonIhpdetailsRegionApplication);
+      seasonIhpdetailsRegionApplication.setRegionIhp(this);
 
-		return seasonIhpdetailsRegionApplication;
-	}
+      return seasonIhpdetailsRegionApplication;
+   }
 
-	public SeasonIHPDetailsRegionApplication removeSeasonIhpdetailsRegionApplication(SeasonIHPDetailsRegionApplication seasonIhpdetailsRegionApplication) {
-		getSeasonIhpdetailsRegionApplications().remove(seasonIhpdetailsRegionApplication);
-		seasonIhpdetailsRegionApplication.setRegionIhp(null);
+   public SeasonIHPDetailsRegionApplication removeSeasonIhpdetailsRegionApplication(SeasonIHPDetailsRegionApplication seasonIhpdetailsRegionApplication) {
+      getSeasonIhpdetailsRegionApplications().remove(seasonIhpdetailsRegionApplication);
+      seasonIhpdetailsRegionApplication.setRegionIhp(null);
 
-		return seasonIhpdetailsRegionApplication;
-	}
+      return seasonIhpdetailsRegionApplication;
+   }
 
-	public List<SeasonIHPGeographyConfiguration> getSeasonIhpgeographyConfigurations() {
-		return this.seasonIhpgeographyConfigurations;
-	}
+   public List<SeasonIHPGeographyConfiguration> getSeasonIhpgeographyConfigurations() {
+      return this.seasonIhpgeographyConfigurations;
+   }
 
-	public void setSeasonIhpgeographyConfigurations(List<SeasonIHPGeographyConfiguration> seasonIhpgeographyConfigurations) {
-		this.seasonIhpgeographyConfigurations = seasonIhpgeographyConfigurations;
-	}
+   public void setSeasonIhpgeographyConfigurations(List<SeasonIHPGeographyConfiguration> seasonIhpgeographyConfigurations) {
+      this.seasonIhpgeographyConfigurations = seasonIhpgeographyConfigurations;
+   }
 
-	public SeasonIHPGeographyConfiguration addSeasonIhpgeographyConfiguration(SeasonIHPGeographyConfiguration seasonIhpgeographyConfiguration) {
-		getSeasonIhpgeographyConfigurations().add(seasonIhpgeographyConfiguration);
-		seasonIhpgeographyConfiguration.setRegionIhp(this);
+   public SeasonIHPGeographyConfiguration addSeasonIhpgeographyConfiguration(SeasonIHPGeographyConfiguration seasonIhpgeographyConfiguration) {
+      getSeasonIhpgeographyConfigurations().add(seasonIhpgeographyConfiguration);
+      seasonIhpgeographyConfiguration.setRegionIhp(this);
 
-		return seasonIhpgeographyConfiguration;
-	}
+      return seasonIhpgeographyConfiguration;
+   }
 
-	public SeasonIHPGeographyConfiguration removeSeasonIhpgeographyConfiguration(SeasonIHPGeographyConfiguration seasonIhpgeographyConfiguration) {
-		getSeasonIhpgeographyConfigurations().remove(seasonIhpgeographyConfiguration);
-		seasonIhpgeographyConfiguration.setRegionIhp(null);
+   public SeasonIHPGeographyConfiguration removeSeasonIhpgeographyConfiguration(SeasonIHPGeographyConfiguration seasonIhpgeographyConfiguration) {
+      getSeasonIhpgeographyConfigurations().remove(seasonIhpgeographyConfiguration);
+      seasonIhpgeographyConfiguration.setRegionIhp(null);
 
-		return seasonIhpgeographyConfiguration;
-	}
+      return seasonIhpgeographyConfiguration;
+   }
 
 }

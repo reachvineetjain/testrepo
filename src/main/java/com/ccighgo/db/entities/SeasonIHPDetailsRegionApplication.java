@@ -13,102 +13,102 @@ import java.sql.Timestamp;
 @Table(name="SeasonIHPDetailsRegionApplications")
 @NamedQuery(name="SeasonIHPDetailsRegionApplication.findAll", query="SELECT s FROM SeasonIHPDetailsRegionApplication s")
 public class SeasonIHPDetailsRegionApplication implements Serializable {
-	private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
-	private Integer seasonIHPDetailsRegionApplicationId;
+   @Id
+   @GeneratedValue(strategy=GenerationType.IDENTITY)
+   @Column(unique=true, nullable=false)
+   private Integer seasonIHPDetailsRegionApplicationId;
 
-	@Column(nullable=false)
-	private Integer createdBy;
+   @Column(nullable=false)
+   private Integer createdBy;
 
-	@Column(nullable=false)
-	private Timestamp createdOn;
+   @Column(nullable=false)
+   private Timestamp createdOn;
 
-	@Column(nullable=false)
-	private Integer modifiedBy;
+   @Column(nullable=false)
+   private Integer modifiedBy;
 
-	@Column(nullable=false)
-	private Timestamp modifiedOn;
+   @Column(nullable=false)
+   private Timestamp modifiedOn;
 
-	private Byte stopAcceptingApps;
+   private Byte stopAcceptingApps;
 
-	//bi-directional many-to-one association to RegionIHP
-	@ManyToOne
-	@JoinColumn(name="regionIHPId")
-	private RegionIHP regionIhp;
+   //bi-directional many-to-one association to RegionIHP
+   @ManyToOne
+   @JoinColumn(name="regionIHPId")
+   private RegionIHP regionIhp;
 
-	//bi-directional many-to-one association to SeasonIHPDetail
-	@ManyToOne
-	@JoinColumn(name="seasonIHPDetailsId")
-	private SeasonIHPDetail seasonIhpdetail;
+   //bi-directional many-to-one association to SeasonIHPDetail
+   @ManyToOne
+   @JoinColumn(name="seasonIHPDetailsId")
+   private SeasonIHPDetail seasonIhpdetail;
 
-	public SeasonIHPDetailsRegionApplication() {
-	}
+   public SeasonIHPDetailsRegionApplication() {
+   }
 
-	public Integer getSeasonIHPDetailsRegionApplicationId() {
-		return this.seasonIHPDetailsRegionApplicationId;
-	}
+   public Integer getSeasonIHPDetailsRegionApplicationId() {
+      return this.seasonIHPDetailsRegionApplicationId;
+   }
 
-	public void setSeasonIHPDetailsRegionApplicationId(Integer seasonIHPDetailsRegionApplicationId) {
-		this.seasonIHPDetailsRegionApplicationId = seasonIHPDetailsRegionApplicationId;
-	}
+   public void setSeasonIHPDetailsRegionApplicationId(Integer seasonIHPDetailsRegionApplicationId) {
+      this.seasonIHPDetailsRegionApplicationId = seasonIHPDetailsRegionApplicationId;
+   }
 
-	public Integer getCreatedBy() {
-		return this.createdBy;
-	}
+   public Integer getCreatedBy() {
+      return this.createdBy;
+   }
 
-	public void setCreatedBy(Integer createdBy) {
-		this.createdBy = createdBy;
-	}
+   public void setCreatedBy(Integer createdBy) {
+      this.createdBy = createdBy;
+   }
 
-	public Timestamp getCreatedOn() {
-		return this.createdOn;
-	}
+   public Timestamp getCreatedOn() {
+      return this.createdOn;
+   }
 
-	public void setCreatedOn(Timestamp createdOn) {
-		this.createdOn = createdOn;
-	}
+   public void setCreatedOn(Timestamp createdOn) {
+      this.createdOn = createdOn;
+   }
 
-	public Integer getModifiedBy() {
-		return this.modifiedBy;
-	}
+   public Integer getModifiedBy() {
+      return this.modifiedBy;
+   }
 
-	public void setModifiedBy(Integer modifiedBy) {
-		this.modifiedBy = modifiedBy;
-	}
+   public void setModifiedBy(Integer modifiedBy) {
+      this.modifiedBy = modifiedBy;
+   }
 
-	public Timestamp getModifiedOn() {
-		return this.modifiedOn;
-	}
+   public Timestamp getModifiedOn() {
+      return this.modifiedOn;
+   }
 
-	public void setModifiedOn(Timestamp modifiedOn) {
-		this.modifiedOn = modifiedOn;
-	}
+   public void setModifiedOn(Timestamp modifiedOn) {
+      this.modifiedOn = modifiedOn;
+   }
 
-	public Byte getStopAcceptingApps() {
-		return this.stopAcceptingApps;
-	}
+   public Byte getStopAcceptingApps() {
+      return this.stopAcceptingApps;
+   }
 
-	public void setStopAcceptingApps(Byte stopAcceptingApps) {
-		this.stopAcceptingApps = stopAcceptingApps;
-	}
+   public void setStopAcceptingApps(Byte stopAcceptingApps) {
+      this.stopAcceptingApps = stopAcceptingApps;
+   }
 
-	public RegionIHP getRegionIhp() {
-		return this.regionIhp;
-	}
+   public RegionIHP getRegionIhp() {
+      return this.regionIhp;
+   }
 
-	public void setRegionIhp(RegionIHP regionIhp) {
-		this.regionIhp = regionIhp;
-	}
+   public void setRegionIhp(RegionIHP regionIhp) {
+      this.regionIhp = regionIhp;
+   }
 
-	public SeasonIHPDetail getSeasonIhpdetail() {
-		return this.seasonIhpdetail;
-	}
+   public SeasonIHPDetail getSeasonIhpdetail() {
+      return this.seasonIhpdetail;
+   }
 
-	public void setSeasonIhpdetail(SeasonIHPDetail seasonIhpdetail) {
-		this.seasonIhpdetail = seasonIhpdetail;
-	}
+   public void setSeasonIhpdetail(SeasonIHPDetail seasonIhpdetail) {
+      this.seasonIhpdetail = seasonIhpdetail;
+   }
 
 }

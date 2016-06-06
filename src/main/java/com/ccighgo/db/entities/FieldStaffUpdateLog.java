@@ -13,67 +13,67 @@ import java.util.Date;
 @Table(name="FieldStaffUpdateLog")
 @NamedQuery(name="FieldStaffUpdateLog.findAll", query="SELECT f FROM FieldStaffUpdateLog f")
 public class FieldStaffUpdateLog implements Serializable {
-	private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
-	private Integer fieldStaffUpdateLogId;
+   @Id
+   @GeneratedValue(strategy=GenerationType.IDENTITY)
+   @Column(unique=true, nullable=false)
+   private Integer fieldStaffUpdateLogId;
 
-	private Integer createdBy;
+   private Integer createdBy;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date createdOn;
+   @Temporal(TemporalType.TIMESTAMP)
+   private Date createdOn;
 
-	@Lob
-	private String updateLogObject;
+   @Lob
+   private String updateLogObject;
 
-	//bi-directional many-to-one association to FieldStaff
-	@ManyToOne
-	@JoinColumn(name="fieldStaffGoId")
-	private FieldStaff fieldStaff;
+   //bi-directional many-to-one association to FieldStaff
+   @ManyToOne
+   @JoinColumn(name="fieldStaffGoId")
+   private FieldStaff fieldStaff;
 
-	public FieldStaffUpdateLog() {
-	}
+   public FieldStaffUpdateLog() {
+   }
 
-	public Integer getFieldStaffUpdateLogId() {
-		return this.fieldStaffUpdateLogId;
-	}
+   public Integer getFieldStaffUpdateLogId() {
+      return this.fieldStaffUpdateLogId;
+   }
 
-	public void setFieldStaffUpdateLogId(Integer fieldStaffUpdateLogId) {
-		this.fieldStaffUpdateLogId = fieldStaffUpdateLogId;
-	}
+   public void setFieldStaffUpdateLogId(Integer fieldStaffUpdateLogId) {
+      this.fieldStaffUpdateLogId = fieldStaffUpdateLogId;
+   }
 
-	public Integer getCreatedBy() {
-		return this.createdBy;
-	}
+   public Integer getCreatedBy() {
+      return this.createdBy;
+   }
 
-	public void setCreatedBy(Integer createdBy) {
-		this.createdBy = createdBy;
-	}
+   public void setCreatedBy(Integer createdBy) {
+      this.createdBy = createdBy;
+   }
 
-	public Date getCreatedOn() {
-		return this.createdOn;
-	}
+   public Date getCreatedOn() {
+      return this.createdOn;
+   }
 
-	public void setCreatedOn(Date createdOn) {
-		this.createdOn = createdOn;
-	}
+   public void setCreatedOn(Date createdOn) {
+      this.createdOn = createdOn;
+   }
 
-	public String getUpdateLogObject() {
-		return this.updateLogObject;
-	}
+   public String getUpdateLogObject() {
+      return this.updateLogObject;
+   }
 
-	public void setUpdateLogObject(String updateLogObject) {
-		this.updateLogObject = updateLogObject;
-	}
+   public void setUpdateLogObject(String updateLogObject) {
+      this.updateLogObject = updateLogObject;
+   }
 
-	public FieldStaff getFieldStaff() {
-		return this.fieldStaff;
-	}
+   public FieldStaff getFieldStaff() {
+      return this.fieldStaff;
+   }
 
-	public void setFieldStaff(FieldStaff fieldStaff) {
-		this.fieldStaff = fieldStaff;
-	}
+   public void setFieldStaff(FieldStaff fieldStaff) {
+      this.fieldStaff = fieldStaff;
+   }
 
 }

@@ -12,35 +12,35 @@ import javax.persistence.*;
 @Table(name="FieldStaffPermissions")
 @NamedQuery(name="FieldStaffPermission.findAll", query="SELECT f FROM FieldStaffPermission f")
 public class FieldStaffPermission implements Serializable {
-	private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
-	private Integer fieldStaffPermissionsId;
+   @Id
+   @GeneratedValue(strategy=GenerationType.IDENTITY)
+   @Column(unique=true, nullable=false)
+   private Integer fieldStaffPermissionsId;
 
-	//bi-directional many-to-one association to FieldStaff
-	@ManyToOne
-	@JoinColumn(name="fieldStaffGoId")
-	private FieldStaff fieldStaff;
+   //bi-directional many-to-one association to FieldStaff
+   @ManyToOne
+   @JoinColumn(name="fieldStaffGoId")
+   private FieldStaff fieldStaff;
 
-	public FieldStaffPermission() {
-	}
+   public FieldStaffPermission() {
+   }
 
-	public Integer getFieldStaffPermissionsId() {
-		return this.fieldStaffPermissionsId;
-	}
+   public Integer getFieldStaffPermissionsId() {
+      return this.fieldStaffPermissionsId;
+   }
 
-	public void setFieldStaffPermissionsId(Integer fieldStaffPermissionsId) {
-		this.fieldStaffPermissionsId = fieldStaffPermissionsId;
-	}
+   public void setFieldStaffPermissionsId(Integer fieldStaffPermissionsId) {
+      this.fieldStaffPermissionsId = fieldStaffPermissionsId;
+   }
 
-	public FieldStaff getFieldStaff() {
-		return this.fieldStaff;
-	}
+   public FieldStaff getFieldStaff() {
+      return this.fieldStaff;
+   }
 
-	public void setFieldStaff(FieldStaff fieldStaff) {
-		this.fieldStaff = fieldStaff;
-	}
+   public void setFieldStaff(FieldStaff fieldStaff) {
+      this.fieldStaff = fieldStaff;
+   }
 
 }

@@ -14,156 +14,156 @@ import java.sql.Timestamp;
 @Table(name="SeasonWnTSummerDetails")
 @NamedQuery(name="SeasonWnTSummerDetail.findAll", query="SELECT s FROM SeasonWnTSummerDetail s")
 public class SeasonWnTSummerDetail implements Serializable {
-	private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
-	private Integer seasonWnTSummerDetailsId;
+   @Id
+   @GeneratedValue(strategy=GenerationType.IDENTITY)
+   @Column(unique=true, nullable=false)
+   private Integer seasonWnTSummerDetailsId;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date applicationDeadlineDate;
+   @Temporal(TemporalType.TIMESTAMP)
+   private Date applicationDeadlineDate;
 
-	@Column(nullable=false)
-	private Integer createdBy;
+   @Column(nullable=false)
+   private Integer createdBy;
 
-	@Column(nullable=false)
-	private Timestamp createdOn;
+   @Column(nullable=false)
+   private Timestamp createdOn;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date endDate;
+   @Temporal(TemporalType.TIMESTAMP)
+   private Date endDate;
 
-	private Byte isJobBoardOpen;
+   private Byte isJobBoardOpen;
 
-	private Integer maxPendingJobApps;
+   private Integer maxPendingJobApps;
 
-	@Column(nullable=false)
-	private Integer modifiedBy;
+   @Column(nullable=false)
+   private Integer modifiedBy;
 
-	@Column(nullable=false)
-	private Timestamp modifiedOn;
+   @Column(nullable=false)
+   private Timestamp modifiedOn;
 
-	@Column(length=50)
-	private String programName;
+   @Column(length=50)
+   private String programName;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date startDate;
+   @Temporal(TemporalType.TIMESTAMP)
+   private Date startDate;
 
-	//bi-directional many-to-one association to Season
-	@ManyToOne
-	@JoinColumn(name="seasonId", nullable=false)
-	private Season season;
+   //bi-directional many-to-one association to Season
+   @ManyToOne
+   @JoinColumn(name="seasonId", nullable=false)
+   private Season season;
 
-	//bi-directional many-to-one association to SeasonStatus
-	@ManyToOne
-	@JoinColumn(name="programStatusId", nullable=false)
-	private SeasonStatus seasonStatus;
+   //bi-directional many-to-one association to SeasonStatus
+   @ManyToOne
+   @JoinColumn(name="programStatusId", nullable=false)
+   private SeasonStatus seasonStatus;
 
-	public SeasonWnTSummerDetail() {
-	}
+   public SeasonWnTSummerDetail() {
+   }
 
-	public Integer getSeasonWnTSummerDetailsId() {
-		return this.seasonWnTSummerDetailsId;
-	}
+   public Integer getSeasonWnTSummerDetailsId() {
+      return this.seasonWnTSummerDetailsId;
+   }
 
-	public void setSeasonWnTSummerDetailsId(Integer seasonWnTSummerDetailsId) {
-		this.seasonWnTSummerDetailsId = seasonWnTSummerDetailsId;
-	}
+   public void setSeasonWnTSummerDetailsId(Integer seasonWnTSummerDetailsId) {
+      this.seasonWnTSummerDetailsId = seasonWnTSummerDetailsId;
+   }
 
-	public Date getApplicationDeadlineDate() {
-		return this.applicationDeadlineDate;
-	}
+   public Date getApplicationDeadlineDate() {
+      return this.applicationDeadlineDate;
+   }
 
-	public void setApplicationDeadlineDate(Date applicationDeadlineDate) {
-		this.applicationDeadlineDate = applicationDeadlineDate;
-	}
+   public void setApplicationDeadlineDate(Date applicationDeadlineDate) {
+      this.applicationDeadlineDate = applicationDeadlineDate;
+   }
 
-	public Integer getCreatedBy() {
-		return this.createdBy;
-	}
+   public Integer getCreatedBy() {
+      return this.createdBy;
+   }
 
-	public void setCreatedBy(Integer createdBy) {
-		this.createdBy = createdBy;
-	}
+   public void setCreatedBy(Integer createdBy) {
+      this.createdBy = createdBy;
+   }
 
-	public Timestamp getCreatedOn() {
-		return this.createdOn;
-	}
+   public Timestamp getCreatedOn() {
+      return this.createdOn;
+   }
 
-	public void setCreatedOn(Timestamp createdOn) {
-		this.createdOn = createdOn;
-	}
+   public void setCreatedOn(Timestamp createdOn) {
+      this.createdOn = createdOn;
+   }
 
-	public Date getEndDate() {
-		return this.endDate;
-	}
+   public Date getEndDate() {
+      return this.endDate;
+   }
 
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
-	}
+   public void setEndDate(Date endDate) {
+      this.endDate = endDate;
+   }
 
-	public Byte getIsJobBoardOpen() {
-		return this.isJobBoardOpen;
-	}
+   public Byte getIsJobBoardOpen() {
+      return this.isJobBoardOpen;
+   }
 
-	public void setIsJobBoardOpen(Byte isJobBoardOpen) {
-		this.isJobBoardOpen = isJobBoardOpen;
-	}
+   public void setIsJobBoardOpen(Byte isJobBoardOpen) {
+      this.isJobBoardOpen = isJobBoardOpen;
+   }
 
-	public Integer getMaxPendingJobApps() {
-		return this.maxPendingJobApps;
-	}
+   public Integer getMaxPendingJobApps() {
+      return this.maxPendingJobApps;
+   }
 
-	public void setMaxPendingJobApps(Integer maxPendingJobApps) {
-		this.maxPendingJobApps = maxPendingJobApps;
-	}
+   public void setMaxPendingJobApps(Integer maxPendingJobApps) {
+      this.maxPendingJobApps = maxPendingJobApps;
+   }
 
-	public Integer getModifiedBy() {
-		return this.modifiedBy;
-	}
+   public Integer getModifiedBy() {
+      return this.modifiedBy;
+   }
 
-	public void setModifiedBy(Integer modifiedBy) {
-		this.modifiedBy = modifiedBy;
-	}
+   public void setModifiedBy(Integer modifiedBy) {
+      this.modifiedBy = modifiedBy;
+   }
 
-	public Timestamp getModifiedOn() {
-		return this.modifiedOn;
-	}
+   public Timestamp getModifiedOn() {
+      return this.modifiedOn;
+   }
 
-	public void setModifiedOn(Timestamp modifiedOn) {
-		this.modifiedOn = modifiedOn;
-	}
+   public void setModifiedOn(Timestamp modifiedOn) {
+      this.modifiedOn = modifiedOn;
+   }
 
-	public String getProgramName() {
-		return this.programName;
-	}
+   public String getProgramName() {
+      return this.programName;
+   }
 
-	public void setProgramName(String programName) {
-		this.programName = programName;
-	}
+   public void setProgramName(String programName) {
+      this.programName = programName;
+   }
 
-	public Date getStartDate() {
-		return this.startDate;
-	}
+   public Date getStartDate() {
+      return this.startDate;
+   }
 
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
-	}
+   public void setStartDate(Date startDate) {
+      this.startDate = startDate;
+   }
 
-	public Season getSeason() {
-		return this.season;
-	}
+   public Season getSeason() {
+      return this.season;
+   }
 
-	public void setSeason(Season season) {
-		this.season = season;
-	}
+   public void setSeason(Season season) {
+      this.season = season;
+   }
 
-	public SeasonStatus getSeasonStatus() {
-		return this.seasonStatus;
-	}
+   public SeasonStatus getSeasonStatus() {
+      return this.seasonStatus;
+   }
 
-	public void setSeasonStatus(SeasonStatus seasonStatus) {
-		this.seasonStatus = seasonStatus;
-	}
+   public void setSeasonStatus(SeasonStatus seasonStatus) {
+      this.seasonStatus = seasonStatus;
+   }
 
 }

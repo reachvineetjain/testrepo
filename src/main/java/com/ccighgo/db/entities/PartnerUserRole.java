@@ -12,46 +12,46 @@ import javax.persistence.*;
 @Table(name="PartnerUserRoles")
 @NamedQuery(name="PartnerUserRole.findAll", query="SELECT p FROM PartnerUserRole p")
 public class PartnerUserRole implements Serializable {
-	private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
-	private Integer partnerUserRoleId;
+   @Id
+   @GeneratedValue(strategy=GenerationType.IDENTITY)
+   @Column(unique=true, nullable=false)
+   private Integer partnerUserRoleId;
 
-	@Column(length=50)
-	private String partnerUserRoleName;
+   @Column(length=50)
+   private String partnerUserRoleName;
 
-	//bi-directional many-to-one association to PartnerUser
-	@ManyToOne
-	@JoinColumn(name="partnerUserId")
-	private PartnerUser partnerUser;
+   //bi-directional many-to-one association to PartnerUser
+   @ManyToOne
+   @JoinColumn(name="partnerUserId")
+   private PartnerUser partnerUser;
 
-	public PartnerUserRole() {
-	}
+   public PartnerUserRole() {
+   }
 
-	public Integer getPartnerUserRoleId() {
-		return this.partnerUserRoleId;
-	}
+   public Integer getPartnerUserRoleId() {
+      return this.partnerUserRoleId;
+   }
 
-	public void setPartnerUserRoleId(Integer partnerUserRoleId) {
-		this.partnerUserRoleId = partnerUserRoleId;
-	}
+   public void setPartnerUserRoleId(Integer partnerUserRoleId) {
+      this.partnerUserRoleId = partnerUserRoleId;
+   }
 
-	public String getPartnerUserRoleName() {
-		return this.partnerUserRoleName;
-	}
+   public String getPartnerUserRoleName() {
+      return this.partnerUserRoleName;
+   }
 
-	public void setPartnerUserRoleName(String partnerUserRoleName) {
-		this.partnerUserRoleName = partnerUserRoleName;
-	}
+   public void setPartnerUserRoleName(String partnerUserRoleName) {
+      this.partnerUserRoleName = partnerUserRoleName;
+   }
 
-	public PartnerUser getPartnerUser() {
-		return this.partnerUser;
-	}
+   public PartnerUser getPartnerUser() {
+      return this.partnerUser;
+   }
 
-	public void setPartnerUser(PartnerUser partnerUser) {
-		this.partnerUser = partnerUser;
-	}
+   public void setPartnerUser(PartnerUser partnerUser) {
+      this.partnerUser = partnerUser;
+   }
 
 }

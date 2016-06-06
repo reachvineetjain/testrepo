@@ -13,108 +13,108 @@ import java.sql.Timestamp;
 @Table(name="HostFamilyAirport")
 @NamedQuery(name="HostFamilyAirport.findAll", query="SELECT h FROM HostFamilyAirport h")
 public class HostFamilyAirport implements Serializable {
-	private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
-	private Integer hostFamilyAirportId;
+   @Id
+   @GeneratedValue(strategy=GenerationType.IDENTITY)
+   @Column(unique=true, nullable=false)
+   private Integer hostFamilyAirportId;
 
-	private Byte active;
+   private Byte active;
 
-	private Integer createdBy;
+   private Integer createdBy;
 
-	private Timestamp createdOn;
+   private Timestamp createdOn;
 
-	private Integer distanceToAirport;
+   private Integer distanceToAirport;
 
-	private Integer modifiedBy;
+   private Integer modifiedBy;
 
-	private Timestamp modifiedOn;
+   private Timestamp modifiedOn;
 
-	//bi-directional many-to-one association to Airport
-	@ManyToOne
-	@JoinColumn(name="airportId")
-	private Airport airport;
+   //bi-directional many-to-one association to Airport
+   @ManyToOne
+   @JoinColumn(name="airportId")
+   private Airport airport;
 
-	//bi-directional many-to-one association to HostFamily
-	@ManyToOne
-	@JoinColumn(name="hostFamilyGoId")
-	private HostFamily hostFamily;
+   //bi-directional many-to-one association to HostFamily
+   @ManyToOne
+   @JoinColumn(name="hostFamilyGoId")
+   private HostFamily hostFamily;
 
-	public HostFamilyAirport() {
-	}
+   public HostFamilyAirport() {
+   }
 
-	public Integer getHostFamilyAirportId() {
-		return this.hostFamilyAirportId;
-	}
+   public Integer getHostFamilyAirportId() {
+      return this.hostFamilyAirportId;
+   }
 
-	public void setHostFamilyAirportId(Integer hostFamilyAirportId) {
-		this.hostFamilyAirportId = hostFamilyAirportId;
-	}
+   public void setHostFamilyAirportId(Integer hostFamilyAirportId) {
+      this.hostFamilyAirportId = hostFamilyAirportId;
+   }
 
-	public Byte getActive() {
-		return this.active;
-	}
+   public Byte getActive() {
+      return this.active;
+   }
 
-	public void setActive(Byte active) {
-		this.active = active;
-	}
+   public void setActive(Byte active) {
+      this.active = active;
+   }
 
-	public Integer getCreatedBy() {
-		return this.createdBy;
-	}
+   public Integer getCreatedBy() {
+      return this.createdBy;
+   }
 
-	public void setCreatedBy(Integer createdBy) {
-		this.createdBy = createdBy;
-	}
+   public void setCreatedBy(Integer createdBy) {
+      this.createdBy = createdBy;
+   }
 
-	public Timestamp getCreatedOn() {
-		return this.createdOn;
-	}
+   public Timestamp getCreatedOn() {
+      return this.createdOn;
+   }
 
-	public void setCreatedOn(Timestamp createdOn) {
-		this.createdOn = createdOn;
-	}
+   public void setCreatedOn(Timestamp createdOn) {
+      this.createdOn = createdOn;
+   }
 
-	public Integer getDistanceToAirport() {
-		return this.distanceToAirport;
-	}
+   public Integer getDistanceToAirport() {
+      return this.distanceToAirport;
+   }
 
-	public void setDistanceToAirport(Integer distanceToAirport) {
-		this.distanceToAirport = distanceToAirport;
-	}
+   public void setDistanceToAirport(Integer distanceToAirport) {
+      this.distanceToAirport = distanceToAirport;
+   }
 
-	public Integer getModifiedBy() {
-		return this.modifiedBy;
-	}
+   public Integer getModifiedBy() {
+      return this.modifiedBy;
+   }
 
-	public void setModifiedBy(Integer modifiedBy) {
-		this.modifiedBy = modifiedBy;
-	}
+   public void setModifiedBy(Integer modifiedBy) {
+      this.modifiedBy = modifiedBy;
+   }
 
-	public Timestamp getModifiedOn() {
-		return this.modifiedOn;
-	}
+   public Timestamp getModifiedOn() {
+      return this.modifiedOn;
+   }
 
-	public void setModifiedOn(Timestamp modifiedOn) {
-		this.modifiedOn = modifiedOn;
-	}
+   public void setModifiedOn(Timestamp modifiedOn) {
+      this.modifiedOn = modifiedOn;
+   }
 
-	public Airport getAirport() {
-		return this.airport;
-	}
+   public Airport getAirport() {
+      return this.airport;
+   }
 
-	public void setAirport(Airport airport) {
-		this.airport = airport;
-	}
+   public void setAirport(Airport airport) {
+      this.airport = airport;
+   }
 
-	public HostFamily getHostFamily() {
-		return this.hostFamily;
-	}
+   public HostFamily getHostFamily() {
+      return this.hostFamily;
+   }
 
-	public void setHostFamily(HostFamily hostFamily) {
-		this.hostFamily = hostFamily;
-	}
+   public void setHostFamily(HostFamily hostFamily) {
+      this.hostFamily = hostFamily;
+   }
 
 }

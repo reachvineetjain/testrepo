@@ -12,35 +12,35 @@ import javax.persistence.*;
 @Table(name="ParticipantPermissions")
 @NamedQuery(name="ParticipantPermission.findAll", query="SELECT p FROM ParticipantPermission p")
 public class ParticipantPermission implements Serializable {
-	private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
-	private Integer participantPermissionsId;
+   @Id
+   @GeneratedValue(strategy=GenerationType.IDENTITY)
+   @Column(unique=true, nullable=false)
+   private Integer participantPermissionsId;
 
-	//bi-directional many-to-one association to Participant
-	@ManyToOne
-	@JoinColumn(name="participantGoId")
-	private Participant participant;
+   //bi-directional many-to-one association to Participant
+   @ManyToOne
+   @JoinColumn(name="participantGoId")
+   private Participant participant;
 
-	public ParticipantPermission() {
-	}
+   public ParticipantPermission() {
+   }
 
-	public Integer getParticipantPermissionsId() {
-		return this.participantPermissionsId;
-	}
+   public Integer getParticipantPermissionsId() {
+      return this.participantPermissionsId;
+   }
 
-	public void setParticipantPermissionsId(Integer participantPermissionsId) {
-		this.participantPermissionsId = participantPermissionsId;
-	}
+   public void setParticipantPermissionsId(Integer participantPermissionsId) {
+      this.participantPermissionsId = participantPermissionsId;
+   }
 
-	public Participant getParticipant() {
-		return this.participant;
-	}
+   public Participant getParticipant() {
+      return this.participant;
+   }
 
-	public void setParticipant(Participant participant) {
-		this.participant = participant;
-	}
+   public void setParticipant(Participant participant) {
+      this.participant = participant;
+   }
 
 }
