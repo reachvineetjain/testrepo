@@ -14,214 +14,214 @@ import java.sql.Timestamp;
 @Table(name="PartnerSeasonAllocation")
 @NamedQuery(name="PartnerSeasonAllocation.findAll", query="SELECT p FROM PartnerSeasonAllocation p")
 public class PartnerSeasonAllocation implements Serializable {
-	private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
-	private Integer partnerSeasonAllocationId;
+   @Id
+   @GeneratedValue(strategy=GenerationType.IDENTITY)
+   @Column(unique=true, nullable=false)
+   private Integer partnerSeasonAllocationId;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date allocationRequestedOn;
+   @Temporal(TemporalType.TIMESTAMP)
+   private Date allocationRequestedOn;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date allocationRequestReviewedOn;
+   @Temporal(TemporalType.TIMESTAMP)
+   private Date allocationRequestReviewedOn;
 
-	@Column(nullable=false)
-	private Integer createdBy;
+   @Column(nullable=false)
+   private Integer createdBy;
 
-	@Column(nullable=false)
-	private Timestamp createdOn;
+   @Column(nullable=false)
+   private Timestamp createdOn;
 
-	private Integer expectedPaxCount;
+   private Integer expectedPaxCount;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date followupDate;
+   @Temporal(TemporalType.TIMESTAMP)
+   private Date followupDate;
 
-	private Integer maxGuaranteedPax;
+   private Integer maxGuaranteedPax;
 
-	private Integer maxPax;
+   private Integer maxPax;
 
-	@Column(nullable=false)
-	private Integer modifiedBy;
+   @Column(nullable=false)
+   private Integer modifiedBy;
 
-	@Column(nullable=false)
-	private Timestamp modifiedOn;
+   @Column(nullable=false)
+   private Timestamp modifiedOn;
 
-	private Integer requestedMaxGuaranteedPax;
+   private Integer requestedMaxGuaranteedPax;
 
-	private Integer requestedMaxPax;
+   private Integer requestedMaxPax;
 
-	//bi-directional many-to-one association to CCIStaffUser
-	@ManyToOne
-	@JoinColumn(name="allocationRequestReviewedBy")
-	private CCIStaffUser ccistaffUser;
+   //bi-directional many-to-one association to CCIStaffUser
+   @ManyToOne
+   @JoinColumn(name="allocationRequestReviewedBy")
+   private CCIStaffUser ccistaffUser;
 
-	//bi-directional many-to-one association to DepartmentProgramOption
-	@ManyToOne
-	@JoinColumn(name="departmentProgramOptionId")
-	private DepartmentProgramOption departmentProgramOption;
+   //bi-directional many-to-one association to DepartmentProgramOption
+   @ManyToOne
+   @JoinColumn(name="departmentProgramOptionId")
+   private DepartmentProgramOption departmentProgramOption;
 
-	//bi-directional many-to-one association to Login
-	@ManyToOne
-	@JoinColumn(name="allocationRequestedBy")
-	private Login login;
+   //bi-directional many-to-one association to Login
+   @ManyToOne
+   @JoinColumn(name="allocationRequestedBy")
+   private Login login;
 
-	//bi-directional many-to-one association to PartnerSeason
-	@ManyToOne
-	@JoinColumn(name="partnerSeasonId")
-	private PartnerSeason partnerSeason;
+   //bi-directional many-to-one association to PartnerSeason
+   @ManyToOne
+   @JoinColumn(name="partnerSeasonId")
+   private PartnerSeason partnerSeason;
 
-	//bi-directional many-to-one association to PartnerStatus
-	@ManyToOne
-	@JoinColumn(name="allocationRequestStatusId")
-	private PartnerStatus partnerStatus;
+   //bi-directional many-to-one association to PartnerStatus
+   @ManyToOne
+   @JoinColumn(name="allocationRequestStatusId")
+   private PartnerStatus partnerStatus;
 
-	public PartnerSeasonAllocation() {
-	}
+   public PartnerSeasonAllocation() {
+   }
 
-	public Integer getPartnerSeasonAllocationId() {
-		return this.partnerSeasonAllocationId;
-	}
+   public Integer getPartnerSeasonAllocationId() {
+      return this.partnerSeasonAllocationId;
+   }
 
-	public void setPartnerSeasonAllocationId(Integer partnerSeasonAllocationId) {
-		this.partnerSeasonAllocationId = partnerSeasonAllocationId;
-	}
+   public void setPartnerSeasonAllocationId(Integer partnerSeasonAllocationId) {
+      this.partnerSeasonAllocationId = partnerSeasonAllocationId;
+   }
 
-	public Date getAllocationRequestedOn() {
-		return this.allocationRequestedOn;
-	}
+   public Date getAllocationRequestedOn() {
+      return this.allocationRequestedOn;
+   }
 
-	public void setAllocationRequestedOn(Date allocationRequestedOn) {
-		this.allocationRequestedOn = allocationRequestedOn;
-	}
+   public void setAllocationRequestedOn(Date allocationRequestedOn) {
+      this.allocationRequestedOn = allocationRequestedOn;
+   }
 
-	public Date getAllocationRequestReviewedOn() {
-		return this.allocationRequestReviewedOn;
-	}
+   public Date getAllocationRequestReviewedOn() {
+      return this.allocationRequestReviewedOn;
+   }
 
-	public void setAllocationRequestReviewedOn(Date allocationRequestReviewedOn) {
-		this.allocationRequestReviewedOn = allocationRequestReviewedOn;
-	}
+   public void setAllocationRequestReviewedOn(Date allocationRequestReviewedOn) {
+      this.allocationRequestReviewedOn = allocationRequestReviewedOn;
+   }
 
-	public Integer getCreatedBy() {
-		return this.createdBy;
-	}
+   public Integer getCreatedBy() {
+      return this.createdBy;
+   }
 
-	public void setCreatedBy(Integer createdBy) {
-		this.createdBy = createdBy;
-	}
+   public void setCreatedBy(Integer createdBy) {
+      this.createdBy = createdBy;
+   }
 
-	public Timestamp getCreatedOn() {
-		return this.createdOn;
-	}
+   public Timestamp getCreatedOn() {
+      return this.createdOn;
+   }
 
-	public void setCreatedOn(Timestamp createdOn) {
-		this.createdOn = createdOn;
-	}
+   public void setCreatedOn(Timestamp createdOn) {
+      this.createdOn = createdOn;
+   }
 
-	public Integer getExpectedPaxCount() {
-		return this.expectedPaxCount;
-	}
+   public Integer getExpectedPaxCount() {
+      return this.expectedPaxCount;
+   }
 
-	public void setExpectedPaxCount(Integer expectedPaxCount) {
-		this.expectedPaxCount = expectedPaxCount;
-	}
+   public void setExpectedPaxCount(Integer expectedPaxCount) {
+      this.expectedPaxCount = expectedPaxCount;
+   }
 
-	public Date getFollowupDate() {
-		return this.followupDate;
-	}
+   public Date getFollowupDate() {
+      return this.followupDate;
+   }
 
-	public void setFollowupDate(Date followupDate) {
-		this.followupDate = followupDate;
-	}
+   public void setFollowupDate(Date followupDate) {
+      this.followupDate = followupDate;
+   }
 
-	public Integer getMaxGuaranteedPax() {
-		return this.maxGuaranteedPax;
-	}
+   public Integer getMaxGuaranteedPax() {
+      return this.maxGuaranteedPax;
+   }
 
-	public void setMaxGuaranteedPax(Integer maxGuaranteedPax) {
-		this.maxGuaranteedPax = maxGuaranteedPax;
-	}
+   public void setMaxGuaranteedPax(Integer maxGuaranteedPax) {
+      this.maxGuaranteedPax = maxGuaranteedPax;
+   }
 
-	public Integer getMaxPax() {
-		return this.maxPax;
-	}
+   public Integer getMaxPax() {
+      return this.maxPax;
+   }
 
-	public void setMaxPax(Integer maxPax) {
-		this.maxPax = maxPax;
-	}
+   public void setMaxPax(Integer maxPax) {
+      this.maxPax = maxPax;
+   }
 
-	public Integer getModifiedBy() {
-		return this.modifiedBy;
-	}
+   public Integer getModifiedBy() {
+      return this.modifiedBy;
+   }
 
-	public void setModifiedBy(Integer modifiedBy) {
-		this.modifiedBy = modifiedBy;
-	}
+   public void setModifiedBy(Integer modifiedBy) {
+      this.modifiedBy = modifiedBy;
+   }
 
-	public Timestamp getModifiedOn() {
-		return this.modifiedOn;
-	}
+   public Timestamp getModifiedOn() {
+      return this.modifiedOn;
+   }
 
-	public void setModifiedOn(Timestamp modifiedOn) {
-		this.modifiedOn = modifiedOn;
-	}
+   public void setModifiedOn(Timestamp modifiedOn) {
+      this.modifiedOn = modifiedOn;
+   }
 
-	public Integer getRequestedMaxGuaranteedPax() {
-		return this.requestedMaxGuaranteedPax;
-	}
+   public Integer getRequestedMaxGuaranteedPax() {
+      return this.requestedMaxGuaranteedPax;
+   }
 
-	public void setRequestedMaxGuaranteedPax(Integer requestedMaxGuaranteedPax) {
-		this.requestedMaxGuaranteedPax = requestedMaxGuaranteedPax;
-	}
+   public void setRequestedMaxGuaranteedPax(Integer requestedMaxGuaranteedPax) {
+      this.requestedMaxGuaranteedPax = requestedMaxGuaranteedPax;
+   }
 
-	public Integer getRequestedMaxPax() {
-		return this.requestedMaxPax;
-	}
+   public Integer getRequestedMaxPax() {
+      return this.requestedMaxPax;
+   }
 
-	public void setRequestedMaxPax(Integer requestedMaxPax) {
-		this.requestedMaxPax = requestedMaxPax;
-	}
+   public void setRequestedMaxPax(Integer requestedMaxPax) {
+      this.requestedMaxPax = requestedMaxPax;
+   }
 
-	public CCIStaffUser getCcistaffUser() {
-		return this.ccistaffUser;
-	}
+   public CCIStaffUser getCcistaffUser() {
+      return this.ccistaffUser;
+   }
 
-	public void setCcistaffUser(CCIStaffUser ccistaffUser) {
-		this.ccistaffUser = ccistaffUser;
-	}
+   public void setCcistaffUser(CCIStaffUser ccistaffUser) {
+      this.ccistaffUser = ccistaffUser;
+   }
 
-	public DepartmentProgramOption getDepartmentProgramOption() {
-		return this.departmentProgramOption;
-	}
+   public DepartmentProgramOption getDepartmentProgramOption() {
+      return this.departmentProgramOption;
+   }
 
-	public void setDepartmentProgramOption(DepartmentProgramOption departmentProgramOption) {
-		this.departmentProgramOption = departmentProgramOption;
-	}
+   public void setDepartmentProgramOption(DepartmentProgramOption departmentProgramOption) {
+      this.departmentProgramOption = departmentProgramOption;
+   }
 
-	public Login getLogin() {
-		return this.login;
-	}
+   public Login getLogin() {
+      return this.login;
+   }
 
-	public void setLogin(Login login) {
-		this.login = login;
-	}
+   public void setLogin(Login login) {
+      this.login = login;
+   }
 
-	public PartnerSeason getPartnerSeason() {
-		return this.partnerSeason;
-	}
+   public PartnerSeason getPartnerSeason() {
+      return this.partnerSeason;
+   }
 
-	public void setPartnerSeason(PartnerSeason partnerSeason) {
-		this.partnerSeason = partnerSeason;
-	}
+   public void setPartnerSeason(PartnerSeason partnerSeason) {
+      this.partnerSeason = partnerSeason;
+   }
 
-	public PartnerStatus getPartnerStatus() {
-		return this.partnerStatus;
-	}
+   public PartnerStatus getPartnerStatus() {
+      return this.partnerStatus;
+   }
 
-	public void setPartnerStatus(PartnerStatus partnerStatus) {
-		this.partnerStatus = partnerStatus;
-	}
+   public void setPartnerStatus(PartnerStatus partnerStatus) {
+      this.partnerStatus = partnerStatus;
+   }
 
 }

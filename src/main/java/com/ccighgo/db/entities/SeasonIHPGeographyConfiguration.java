@@ -13,105 +13,105 @@ import java.sql.Timestamp;
 @Table(name="SeasonIHPGeographyConfiguration")
 @NamedQuery(name="SeasonIHPGeographyConfiguration.findAll", query="SELECT s FROM SeasonIHPGeographyConfiguration s")
 public class SeasonIHPGeographyConfiguration implements Serializable {
-	private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
-	private Integer seasonIHPGeographyConfigurationId;
+   @Id
+   @GeneratedValue(strategy=GenerationType.IDENTITY)
+   @Column(unique=true, nullable=false)
+   private Integer seasonIHPGeographyConfigurationId;
 
-	@Column(nullable=false)
-	private Integer createdBy;
+   @Column(nullable=false)
+   private Integer createdBy;
 
-	@Column(nullable=false)
-	private Timestamp createdOn;
+   @Column(nullable=false)
+   private Timestamp createdOn;
 
-	@Column(nullable=false)
-	private Integer modifiedBy;
+   @Column(nullable=false)
+   private Integer modifiedBy;
 
-	@Column(nullable=false)
-	private Timestamp modifiedOn;
+   @Column(nullable=false)
+   private Timestamp modifiedOn;
 
-	//bi-directional many-to-one association to LookupUSState
-	@ManyToOne
-	@JoinColumn(name="usStatesId")
-	private LookupUSState lookupUsstate;
+   //bi-directional many-to-one association to LookupUSState
+   @ManyToOne
+   @JoinColumn(name="usStatesId")
+   private LookupUSState lookupUsstate;
 
-	//bi-directional many-to-one association to RegionIHP
-	@ManyToOne
-	@JoinColumn(name="regionIHPId")
-	private RegionIHP regionIhp;
+   //bi-directional many-to-one association to RegionIHP
+   @ManyToOne
+   @JoinColumn(name="regionIHPId")
+   private RegionIHP regionIhp;
 
-	//bi-directional many-to-one association to Season
-	@ManyToOne
-	@JoinColumn(name="seasonId")
-	private Season season;
+   //bi-directional many-to-one association to Season
+   @ManyToOne
+   @JoinColumn(name="seasonId")
+   private Season season;
 
-	public SeasonIHPGeographyConfiguration() {
-	}
+   public SeasonIHPGeographyConfiguration() {
+   }
 
-	public Integer getSeasonIHPGeographyConfigurationId() {
-		return this.seasonIHPGeographyConfigurationId;
-	}
+   public Integer getSeasonIHPGeographyConfigurationId() {
+      return this.seasonIHPGeographyConfigurationId;
+   }
 
-	public void setSeasonIHPGeographyConfigurationId(Integer seasonIHPGeographyConfigurationId) {
-		this.seasonIHPGeographyConfigurationId = seasonIHPGeographyConfigurationId;
-	}
+   public void setSeasonIHPGeographyConfigurationId(Integer seasonIHPGeographyConfigurationId) {
+      this.seasonIHPGeographyConfigurationId = seasonIHPGeographyConfigurationId;
+   }
 
-	public Integer getCreatedBy() {
-		return this.createdBy;
-	}
+   public Integer getCreatedBy() {
+      return this.createdBy;
+   }
 
-	public void setCreatedBy(Integer createdBy) {
-		this.createdBy = createdBy;
-	}
+   public void setCreatedBy(Integer createdBy) {
+      this.createdBy = createdBy;
+   }
 
-	public Timestamp getCreatedOn() {
-		return this.createdOn;
-	}
+   public Timestamp getCreatedOn() {
+      return this.createdOn;
+   }
 
-	public void setCreatedOn(Timestamp createdOn) {
-		this.createdOn = createdOn;
-	}
+   public void setCreatedOn(Timestamp createdOn) {
+      this.createdOn = createdOn;
+   }
 
-	public Integer getModifiedBy() {
-		return this.modifiedBy;
-	}
+   public Integer getModifiedBy() {
+      return this.modifiedBy;
+   }
 
-	public void setModifiedBy(Integer modifiedBy) {
-		this.modifiedBy = modifiedBy;
-	}
+   public void setModifiedBy(Integer modifiedBy) {
+      this.modifiedBy = modifiedBy;
+   }
 
-	public Timestamp getModifiedOn() {
-		return this.modifiedOn;
-	}
+   public Timestamp getModifiedOn() {
+      return this.modifiedOn;
+   }
 
-	public void setModifiedOn(Timestamp modifiedOn) {
-		this.modifiedOn = modifiedOn;
-	}
+   public void setModifiedOn(Timestamp modifiedOn) {
+      this.modifiedOn = modifiedOn;
+   }
 
-	public LookupUSState getLookupUsstate() {
-		return this.lookupUsstate;
-	}
+   public LookupUSState getLookupUsstate() {
+      return this.lookupUsstate;
+   }
 
-	public void setLookupUsstate(LookupUSState lookupUsstate) {
-		this.lookupUsstate = lookupUsstate;
-	}
+   public void setLookupUsstate(LookupUSState lookupUsstate) {
+      this.lookupUsstate = lookupUsstate;
+   }
 
-	public RegionIHP getRegionIhp() {
-		return this.regionIhp;
-	}
+   public RegionIHP getRegionIhp() {
+      return this.regionIhp;
+   }
 
-	public void setRegionIhp(RegionIHP regionIhp) {
-		this.regionIhp = regionIhp;
-	}
+   public void setRegionIhp(RegionIHP regionIhp) {
+      this.regionIhp = regionIhp;
+   }
 
-	public Season getSeason() {
-		return this.season;
-	}
+   public Season getSeason() {
+      return this.season;
+   }
 
-	public void setSeason(Season season) {
-		this.season = season;
-	}
+   public void setSeason(Season season) {
+      this.season = season;
+   }
 
 }

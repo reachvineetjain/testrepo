@@ -13,67 +13,67 @@ import java.util.Date;
 @Table(name="PartnerUpdateLog")
 @NamedQuery(name="PartnerUpdateLog.findAll", query="SELECT p FROM PartnerUpdateLog p")
 public class PartnerUpdateLog implements Serializable {
-	private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
-	private Integer partnerUpdateLogId;
+   @Id
+   @GeneratedValue(strategy=GenerationType.IDENTITY)
+   @Column(unique=true, nullable=false)
+   private Integer partnerUpdateLogId;
 
-	private Integer createdBy;
+   private Integer createdBy;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date createdOn;
+   @Temporal(TemporalType.TIMESTAMP)
+   private Date createdOn;
 
-	@Lob
-	private String updateLogObject;
+   @Lob
+   private String updateLogObject;
 
-	//bi-directional many-to-one association to Partner
-	@ManyToOne
-	@JoinColumn(name="partnerGoId")
-	private Partner partner;
+   //bi-directional many-to-one association to Partner
+   @ManyToOne
+   @JoinColumn(name="partnerGoId")
+   private Partner partner;
 
-	public PartnerUpdateLog() {
-	}
+   public PartnerUpdateLog() {
+   }
 
-	public Integer getPartnerUpdateLogId() {
-		return this.partnerUpdateLogId;
-	}
+   public Integer getPartnerUpdateLogId() {
+      return this.partnerUpdateLogId;
+   }
 
-	public void setPartnerUpdateLogId(Integer partnerUpdateLogId) {
-		this.partnerUpdateLogId = partnerUpdateLogId;
-	}
+   public void setPartnerUpdateLogId(Integer partnerUpdateLogId) {
+      this.partnerUpdateLogId = partnerUpdateLogId;
+   }
 
-	public Integer getCreatedBy() {
-		return this.createdBy;
-	}
+   public Integer getCreatedBy() {
+      return this.createdBy;
+   }
 
-	public void setCreatedBy(Integer createdBy) {
-		this.createdBy = createdBy;
-	}
+   public void setCreatedBy(Integer createdBy) {
+      this.createdBy = createdBy;
+   }
 
-	public Date getCreatedOn() {
-		return this.createdOn;
-	}
+   public Date getCreatedOn() {
+      return this.createdOn;
+   }
 
-	public void setCreatedOn(Date createdOn) {
-		this.createdOn = createdOn;
-	}
+   public void setCreatedOn(Date createdOn) {
+      this.createdOn = createdOn;
+   }
 
-	public String getUpdateLogObject() {
-		return this.updateLogObject;
-	}
+   public String getUpdateLogObject() {
+      return this.updateLogObject;
+   }
 
-	public void setUpdateLogObject(String updateLogObject) {
-		this.updateLogObject = updateLogObject;
-	}
+   public void setUpdateLogObject(String updateLogObject) {
+      this.updateLogObject = updateLogObject;
+   }
 
-	public Partner getPartner() {
-		return this.partner;
-	}
+   public Partner getPartner() {
+      return this.partner;
+   }
 
-	public void setPartner(Partner partner) {
-		this.partner = partner;
-	}
+   public void setPartner(Partner partner) {
+      this.partner = partner;
+   }
 
 }

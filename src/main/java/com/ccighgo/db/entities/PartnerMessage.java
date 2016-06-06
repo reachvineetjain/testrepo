@@ -13,70 +13,70 @@ import java.util.Date;
 @Table(name="PartnerMessages")
 @NamedQuery(name="PartnerMessage.findAll", query="SELECT p FROM PartnerMessage p")
 public class PartnerMessage implements Serializable {
-	private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
-	private Integer partnerInquiryMessageId;
+   @Id
+   @GeneratedValue(strategy=GenerationType.IDENTITY)
+   @Column(unique=true, nullable=false)
+   private Integer partnerInquiryMessageId;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date createdOn;
+   @Temporal(TemporalType.TIMESTAMP)
+   private Date createdOn;
 
-	@Column(length=1000)
-	private String partnerInquiryMessage;
+   @Column(length=1000)
+   private String partnerInquiryMessage;
 
-	//bi-directional many-to-one association to CCIStaffUser
-	@ManyToOne
-	@JoinColumn(name="cciStaffUserId")
-	private CCIStaffUser ccistaffUser;
+   //bi-directional many-to-one association to CCIStaffUser
+   @ManyToOne
+   @JoinColumn(name="cciStaffUserId")
+   private CCIStaffUser ccistaffUser;
 
-	//bi-directional many-to-one association to Partner
-	@ManyToOne
-	@JoinColumn(name="partnerGoId")
-	private Partner partner;
+   //bi-directional many-to-one association to Partner
+   @ManyToOne
+   @JoinColumn(name="partnerGoId")
+   private Partner partner;
 
-	public PartnerMessage() {
-	}
+   public PartnerMessage() {
+   }
 
-	public Integer getPartnerInquiryMessageId() {
-		return this.partnerInquiryMessageId;
-	}
+   public Integer getPartnerInquiryMessageId() {
+      return this.partnerInquiryMessageId;
+   }
 
-	public void setPartnerInquiryMessageId(Integer partnerInquiryMessageId) {
-		this.partnerInquiryMessageId = partnerInquiryMessageId;
-	}
+   public void setPartnerInquiryMessageId(Integer partnerInquiryMessageId) {
+      this.partnerInquiryMessageId = partnerInquiryMessageId;
+   }
 
-	public Date getCreatedOn() {
-		return this.createdOn;
-	}
+   public Date getCreatedOn() {
+      return this.createdOn;
+   }
 
-	public void setCreatedOn(Date createdOn) {
-		this.createdOn = createdOn;
-	}
+   public void setCreatedOn(Date createdOn) {
+      this.createdOn = createdOn;
+   }
 
-	public String getPartnerInquiryMessage() {
-		return this.partnerInquiryMessage;
-	}
+   public String getPartnerInquiryMessage() {
+      return this.partnerInquiryMessage;
+   }
 
-	public void setPartnerInquiryMessage(String partnerInquiryMessage) {
-		this.partnerInquiryMessage = partnerInquiryMessage;
-	}
+   public void setPartnerInquiryMessage(String partnerInquiryMessage) {
+      this.partnerInquiryMessage = partnerInquiryMessage;
+   }
 
-	public CCIStaffUser getCcistaffUser() {
-		return this.ccistaffUser;
-	}
+   public CCIStaffUser getCcistaffUser() {
+      return this.ccistaffUser;
+   }
 
-	public void setCcistaffUser(CCIStaffUser ccistaffUser) {
-		this.ccistaffUser = ccistaffUser;
-	}
+   public void setCcistaffUser(CCIStaffUser ccistaffUser) {
+      this.ccistaffUser = ccistaffUser;
+   }
 
-	public Partner getPartner() {
-		return this.partner;
-	}
+   public Partner getPartner() {
+      return this.partner;
+   }
 
-	public void setPartner(Partner partner) {
-		this.partner = partner;
-	}
+   public void setPartner(Partner partner) {
+      this.partner = partner;
+   }
 
 }

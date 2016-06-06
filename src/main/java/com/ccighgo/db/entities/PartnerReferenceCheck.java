@@ -13,101 +13,101 @@ import java.util.Date;
 @Table(name="PartnerReferenceChecks")
 @NamedQuery(name="PartnerReferenceCheck.findAll", query="SELECT p FROM PartnerReferenceCheck p")
 public class PartnerReferenceCheck implements Serializable {
-	private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
-	private Integer partnerReferenceCheckId;
+   @Id
+   @GeneratedValue(strategy=GenerationType.IDENTITY)
+   @Column(unique=true, nullable=false)
+   private Integer partnerReferenceCheckId;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date businessLicenseExpiryDate;
+   @Temporal(TemporalType.TIMESTAMP)
+   private Date businessLicenseExpiryDate;
 
-	@Column(length=50)
-	private String referenceApprovedBy;
+   @Column(length=50)
+   private String referenceApprovedBy;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date referenceApprovedOn;
+   @Temporal(TemporalType.TIMESTAMP)
+   private Date referenceApprovedOn;
 
-	@Lob
-	private String referenceCheckNotes;
+   @Lob
+   private String referenceCheckNotes;
 
-	@Column(length=50)
-	private String referenceCompletedBy;
+   @Column(length=50)
+   private String referenceCompletedBy;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date referenceCompletedOn;
+   @Temporal(TemporalType.TIMESTAMP)
+   private Date referenceCompletedOn;
 
-	//bi-directional many-to-one association to Partner
-	@ManyToOne
-	@JoinColumn(name="partnerGoId")
-	private Partner partner;
+   //bi-directional many-to-one association to Partner
+   @ManyToOne
+   @JoinColumn(name="partnerGoId")
+   private Partner partner;
 
-	public PartnerReferenceCheck() {
-	}
+   public PartnerReferenceCheck() {
+   }
 
-	public Integer getPartnerReferenceCheckId() {
-		return this.partnerReferenceCheckId;
-	}
+   public Integer getPartnerReferenceCheckId() {
+      return this.partnerReferenceCheckId;
+   }
 
-	public void setPartnerReferenceCheckId(Integer partnerReferenceCheckId) {
-		this.partnerReferenceCheckId = partnerReferenceCheckId;
-	}
+   public void setPartnerReferenceCheckId(Integer partnerReferenceCheckId) {
+      this.partnerReferenceCheckId = partnerReferenceCheckId;
+   }
 
-	public Date getBusinessLicenseExpiryDate() {
-		return this.businessLicenseExpiryDate;
-	}
+   public Date getBusinessLicenseExpiryDate() {
+      return this.businessLicenseExpiryDate;
+   }
 
-	public void setBusinessLicenseExpiryDate(Date businessLicenseExpiryDate) {
-		this.businessLicenseExpiryDate = businessLicenseExpiryDate;
-	}
+   public void setBusinessLicenseExpiryDate(Date businessLicenseExpiryDate) {
+      this.businessLicenseExpiryDate = businessLicenseExpiryDate;
+   }
 
-	public String getReferenceApprovedBy() {
-		return this.referenceApprovedBy;
-	}
+   public String getReferenceApprovedBy() {
+      return this.referenceApprovedBy;
+   }
 
-	public void setReferenceApprovedBy(String referenceApprovedBy) {
-		this.referenceApprovedBy = referenceApprovedBy;
-	}
+   public void setReferenceApprovedBy(String referenceApprovedBy) {
+      this.referenceApprovedBy = referenceApprovedBy;
+   }
 
-	public Date getReferenceApprovedOn() {
-		return this.referenceApprovedOn;
-	}
+   public Date getReferenceApprovedOn() {
+      return this.referenceApprovedOn;
+   }
 
-	public void setReferenceApprovedOn(Date referenceApprovedOn) {
-		this.referenceApprovedOn = referenceApprovedOn;
-	}
+   public void setReferenceApprovedOn(Date referenceApprovedOn) {
+      this.referenceApprovedOn = referenceApprovedOn;
+   }
 
-	public String getReferenceCheckNotes() {
-		return this.referenceCheckNotes;
-	}
+   public String getReferenceCheckNotes() {
+      return this.referenceCheckNotes;
+   }
 
-	public void setReferenceCheckNotes(String referenceCheckNotes) {
-		this.referenceCheckNotes = referenceCheckNotes;
-	}
+   public void setReferenceCheckNotes(String referenceCheckNotes) {
+      this.referenceCheckNotes = referenceCheckNotes;
+   }
 
-	public String getReferenceCompletedBy() {
-		return this.referenceCompletedBy;
-	}
+   public String getReferenceCompletedBy() {
+      return this.referenceCompletedBy;
+   }
 
-	public void setReferenceCompletedBy(String referenceCompletedBy) {
-		this.referenceCompletedBy = referenceCompletedBy;
-	}
+   public void setReferenceCompletedBy(String referenceCompletedBy) {
+      this.referenceCompletedBy = referenceCompletedBy;
+   }
 
-	public Date getReferenceCompletedOn() {
-		return this.referenceCompletedOn;
-	}
+   public Date getReferenceCompletedOn() {
+      return this.referenceCompletedOn;
+   }
 
-	public void setReferenceCompletedOn(Date referenceCompletedOn) {
-		this.referenceCompletedOn = referenceCompletedOn;
-	}
+   public void setReferenceCompletedOn(Date referenceCompletedOn) {
+      this.referenceCompletedOn = referenceCompletedOn;
+   }
 
-	public Partner getPartner() {
-		return this.partner;
-	}
+   public Partner getPartner() {
+      return this.partner;
+   }
 
-	public void setPartner(Partner partner) {
-		this.partner = partner;
-	}
+   public void setPartner(Partner partner) {
+      this.partner = partner;
+   }
 
 }

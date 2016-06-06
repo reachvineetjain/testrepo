@@ -13,325 +13,325 @@ import java.util.List;
 @Table(name="StateTypes")
 @NamedQuery(name="StateType.findAll", query="SELECT s FROM StateType s")
 public class StateType implements Serializable {
-	private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
-	private Integer stateTypeId;
+   @Id
+   @GeneratedValue(strategy=GenerationType.IDENTITY)
+   @Column(unique=true, nullable=false)
+   private Integer stateTypeId;
 
-	private Byte isLastStep;
+   private Byte isLastStep;
 
-	private Byte isVisibleToAdmin;
+   private Byte isVisibleToAdmin;
 
-	private Byte isVisibleToParticipant;
+   private Byte isVisibleToParticipant;
 
-	private Byte isVisibleToPartner;
+   private Byte isVisibleToPartner;
 
-	@Column(length=45)
-	private String stateName;
+   @Column(length=45)
+   private String stateName;
 
-	private Integer workQueueCategoryId;
+   private Integer workQueueCategoryId;
 
-	@Column(length=50)
-	private String workQueueRoleType;
+   @Column(length=50)
+   private String workQueueRoleType;
 
-	private Integer workQueueTypeId;
+   private Integer workQueueTypeId;
 
-	//bi-directional many-to-one association to AdminWorkQueue
-	@OneToMany(mappedBy="stateType")
-	private List<AdminWorkQueue> adminWorkQueues;
+   //bi-directional many-to-one association to AdminWorkQueue
+   @OneToMany(mappedBy="stateType")
+   private List<AdminWorkQueue> adminWorkQueues;
 
-	//bi-directional many-to-one association to FieldStaffWorkQueue
-	@OneToMany(mappedBy="stateType")
-	private List<FieldStaffWorkQueue> fieldStaffWorkQueues;
+   //bi-directional many-to-one association to FieldStaffWorkQueue
+   @OneToMany(mappedBy="stateType")
+   private List<FieldStaffWorkQueue> fieldStaffWorkQueues;
 
-	//bi-directional many-to-one association to HostFamilyWorkQueue
-	@OneToMany(mappedBy="stateType")
-	private List<HostFamilyWorkQueue> hostFamilyWorkQueues;
+   //bi-directional many-to-one association to HostFamilyWorkQueue
+   @OneToMany(mappedBy="stateType")
+   private List<HostFamilyWorkQueue> hostFamilyWorkQueues;
 
-	//bi-directional many-to-one association to PartnerWorkQueue
-	@OneToMany(mappedBy="stateType")
-	private List<PartnerWorkQueue> partnerWorkQueues;
+   //bi-directional many-to-one association to PartnerWorkQueue
+   @OneToMany(mappedBy="stateType")
+   private List<PartnerWorkQueue> partnerWorkQueues;
 
-	//bi-directional many-to-one association to StateAction
-	@OneToMany(mappedBy="stateType")
-	private List<StateAction> stateActions;
+   //bi-directional many-to-one association to StateAction
+   @OneToMany(mappedBy="stateType")
+   private List<StateAction> stateActions;
 
-	//bi-directional many-to-one association to StateTransition
-	@OneToMany(mappedBy="stateType1")
-	private List<StateTransition> stateTransitions1;
+   //bi-directional many-to-one association to StateTransition
+   @OneToMany(mappedBy="stateType1")
+   private List<StateTransition> stateTransitions1;
 
-	//bi-directional many-to-one association to StateTransition
-	@OneToMany(mappedBy="stateType2")
-	private List<StateTransition> stateTransitions2;
+   //bi-directional many-to-one association to StateTransition
+   @OneToMany(mappedBy="stateType2")
+   private List<StateTransition> stateTransitions2;
 
-	//bi-directional many-to-one association to StateTypeResourcePermission
-	@OneToMany(mappedBy="stateType")
-	private List<StateTypeResourcePermission> stateTypeResourcePermissions;
+   //bi-directional many-to-one association to StateTypeResourcePermission
+   @OneToMany(mappedBy="stateType")
+   private List<StateTypeResourcePermission> stateTypeResourcePermissions;
 
-	//bi-directional many-to-one association to StateProcess
-	@ManyToOne
-	@JoinColumn(name="stateProcessId")
-	private StateProcess stateProcess;
+   //bi-directional many-to-one association to StateProcess
+   @ManyToOne
+   @JoinColumn(name="stateProcessId")
+   private StateProcess stateProcess;
 
-	public StateType() {
-	}
+   public StateType() {
+   }
 
-	public Integer getStateTypeId() {
-		return this.stateTypeId;
-	}
+   public Integer getStateTypeId() {
+      return this.stateTypeId;
+   }
 
-	public void setStateTypeId(Integer stateTypeId) {
-		this.stateTypeId = stateTypeId;
-	}
+   public void setStateTypeId(Integer stateTypeId) {
+      this.stateTypeId = stateTypeId;
+   }
 
-	public Byte getIsLastStep() {
-		return this.isLastStep;
-	}
+   public Byte getIsLastStep() {
+      return this.isLastStep;
+   }
 
-	public void setIsLastStep(Byte isLastStep) {
-		this.isLastStep = isLastStep;
-	}
+   public void setIsLastStep(Byte isLastStep) {
+      this.isLastStep = isLastStep;
+   }
 
-	public Byte getIsVisibleToAdmin() {
-		return this.isVisibleToAdmin;
-	}
+   public Byte getIsVisibleToAdmin() {
+      return this.isVisibleToAdmin;
+   }
 
-	public void setIsVisibleToAdmin(Byte isVisibleToAdmin) {
-		this.isVisibleToAdmin = isVisibleToAdmin;
-	}
+   public void setIsVisibleToAdmin(Byte isVisibleToAdmin) {
+      this.isVisibleToAdmin = isVisibleToAdmin;
+   }
 
-	public Byte getIsVisibleToParticipant() {
-		return this.isVisibleToParticipant;
-	}
+   public Byte getIsVisibleToParticipant() {
+      return this.isVisibleToParticipant;
+   }
 
-	public void setIsVisibleToParticipant(Byte isVisibleToParticipant) {
-		this.isVisibleToParticipant = isVisibleToParticipant;
-	}
+   public void setIsVisibleToParticipant(Byte isVisibleToParticipant) {
+      this.isVisibleToParticipant = isVisibleToParticipant;
+   }
 
-	public Byte getIsVisibleToPartner() {
-		return this.isVisibleToPartner;
-	}
+   public Byte getIsVisibleToPartner() {
+      return this.isVisibleToPartner;
+   }
 
-	public void setIsVisibleToPartner(Byte isVisibleToPartner) {
-		this.isVisibleToPartner = isVisibleToPartner;
-	}
+   public void setIsVisibleToPartner(Byte isVisibleToPartner) {
+      this.isVisibleToPartner = isVisibleToPartner;
+   }
 
-	public String getStateName() {
-		return this.stateName;
-	}
+   public String getStateName() {
+      return this.stateName;
+   }
 
-	public void setStateName(String stateName) {
-		this.stateName = stateName;
-	}
+   public void setStateName(String stateName) {
+      this.stateName = stateName;
+   }
 
-	public Integer getWorkQueueCategoryId() {
-		return this.workQueueCategoryId;
-	}
+   public Integer getWorkQueueCategoryId() {
+      return this.workQueueCategoryId;
+   }
 
-	public void setWorkQueueCategoryId(Integer workQueueCategoryId) {
-		this.workQueueCategoryId = workQueueCategoryId;
-	}
+   public void setWorkQueueCategoryId(Integer workQueueCategoryId) {
+      this.workQueueCategoryId = workQueueCategoryId;
+   }
 
-	public String getWorkQueueRoleType() {
-		return this.workQueueRoleType;
-	}
+   public String getWorkQueueRoleType() {
+      return this.workQueueRoleType;
+   }
 
-	public void setWorkQueueRoleType(String workQueueRoleType) {
-		this.workQueueRoleType = workQueueRoleType;
-	}
+   public void setWorkQueueRoleType(String workQueueRoleType) {
+      this.workQueueRoleType = workQueueRoleType;
+   }
 
-	public Integer getWorkQueueTypeId() {
-		return this.workQueueTypeId;
-	}
+   public Integer getWorkQueueTypeId() {
+      return this.workQueueTypeId;
+   }
 
-	public void setWorkQueueTypeId(Integer workQueueTypeId) {
-		this.workQueueTypeId = workQueueTypeId;
-	}
+   public void setWorkQueueTypeId(Integer workQueueTypeId) {
+      this.workQueueTypeId = workQueueTypeId;
+   }
 
-	public List<AdminWorkQueue> getAdminWorkQueues() {
-		return this.adminWorkQueues;
-	}
+   public List<AdminWorkQueue> getAdminWorkQueues() {
+      return this.adminWorkQueues;
+   }
 
-	public void setAdminWorkQueues(List<AdminWorkQueue> adminWorkQueues) {
-		this.adminWorkQueues = adminWorkQueues;
-	}
+   public void setAdminWorkQueues(List<AdminWorkQueue> adminWorkQueues) {
+      this.adminWorkQueues = adminWorkQueues;
+   }
 
-	public AdminWorkQueue addAdminWorkQueue(AdminWorkQueue adminWorkQueue) {
-		getAdminWorkQueues().add(adminWorkQueue);
-		adminWorkQueue.setStateType(this);
+   public AdminWorkQueue addAdminWorkQueue(AdminWorkQueue adminWorkQueue) {
+      getAdminWorkQueues().add(adminWorkQueue);
+      adminWorkQueue.setStateType(this);
 
-		return adminWorkQueue;
-	}
+      return adminWorkQueue;
+   }
 
-	public AdminWorkQueue removeAdminWorkQueue(AdminWorkQueue adminWorkQueue) {
-		getAdminWorkQueues().remove(adminWorkQueue);
-		adminWorkQueue.setStateType(null);
+   public AdminWorkQueue removeAdminWorkQueue(AdminWorkQueue adminWorkQueue) {
+      getAdminWorkQueues().remove(adminWorkQueue);
+      adminWorkQueue.setStateType(null);
 
-		return adminWorkQueue;
-	}
+      return adminWorkQueue;
+   }
 
-	public List<FieldStaffWorkQueue> getFieldStaffWorkQueues() {
-		return this.fieldStaffWorkQueues;
-	}
+   public List<FieldStaffWorkQueue> getFieldStaffWorkQueues() {
+      return this.fieldStaffWorkQueues;
+   }
 
-	public void setFieldStaffWorkQueues(List<FieldStaffWorkQueue> fieldStaffWorkQueues) {
-		this.fieldStaffWorkQueues = fieldStaffWorkQueues;
-	}
+   public void setFieldStaffWorkQueues(List<FieldStaffWorkQueue> fieldStaffWorkQueues) {
+      this.fieldStaffWorkQueues = fieldStaffWorkQueues;
+   }
 
-	public FieldStaffWorkQueue addFieldStaffWorkQueue(FieldStaffWorkQueue fieldStaffWorkQueue) {
-		getFieldStaffWorkQueues().add(fieldStaffWorkQueue);
-		fieldStaffWorkQueue.setStateType(this);
+   public FieldStaffWorkQueue addFieldStaffWorkQueue(FieldStaffWorkQueue fieldStaffWorkQueue) {
+      getFieldStaffWorkQueues().add(fieldStaffWorkQueue);
+      fieldStaffWorkQueue.setStateType(this);
 
-		return fieldStaffWorkQueue;
-	}
+      return fieldStaffWorkQueue;
+   }
 
-	public FieldStaffWorkQueue removeFieldStaffWorkQueue(FieldStaffWorkQueue fieldStaffWorkQueue) {
-		getFieldStaffWorkQueues().remove(fieldStaffWorkQueue);
-		fieldStaffWorkQueue.setStateType(null);
+   public FieldStaffWorkQueue removeFieldStaffWorkQueue(FieldStaffWorkQueue fieldStaffWorkQueue) {
+      getFieldStaffWorkQueues().remove(fieldStaffWorkQueue);
+      fieldStaffWorkQueue.setStateType(null);
 
-		return fieldStaffWorkQueue;
-	}
+      return fieldStaffWorkQueue;
+   }
 
-	public List<HostFamilyWorkQueue> getHostFamilyWorkQueues() {
-		return this.hostFamilyWorkQueues;
-	}
+   public List<HostFamilyWorkQueue> getHostFamilyWorkQueues() {
+      return this.hostFamilyWorkQueues;
+   }
 
-	public void setHostFamilyWorkQueues(List<HostFamilyWorkQueue> hostFamilyWorkQueues) {
-		this.hostFamilyWorkQueues = hostFamilyWorkQueues;
-	}
+   public void setHostFamilyWorkQueues(List<HostFamilyWorkQueue> hostFamilyWorkQueues) {
+      this.hostFamilyWorkQueues = hostFamilyWorkQueues;
+   }
 
-	public HostFamilyWorkQueue addHostFamilyWorkQueue(HostFamilyWorkQueue hostFamilyWorkQueue) {
-		getHostFamilyWorkQueues().add(hostFamilyWorkQueue);
-		hostFamilyWorkQueue.setStateType(this);
+   public HostFamilyWorkQueue addHostFamilyWorkQueue(HostFamilyWorkQueue hostFamilyWorkQueue) {
+      getHostFamilyWorkQueues().add(hostFamilyWorkQueue);
+      hostFamilyWorkQueue.setStateType(this);
 
-		return hostFamilyWorkQueue;
-	}
+      return hostFamilyWorkQueue;
+   }
 
-	public HostFamilyWorkQueue removeHostFamilyWorkQueue(HostFamilyWorkQueue hostFamilyWorkQueue) {
-		getHostFamilyWorkQueues().remove(hostFamilyWorkQueue);
-		hostFamilyWorkQueue.setStateType(null);
+   public HostFamilyWorkQueue removeHostFamilyWorkQueue(HostFamilyWorkQueue hostFamilyWorkQueue) {
+      getHostFamilyWorkQueues().remove(hostFamilyWorkQueue);
+      hostFamilyWorkQueue.setStateType(null);
 
-		return hostFamilyWorkQueue;
-	}
+      return hostFamilyWorkQueue;
+   }
 
-	public List<PartnerWorkQueue> getPartnerWorkQueues() {
-		return this.partnerWorkQueues;
-	}
+   public List<PartnerWorkQueue> getPartnerWorkQueues() {
+      return this.partnerWorkQueues;
+   }
 
-	public void setPartnerWorkQueues(List<PartnerWorkQueue> partnerWorkQueues) {
-		this.partnerWorkQueues = partnerWorkQueues;
-	}
+   public void setPartnerWorkQueues(List<PartnerWorkQueue> partnerWorkQueues) {
+      this.partnerWorkQueues = partnerWorkQueues;
+   }
 
-	public PartnerWorkQueue addPartnerWorkQueue(PartnerWorkQueue partnerWorkQueue) {
-		getPartnerWorkQueues().add(partnerWorkQueue);
-		partnerWorkQueue.setStateType(this);
+   public PartnerWorkQueue addPartnerWorkQueue(PartnerWorkQueue partnerWorkQueue) {
+      getPartnerWorkQueues().add(partnerWorkQueue);
+      partnerWorkQueue.setStateType(this);
 
-		return partnerWorkQueue;
-	}
+      return partnerWorkQueue;
+   }
 
-	public PartnerWorkQueue removePartnerWorkQueue(PartnerWorkQueue partnerWorkQueue) {
-		getPartnerWorkQueues().remove(partnerWorkQueue);
-		partnerWorkQueue.setStateType(null);
+   public PartnerWorkQueue removePartnerWorkQueue(PartnerWorkQueue partnerWorkQueue) {
+      getPartnerWorkQueues().remove(partnerWorkQueue);
+      partnerWorkQueue.setStateType(null);
 
-		return partnerWorkQueue;
-	}
+      return partnerWorkQueue;
+   }
 
-	public List<StateAction> getStateActions() {
-		return this.stateActions;
-	}
+   public List<StateAction> getStateActions() {
+      return this.stateActions;
+   }
 
-	public void setStateActions(List<StateAction> stateActions) {
-		this.stateActions = stateActions;
-	}
+   public void setStateActions(List<StateAction> stateActions) {
+      this.stateActions = stateActions;
+   }
 
-	public StateAction addStateAction(StateAction stateAction) {
-		getStateActions().add(stateAction);
-		stateAction.setStateType(this);
+   public StateAction addStateAction(StateAction stateAction) {
+      getStateActions().add(stateAction);
+      stateAction.setStateType(this);
 
-		return stateAction;
-	}
+      return stateAction;
+   }
 
-	public StateAction removeStateAction(StateAction stateAction) {
-		getStateActions().remove(stateAction);
-		stateAction.setStateType(null);
+   public StateAction removeStateAction(StateAction stateAction) {
+      getStateActions().remove(stateAction);
+      stateAction.setStateType(null);
 
-		return stateAction;
-	}
+      return stateAction;
+   }
 
-	public List<StateTransition> getStateTransitions1() {
-		return this.stateTransitions1;
-	}
+   public List<StateTransition> getStateTransitions1() {
+      return this.stateTransitions1;
+   }
 
-	public void setStateTransitions1(List<StateTransition> stateTransitions1) {
-		this.stateTransitions1 = stateTransitions1;
-	}
+   public void setStateTransitions1(List<StateTransition> stateTransitions1) {
+      this.stateTransitions1 = stateTransitions1;
+   }
 
-	public StateTransition addStateTransitions1(StateTransition stateTransitions1) {
-		getStateTransitions1().add(stateTransitions1);
-		stateTransitions1.setStateType1(this);
+   public StateTransition addStateTransitions1(StateTransition stateTransitions1) {
+      getStateTransitions1().add(stateTransitions1);
+      stateTransitions1.setStateType1(this);
 
-		return stateTransitions1;
-	}
+      return stateTransitions1;
+   }
 
-	public StateTransition removeStateTransitions1(StateTransition stateTransitions1) {
-		getStateTransitions1().remove(stateTransitions1);
-		stateTransitions1.setStateType1(null);
+   public StateTransition removeStateTransitions1(StateTransition stateTransitions1) {
+      getStateTransitions1().remove(stateTransitions1);
+      stateTransitions1.setStateType1(null);
 
-		return stateTransitions1;
-	}
+      return stateTransitions1;
+   }
 
-	public List<StateTransition> getStateTransitions2() {
-		return this.stateTransitions2;
-	}
+   public List<StateTransition> getStateTransitions2() {
+      return this.stateTransitions2;
+   }
 
-	public void setStateTransitions2(List<StateTransition> stateTransitions2) {
-		this.stateTransitions2 = stateTransitions2;
-	}
+   public void setStateTransitions2(List<StateTransition> stateTransitions2) {
+      this.stateTransitions2 = stateTransitions2;
+   }
 
-	public StateTransition addStateTransitions2(StateTransition stateTransitions2) {
-		getStateTransitions2().add(stateTransitions2);
-		stateTransitions2.setStateType2(this);
+   public StateTransition addStateTransitions2(StateTransition stateTransitions2) {
+      getStateTransitions2().add(stateTransitions2);
+      stateTransitions2.setStateType2(this);
 
-		return stateTransitions2;
-	}
+      return stateTransitions2;
+   }
 
-	public StateTransition removeStateTransitions2(StateTransition stateTransitions2) {
-		getStateTransitions2().remove(stateTransitions2);
-		stateTransitions2.setStateType2(null);
+   public StateTransition removeStateTransitions2(StateTransition stateTransitions2) {
+      getStateTransitions2().remove(stateTransitions2);
+      stateTransitions2.setStateType2(null);
 
-		return stateTransitions2;
-	}
+      return stateTransitions2;
+   }
 
-	public List<StateTypeResourcePermission> getStateTypeResourcePermissions() {
-		return this.stateTypeResourcePermissions;
-	}
+   public List<StateTypeResourcePermission> getStateTypeResourcePermissions() {
+      return this.stateTypeResourcePermissions;
+   }
 
-	public void setStateTypeResourcePermissions(List<StateTypeResourcePermission> stateTypeResourcePermissions) {
-		this.stateTypeResourcePermissions = stateTypeResourcePermissions;
-	}
+   public void setStateTypeResourcePermissions(List<StateTypeResourcePermission> stateTypeResourcePermissions) {
+      this.stateTypeResourcePermissions = stateTypeResourcePermissions;
+   }
 
-	public StateTypeResourcePermission addStateTypeResourcePermission(StateTypeResourcePermission stateTypeResourcePermission) {
-		getStateTypeResourcePermissions().add(stateTypeResourcePermission);
-		stateTypeResourcePermission.setStateType(this);
+   public StateTypeResourcePermission addStateTypeResourcePermission(StateTypeResourcePermission stateTypeResourcePermission) {
+      getStateTypeResourcePermissions().add(stateTypeResourcePermission);
+      stateTypeResourcePermission.setStateType(this);
 
-		return stateTypeResourcePermission;
-	}
+      return stateTypeResourcePermission;
+   }
 
-	public StateTypeResourcePermission removeStateTypeResourcePermission(StateTypeResourcePermission stateTypeResourcePermission) {
-		getStateTypeResourcePermissions().remove(stateTypeResourcePermission);
-		stateTypeResourcePermission.setStateType(null);
+   public StateTypeResourcePermission removeStateTypeResourcePermission(StateTypeResourcePermission stateTypeResourcePermission) {
+      getStateTypeResourcePermissions().remove(stateTypeResourcePermission);
+      stateTypeResourcePermission.setStateType(null);
 
-		return stateTypeResourcePermission;
-	}
+      return stateTypeResourcePermission;
+   }
 
-	public StateProcess getStateProcess() {
-		return this.stateProcess;
-	}
+   public StateProcess getStateProcess() {
+      return this.stateProcess;
+   }
 
-	public void setStateProcess(StateProcess stateProcess) {
-		this.stateProcess = stateProcess;
-	}
+   public void setStateProcess(StateProcess stateProcess) {
+      this.stateProcess = stateProcess;
+   }
 
 }

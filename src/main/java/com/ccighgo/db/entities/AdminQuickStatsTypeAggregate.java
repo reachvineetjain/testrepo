@@ -13,93 +13,93 @@ import java.sql.Timestamp;
 @Table(name="AdminQuickStatsTypeAggregate")
 @NamedQuery(name="AdminQuickStatsTypeAggregate.findAll", query="SELECT a FROM AdminQuickStatsTypeAggregate a")
 public class AdminQuickStatsTypeAggregate implements Serializable {
-	private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
-	private Integer adminQSTypeAggregateId;
+   @Id
+   @GeneratedValue(strategy=GenerationType.IDENTITY)
+   @Column(unique=true, nullable=false)
+   private Integer adminQSTypeAggregateId;
 
-	private Integer adminQSTypeAggregate;
+   private Integer adminQSTypeAggregate;
 
-	@Column(length=50)
-	private String adminQSTypeName;
+   @Column(length=50)
+   private String adminQSTypeName;
 
-	@Column(nullable=false)
-	private Timestamp modifiedDate;
+   @Column(nullable=false)
+   private Timestamp modifiedDate;
 
-	//bi-directional many-to-one association to AdminQuickStatsType
-	@ManyToOne
-	@JoinColumn(name="adminQSTypeId")
-	private AdminQuickStatsType adminQuickStatsType;
+   //bi-directional many-to-one association to AdminQuickStatsType
+   @ManyToOne
+   @JoinColumn(name="adminQSTypeId")
+   private AdminQuickStatsType adminQuickStatsType;
 
-	//bi-directional many-to-one association to CCIStaffUser
-	@ManyToOne
-	@JoinColumn(name="adminGoId")
-	private CCIStaffUser ccistaffUser;
+   //bi-directional many-to-one association to CCIStaffUser
+   @ManyToOne
+   @JoinColumn(name="adminGoId")
+   private CCIStaffUser ccistaffUser;
 
-	//bi-directional many-to-one association to LookupDepartmentProgram
-	@ManyToOne
-	@JoinColumn(name="lookupDepartmentProgramId")
-	private LookupDepartmentProgram lookupDepartmentProgram;
+   //bi-directional many-to-one association to LookupDepartmentProgram
+   @ManyToOne
+   @JoinColumn(name="lookupDepartmentProgramId")
+   private LookupDepartmentProgram lookupDepartmentProgram;
 
-	public AdminQuickStatsTypeAggregate() {
-	}
+   public AdminQuickStatsTypeAggregate() {
+   }
 
-	public Integer getAdminQSTypeAggregateId() {
-		return this.adminQSTypeAggregateId;
-	}
+   public Integer getAdminQSTypeAggregateId() {
+      return this.adminQSTypeAggregateId;
+   }
 
-	public void setAdminQSTypeAggregateId(Integer adminQSTypeAggregateId) {
-		this.adminQSTypeAggregateId = adminQSTypeAggregateId;
-	}
+   public void setAdminQSTypeAggregateId(Integer adminQSTypeAggregateId) {
+      this.adminQSTypeAggregateId = adminQSTypeAggregateId;
+   }
 
-	public Integer getAdminQSTypeAggregate() {
-		return this.adminQSTypeAggregate;
-	}
+   public Integer getAdminQSTypeAggregate() {
+      return this.adminQSTypeAggregate;
+   }
 
-	public void setAdminQSTypeAggregate(Integer adminQSTypeAggregate) {
-		this.adminQSTypeAggregate = adminQSTypeAggregate;
-	}
+   public void setAdminQSTypeAggregate(Integer adminQSTypeAggregate) {
+      this.adminQSTypeAggregate = adminQSTypeAggregate;
+   }
 
-	public String getAdminQSTypeName() {
-		return this.adminQSTypeName;
-	}
+   public String getAdminQSTypeName() {
+      return this.adminQSTypeName;
+   }
 
-	public void setAdminQSTypeName(String adminQSTypeName) {
-		this.adminQSTypeName = adminQSTypeName;
-	}
+   public void setAdminQSTypeName(String adminQSTypeName) {
+      this.adminQSTypeName = adminQSTypeName;
+   }
 
-	public Timestamp getModifiedDate() {
-		return this.modifiedDate;
-	}
+   public Timestamp getModifiedDate() {
+      return this.modifiedDate;
+   }
 
-	public void setModifiedDate(Timestamp modifiedDate) {
-		this.modifiedDate = modifiedDate;
-	}
+   public void setModifiedDate(Timestamp modifiedDate) {
+      this.modifiedDate = modifiedDate;
+   }
 
-	public AdminQuickStatsType getAdminQuickStatsType() {
-		return this.adminQuickStatsType;
-	}
+   public AdminQuickStatsType getAdminQuickStatsType() {
+      return this.adminQuickStatsType;
+   }
 
-	public void setAdminQuickStatsType(AdminQuickStatsType adminQuickStatsType) {
-		this.adminQuickStatsType = adminQuickStatsType;
-	}
+   public void setAdminQuickStatsType(AdminQuickStatsType adminQuickStatsType) {
+      this.adminQuickStatsType = adminQuickStatsType;
+   }
 
-	public CCIStaffUser getCcistaffUser() {
-		return this.ccistaffUser;
-	}
+   public CCIStaffUser getCcistaffUser() {
+      return this.ccistaffUser;
+   }
 
-	public void setCcistaffUser(CCIStaffUser ccistaffUser) {
-		this.ccistaffUser = ccistaffUser;
-	}
+   public void setCcistaffUser(CCIStaffUser ccistaffUser) {
+      this.ccistaffUser = ccistaffUser;
+   }
 
-	public LookupDepartmentProgram getLookupDepartmentProgram() {
-		return this.lookupDepartmentProgram;
-	}
+   public LookupDepartmentProgram getLookupDepartmentProgram() {
+      return this.lookupDepartmentProgram;
+   }
 
-	public void setLookupDepartmentProgram(LookupDepartmentProgram lookupDepartmentProgram) {
-		this.lookupDepartmentProgram = lookupDepartmentProgram;
-	}
+   public void setLookupDepartmentProgram(LookupDepartmentProgram lookupDepartmentProgram) {
+      this.lookupDepartmentProgram = lookupDepartmentProgram;
+   }
 
 }

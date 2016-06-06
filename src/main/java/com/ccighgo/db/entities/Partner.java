@@ -18,1124 +18,1124 @@ import java.util.List;
 @Table(name="Partner")
 @NamedQuery(name="Partner.findAll", query="SELECT p FROM Partner p")
 public class Partner implements Serializable {
-	private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
 
-	@Id
-	@Column(unique=true, nullable=false)
-	private Integer partnerGoId;
+   @Id
+   @Column(unique=true, nullable=false)
+   private Integer partnerGoId;
 
-	@Column(length=150)
-	private String acronym;
+   @Column(length=150)
+   private String acronym;
 
-	@Column(length=150)
-	private String addressLineOne;
+   @Column(length=150)
+   private String addressLineOne;
 
-	@Column(length=150)
-	private String addressLineTwo;
+   @Column(length=150)
+   private String addressLineTwo;
 
-	@Column(length=1000)
-	private String billingNotes;
+   @Column(length=1000)
+   private String billingNotes;
 
-	private Byte canHaveSubPartner;
+   private Byte canHaveSubPartner;
 
-	@Column(length=50)
-	private String city;
+   @Column(length=50)
+   private String city;
 
-	@Column(length=250)
-	private String companyName;
+   @Column(length=250)
+   private String companyName;
 
-	@Column(length=2000)
-	private String contactNotes;
+   @Column(length=2000)
+   private String contactNotes;
 
-	@Column(length=50)
-	private String contractSigner;
+   @Column(length=50)
+   private String contractSigner;
 
-	private Integer createdBy;
+   private Integer createdBy;
 
-	@Column(nullable=false)
-	private Timestamp createdOn;
+   @Column(nullable=false)
+   private Timestamp createdOn;
 
-	private Integer dandBNumber;
+   private Integer dandBNumber;
 
-	private Byte deliverDSForms;
+   private Byte deliverDSForms;
 
-	@Column(length=100)
-	private String email;
+   @Column(length=100)
+   private String email;
 
-	private Byte hasSubPartners;
+   private Byte hasSubPartners;
 
-	@Column(length=100)
-	private String invoiceMail;
+   @Column(length=100)
+   private String invoiceMail;
 
-	private Byte isSubPartner;
+   private Byte isSubPartner;
 
-	private Integer lastSelectedProgramId;
+   private Integer lastSelectedProgramId;
 
-	private Byte mailingAddressIsSameAsPhysicalAdress;
+   private Byte mailingAddressIsSameAsPhysicalAdress;
 
-	private Integer modifiedBy;
+   private Integer modifiedBy;
 
-	@Column(nullable=false)
-	private Timestamp modifiedOn;
+   @Column(nullable=false)
+   private Timestamp modifiedOn;
 
-	private Byte multiCountrySender;
+   private Byte multiCountrySender;
 
-	private Byte needPartnerReview;
+   private Byte needPartnerReview;
 
-	private Integer oldId;
+   private Integer oldId;
 
-	private Integer parentPartnerGoId;
+   private Integer parentPartnerGoId;
 
-	private Byte participantELTISRequired;
+   private Byte participantELTISRequired;
 
-	private Byte participantMedicalReleaseRequired;
+   private Byte participantMedicalReleaseRequired;
 
-	private Byte participantSLEPRequired;
+   private Byte participantSLEPRequired;
 
-	private Byte participantTranscriptRequired;
+   private Byte participantTranscriptRequired;
 
-	@Column(length=64)
-	private String partnerGuid;
+   @Column(length=64)
+   private String partnerGuid;
 
-	@Column(length=300)
-	private String partnerLogo;
+   @Column(length=300)
+   private String partnerLogo;
 
-	private Byte payGreenheartDirectly;
+   private Byte payGreenheartDirectly;
 
-	@Column(length=150)
-	private String physicalAddressLineOne;
+   @Column(length=150)
+   private String physicalAddressLineOne;
 
-	@Column(length=150)
-	private String physicalAddressLineTwo;
+   @Column(length=150)
+   private String physicalAddressLineTwo;
 
-	@Column(length=50)
-	private String physicalCity;
+   @Column(length=50)
+   private String physicalCity;
 
-	@Column(length=50)
-	private String physicalstate;
+   @Column(length=50)
+   private String physicalstate;
 
-	@Column(length=15)
-	private String physicalZipcode;
+   @Column(length=15)
+   private String physicalZipcode;
 
-	@Column(length=40)
-	private String quickbooksCode;
+   @Column(length=40)
+   private String quickbooksCode;
 
-	private Byte receiveAYPMails;
+   private Byte receiveAYPMails;
 
-	@Column(length=50)
-	private String state;
+   @Column(length=50)
+   private String state;
 
-	private Byte subscribeToCCINewsletter;
+   private Byte subscribeToCCINewsletter;
 
-	private Byte unguaranteedFormRequired;
+   private Byte unguaranteedFormRequired;
 
-	@Column(length=15)
-	private String zipcode;
+   @Column(length=15)
+   private String zipcode;
 
-	//bi-directional many-to-one association to Participant
-	@OneToMany(mappedBy="partner1")
-	private List<Participant> participants1;
+   //bi-directional many-to-one association to Participant
+   @OneToMany(mappedBy="partner1")
+   private List<Participant> participants1;
 
-	//bi-directional many-to-one association to Participant
-	@OneToMany(mappedBy="partner2")
-	private List<Participant> participants2;
+   //bi-directional many-to-one association to Participant
+   @OneToMany(mappedBy="partner2")
+   private List<Participant> participants2;
 
-	//bi-directional many-to-one association to CCIStaffUser
-	@ManyToOne
-	@JoinColumn(name="cciGeneralContact")
-	private CCIStaffUser ccistaffUser;
+   //bi-directional many-to-one association to CCIStaffUser
+   @ManyToOne
+   @JoinColumn(name="cciGeneralContact")
+   private CCIStaffUser ccistaffUser;
 
-	//bi-directional one-to-one association to GoIdSequence
-	@OneToOne
-	@JoinColumn(name="partnerGoId", nullable=false, insertable=false, updatable=false)
-	private GoIdSequence goIdSequence;
+   //bi-directional one-to-one association to GoIdSequence
+   @OneToOne
+   @JoinColumn(name="partnerGoId", nullable=false, insertable=false, updatable=false)
+   private GoIdSequence goIdSequence;
 
-	//bi-directional many-to-one association to LookupCountry
-	@ManyToOne
-	@JoinColumn(name="physicalcountryId")
-	private LookupCountry lookupCountry1;
+   //bi-directional many-to-one association to LookupCountry
+   @ManyToOne
+   @JoinColumn(name="physicalcountryId")
+   private LookupCountry lookupCountry1;
 
-	//bi-directional many-to-one association to LookupCountry
-	@ManyToOne
-	@JoinColumn(name="countryId")
-	private LookupCountry lookupCountry2;
+   //bi-directional many-to-one association to LookupCountry
+   @ManyToOne
+   @JoinColumn(name="countryId")
+   private LookupCountry lookupCountry2;
 
-	//bi-directional many-to-one association to PartnerAgentInquiry
-	@OneToMany(mappedBy="partner")
-	private List<PartnerAgentInquiry> partnerAgentInquiries;
+   //bi-directional many-to-one association to PartnerAgentInquiry
+   @OneToMany(mappedBy="partner")
+   private List<PartnerAgentInquiry> partnerAgentInquiries;
 
-	//bi-directional many-to-one association to PartnerAnnouncement
-	@OneToMany(mappedBy="partner")
-	private List<PartnerAnnouncement> partnerAnnouncements;
+   //bi-directional many-to-one association to PartnerAnnouncement
+   @OneToMany(mappedBy="partner")
+   private List<PartnerAnnouncement> partnerAnnouncements;
 
-	//bi-directional many-to-one association to PartnerAnnouncementResult
-	@OneToMany(mappedBy="partner")
-	private List<PartnerAnnouncementResult> partnerAnnouncementResults;
+   //bi-directional many-to-one association to PartnerAnnouncementResult
+   @OneToMany(mappedBy="partner")
+   private List<PartnerAnnouncementResult> partnerAnnouncementResults;
 
-	//bi-directional many-to-one association to PartnerDocument
-	@OneToMany(mappedBy="partner")
-	private List<PartnerDocument> partnerDocuments;
+   //bi-directional many-to-one association to PartnerDocument
+   @OneToMany(mappedBy="partner")
+   private List<PartnerDocument> partnerDocuments;
 
-	//bi-directional many-to-one association to PartnerHelpRequest
-	@OneToMany(mappedBy="partner1")
-	private List<PartnerHelpRequest> partnerHelpRequests1;
+   //bi-directional many-to-one association to PartnerHelpRequest
+   @OneToMany(mappedBy="partner1")
+   private List<PartnerHelpRequest> partnerHelpRequests1;
 
-	//bi-directional many-to-one association to PartnerHelpRequest
-	@OneToMany(mappedBy="partner2")
-	private List<PartnerHelpRequest> partnerHelpRequests2;
+   //bi-directional many-to-one association to PartnerHelpRequest
+   @OneToMany(mappedBy="partner2")
+   private List<PartnerHelpRequest> partnerHelpRequests2;
 
-	//bi-directional many-to-one association to PartnerMessage
-	@OneToMany(mappedBy="partner")
-	private List<PartnerMessage> partnerMessages;
+   //bi-directional many-to-one association to PartnerMessage
+   @OneToMany(mappedBy="partner")
+   private List<PartnerMessage> partnerMessages;
 
-	//bi-directional many-to-one association to PartnerNoteTopic
-	@OneToMany(mappedBy="partner")
-	private List<PartnerNoteTopic> partnerNoteTopics;
+   //bi-directional many-to-one association to PartnerNoteTopic
+   @OneToMany(mappedBy="partner")
+   private List<PartnerNoteTopic> partnerNoteTopics;
 
-	//bi-directional many-to-one association to PartnerNote
-	@OneToMany(mappedBy="partner")
-	private List<PartnerNote> partnerNotes;
+   //bi-directional many-to-one association to PartnerNote
+   @OneToMany(mappedBy="partner")
+   private List<PartnerNote> partnerNotes;
 
-	//bi-directional many-to-one association to PartnerOffice
-	@OneToMany(mappedBy="partner")
-	private List<PartnerOffice> partnerOffices;
+   //bi-directional many-to-one association to PartnerOffice
+   @OneToMany(mappedBy="partner")
+   private List<PartnerOffice> partnerOffices;
 
-	//bi-directional many-to-one association to PartnerProgram
-	@OneToMany(mappedBy="partner")
-	private List<PartnerProgram> partnerPrograms;
+   //bi-directional many-to-one association to PartnerProgram
+   @OneToMany(mappedBy="partner")
+   private List<PartnerProgram> partnerPrograms;
 
-	//bi-directional many-to-one association to PartnerQuickStatsCategoryAggregate
-	@OneToMany(mappedBy="partner")
-	private List<PartnerQuickStatsCategoryAggregate> partnerQuickStatsCategoryAggregates;
+   //bi-directional many-to-one association to PartnerQuickStatsCategoryAggregate
+   @OneToMany(mappedBy="partner")
+   private List<PartnerQuickStatsCategoryAggregate> partnerQuickStatsCategoryAggregates;
 
-	//bi-directional many-to-one association to PartnerQuickStatsTypeAggregate
-	@OneToMany(mappedBy="partner")
-	private List<PartnerQuickStatsTypeAggregate> partnerQuickStatsTypeAggregates;
+   //bi-directional many-to-one association to PartnerQuickStatsTypeAggregate
+   @OneToMany(mappedBy="partner")
+   private List<PartnerQuickStatsTypeAggregate> partnerQuickStatsTypeAggregates;
 
-	//bi-directional many-to-one association to PartnerReferenceCheck
-	@OneToMany(mappedBy="partner")
-	private List<PartnerReferenceCheck> partnerReferenceChecks;
+   //bi-directional many-to-one association to PartnerReferenceCheck
+   @OneToMany(mappedBy="partner")
+   private List<PartnerReferenceCheck> partnerReferenceChecks;
 
-	//bi-directional many-to-one association to PartnerReviewStatus
-	@OneToMany(mappedBy="partner")
-	private List<PartnerReviewStatus> partnerReviewStatuses;
+   //bi-directional many-to-one association to PartnerReviewStatus
+   @OneToMany(mappedBy="partner")
+   private List<PartnerReviewStatus> partnerReviewStatuses;
 
-	//bi-directional many-to-one association to PartnerSeason
-	@OneToMany(mappedBy="partner")
-	private List<PartnerSeason> partnerSeasons;
+   //bi-directional many-to-one association to PartnerSeason
+   @OneToMany(mappedBy="partner")
+   private List<PartnerSeason> partnerSeasons;
 
-	//bi-directional many-to-one association to PartnerUpdateLog
-	@OneToMany(mappedBy="partner")
-	private List<PartnerUpdateLog> partnerUpdateLogs;
+   //bi-directional many-to-one association to PartnerUpdateLog
+   @OneToMany(mappedBy="partner")
+   private List<PartnerUpdateLog> partnerUpdateLogs;
 
-	//bi-directional many-to-one association to PartnerUser
-	@OneToMany(mappedBy = "partner", fetch = FetchType.EAGER)
+   //bi-directional many-to-one association to PartnerUser
+   @OneToMany(mappedBy = "partner", fetch = FetchType.EAGER)
    @Fetch(value = FetchMode.SUBSELECT)
-	private List<PartnerUser> partnerUsers;
+   private List<PartnerUser> partnerUsers;
 
-	//bi-directional many-to-one association to PartnerWorkQueue
-	@OneToMany(mappedBy="partner")
-	private List<PartnerWorkQueue> partnerWorkQueues;
+   //bi-directional many-to-one association to PartnerWorkQueue
+   @OneToMany(mappedBy="partner")
+   private List<PartnerWorkQueue> partnerWorkQueues;
 
-	//bi-directional many-to-one association to PartnerWorkQueueCategoryAggregate
-	@OneToMany(mappedBy="partner")
-	private List<PartnerWorkQueueCategoryAggregate> partnerWorkQueueCategoryAggregates;
+   //bi-directional many-to-one association to PartnerWorkQueueCategoryAggregate
+   @OneToMany(mappedBy="partner")
+   private List<PartnerWorkQueueCategoryAggregate> partnerWorkQueueCategoryAggregates;
 
-	//bi-directional many-to-one association to PartnerWorkQueueTypeAggregate
-	@OneToMany(mappedBy="partner")
-	private List<PartnerWorkQueueTypeAggregate> partnerWorkQueueTypeAggregates;
+   //bi-directional many-to-one association to PartnerWorkQueueTypeAggregate
+   @OneToMany(mappedBy="partner")
+   private List<PartnerWorkQueueTypeAggregate> partnerWorkQueueTypeAggregates;
 
-	public Partner() {
-	}
+   public Partner() {
+   }
 
-	public Integer getPartnerGoId() {
-		return this.partnerGoId;
-	}
+   public Integer getPartnerGoId() {
+      return this.partnerGoId;
+   }
 
-	public void setPartnerGoId(Integer partnerGoId) {
-		this.partnerGoId = partnerGoId;
-	}
+   public void setPartnerGoId(Integer partnerGoId) {
+      this.partnerGoId = partnerGoId;
+   }
 
-	public String getAcronym() {
-		return this.acronym;
-	}
+   public String getAcronym() {
+      return this.acronym;
+   }
 
-	public void setAcronym(String acronym) {
-		this.acronym = acronym;
-	}
+   public void setAcronym(String acronym) {
+      this.acronym = acronym;
+   }
 
-	public String getAddressLineOne() {
-		return this.addressLineOne;
-	}
+   public String getAddressLineOne() {
+      return this.addressLineOne;
+   }
 
-	public void setAddressLineOne(String addressLineOne) {
-		this.addressLineOne = addressLineOne;
-	}
+   public void setAddressLineOne(String addressLineOne) {
+      this.addressLineOne = addressLineOne;
+   }
 
-	public String getAddressLineTwo() {
-		return this.addressLineTwo;
-	}
+   public String getAddressLineTwo() {
+      return this.addressLineTwo;
+   }
 
-	public void setAddressLineTwo(String addressLineTwo) {
-		this.addressLineTwo = addressLineTwo;
-	}
+   public void setAddressLineTwo(String addressLineTwo) {
+      this.addressLineTwo = addressLineTwo;
+   }
 
-	public String getBillingNotes() {
-		return this.billingNotes;
-	}
+   public String getBillingNotes() {
+      return this.billingNotes;
+   }
 
-	public void setBillingNotes(String billingNotes) {
-		this.billingNotes = billingNotes;
-	}
+   public void setBillingNotes(String billingNotes) {
+      this.billingNotes = billingNotes;
+   }
 
-	public Byte getCanHaveSubPartner() {
-		return this.canHaveSubPartner;
-	}
+   public Byte getCanHaveSubPartner() {
+      return this.canHaveSubPartner;
+   }
 
-	public void setCanHaveSubPartner(Byte canHaveSubPartner) {
-		this.canHaveSubPartner = canHaveSubPartner;
-	}
+   public void setCanHaveSubPartner(Byte canHaveSubPartner) {
+      this.canHaveSubPartner = canHaveSubPartner;
+   }
 
-	public String getCity() {
-		return this.city;
-	}
+   public String getCity() {
+      return this.city;
+   }
 
-	public void setCity(String city) {
-		this.city = city;
-	}
+   public void setCity(String city) {
+      this.city = city;
+   }
 
-	public String getCompanyName() {
-		return this.companyName;
-	}
+   public String getCompanyName() {
+      return this.companyName;
+   }
 
-	public void setCompanyName(String companyName) {
-		this.companyName = companyName;
-	}
+   public void setCompanyName(String companyName) {
+      this.companyName = companyName;
+   }
 
-	public String getContactNotes() {
-		return this.contactNotes;
-	}
+   public String getContactNotes() {
+      return this.contactNotes;
+   }
 
-	public void setContactNotes(String contactNotes) {
-		this.contactNotes = contactNotes;
-	}
+   public void setContactNotes(String contactNotes) {
+      this.contactNotes = contactNotes;
+   }
 
-	public String getContractSigner() {
-		return this.contractSigner;
-	}
+   public String getContractSigner() {
+      return this.contractSigner;
+   }
 
-	public void setContractSigner(String contractSigner) {
-		this.contractSigner = contractSigner;
-	}
+   public void setContractSigner(String contractSigner) {
+      this.contractSigner = contractSigner;
+   }
 
-	public Integer getCreatedBy() {
-		return this.createdBy;
-	}
+   public Integer getCreatedBy() {
+      return this.createdBy;
+   }
 
-	public void setCreatedBy(Integer createdBy) {
-		this.createdBy = createdBy;
-	}
+   public void setCreatedBy(Integer createdBy) {
+      this.createdBy = createdBy;
+   }
 
-	public Timestamp getCreatedOn() {
-		return this.createdOn;
-	}
+   public Timestamp getCreatedOn() {
+      return this.createdOn;
+   }
 
-	public void setCreatedOn(Timestamp createdOn) {
-		this.createdOn = createdOn;
-	}
+   public void setCreatedOn(Timestamp createdOn) {
+      this.createdOn = createdOn;
+   }
 
-	public Integer getDandBNumber() {
-		return this.dandBNumber;
-	}
+   public Integer getDandBNumber() {
+      return this.dandBNumber;
+   }
 
-	public void setDandBNumber(Integer dandBNumber) {
-		this.dandBNumber = dandBNumber;
-	}
+   public void setDandBNumber(Integer dandBNumber) {
+      this.dandBNumber = dandBNumber;
+   }
 
-	public Byte getDeliverDSForms() {
-		return this.deliverDSForms;
-	}
+   public Byte getDeliverDSForms() {
+      return this.deliverDSForms;
+   }
 
-	public void setDeliverDSForms(Byte deliverDSForms) {
-		this.deliverDSForms = deliverDSForms;
-	}
+   public void setDeliverDSForms(Byte deliverDSForms) {
+      this.deliverDSForms = deliverDSForms;
+   }
 
-	public String getEmail() {
-		return this.email;
-	}
+   public String getEmail() {
+      return this.email;
+   }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+   public void setEmail(String email) {
+      this.email = email;
+   }
 
-	public Byte getHasSubPartners() {
-		return this.hasSubPartners;
-	}
+   public Byte getHasSubPartners() {
+      return this.hasSubPartners;
+   }
 
-	public void setHasSubPartners(Byte hasSubPartners) {
-		this.hasSubPartners = hasSubPartners;
-	}
+   public void setHasSubPartners(Byte hasSubPartners) {
+      this.hasSubPartners = hasSubPartners;
+   }
 
-	public String getInvoiceMail() {
-		return this.invoiceMail;
-	}
+   public String getInvoiceMail() {
+      return this.invoiceMail;
+   }
 
-	public void setInvoiceMail(String invoiceMail) {
-		this.invoiceMail = invoiceMail;
-	}
+   public void setInvoiceMail(String invoiceMail) {
+      this.invoiceMail = invoiceMail;
+   }
 
-	public Byte getIsSubPartner() {
-		return this.isSubPartner;
-	}
+   public Byte getIsSubPartner() {
+      return this.isSubPartner;
+   }
 
-	public void setIsSubPartner(Byte isSubPartner) {
-		this.isSubPartner = isSubPartner;
-	}
+   public void setIsSubPartner(Byte isSubPartner) {
+      this.isSubPartner = isSubPartner;
+   }
 
-	public Integer getLastSelectedProgramId() {
-		return this.lastSelectedProgramId;
-	}
+   public Integer getLastSelectedProgramId() {
+      return this.lastSelectedProgramId;
+   }
 
-	public void setLastSelectedProgramId(Integer lastSelectedProgramId) {
-		this.lastSelectedProgramId = lastSelectedProgramId;
-	}
+   public void setLastSelectedProgramId(Integer lastSelectedProgramId) {
+      this.lastSelectedProgramId = lastSelectedProgramId;
+   }
 
-	public Byte getMailingAddressIsSameAsPhysicalAdress() {
-		return this.mailingAddressIsSameAsPhysicalAdress;
-	}
+   public Byte getMailingAddressIsSameAsPhysicalAdress() {
+      return this.mailingAddressIsSameAsPhysicalAdress;
+   }
 
-	public void setMailingAddressIsSameAsPhysicalAdress(Byte mailingAddressIsSameAsPhysicalAdress) {
-		this.mailingAddressIsSameAsPhysicalAdress = mailingAddressIsSameAsPhysicalAdress;
-	}
+   public void setMailingAddressIsSameAsPhysicalAdress(Byte mailingAddressIsSameAsPhysicalAdress) {
+      this.mailingAddressIsSameAsPhysicalAdress = mailingAddressIsSameAsPhysicalAdress;
+   }
 
-	public Integer getModifiedBy() {
-		return this.modifiedBy;
-	}
+   public Integer getModifiedBy() {
+      return this.modifiedBy;
+   }
 
-	public void setModifiedBy(Integer modifiedBy) {
-		this.modifiedBy = modifiedBy;
-	}
+   public void setModifiedBy(Integer modifiedBy) {
+      this.modifiedBy = modifiedBy;
+   }
 
-	public Timestamp getModifiedOn() {
-		return this.modifiedOn;
-	}
+   public Timestamp getModifiedOn() {
+      return this.modifiedOn;
+   }
 
-	public void setModifiedOn(Timestamp modifiedOn) {
-		this.modifiedOn = modifiedOn;
-	}
+   public void setModifiedOn(Timestamp modifiedOn) {
+      this.modifiedOn = modifiedOn;
+   }
 
-	public Byte getMultiCountrySender() {
-		return this.multiCountrySender;
-	}
+   public Byte getMultiCountrySender() {
+      return this.multiCountrySender;
+   }
 
-	public void setMultiCountrySender(Byte multiCountrySender) {
-		this.multiCountrySender = multiCountrySender;
-	}
+   public void setMultiCountrySender(Byte multiCountrySender) {
+      this.multiCountrySender = multiCountrySender;
+   }
 
-	public Byte getNeedPartnerReview() {
-		return this.needPartnerReview;
-	}
+   public Byte getNeedPartnerReview() {
+      return this.needPartnerReview;
+   }
 
-	public void setNeedPartnerReview(Byte needPartnerReview) {
-		this.needPartnerReview = needPartnerReview;
-	}
+   public void setNeedPartnerReview(Byte needPartnerReview) {
+      this.needPartnerReview = needPartnerReview;
+   }
 
-	public Integer getOldId() {
-		return this.oldId;
-	}
+   public Integer getOldId() {
+      return this.oldId;
+   }
 
-	public void setOldId(Integer oldId) {
-		this.oldId = oldId;
-	}
+   public void setOldId(Integer oldId) {
+      this.oldId = oldId;
+   }
 
-	public Integer getParentPartnerGoId() {
-		return this.parentPartnerGoId;
-	}
+   public Integer getParentPartnerGoId() {
+      return this.parentPartnerGoId;
+   }
 
-	public void setParentPartnerGoId(Integer parentPartnerGoId) {
-		this.parentPartnerGoId = parentPartnerGoId;
-	}
+   public void setParentPartnerGoId(Integer parentPartnerGoId) {
+      this.parentPartnerGoId = parentPartnerGoId;
+   }
 
-	public Byte getParticipantELTISRequired() {
-		return this.participantELTISRequired;
-	}
+   public Byte getParticipantELTISRequired() {
+      return this.participantELTISRequired;
+   }
 
-	public void setParticipantELTISRequired(Byte participantELTISRequired) {
-		this.participantELTISRequired = participantELTISRequired;
-	}
+   public void setParticipantELTISRequired(Byte participantELTISRequired) {
+      this.participantELTISRequired = participantELTISRequired;
+   }
 
-	public Byte getParticipantMedicalReleaseRequired() {
-		return this.participantMedicalReleaseRequired;
-	}
+   public Byte getParticipantMedicalReleaseRequired() {
+      return this.participantMedicalReleaseRequired;
+   }
 
-	public void setParticipantMedicalReleaseRequired(Byte participantMedicalReleaseRequired) {
-		this.participantMedicalReleaseRequired = participantMedicalReleaseRequired;
-	}
+   public void setParticipantMedicalReleaseRequired(Byte participantMedicalReleaseRequired) {
+      this.participantMedicalReleaseRequired = participantMedicalReleaseRequired;
+   }
 
-	public Byte getParticipantSLEPRequired() {
-		return this.participantSLEPRequired;
-	}
+   public Byte getParticipantSLEPRequired() {
+      return this.participantSLEPRequired;
+   }
 
-	public void setParticipantSLEPRequired(Byte participantSLEPRequired) {
-		this.participantSLEPRequired = participantSLEPRequired;
-	}
+   public void setParticipantSLEPRequired(Byte participantSLEPRequired) {
+      this.participantSLEPRequired = participantSLEPRequired;
+   }
 
-	public Byte getParticipantTranscriptRequired() {
-		return this.participantTranscriptRequired;
-	}
+   public Byte getParticipantTranscriptRequired() {
+      return this.participantTranscriptRequired;
+   }
 
-	public void setParticipantTranscriptRequired(Byte participantTranscriptRequired) {
-		this.participantTranscriptRequired = participantTranscriptRequired;
-	}
+   public void setParticipantTranscriptRequired(Byte participantTranscriptRequired) {
+      this.participantTranscriptRequired = participantTranscriptRequired;
+   }
 
-	public String getPartnerGuid() {
-		return this.partnerGuid;
-	}
+   public String getPartnerGuid() {
+      return this.partnerGuid;
+   }
 
-	public void setPartnerGuid(String partnerGuid) {
-		this.partnerGuid = partnerGuid;
-	}
+   public void setPartnerGuid(String partnerGuid) {
+      this.partnerGuid = partnerGuid;
+   }
 
-	public String getPartnerLogo() {
-		return this.partnerLogo;
-	}
+   public String getPartnerLogo() {
+      return this.partnerLogo;
+   }
 
-	public void setPartnerLogo(String partnerLogo) {
-		this.partnerLogo = partnerLogo;
-	}
+   public void setPartnerLogo(String partnerLogo) {
+      this.partnerLogo = partnerLogo;
+   }
 
-	public Byte getPayGreenheartDirectly() {
-		return this.payGreenheartDirectly;
-	}
+   public Byte getPayGreenheartDirectly() {
+      return this.payGreenheartDirectly;
+   }
 
-	public void setPayGreenheartDirectly(Byte payGreenheartDirectly) {
-		this.payGreenheartDirectly = payGreenheartDirectly;
-	}
+   public void setPayGreenheartDirectly(Byte payGreenheartDirectly) {
+      this.payGreenheartDirectly = payGreenheartDirectly;
+   }
 
-	public String getPhysicalAddressLineOne() {
-		return this.physicalAddressLineOne;
-	}
+   public String getPhysicalAddressLineOne() {
+      return this.physicalAddressLineOne;
+   }
 
-	public void setPhysicalAddressLineOne(String physicalAddressLineOne) {
-		this.physicalAddressLineOne = physicalAddressLineOne;
-	}
+   public void setPhysicalAddressLineOne(String physicalAddressLineOne) {
+      this.physicalAddressLineOne = physicalAddressLineOne;
+   }
 
-	public String getPhysicalAddressLineTwo() {
-		return this.physicalAddressLineTwo;
-	}
+   public String getPhysicalAddressLineTwo() {
+      return this.physicalAddressLineTwo;
+   }
 
-	public void setPhysicalAddressLineTwo(String physicalAddressLineTwo) {
-		this.physicalAddressLineTwo = physicalAddressLineTwo;
-	}
+   public void setPhysicalAddressLineTwo(String physicalAddressLineTwo) {
+      this.physicalAddressLineTwo = physicalAddressLineTwo;
+   }
 
-	public String getPhysicalCity() {
-		return this.physicalCity;
-	}
+   public String getPhysicalCity() {
+      return this.physicalCity;
+   }
 
-	public void setPhysicalCity(String physicalCity) {
-		this.physicalCity = physicalCity;
-	}
+   public void setPhysicalCity(String physicalCity) {
+      this.physicalCity = physicalCity;
+   }
 
-	public String getPhysicalstate() {
-		return this.physicalstate;
-	}
+   public String getPhysicalstate() {
+      return this.physicalstate;
+   }
 
-	public void setPhysicalstate(String physicalstate) {
-		this.physicalstate = physicalstate;
-	}
+   public void setPhysicalstate(String physicalstate) {
+      this.physicalstate = physicalstate;
+   }
 
-	public String getPhysicalZipcode() {
-		return this.physicalZipcode;
-	}
+   public String getPhysicalZipcode() {
+      return this.physicalZipcode;
+   }
 
-	public void setPhysicalZipcode(String physicalZipcode) {
-		this.physicalZipcode = physicalZipcode;
-	}
+   public void setPhysicalZipcode(String physicalZipcode) {
+      this.physicalZipcode = physicalZipcode;
+   }
 
-	public String getQuickbooksCode() {
-		return this.quickbooksCode;
-	}
+   public String getQuickbooksCode() {
+      return this.quickbooksCode;
+   }
 
-	public void setQuickbooksCode(String quickbooksCode) {
-		this.quickbooksCode = quickbooksCode;
-	}
+   public void setQuickbooksCode(String quickbooksCode) {
+      this.quickbooksCode = quickbooksCode;
+   }
 
-	public Byte getReceiveAYPMails() {
-		return this.receiveAYPMails;
-	}
+   public Byte getReceiveAYPMails() {
+      return this.receiveAYPMails;
+   }
 
-	public void setReceiveAYPMails(Byte receiveAYPMails) {
-		this.receiveAYPMails = receiveAYPMails;
-	}
+   public void setReceiveAYPMails(Byte receiveAYPMails) {
+      this.receiveAYPMails = receiveAYPMails;
+   }
 
-	public String getState() {
-		return this.state;
-	}
+   public String getState() {
+      return this.state;
+   }
 
-	public void setState(String state) {
-		this.state = state;
-	}
+   public void setState(String state) {
+      this.state = state;
+   }
 
-	public Byte getSubscribeToCCINewsletter() {
-		return this.subscribeToCCINewsletter;
-	}
+   public Byte getSubscribeToCCINewsletter() {
+      return this.subscribeToCCINewsletter;
+   }
 
-	public void setSubscribeToCCINewsletter(Byte subscribeToCCINewsletter) {
-		this.subscribeToCCINewsletter = subscribeToCCINewsletter;
-	}
+   public void setSubscribeToCCINewsletter(Byte subscribeToCCINewsletter) {
+      this.subscribeToCCINewsletter = subscribeToCCINewsletter;
+   }
 
-	public Byte getUnguaranteedFormRequired() {
-		return this.unguaranteedFormRequired;
-	}
+   public Byte getUnguaranteedFormRequired() {
+      return this.unguaranteedFormRequired;
+   }
 
-	public void setUnguaranteedFormRequired(Byte unguaranteedFormRequired) {
-		this.unguaranteedFormRequired = unguaranteedFormRequired;
-	}
+   public void setUnguaranteedFormRequired(Byte unguaranteedFormRequired) {
+      this.unguaranteedFormRequired = unguaranteedFormRequired;
+   }
 
-	public String getZipcode() {
-		return this.zipcode;
-	}
+   public String getZipcode() {
+      return this.zipcode;
+   }
 
-	public void setZipcode(String zipcode) {
-		this.zipcode = zipcode;
-	}
+   public void setZipcode(String zipcode) {
+      this.zipcode = zipcode;
+   }
 
-	public List<Participant> getParticipants1() {
-		return this.participants1;
-	}
+   public List<Participant> getParticipants1() {
+      return this.participants1;
+   }
 
-	public void setParticipants1(List<Participant> participants1) {
-		this.participants1 = participants1;
-	}
+   public void setParticipants1(List<Participant> participants1) {
+      this.participants1 = participants1;
+   }
 
-	public Participant addParticipants1(Participant participants1) {
-		getParticipants1().add(participants1);
-		participants1.setPartner1(this);
+   public Participant addParticipants1(Participant participants1) {
+      getParticipants1().add(participants1);
+      participants1.setPartner1(this);
 
-		return participants1;
-	}
+      return participants1;
+   }
 
-	public Participant removeParticipants1(Participant participants1) {
-		getParticipants1().remove(participants1);
-		participants1.setPartner1(null);
+   public Participant removeParticipants1(Participant participants1) {
+      getParticipants1().remove(participants1);
+      participants1.setPartner1(null);
 
-		return participants1;
-	}
+      return participants1;
+   }
 
-	public List<Participant> getParticipants2() {
-		return this.participants2;
-	}
+   public List<Participant> getParticipants2() {
+      return this.participants2;
+   }
 
-	public void setParticipants2(List<Participant> participants2) {
-		this.participants2 = participants2;
-	}
+   public void setParticipants2(List<Participant> participants2) {
+      this.participants2 = participants2;
+   }
 
-	public Participant addParticipants2(Participant participants2) {
-		getParticipants2().add(participants2);
-		participants2.setPartner2(this);
+   public Participant addParticipants2(Participant participants2) {
+      getParticipants2().add(participants2);
+      participants2.setPartner2(this);
 
-		return participants2;
-	}
+      return participants2;
+   }
 
-	public Participant removeParticipants2(Participant participants2) {
-		getParticipants2().remove(participants2);
-		participants2.setPartner2(null);
+   public Participant removeParticipants2(Participant participants2) {
+      getParticipants2().remove(participants2);
+      participants2.setPartner2(null);
 
-		return participants2;
-	}
+      return participants2;
+   }
 
-	public CCIStaffUser getCcistaffUser() {
-		return this.ccistaffUser;
-	}
+   public CCIStaffUser getCcistaffUser() {
+      return this.ccistaffUser;
+   }
 
-	public void setCcistaffUser(CCIStaffUser ccistaffUser) {
-		this.ccistaffUser = ccistaffUser;
-	}
+   public void setCcistaffUser(CCIStaffUser ccistaffUser) {
+      this.ccistaffUser = ccistaffUser;
+   }
 
-	public GoIdSequence getGoIdSequence() {
-		return this.goIdSequence;
-	}
+   public GoIdSequence getGoIdSequence() {
+      return this.goIdSequence;
+   }
 
-	public void setGoIdSequence(GoIdSequence goIdSequence) {
-		this.goIdSequence = goIdSequence;
-	}
+   public void setGoIdSequence(GoIdSequence goIdSequence) {
+      this.goIdSequence = goIdSequence;
+   }
 
-	public LookupCountry getLookupCountry1() {
-		return this.lookupCountry1;
-	}
+   public LookupCountry getLookupCountry1() {
+      return this.lookupCountry1;
+   }
 
-	public void setLookupCountry1(LookupCountry lookupCountry1) {
-		this.lookupCountry1 = lookupCountry1;
-	}
+   public void setLookupCountry1(LookupCountry lookupCountry1) {
+      this.lookupCountry1 = lookupCountry1;
+   }
 
-	public LookupCountry getLookupCountry2() {
-		return this.lookupCountry2;
-	}
+   public LookupCountry getLookupCountry2() {
+      return this.lookupCountry2;
+   }
 
-	public void setLookupCountry2(LookupCountry lookupCountry2) {
-		this.lookupCountry2 = lookupCountry2;
-	}
+   public void setLookupCountry2(LookupCountry lookupCountry2) {
+      this.lookupCountry2 = lookupCountry2;
+   }
 
-	public List<PartnerAgentInquiry> getPartnerAgentInquiries() {
-		return this.partnerAgentInquiries;
-	}
+   public List<PartnerAgentInquiry> getPartnerAgentInquiries() {
+      return this.partnerAgentInquiries;
+   }
 
-	public void setPartnerAgentInquiries(List<PartnerAgentInquiry> partnerAgentInquiries) {
-		this.partnerAgentInquiries = partnerAgentInquiries;
-	}
+   public void setPartnerAgentInquiries(List<PartnerAgentInquiry> partnerAgentInquiries) {
+      this.partnerAgentInquiries = partnerAgentInquiries;
+   }
 
-	public PartnerAgentInquiry addPartnerAgentInquiry(PartnerAgentInquiry partnerAgentInquiry) {
-		getPartnerAgentInquiries().add(partnerAgentInquiry);
-		partnerAgentInquiry.setPartner(this);
+   public PartnerAgentInquiry addPartnerAgentInquiry(PartnerAgentInquiry partnerAgentInquiry) {
+      getPartnerAgentInquiries().add(partnerAgentInquiry);
+      partnerAgentInquiry.setPartner(this);
 
-		return partnerAgentInquiry;
-	}
+      return partnerAgentInquiry;
+   }
 
-	public PartnerAgentInquiry removePartnerAgentInquiry(PartnerAgentInquiry partnerAgentInquiry) {
-		getPartnerAgentInquiries().remove(partnerAgentInquiry);
-		partnerAgentInquiry.setPartner(null);
+   public PartnerAgentInquiry removePartnerAgentInquiry(PartnerAgentInquiry partnerAgentInquiry) {
+      getPartnerAgentInquiries().remove(partnerAgentInquiry);
+      partnerAgentInquiry.setPartner(null);
 
-		return partnerAgentInquiry;
-	}
+      return partnerAgentInquiry;
+   }
 
-	public List<PartnerAnnouncement> getPartnerAnnouncements() {
-		return this.partnerAnnouncements;
-	}
+   public List<PartnerAnnouncement> getPartnerAnnouncements() {
+      return this.partnerAnnouncements;
+   }
 
-	public void setPartnerAnnouncements(List<PartnerAnnouncement> partnerAnnouncements) {
-		this.partnerAnnouncements = partnerAnnouncements;
-	}
+   public void setPartnerAnnouncements(List<PartnerAnnouncement> partnerAnnouncements) {
+      this.partnerAnnouncements = partnerAnnouncements;
+   }
 
-	public PartnerAnnouncement addPartnerAnnouncement(PartnerAnnouncement partnerAnnouncement) {
-		getPartnerAnnouncements().add(partnerAnnouncement);
-		partnerAnnouncement.setPartner(this);
+   public PartnerAnnouncement addPartnerAnnouncement(PartnerAnnouncement partnerAnnouncement) {
+      getPartnerAnnouncements().add(partnerAnnouncement);
+      partnerAnnouncement.setPartner(this);
 
-		return partnerAnnouncement;
-	}
+      return partnerAnnouncement;
+   }
 
-	public PartnerAnnouncement removePartnerAnnouncement(PartnerAnnouncement partnerAnnouncement) {
-		getPartnerAnnouncements().remove(partnerAnnouncement);
-		partnerAnnouncement.setPartner(null);
+   public PartnerAnnouncement removePartnerAnnouncement(PartnerAnnouncement partnerAnnouncement) {
+      getPartnerAnnouncements().remove(partnerAnnouncement);
+      partnerAnnouncement.setPartner(null);
 
-		return partnerAnnouncement;
-	}
+      return partnerAnnouncement;
+   }
 
-	public List<PartnerAnnouncementResult> getPartnerAnnouncementResults() {
-		return this.partnerAnnouncementResults;
-	}
+   public List<PartnerAnnouncementResult> getPartnerAnnouncementResults() {
+      return this.partnerAnnouncementResults;
+   }
 
-	public void setPartnerAnnouncementResults(List<PartnerAnnouncementResult> partnerAnnouncementResults) {
-		this.partnerAnnouncementResults = partnerAnnouncementResults;
-	}
+   public void setPartnerAnnouncementResults(List<PartnerAnnouncementResult> partnerAnnouncementResults) {
+      this.partnerAnnouncementResults = partnerAnnouncementResults;
+   }
 
-	public PartnerAnnouncementResult addPartnerAnnouncementResult(PartnerAnnouncementResult partnerAnnouncementResult) {
-		getPartnerAnnouncementResults().add(partnerAnnouncementResult);
-		partnerAnnouncementResult.setPartner(this);
+   public PartnerAnnouncementResult addPartnerAnnouncementResult(PartnerAnnouncementResult partnerAnnouncementResult) {
+      getPartnerAnnouncementResults().add(partnerAnnouncementResult);
+      partnerAnnouncementResult.setPartner(this);
 
-		return partnerAnnouncementResult;
-	}
+      return partnerAnnouncementResult;
+   }
 
-	public PartnerAnnouncementResult removePartnerAnnouncementResult(PartnerAnnouncementResult partnerAnnouncementResult) {
-		getPartnerAnnouncementResults().remove(partnerAnnouncementResult);
-		partnerAnnouncementResult.setPartner(null);
+   public PartnerAnnouncementResult removePartnerAnnouncementResult(PartnerAnnouncementResult partnerAnnouncementResult) {
+      getPartnerAnnouncementResults().remove(partnerAnnouncementResult);
+      partnerAnnouncementResult.setPartner(null);
 
-		return partnerAnnouncementResult;
-	}
+      return partnerAnnouncementResult;
+   }
 
-	public List<PartnerDocument> getPartnerDocuments() {
-		return this.partnerDocuments;
-	}
+   public List<PartnerDocument> getPartnerDocuments() {
+      return this.partnerDocuments;
+   }
 
-	public void setPartnerDocuments(List<PartnerDocument> partnerDocuments) {
-		this.partnerDocuments = partnerDocuments;
-	}
+   public void setPartnerDocuments(List<PartnerDocument> partnerDocuments) {
+      this.partnerDocuments = partnerDocuments;
+   }
 
-	public PartnerDocument addPartnerDocument(PartnerDocument partnerDocument) {
-		getPartnerDocuments().add(partnerDocument);
-		partnerDocument.setPartner(this);
+   public PartnerDocument addPartnerDocument(PartnerDocument partnerDocument) {
+      getPartnerDocuments().add(partnerDocument);
+      partnerDocument.setPartner(this);
 
-		return partnerDocument;
-	}
+      return partnerDocument;
+   }
 
-	public PartnerDocument removePartnerDocument(PartnerDocument partnerDocument) {
-		getPartnerDocuments().remove(partnerDocument);
-		partnerDocument.setPartner(null);
+   public PartnerDocument removePartnerDocument(PartnerDocument partnerDocument) {
+      getPartnerDocuments().remove(partnerDocument);
+      partnerDocument.setPartner(null);
 
-		return partnerDocument;
-	}
+      return partnerDocument;
+   }
 
-	public List<PartnerHelpRequest> getPartnerHelpRequests1() {
-		return this.partnerHelpRequests1;
-	}
+   public List<PartnerHelpRequest> getPartnerHelpRequests1() {
+      return this.partnerHelpRequests1;
+   }
 
-	public void setPartnerHelpRequests1(List<PartnerHelpRequest> partnerHelpRequests1) {
-		this.partnerHelpRequests1 = partnerHelpRequests1;
-	}
+   public void setPartnerHelpRequests1(List<PartnerHelpRequest> partnerHelpRequests1) {
+      this.partnerHelpRequests1 = partnerHelpRequests1;
+   }
 
-	public PartnerHelpRequest addPartnerHelpRequests1(PartnerHelpRequest partnerHelpRequests1) {
-		getPartnerHelpRequests1().add(partnerHelpRequests1);
-		partnerHelpRequests1.setPartner1(this);
+   public PartnerHelpRequest addPartnerHelpRequests1(PartnerHelpRequest partnerHelpRequests1) {
+      getPartnerHelpRequests1().add(partnerHelpRequests1);
+      partnerHelpRequests1.setPartner1(this);
 
-		return partnerHelpRequests1;
-	}
+      return partnerHelpRequests1;
+   }
 
-	public PartnerHelpRequest removePartnerHelpRequests1(PartnerHelpRequest partnerHelpRequests1) {
-		getPartnerHelpRequests1().remove(partnerHelpRequests1);
-		partnerHelpRequests1.setPartner1(null);
+   public PartnerHelpRequest removePartnerHelpRequests1(PartnerHelpRequest partnerHelpRequests1) {
+      getPartnerHelpRequests1().remove(partnerHelpRequests1);
+      partnerHelpRequests1.setPartner1(null);
 
-		return partnerHelpRequests1;
-	}
+      return partnerHelpRequests1;
+   }
 
-	public List<PartnerHelpRequest> getPartnerHelpRequests2() {
-		return this.partnerHelpRequests2;
-	}
+   public List<PartnerHelpRequest> getPartnerHelpRequests2() {
+      return this.partnerHelpRequests2;
+   }
 
-	public void setPartnerHelpRequests2(List<PartnerHelpRequest> partnerHelpRequests2) {
-		this.partnerHelpRequests2 = partnerHelpRequests2;
-	}
+   public void setPartnerHelpRequests2(List<PartnerHelpRequest> partnerHelpRequests2) {
+      this.partnerHelpRequests2 = partnerHelpRequests2;
+   }
 
-	public PartnerHelpRequest addPartnerHelpRequests2(PartnerHelpRequest partnerHelpRequests2) {
-		getPartnerHelpRequests2().add(partnerHelpRequests2);
-		partnerHelpRequests2.setPartner2(this);
+   public PartnerHelpRequest addPartnerHelpRequests2(PartnerHelpRequest partnerHelpRequests2) {
+      getPartnerHelpRequests2().add(partnerHelpRequests2);
+      partnerHelpRequests2.setPartner2(this);
 
-		return partnerHelpRequests2;
-	}
+      return partnerHelpRequests2;
+   }
 
-	public PartnerHelpRequest removePartnerHelpRequests2(PartnerHelpRequest partnerHelpRequests2) {
-		getPartnerHelpRequests2().remove(partnerHelpRequests2);
-		partnerHelpRequests2.setPartner2(null);
+   public PartnerHelpRequest removePartnerHelpRequests2(PartnerHelpRequest partnerHelpRequests2) {
+      getPartnerHelpRequests2().remove(partnerHelpRequests2);
+      partnerHelpRequests2.setPartner2(null);
 
-		return partnerHelpRequests2;
-	}
+      return partnerHelpRequests2;
+   }
 
-	public List<PartnerMessage> getPartnerMessages() {
-		return this.partnerMessages;
-	}
+   public List<PartnerMessage> getPartnerMessages() {
+      return this.partnerMessages;
+   }
 
-	public void setPartnerMessages(List<PartnerMessage> partnerMessages) {
-		this.partnerMessages = partnerMessages;
-	}
+   public void setPartnerMessages(List<PartnerMessage> partnerMessages) {
+      this.partnerMessages = partnerMessages;
+   }
 
-	public PartnerMessage addPartnerMessage(PartnerMessage partnerMessage) {
-		getPartnerMessages().add(partnerMessage);
-		partnerMessage.setPartner(this);
+   public PartnerMessage addPartnerMessage(PartnerMessage partnerMessage) {
+      getPartnerMessages().add(partnerMessage);
+      partnerMessage.setPartner(this);
 
-		return partnerMessage;
-	}
+      return partnerMessage;
+   }
 
-	public PartnerMessage removePartnerMessage(PartnerMessage partnerMessage) {
-		getPartnerMessages().remove(partnerMessage);
-		partnerMessage.setPartner(null);
+   public PartnerMessage removePartnerMessage(PartnerMessage partnerMessage) {
+      getPartnerMessages().remove(partnerMessage);
+      partnerMessage.setPartner(null);
 
-		return partnerMessage;
-	}
+      return partnerMessage;
+   }
 
-	public List<PartnerNoteTopic> getPartnerNoteTopics() {
-		return this.partnerNoteTopics;
-	}
+   public List<PartnerNoteTopic> getPartnerNoteTopics() {
+      return this.partnerNoteTopics;
+   }
 
-	public void setPartnerNoteTopics(List<PartnerNoteTopic> partnerNoteTopics) {
-		this.partnerNoteTopics = partnerNoteTopics;
-	}
+   public void setPartnerNoteTopics(List<PartnerNoteTopic> partnerNoteTopics) {
+      this.partnerNoteTopics = partnerNoteTopics;
+   }
 
-	public PartnerNoteTopic addPartnerNoteTopic(PartnerNoteTopic partnerNoteTopic) {
-		getPartnerNoteTopics().add(partnerNoteTopic);
-		partnerNoteTopic.setPartner(this);
+   public PartnerNoteTopic addPartnerNoteTopic(PartnerNoteTopic partnerNoteTopic) {
+      getPartnerNoteTopics().add(partnerNoteTopic);
+      partnerNoteTopic.setPartner(this);
 
-		return partnerNoteTopic;
-	}
+      return partnerNoteTopic;
+   }
 
-	public PartnerNoteTopic removePartnerNoteTopic(PartnerNoteTopic partnerNoteTopic) {
-		getPartnerNoteTopics().remove(partnerNoteTopic);
-		partnerNoteTopic.setPartner(null);
+   public PartnerNoteTopic removePartnerNoteTopic(PartnerNoteTopic partnerNoteTopic) {
+      getPartnerNoteTopics().remove(partnerNoteTopic);
+      partnerNoteTopic.setPartner(null);
 
-		return partnerNoteTopic;
-	}
+      return partnerNoteTopic;
+   }
 
-	public List<PartnerNote> getPartnerNotes() {
-		return this.partnerNotes;
-	}
+   public List<PartnerNote> getPartnerNotes() {
+      return this.partnerNotes;
+   }
 
-	public void setPartnerNotes(List<PartnerNote> partnerNotes) {
-		this.partnerNotes = partnerNotes;
-	}
+   public void setPartnerNotes(List<PartnerNote> partnerNotes) {
+      this.partnerNotes = partnerNotes;
+   }
 
-	public PartnerNote addPartnerNote(PartnerNote partnerNote) {
-		getPartnerNotes().add(partnerNote);
-		partnerNote.setPartner(this);
+   public PartnerNote addPartnerNote(PartnerNote partnerNote) {
+      getPartnerNotes().add(partnerNote);
+      partnerNote.setPartner(this);
 
-		return partnerNote;
-	}
+      return partnerNote;
+   }
 
-	public PartnerNote removePartnerNote(PartnerNote partnerNote) {
-		getPartnerNotes().remove(partnerNote);
-		partnerNote.setPartner(null);
+   public PartnerNote removePartnerNote(PartnerNote partnerNote) {
+      getPartnerNotes().remove(partnerNote);
+      partnerNote.setPartner(null);
 
-		return partnerNote;
-	}
+      return partnerNote;
+   }
 
-	public List<PartnerOffice> getPartnerOffices() {
-		return this.partnerOffices;
-	}
+   public List<PartnerOffice> getPartnerOffices() {
+      return this.partnerOffices;
+   }
 
-	public void setPartnerOffices(List<PartnerOffice> partnerOffices) {
-		this.partnerOffices = partnerOffices;
-	}
+   public void setPartnerOffices(List<PartnerOffice> partnerOffices) {
+      this.partnerOffices = partnerOffices;
+   }
 
-	public PartnerOffice addPartnerOffice(PartnerOffice partnerOffice) {
-		getPartnerOffices().add(partnerOffice);
-		partnerOffice.setPartner(this);
+   public PartnerOffice addPartnerOffice(PartnerOffice partnerOffice) {
+      getPartnerOffices().add(partnerOffice);
+      partnerOffice.setPartner(this);
 
-		return partnerOffice;
-	}
+      return partnerOffice;
+   }
 
-	public PartnerOffice removePartnerOffice(PartnerOffice partnerOffice) {
-		getPartnerOffices().remove(partnerOffice);
-		partnerOffice.setPartner(null);
+   public PartnerOffice removePartnerOffice(PartnerOffice partnerOffice) {
+      getPartnerOffices().remove(partnerOffice);
+      partnerOffice.setPartner(null);
 
-		return partnerOffice;
-	}
+      return partnerOffice;
+   }
 
-	public List<PartnerProgram> getPartnerPrograms() {
-		return this.partnerPrograms;
-	}
+   public List<PartnerProgram> getPartnerPrograms() {
+      return this.partnerPrograms;
+   }
 
-	public void setPartnerPrograms(List<PartnerProgram> partnerPrograms) {
-		this.partnerPrograms = partnerPrograms;
-	}
+   public void setPartnerPrograms(List<PartnerProgram> partnerPrograms) {
+      this.partnerPrograms = partnerPrograms;
+   }
 
-	public PartnerProgram addPartnerProgram(PartnerProgram partnerProgram) {
-		getPartnerPrograms().add(partnerProgram);
-		partnerProgram.setPartner(this);
+   public PartnerProgram addPartnerProgram(PartnerProgram partnerProgram) {
+      getPartnerPrograms().add(partnerProgram);
+      partnerProgram.setPartner(this);
 
-		return partnerProgram;
-	}
+      return partnerProgram;
+   }
 
-	public PartnerProgram removePartnerProgram(PartnerProgram partnerProgram) {
-		getPartnerPrograms().remove(partnerProgram);
-		partnerProgram.setPartner(null);
+   public PartnerProgram removePartnerProgram(PartnerProgram partnerProgram) {
+      getPartnerPrograms().remove(partnerProgram);
+      partnerProgram.setPartner(null);
 
-		return partnerProgram;
-	}
+      return partnerProgram;
+   }
 
-	public List<PartnerQuickStatsCategoryAggregate> getPartnerQuickStatsCategoryAggregates() {
-		return this.partnerQuickStatsCategoryAggregates;
-	}
+   public List<PartnerQuickStatsCategoryAggregate> getPartnerQuickStatsCategoryAggregates() {
+      return this.partnerQuickStatsCategoryAggregates;
+   }
 
-	public void setPartnerQuickStatsCategoryAggregates(List<PartnerQuickStatsCategoryAggregate> partnerQuickStatsCategoryAggregates) {
-		this.partnerQuickStatsCategoryAggregates = partnerQuickStatsCategoryAggregates;
-	}
+   public void setPartnerQuickStatsCategoryAggregates(List<PartnerQuickStatsCategoryAggregate> partnerQuickStatsCategoryAggregates) {
+      this.partnerQuickStatsCategoryAggregates = partnerQuickStatsCategoryAggregates;
+   }
 
-	public PartnerQuickStatsCategoryAggregate addPartnerQuickStatsCategoryAggregate(PartnerQuickStatsCategoryAggregate partnerQuickStatsCategoryAggregate) {
-		getPartnerQuickStatsCategoryAggregates().add(partnerQuickStatsCategoryAggregate);
-		partnerQuickStatsCategoryAggregate.setPartner(this);
+   public PartnerQuickStatsCategoryAggregate addPartnerQuickStatsCategoryAggregate(PartnerQuickStatsCategoryAggregate partnerQuickStatsCategoryAggregate) {
+      getPartnerQuickStatsCategoryAggregates().add(partnerQuickStatsCategoryAggregate);
+      partnerQuickStatsCategoryAggregate.setPartner(this);
 
-		return partnerQuickStatsCategoryAggregate;
-	}
+      return partnerQuickStatsCategoryAggregate;
+   }
 
-	public PartnerQuickStatsCategoryAggregate removePartnerQuickStatsCategoryAggregate(PartnerQuickStatsCategoryAggregate partnerQuickStatsCategoryAggregate) {
-		getPartnerQuickStatsCategoryAggregates().remove(partnerQuickStatsCategoryAggregate);
-		partnerQuickStatsCategoryAggregate.setPartner(null);
+   public PartnerQuickStatsCategoryAggregate removePartnerQuickStatsCategoryAggregate(PartnerQuickStatsCategoryAggregate partnerQuickStatsCategoryAggregate) {
+      getPartnerQuickStatsCategoryAggregates().remove(partnerQuickStatsCategoryAggregate);
+      partnerQuickStatsCategoryAggregate.setPartner(null);
 
-		return partnerQuickStatsCategoryAggregate;
-	}
+      return partnerQuickStatsCategoryAggregate;
+   }
 
-	public List<PartnerQuickStatsTypeAggregate> getPartnerQuickStatsTypeAggregates() {
-		return this.partnerQuickStatsTypeAggregates;
-	}
+   public List<PartnerQuickStatsTypeAggregate> getPartnerQuickStatsTypeAggregates() {
+      return this.partnerQuickStatsTypeAggregates;
+   }
 
-	public void setPartnerQuickStatsTypeAggregates(List<PartnerQuickStatsTypeAggregate> partnerQuickStatsTypeAggregates) {
-		this.partnerQuickStatsTypeAggregates = partnerQuickStatsTypeAggregates;
-	}
+   public void setPartnerQuickStatsTypeAggregates(List<PartnerQuickStatsTypeAggregate> partnerQuickStatsTypeAggregates) {
+      this.partnerQuickStatsTypeAggregates = partnerQuickStatsTypeAggregates;
+   }
 
-	public PartnerQuickStatsTypeAggregate addPartnerQuickStatsTypeAggregate(PartnerQuickStatsTypeAggregate partnerQuickStatsTypeAggregate) {
-		getPartnerQuickStatsTypeAggregates().add(partnerQuickStatsTypeAggregate);
-		partnerQuickStatsTypeAggregate.setPartner(this);
+   public PartnerQuickStatsTypeAggregate addPartnerQuickStatsTypeAggregate(PartnerQuickStatsTypeAggregate partnerQuickStatsTypeAggregate) {
+      getPartnerQuickStatsTypeAggregates().add(partnerQuickStatsTypeAggregate);
+      partnerQuickStatsTypeAggregate.setPartner(this);
 
-		return partnerQuickStatsTypeAggregate;
-	}
+      return partnerQuickStatsTypeAggregate;
+   }
 
-	public PartnerQuickStatsTypeAggregate removePartnerQuickStatsTypeAggregate(PartnerQuickStatsTypeAggregate partnerQuickStatsTypeAggregate) {
-		getPartnerQuickStatsTypeAggregates().remove(partnerQuickStatsTypeAggregate);
-		partnerQuickStatsTypeAggregate.setPartner(null);
+   public PartnerQuickStatsTypeAggregate removePartnerQuickStatsTypeAggregate(PartnerQuickStatsTypeAggregate partnerQuickStatsTypeAggregate) {
+      getPartnerQuickStatsTypeAggregates().remove(partnerQuickStatsTypeAggregate);
+      partnerQuickStatsTypeAggregate.setPartner(null);
 
-		return partnerQuickStatsTypeAggregate;
-	}
+      return partnerQuickStatsTypeAggregate;
+   }
 
-	public List<PartnerReferenceCheck> getPartnerReferenceChecks() {
-		return this.partnerReferenceChecks;
-	}
+   public List<PartnerReferenceCheck> getPartnerReferenceChecks() {
+      return this.partnerReferenceChecks;
+   }
 
-	public void setPartnerReferenceChecks(List<PartnerReferenceCheck> partnerReferenceChecks) {
-		this.partnerReferenceChecks = partnerReferenceChecks;
-	}
+   public void setPartnerReferenceChecks(List<PartnerReferenceCheck> partnerReferenceChecks) {
+      this.partnerReferenceChecks = partnerReferenceChecks;
+   }
 
-	public PartnerReferenceCheck addPartnerReferenceCheck(PartnerReferenceCheck partnerReferenceCheck) {
-		getPartnerReferenceChecks().add(partnerReferenceCheck);
-		partnerReferenceCheck.setPartner(this);
+   public PartnerReferenceCheck addPartnerReferenceCheck(PartnerReferenceCheck partnerReferenceCheck) {
+      getPartnerReferenceChecks().add(partnerReferenceCheck);
+      partnerReferenceCheck.setPartner(this);
 
-		return partnerReferenceCheck;
-	}
+      return partnerReferenceCheck;
+   }
 
-	public PartnerReferenceCheck removePartnerReferenceCheck(PartnerReferenceCheck partnerReferenceCheck) {
-		getPartnerReferenceChecks().remove(partnerReferenceCheck);
-		partnerReferenceCheck.setPartner(null);
+   public PartnerReferenceCheck removePartnerReferenceCheck(PartnerReferenceCheck partnerReferenceCheck) {
+      getPartnerReferenceChecks().remove(partnerReferenceCheck);
+      partnerReferenceCheck.setPartner(null);
 
-		return partnerReferenceCheck;
-	}
+      return partnerReferenceCheck;
+   }
 
-	public List<PartnerReviewStatus> getPartnerReviewStatuses() {
-		return this.partnerReviewStatuses;
-	}
+   public List<PartnerReviewStatus> getPartnerReviewStatuses() {
+      return this.partnerReviewStatuses;
+   }
 
-	public void setPartnerReviewStatuses(List<PartnerReviewStatus> partnerReviewStatuses) {
-		this.partnerReviewStatuses = partnerReviewStatuses;
-	}
+   public void setPartnerReviewStatuses(List<PartnerReviewStatus> partnerReviewStatuses) {
+      this.partnerReviewStatuses = partnerReviewStatuses;
+   }
 
-	public PartnerReviewStatus addPartnerReviewStatus(PartnerReviewStatus partnerReviewStatus) {
-		getPartnerReviewStatuses().add(partnerReviewStatus);
-		partnerReviewStatus.setPartner(this);
+   public PartnerReviewStatus addPartnerReviewStatus(PartnerReviewStatus partnerReviewStatus) {
+      getPartnerReviewStatuses().add(partnerReviewStatus);
+      partnerReviewStatus.setPartner(this);
 
-		return partnerReviewStatus;
-	}
+      return partnerReviewStatus;
+   }
 
-	public PartnerReviewStatus removePartnerReviewStatus(PartnerReviewStatus partnerReviewStatus) {
-		getPartnerReviewStatuses().remove(partnerReviewStatus);
-		partnerReviewStatus.setPartner(null);
+   public PartnerReviewStatus removePartnerReviewStatus(PartnerReviewStatus partnerReviewStatus) {
+      getPartnerReviewStatuses().remove(partnerReviewStatus);
+      partnerReviewStatus.setPartner(null);
 
-		return partnerReviewStatus;
-	}
+      return partnerReviewStatus;
+   }
 
-	public List<PartnerSeason> getPartnerSeasons() {
-		return this.partnerSeasons;
-	}
+   public List<PartnerSeason> getPartnerSeasons() {
+      return this.partnerSeasons;
+   }
 
-	public void setPartnerSeasons(List<PartnerSeason> partnerSeasons) {
-		this.partnerSeasons = partnerSeasons;
-	}
+   public void setPartnerSeasons(List<PartnerSeason> partnerSeasons) {
+      this.partnerSeasons = partnerSeasons;
+   }
 
-	public PartnerSeason addPartnerSeason(PartnerSeason partnerSeason) {
-		getPartnerSeasons().add(partnerSeason);
-		partnerSeason.setPartner(this);
+   public PartnerSeason addPartnerSeason(PartnerSeason partnerSeason) {
+      getPartnerSeasons().add(partnerSeason);
+      partnerSeason.setPartner(this);
 
-		return partnerSeason;
-	}
+      return partnerSeason;
+   }
 
-	public PartnerSeason removePartnerSeason(PartnerSeason partnerSeason) {
-		getPartnerSeasons().remove(partnerSeason);
-		partnerSeason.setPartner(null);
+   public PartnerSeason removePartnerSeason(PartnerSeason partnerSeason) {
+      getPartnerSeasons().remove(partnerSeason);
+      partnerSeason.setPartner(null);
 
-		return partnerSeason;
-	}
+      return partnerSeason;
+   }
 
-	public List<PartnerUpdateLog> getPartnerUpdateLogs() {
-		return this.partnerUpdateLogs;
-	}
+   public List<PartnerUpdateLog> getPartnerUpdateLogs() {
+      return this.partnerUpdateLogs;
+   }
 
-	public void setPartnerUpdateLogs(List<PartnerUpdateLog> partnerUpdateLogs) {
-		this.partnerUpdateLogs = partnerUpdateLogs;
-	}
+   public void setPartnerUpdateLogs(List<PartnerUpdateLog> partnerUpdateLogs) {
+      this.partnerUpdateLogs = partnerUpdateLogs;
+   }
 
-	public PartnerUpdateLog addPartnerUpdateLog(PartnerUpdateLog partnerUpdateLog) {
-		getPartnerUpdateLogs().add(partnerUpdateLog);
-		partnerUpdateLog.setPartner(this);
+   public PartnerUpdateLog addPartnerUpdateLog(PartnerUpdateLog partnerUpdateLog) {
+      getPartnerUpdateLogs().add(partnerUpdateLog);
+      partnerUpdateLog.setPartner(this);
 
-		return partnerUpdateLog;
-	}
+      return partnerUpdateLog;
+   }
 
-	public PartnerUpdateLog removePartnerUpdateLog(PartnerUpdateLog partnerUpdateLog) {
-		getPartnerUpdateLogs().remove(partnerUpdateLog);
-		partnerUpdateLog.setPartner(null);
+   public PartnerUpdateLog removePartnerUpdateLog(PartnerUpdateLog partnerUpdateLog) {
+      getPartnerUpdateLogs().remove(partnerUpdateLog);
+      partnerUpdateLog.setPartner(null);
 
-		return partnerUpdateLog;
-	}
+      return partnerUpdateLog;
+   }
 
-	public List<PartnerUser> getPartnerUsers() {
-		return this.partnerUsers;
-	}
+   public List<PartnerUser> getPartnerUsers() {
+      return this.partnerUsers;
+   }
 
-	public void setPartnerUsers(List<PartnerUser> partnerUsers) {
-		this.partnerUsers = partnerUsers;
-	}
+   public void setPartnerUsers(List<PartnerUser> partnerUsers) {
+      this.partnerUsers = partnerUsers;
+   }
 
-	public PartnerUser addPartnerUser(PartnerUser partnerUser) {
-		getPartnerUsers().add(partnerUser);
-		partnerUser.setPartner(this);
+   public PartnerUser addPartnerUser(PartnerUser partnerUser) {
+      getPartnerUsers().add(partnerUser);
+      partnerUser.setPartner(this);
 
-		return partnerUser;
-	}
+      return partnerUser;
+   }
 
-	public PartnerUser removePartnerUser(PartnerUser partnerUser) {
-		getPartnerUsers().remove(partnerUser);
-		partnerUser.setPartner(null);
+   public PartnerUser removePartnerUser(PartnerUser partnerUser) {
+      getPartnerUsers().remove(partnerUser);
+      partnerUser.setPartner(null);
 
-		return partnerUser;
-	}
+      return partnerUser;
+   }
 
-	public List<PartnerWorkQueue> getPartnerWorkQueues() {
-		return this.partnerWorkQueues;
-	}
+   public List<PartnerWorkQueue> getPartnerWorkQueues() {
+      return this.partnerWorkQueues;
+   }
 
-	public void setPartnerWorkQueues(List<PartnerWorkQueue> partnerWorkQueues) {
-		this.partnerWorkQueues = partnerWorkQueues;
-	}
+   public void setPartnerWorkQueues(List<PartnerWorkQueue> partnerWorkQueues) {
+      this.partnerWorkQueues = partnerWorkQueues;
+   }
 
-	public PartnerWorkQueue addPartnerWorkQueue(PartnerWorkQueue partnerWorkQueue) {
-		getPartnerWorkQueues().add(partnerWorkQueue);
-		partnerWorkQueue.setPartner(this);
+   public PartnerWorkQueue addPartnerWorkQueue(PartnerWorkQueue partnerWorkQueue) {
+      getPartnerWorkQueues().add(partnerWorkQueue);
+      partnerWorkQueue.setPartner(this);
 
-		return partnerWorkQueue;
-	}
+      return partnerWorkQueue;
+   }
 
-	public PartnerWorkQueue removePartnerWorkQueue(PartnerWorkQueue partnerWorkQueue) {
-		getPartnerWorkQueues().remove(partnerWorkQueue);
-		partnerWorkQueue.setPartner(null);
+   public PartnerWorkQueue removePartnerWorkQueue(PartnerWorkQueue partnerWorkQueue) {
+      getPartnerWorkQueues().remove(partnerWorkQueue);
+      partnerWorkQueue.setPartner(null);
 
-		return partnerWorkQueue;
-	}
+      return partnerWorkQueue;
+   }
 
-	public List<PartnerWorkQueueCategoryAggregate> getPartnerWorkQueueCategoryAggregates() {
-		return this.partnerWorkQueueCategoryAggregates;
-	}
+   public List<PartnerWorkQueueCategoryAggregate> getPartnerWorkQueueCategoryAggregates() {
+      return this.partnerWorkQueueCategoryAggregates;
+   }
 
-	public void setPartnerWorkQueueCategoryAggregates(List<PartnerWorkQueueCategoryAggregate> partnerWorkQueueCategoryAggregates) {
-		this.partnerWorkQueueCategoryAggregates = partnerWorkQueueCategoryAggregates;
-	}
+   public void setPartnerWorkQueueCategoryAggregates(List<PartnerWorkQueueCategoryAggregate> partnerWorkQueueCategoryAggregates) {
+      this.partnerWorkQueueCategoryAggregates = partnerWorkQueueCategoryAggregates;
+   }
 
-	public PartnerWorkQueueCategoryAggregate addPartnerWorkQueueCategoryAggregate(PartnerWorkQueueCategoryAggregate partnerWorkQueueCategoryAggregate) {
-		getPartnerWorkQueueCategoryAggregates().add(partnerWorkQueueCategoryAggregate);
-		partnerWorkQueueCategoryAggregate.setPartner(this);
+   public PartnerWorkQueueCategoryAggregate addPartnerWorkQueueCategoryAggregate(PartnerWorkQueueCategoryAggregate partnerWorkQueueCategoryAggregate) {
+      getPartnerWorkQueueCategoryAggregates().add(partnerWorkQueueCategoryAggregate);
+      partnerWorkQueueCategoryAggregate.setPartner(this);
 
-		return partnerWorkQueueCategoryAggregate;
-	}
+      return partnerWorkQueueCategoryAggregate;
+   }
 
-	public PartnerWorkQueueCategoryAggregate removePartnerWorkQueueCategoryAggregate(PartnerWorkQueueCategoryAggregate partnerWorkQueueCategoryAggregate) {
-		getPartnerWorkQueueCategoryAggregates().remove(partnerWorkQueueCategoryAggregate);
-		partnerWorkQueueCategoryAggregate.setPartner(null);
+   public PartnerWorkQueueCategoryAggregate removePartnerWorkQueueCategoryAggregate(PartnerWorkQueueCategoryAggregate partnerWorkQueueCategoryAggregate) {
+      getPartnerWorkQueueCategoryAggregates().remove(partnerWorkQueueCategoryAggregate);
+      partnerWorkQueueCategoryAggregate.setPartner(null);
 
-		return partnerWorkQueueCategoryAggregate;
-	}
+      return partnerWorkQueueCategoryAggregate;
+   }
 
-	public List<PartnerWorkQueueTypeAggregate> getPartnerWorkQueueTypeAggregates() {
-		return this.partnerWorkQueueTypeAggregates;
-	}
+   public List<PartnerWorkQueueTypeAggregate> getPartnerWorkQueueTypeAggregates() {
+      return this.partnerWorkQueueTypeAggregates;
+   }
 
-	public void setPartnerWorkQueueTypeAggregates(List<PartnerWorkQueueTypeAggregate> partnerWorkQueueTypeAggregates) {
-		this.partnerWorkQueueTypeAggregates = partnerWorkQueueTypeAggregates;
-	}
+   public void setPartnerWorkQueueTypeAggregates(List<PartnerWorkQueueTypeAggregate> partnerWorkQueueTypeAggregates) {
+      this.partnerWorkQueueTypeAggregates = partnerWorkQueueTypeAggregates;
+   }
 
-	public PartnerWorkQueueTypeAggregate addPartnerWorkQueueTypeAggregate(PartnerWorkQueueTypeAggregate partnerWorkQueueTypeAggregate) {
-		getPartnerWorkQueueTypeAggregates().add(partnerWorkQueueTypeAggregate);
-		partnerWorkQueueTypeAggregate.setPartner(this);
+   public PartnerWorkQueueTypeAggregate addPartnerWorkQueueTypeAggregate(PartnerWorkQueueTypeAggregate partnerWorkQueueTypeAggregate) {
+      getPartnerWorkQueueTypeAggregates().add(partnerWorkQueueTypeAggregate);
+      partnerWorkQueueTypeAggregate.setPartner(this);
 
-		return partnerWorkQueueTypeAggregate;
-	}
+      return partnerWorkQueueTypeAggregate;
+   }
 
-	public PartnerWorkQueueTypeAggregate removePartnerWorkQueueTypeAggregate(PartnerWorkQueueTypeAggregate partnerWorkQueueTypeAggregate) {
-		getPartnerWorkQueueTypeAggregates().remove(partnerWorkQueueTypeAggregate);
-		partnerWorkQueueTypeAggregate.setPartner(null);
+   public PartnerWorkQueueTypeAggregate removePartnerWorkQueueTypeAggregate(PartnerWorkQueueTypeAggregate partnerWorkQueueTypeAggregate) {
+      getPartnerWorkQueueTypeAggregates().remove(partnerWorkQueueTypeAggregate);
+      partnerWorkQueueTypeAggregate.setPartner(null);
 
-		return partnerWorkQueueTypeAggregate;
-	}
+      return partnerWorkQueueTypeAggregate;
+   }
 
 }

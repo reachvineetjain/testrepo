@@ -13,109 +13,109 @@ import java.sql.Timestamp;
 @Table(name="PartnerSeasonNotes")
 @NamedQuery(name="PartnerSeasonNote.findAll", query="SELECT p FROM PartnerSeasonNote p")
 public class PartnerSeasonNote implements Serializable {
-	private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
-	private Integer partnerSeasonNotesId;
+   @Id
+   @GeneratedValue(strategy=GenerationType.IDENTITY)
+   @Column(unique=true, nullable=false)
+   private Integer partnerSeasonNotesId;
 
-	private Integer createdBy;
+   private Integer createdBy;
 
-	private Timestamp createdOn;
+   private Timestamp createdOn;
 
-	private Byte hasRead;
+   private Byte hasRead;
 
-	private Integer modifiedBy;
+   private Integer modifiedBy;
 
-	private Timestamp modifiedOn;
+   private Timestamp modifiedOn;
 
-	@Lob
-	private String partnerNote;
+   @Lob
+   private String partnerNote;
 
-	//bi-directional many-to-one association to PartnerSeason
-	@ManyToOne
-	@JoinColumn(name="partnerSeasonId")
-	private PartnerSeason partnerSeason;
+   //bi-directional many-to-one association to PartnerSeason
+   @ManyToOne
+   @JoinColumn(name="partnerSeasonId")
+   private PartnerSeason partnerSeason;
 
-	//bi-directional many-to-one association to PartnerSeasonNoteTopic
-	@ManyToOne
-	@JoinColumn(name="partnerSeasonNoteTopicId")
-	private PartnerSeasonNoteTopic partnerSeasonNoteTopic;
+   //bi-directional many-to-one association to PartnerSeasonNoteTopic
+   @ManyToOne
+   @JoinColumn(name="partnerSeasonNoteTopicId")
+   private PartnerSeasonNoteTopic partnerSeasonNoteTopic;
 
-	public PartnerSeasonNote() {
-	}
+   public PartnerSeasonNote() {
+   }
 
-	public Integer getPartnerSeasonNotesId() {
-		return this.partnerSeasonNotesId;
-	}
+   public Integer getPartnerSeasonNotesId() {
+      return this.partnerSeasonNotesId;
+   }
 
-	public void setPartnerSeasonNotesId(Integer partnerSeasonNotesId) {
-		this.partnerSeasonNotesId = partnerSeasonNotesId;
-	}
+   public void setPartnerSeasonNotesId(Integer partnerSeasonNotesId) {
+      this.partnerSeasonNotesId = partnerSeasonNotesId;
+   }
 
-	public Integer getCreatedBy() {
-		return this.createdBy;
-	}
+   public Integer getCreatedBy() {
+      return this.createdBy;
+   }
 
-	public void setCreatedBy(Integer createdBy) {
-		this.createdBy = createdBy;
-	}
+   public void setCreatedBy(Integer createdBy) {
+      this.createdBy = createdBy;
+   }
 
-	public Timestamp getCreatedOn() {
-		return this.createdOn;
-	}
+   public Timestamp getCreatedOn() {
+      return this.createdOn;
+   }
 
-	public void setCreatedOn(Timestamp createdOn) {
-		this.createdOn = createdOn;
-	}
+   public void setCreatedOn(Timestamp createdOn) {
+      this.createdOn = createdOn;
+   }
 
-	public Byte getHasRead() {
-		return this.hasRead;
-	}
+   public Byte getHasRead() {
+      return this.hasRead;
+   }
 
-	public void setHasRead(Byte hasRead) {
-		this.hasRead = hasRead;
-	}
+   public void setHasRead(Byte hasRead) {
+      this.hasRead = hasRead;
+   }
 
-	public Integer getModifiedBy() {
-		return this.modifiedBy;
-	}
+   public Integer getModifiedBy() {
+      return this.modifiedBy;
+   }
 
-	public void setModifiedBy(Integer modifiedBy) {
-		this.modifiedBy = modifiedBy;
-	}
+   public void setModifiedBy(Integer modifiedBy) {
+      this.modifiedBy = modifiedBy;
+   }
 
-	public Timestamp getModifiedOn() {
-		return this.modifiedOn;
-	}
+   public Timestamp getModifiedOn() {
+      return this.modifiedOn;
+   }
 
-	public void setModifiedOn(Timestamp modifiedOn) {
-		this.modifiedOn = modifiedOn;
-	}
+   public void setModifiedOn(Timestamp modifiedOn) {
+      this.modifiedOn = modifiedOn;
+   }
 
-	public String getPartnerNote() {
-		return this.partnerNote;
-	}
+   public String getPartnerNote() {
+      return this.partnerNote;
+   }
 
-	public void setPartnerNote(String partnerNote) {
-		this.partnerNote = partnerNote;
-	}
+   public void setPartnerNote(String partnerNote) {
+      this.partnerNote = partnerNote;
+   }
 
-	public PartnerSeason getPartnerSeason() {
-		return this.partnerSeason;
-	}
+   public PartnerSeason getPartnerSeason() {
+      return this.partnerSeason;
+   }
 
-	public void setPartnerSeason(PartnerSeason partnerSeason) {
-		this.partnerSeason = partnerSeason;
-	}
+   public void setPartnerSeason(PartnerSeason partnerSeason) {
+      this.partnerSeason = partnerSeason;
+   }
 
-	public PartnerSeasonNoteTopic getPartnerSeasonNoteTopic() {
-		return this.partnerSeasonNoteTopic;
-	}
+   public PartnerSeasonNoteTopic getPartnerSeasonNoteTopic() {
+      return this.partnerSeasonNoteTopic;
+   }
 
-	public void setPartnerSeasonNoteTopic(PartnerSeasonNoteTopic partnerSeasonNoteTopic) {
-		this.partnerSeasonNoteTopic = partnerSeasonNoteTopic;
-	}
+   public void setPartnerSeasonNoteTopic(PartnerSeasonNoteTopic partnerSeasonNoteTopic) {
+      this.partnerSeasonNoteTopic = partnerSeasonNoteTopic;
+   }
 
 }
