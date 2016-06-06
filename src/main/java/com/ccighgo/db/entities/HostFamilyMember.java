@@ -52,7 +52,7 @@ public class HostFamilyMember implements Serializable {
 	@Column(length=50)
 	private String employer2;
 
-	private Byte employmentType;
+	private String employmentType;
 
 	@Column(length=50)
 	private String firstName;
@@ -77,7 +77,7 @@ public class HostFamilyMember implements Serializable {
 	@Column(length=50)
 	private String lastName;
 
-	private Byte livingAtHome;
+	private String livingAtHome;
 
 	@Column(length=100)
 	private String livingAtHomeExplanation;
@@ -220,11 +220,11 @@ public class HostFamilyMember implements Serializable {
 		this.employer2 = employer2;
 	}
 
-	public Byte getEmploymentType() {
+	public String getEmploymentType() {
 		return this.employmentType;
 	}
 
-	public void setEmploymentType(Byte employmentType) {
+	public void setEmploymentType(String employmentType) {
 		this.employmentType = employmentType;
 	}
 
@@ -300,11 +300,11 @@ public class HostFamilyMember implements Serializable {
 		this.lastName = lastName;
 	}
 
-	public Byte getLivingAtHome() {
+	public String getLivingAtHome() {
 		return this.livingAtHome;
 	}
 
-	public void setLivingAtHome(Byte livingAtHome) {
+	public void setLivingAtHome(String livingAtHome) {
 		this.livingAtHome = livingAtHome;
 	}
 

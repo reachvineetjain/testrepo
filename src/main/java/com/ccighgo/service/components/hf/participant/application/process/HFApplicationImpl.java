@@ -744,11 +744,12 @@ public class HFApplicationImpl implements HFApplication {
                   adult.setBirthdate(String.valueOf(obj[8]));
                   adult.setGenderId(Integer.valueOf(String.valueOf(obj[9])));
                   adult.setEducationLevel(String.valueOf(obj[10]));
-                  adult.setLivesinsideOfHomePartTime(Boolean.valueOf(String.valueOf(obj[11])));
+                  adult.setResidencyTime(String.valueOf(String.valueOf(obj[11])));
                   adult.setLivingInsideHomeExplanation(String.valueOf(obj[12]));
                   adult.setCommunityInvolvement(String.valueOf(obj[13]));
                   adult.setActivitiesOrInterests(String.valueOf(obj[14]));
                   adult.setEmployed(String.valueOf(obj[15]));
+                  adult.setEmploymentType(String.valueOf(obj[31]));
                   adult.setEmployer(String.valueOf(obj[16]));
                   adult.setJobTitle(String.valueOf(obj[17]));
                   adult.setContactName(String.valueOf(obj[18]));
@@ -1275,11 +1276,12 @@ public class HFApplicationImpl implements HFApplication {
             LookupGender gender = genderRepository.findOne(member.getGenderId());
             hfm.setLookupGender(gender);
             hfm.setEducationLevel(member.getEducationLevel());
-            hfm.setLivingAtHome(member.isLivesinsideOfHomePartTime() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
+            hfm.setLivingAtHome(member.getResidencyTime());
             hfm.setLivingAtHomeExplanation(member.getLivingInsideHomeExplanation());
             hfm.setCommunityInvolvement(member.getCommunityInvolvement());
             hfm.setInterests(member.getActivitiesOrInterests());
             hfm.setEmployed(member.getEmployed());
+            hfm.setEmploymentType(member.getEmploymentType());
             hfm.setEmployer1(member.getEmployer());
             hfm.setJobTitle1(member.getJobTitle());
             hfm.setContactName1(member.getContactName());
