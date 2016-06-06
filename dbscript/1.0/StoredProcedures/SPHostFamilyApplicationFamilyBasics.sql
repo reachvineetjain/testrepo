@@ -1,10 +1,10 @@
 DELIMITER $$
 
-USE `cci_gh_go_qa`$$
+USE `cci_gh_go_dev`$$
 
 DROP PROCEDURE IF EXISTS `SPHostFamilyApplicationFamilyBasics`$$
 
-CREATE DEFINER=`phanipothula`@`%` PROCEDURE `SPHostFamilyApplicationFamilyBasics`(IN hostfamilyId INT,IN ssId INT,IN deptprgmId INT)
+CREATE DEFINER=`madhavi`@`%` PROCEDURE `SPHostFamilyApplicationFamilyBasics`(IN hostfamilyId INT,IN ssId INT,IN deptprgmId INT)
 BEGIN
     
     DECLARE hfId,sId,dpId INT;
@@ -31,7 +31,7 @@ BEGIN
                 hfm.`birthDate`,
                 hfm.`genderId`,
                 hfm.`educationLevel`,
-                hfm.`livingAtHome`,
+                hfm.`residencyTime`,
                 hfm.`livingAtHomeExplanation`,
                 hfm.`communityInvolvement`,
                 hfm.`interests`,
@@ -50,11 +50,12 @@ BEGIN
                 hfs.seasonId,
                 hfs.departmentProgramId,
                 hfs.hostFamilySeasonId,
-                hfp.description
-        FROM `HostFamilyPhotos` hfp
-        INNER JOIN `HostFamilyMember` hfm ON hfm.`hostFamilySeasonId` = hfp.`hostFamilySeasonId`
+                hfp.description,
+                hfm.employmentType
+        FROM `HostFamilyMember` hfm
         INNER JOIN `HostFamilySeason` hfs ON hfs.`hostFamilySeasonId` = hfm.`hostFamilySeasonId`
-        WHERE hfs.`hostFamilyGoId` = @hfId AND hfs.`seasonId` = @sId AND hfs.`departmentProgramId` = @dpId AND hfp.hostFamilyPhotoTypeId = 1
+	LEFT JOIN `HostFamilyPhotos` hfp ON hfm.`hostFamilySeasonId` = hfp.`hostFamilySeasonId` AND hfp.hostFamilyPhotoTypeId = 1
+        WHERE hfs.`hostFamilyGoId` = @hfId AND hfs.`seasonId` = @sId AND hfs.`departmentProgramId` = @dpId 
         GROUP BY hfm.`hostFamilyMemberId`;
     END$$
 

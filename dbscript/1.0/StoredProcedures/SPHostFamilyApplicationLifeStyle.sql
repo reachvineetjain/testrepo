@@ -54,7 +54,9 @@ BEGIN
                                 hfs.seasonId,
                                 hfs.departmentProgramId,
                                 hfs.hostFamilySeasonId,
-                                hfd.hostFamilyDetailsId
+                                hfd.hostFamilyDetailsId,
+                                hfd.homeLanguage,
+                                hfd.otherLaungage
 		FROM HostFamilySeason hfs
 		INNER JOIN HostFamilyDetail hfd ON hfs.hostFamilySeasonId = hfd.hostFamilySeasonId
 		WHERE hfs.hostFamilyGoId = @hfGoId AND hfs.seasonId = @sId AND hfs.departmentProgramId = @pgmId;
