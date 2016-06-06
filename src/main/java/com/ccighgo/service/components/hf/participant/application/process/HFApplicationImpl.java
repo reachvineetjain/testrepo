@@ -741,7 +741,8 @@ public class HFApplicationImpl implements HFApplication {
                   adult.setIsHostParent(Boolean.valueOf(String.valueOf(obj[5])));
                   adult.setEmail(String.valueOf(obj[6]));
                   adult.setPersonalPhone(String.valueOf(obj[7]));
-                  adult.setBirthdate(String.valueOf(obj[8]));
+                  Date dateformat = (Date) obj[8];
+                  adult.setBirthdate(DateUtils.getMMddYyyyString(dateformat));
                   adult.setGenderId(Integer.valueOf(String.valueOf(obj[9])));
                   adult.setEducationLevel(String.valueOf(obj[10]));
                   adult.setResidencyTime(String.valueOf(String.valueOf(obj[11])));
