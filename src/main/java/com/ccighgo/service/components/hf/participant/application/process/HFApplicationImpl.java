@@ -93,6 +93,7 @@ import com.ccighgo.service.transport.hostfamily.beans.application.familydetails.
 import com.ccighgo.service.transport.hostfamily.beans.application.familydetails.HFMailingAddress;
 import com.ccighgo.service.transport.hostfamily.beans.application.familydetails.HFPets;
 import com.ccighgo.service.transport.hostfamily.beans.application.familydetails.HFPhysicalAddress;
+import com.ccighgo.service.transport.hostfamily.beans.application.familydetails.HFSingleHostDetails;
 import com.ccighgo.service.transport.hostfamily.beans.application.familylifestyle.HFApplicationFamilyLifeStyle;
 import com.ccighgo.service.transport.hostfamily.beans.application.familylifestyle.HFDieTrayRestriction;
 import com.ccighgo.service.transport.hostfamily.beans.application.familylifestyle.HFFamilyDayDetails;
@@ -452,7 +453,8 @@ public class HFApplicationImpl implements HFApplication {
          updatedObject.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, HostFamilyCodes.SUCCESS.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (CcighgoException e) {
-         updatedObject.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, HostFamilyCodes.ERROR_UPLOAD_OPTIONAL_HF_PHOTOS.getValue(), e.getMessage()));
+         updatedObject
+               .setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, HostFamilyCodes.ERROR_UPLOAD_OPTIONAL_HF_PHOTOS.getValue(), e.getMessage()));
          LOGGER.error(e.getMessage());
       }
       return updatedObject;
@@ -559,7 +561,6 @@ public class HFApplicationImpl implements HFApplication {
       return resp;
    }
 
-   // Pending SP from Phani
    @Override
    public HFHomePage getHostFamilyHome(HomePageParam hpp) {
       HFHomePage hp = new HFHomePage();
@@ -604,7 +605,8 @@ public class HFApplicationImpl implements HFApplication {
             hp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, HostFamilyCodes.SUCCESS.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          } else {
-            hp.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD, CCIConstants.TYPE_INFO, HostFamilyCodes.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
+            hp.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD, CCIConstants.TYPE_INFO, HostFamilyCodes.NO_RECORD.getValue(),
+                  messageUtil.getMessage(CCIConstants.NO_RECORD)));
          }
 
          hp.setApplicationCheckList(applicationChecklist);
@@ -643,6 +645,8 @@ public class HFApplicationImpl implements HFApplication {
                familyDay.setTypicalWeekdayAtHome(String.valueOf(obj[7]));
                familyDay.setTypicalWeekendAtHome(String.valueOf(obj[8]));
                familyDay.setFavouriteThingsToDoAsFamily(String.valueOf(obj[9]));
+               familyDay.setFamilyHomeLanguage(String.valueOf(obj[37]));
+               familyDay.setFamilyOtherLanguage(String.valueOf(obj[38]));
                hfl.setFamilyDay(familyDay);
 
                HFFamilyReligious religious = new HFFamilyReligious();
@@ -691,7 +695,8 @@ public class HFApplicationImpl implements HFApplication {
             hfl.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, HostFamilyCodes.SUCCESS.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          } else {
-            hfl.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD, CCIConstants.TYPE_INFO, HostFamilyCodes.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
+            hfl.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD, CCIConstants.TYPE_INFO, HostFamilyCodes.NO_RECORD.getValue(),
+                  messageUtil.getMessage(CCIConstants.NO_RECORD)));
          }
 
       } catch (CcighgoException e) {
@@ -714,6 +719,8 @@ public class HFApplicationImpl implements HFApplication {
          query.setParameter(2, familyBasicsPageParam.getSeasonId() == 0 ? null : familyBasicsPageParam.getSeasonId());
          query.setParameter(3, familyBasicsPageParam.getDepartmentProgramId() == 0 ? null : familyBasicsPageParam.getDepartmentProgramId());
          hfbs.setHostFamilyId(familyBasicsPageParam.getHostfamilyId());
+
+         // Fetching The single host Data TODO
          @SuppressWarnings("unchecked")
          List<Object[]> result = query.getResultList();
          boolean singleHost = false;
@@ -734,14 +741,16 @@ public class HFApplicationImpl implements HFApplication {
                   adult.setIsHostParent(Boolean.valueOf(String.valueOf(obj[5])));
                   adult.setEmail(String.valueOf(obj[6]));
                   adult.setPersonalPhone(String.valueOf(obj[7]));
-                  adult.setBirthdate(String.valueOf(obj[8]));
+                  Date dateformat = (Date) obj[8];
+                  adult.setBirthdate(DateUtils.getMMddYyyyString(dateformat));
                   adult.setGenderId(Integer.valueOf(String.valueOf(obj[9])));
                   adult.setEducationLevel(String.valueOf(obj[10]));
-                  adult.setLivesinsideOfHomePartTime(Boolean.valueOf(String.valueOf(obj[11])));
+                  adult.setResidencyTime(String.valueOf(String.valueOf(obj[11])));
                   adult.setLivingInsideHomeExplanation(String.valueOf(obj[12]));
                   adult.setCommunityInvolvement(String.valueOf(obj[13]));
                   adult.setActivitiesOrInterests(String.valueOf(obj[14]));
                   adult.setEmployed(String.valueOf(obj[15]));
+                  adult.setEmploymentType(String.valueOf(obj[31]));
                   adult.setEmployer(String.valueOf(obj[16]));
                   adult.setJobTitle(String.valueOf(obj[17]));
                   adult.setContactName(String.valueOf(obj[18]));
@@ -764,7 +773,8 @@ public class HFApplicationImpl implements HFApplication {
             }
             hfbs.setSingleHost(singleHost);
          } else {
-            hfbs.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD, CCIConstants.TYPE_INFO, HostFamilyCodes.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
+            hfbs.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD, CCIConstants.TYPE_INFO, HostFamilyCodes.NO_RECORD.getValue(),
+                  messageUtil.getMessage(CCIConstants.NO_RECORD)));
             return hfbs;
          }
 
@@ -880,6 +890,27 @@ public class HFApplicationImpl implements HFApplication {
                }
             }
          }
+         try {
+            HostFamilyReference singleHostData = hostFamilyReferenceRepository.findBySeasonIdAndThirdReferenceForSingleHost(familyBasicsPageParam.getSeasonId());
+
+            if (singleHostData != null) {
+               HFSingleHostDetails singleHostDetail = new HFSingleHostDetails();
+               singleHostDetail.setCity(singleHostData.getCity());
+               singleHostDetail.setFirstName(singleHostData.getFirstName());
+               singleHostDetail.setLastName(singleHostData.getLastName());
+               singleHostDetail.setPhone(singleHostData.getPhone());
+               singleHostDetail.setRelationshipToFamily(singleHostData.getRelationship());
+               if (singleHostData.getLookupUsstate() != null)
+                  singleHostDetail.setState(singleHostData.getLookupUsstate().getStateCode());
+               singleHostDetail.setStreetAddress(singleHostData.getAddress());
+               singleHostDetail.setZipCode(singleHostData.getZipCode());
+               singleHostDetail.setHostfamilyMemberId(singleHostData.getHostFamilyReferenceId());
+               hfbs.setSingleHostDetail(singleHostDetail);
+            }
+         } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+         }
+
          hfbs.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, HostFamilyCodes.SUCCESS.getValue(),
                messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
       } catch (CcighgoException e) {
@@ -1046,8 +1077,8 @@ public class HFApplicationImpl implements HFApplication {
          if (communityAndSchoolPage.getSeasonId() <= 0) {
             throw new CcighgoException("NO Season ID");
          }
-         HostFamilySeasonCategory hostFamilySeasonCategory = hostFamilySeasonCategoryRepository.getHFSeasonCategoryBySeasonIdAndCategoryId(communityAndSchoolPage.getHostFamilySeasonId(),
-               Integer.valueOf(applicationCategoryId));
+         HostFamilySeasonCategory hostFamilySeasonCategory = hostFamilySeasonCategoryRepository.getHFSeasonCategoryBySeasonIdAndCategoryId(
+               communityAndSchoolPage.getHostFamilySeasonId(), Integer.valueOf(applicationCategoryId));
          if (hostFamilySeasonCategory != null) {
             hostFamilySeasonCategory.setFilledMandatoryFields(communityAndSchoolPage.getFieldsFilled());
             hostFamilySeasonCategoryRepository.saveAndFlush(hostFamilySeasonCategory);
@@ -1113,7 +1144,6 @@ public class HFApplicationImpl implements HFApplication {
             hfbs.setPercentUpdate(CCIUtils.getFormFilledPercentage(hostFamilySeasonCategory.getTotalMandatoryFields(), hostFamilySeasonCategory.getFilledMandatoryFields()));
             hfbs.setFieldsFilled(hostFamilySeasonCategory.getFilledMandatoryFields());
          }
-            
 
          Query query = em.createNativeQuery(SP_HF_COMMUNITY);
          query.setParameter(1, descriptionPageParam.getHostFamilyId() == 0 ? null : descriptionPageParam.getHostFamilyId());
@@ -1205,6 +1235,7 @@ public class HFApplicationImpl implements HFApplication {
             hostFamilySeasonCategory.setFilledMandatoryFields(hfApplicationFamilyDetails.getFieldsFilled());
             hostFamilySeasonCategoryRepository.saveAndFlush(hostFamilySeasonCategory);
          }
+         // Save Single host Data TODO
          // add photo
          HostFamilySeason season = hostFamilySeasonRepository.getSeason(hfApplicationFamilyDetails.getSeasonId(), hfApplicationFamilyDetails.getProgramId(),
                hfApplicationFamilyDetails.getHostFamilyId());
@@ -1246,11 +1277,12 @@ public class HFApplicationImpl implements HFApplication {
             LookupGender gender = genderRepository.findOne(member.getGenderId());
             hfm.setLookupGender(gender);
             hfm.setEducationLevel(member.getEducationLevel());
-            hfm.setLivingAtHome(member.isLivesinsideOfHomePartTime() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
+            hfm.setLivingAtHome(member.getResidencyTime());
             hfm.setLivingAtHomeExplanation(member.getLivingInsideHomeExplanation());
             hfm.setCommunityInvolvement(member.getCommunityInvolvement());
             hfm.setInterests(member.getActivitiesOrInterests());
             hfm.setEmployed(member.getEmployed());
+            hfm.setEmploymentType(member.getEmploymentType());
             hfm.setEmployer1(member.getEmployer());
             hfm.setJobTitle1(member.getJobTitle());
             hfm.setContactName1(member.getContactName());
@@ -1349,6 +1381,32 @@ public class HFApplicationImpl implements HFApplication {
          // if (!pets.isEmpty())
          // hostFamilyPetRepository.save(pets);
 
+         try {
+            if (hfApplicationFamilyDetails.getSingleHostDetail() != null) {
+               HostFamilyReference hRef1 = new HostFamilyReference();
+               hRef1.setFirstName(hfApplicationFamilyDetails.getSingleHostDetail().getFirstName());
+               hRef1.setLastName(hfApplicationFamilyDetails.getSingleHostDetail().getLastName());
+               hRef1.setAddress(hfApplicationFamilyDetails.getSingleHostDetail().getStreetAddress());
+               hRef1.setCity(hfApplicationFamilyDetails.getSingleHostDetail().getCity());
+               LookupUSState lookupUsstate = stateRepository.getStateByStateCode(hfApplicationFamilyDetails.getSingleHostDetail().getState());
+               hRef1.setLookupUsstate(lookupUsstate );
+               hRef1.setZipCode(hfApplicationFamilyDetails.getSingleHostDetail().getZipCode());
+               hRef1.setPhone(hfApplicationFamilyDetails.getSingleHostDetail().getPhone());
+               hRef1.setRelationship(hfApplicationFamilyDetails.getSingleHostDetail().getRelationshipToFamily());
+               
+               hRef1.setActive(CCIConstants.ACTIVE);
+               hRef1.setHostFamilySeason(hostFamilySeasonRepository.findOne(hfApplicationFamilyDetails.getSeasonId()));
+               hRef1.setCreatedBy(hfApplicationFamilyDetails.getLoginId());
+               hRef1.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+               hRef1.setModifiedBy(hfApplicationFamilyDetails.getLoginId());
+               hRef1.setModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
+               hRef1.setIsThirdReferenceForSingleHost(CCIConstants.TRUE_BYTE);
+               hostFamilyReferenceRepository.saveAndFlush(hRef1);
+            }
+         } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+         }
+
          FamilyBasicsPageParam familyBasicsPageParam = new FamilyBasicsPageParam();
          familyBasicsPageParam.setDepartmentProgramId(hfApplicationFamilyDetails.getProgramId());
          familyBasicsPageParam.setHostfamilyId(hfApplicationFamilyDetails.getHostFamilyId());
@@ -1404,6 +1462,9 @@ public class HFApplicationImpl implements HFApplication {
          hfd.setTypicalWeekday(hfApplicationFamilyDetails.getFamilyDay().getTypicalWeekdayAtHome());
          hfd.setTypicalWeekend(hfApplicationFamilyDetails.getFamilyDay().getTypicalWeekendAtHome());
          hfd.setFavouriteWeekend(hfApplicationFamilyDetails.getFamilyDay().getFavouriteThingsToDoAsFamily());
+         hfd.setHomeLanguage(hfApplicationFamilyDetails.getFamilyDay().getFamilyHomeLanguage());
+         hfd.setOtherLaungage(hfApplicationFamilyDetails.getFamilyDay().getFamilyOtherLanguage());
+
 
          // Religion
          hfd.setReligiousAffiliation(hfApplicationFamilyDetails.getReligious().getReligious());
@@ -1780,7 +1841,8 @@ public class HFApplicationImpl implements HFApplication {
                   messageUtil.getMessage(CCIConstants.NO_RECORD)));
          }
       } catch (CcighgoException e) {
-         backgroundCheck.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, HostFamilyCodes.ERROR_GET_HF_BACKGROUND_DETAILS.getValue(), e.getMessage()));
+         backgroundCheck.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, HostFamilyCodes.ERROR_GET_HF_BACKGROUND_DETAILS.getValue(),
+               e.getMessage()));
          LOGGER.error(e.getMessage());
       }
       return backgroundCheck;
@@ -1931,7 +1993,8 @@ public class HFApplicationImpl implements HFApplication {
          }
 
       } catch (CcighgoException e) {
-         appProgress.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, HostFamilyCodes.ERROR_GET_HF_APPLICATION_PROGRESS.getValue(), e.getMessage()));
+         appProgress
+               .setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, HostFamilyCodes.ERROR_GET_HF_APPLICATION_PROGRESS.getValue(), e.getMessage()));
          LOGGER.error(e.getMessage());
       }
       return appProgress;
@@ -1953,7 +2016,8 @@ public class HFApplicationImpl implements HFApplication {
             resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, HostFamilyCodes.SUCCESS.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          } else {
-            resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, HostFamilyCodes.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
+            resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, HostFamilyCodes.NO_RECORD.getValue(),
+                  messageUtil.getMessage(CCIConstants.NO_RECORD)));
          }
       } catch (CcighgoException e) {
          resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, HostFamilyCodes.ERROR_HF_SUBMIT_APPLICATION.getValue(), e.getMessage()));
@@ -2135,7 +2199,8 @@ public class HFApplicationImpl implements HFApplication {
             hfM.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, HostFamilyCodes.SUCCESS.getValue(),
                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
          } else {
-            hfM.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, HostFamilyCodes.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
+            hfM.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, HostFamilyCodes.NO_RECORD.getValue(),
+                  messageUtil.getMessage(CCIConstants.NO_RECORD)));
          }
 
       } catch (CcighgoException e) {
@@ -2224,71 +2289,88 @@ public class HFApplicationImpl implements HFApplication {
       return null;
    }
 
-	@Override
-	public HFP2WorkQueueType getWorkQueueType(String roleType) {
-		HFP2WorkQueueType pwt = new HFP2WorkQueueType();
-//	      try {
-//	         List<AdminWorkQueueType> types = adminWorkQueueTypeRepository.findTypesByPartnerRole(roleType);
-//	         if (types != null) {
-//	            for (AdminWorkQueueType adminWorkQueueType : types) {
-//	               AdminPartnerWorkQueueTypeDetail newType = new AdminPartnerWorkQueueTypeDetail();
-//	               newType.setTypeId(adminWorkQueueType.getAdminWQTypeId());
-//	               newType.setTypeName(adminWorkQueueType.getAdminWQTypeName());
-//	               pwt.getWorkQueueType().add(newType);
-//	            }
-//	            pwt.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE, messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
-//	         } else {
-//	            pwt.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD_IN_DB, CCIConstants.TYPE_INFO, CCIConstants.NO_DATA_CODE, messageUtil.getMessage(CCIConstants.NO_RECORD)));
-//	         }
-//	      } catch (Exception e) {
-//	         ExceptionUtil.logException(e, LOGGER);
-//	         pwt.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.NO_WOEKQUEUE_TYPE.getValue(),
-//	               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_TYPE)));
-//	         LOGGER.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_TYPE));
-//	      }
-	      return pwt;
-	}
-	
-	@Override
-	public HFP2WorkQueueCategory getWorkQueueCategory(int parseInt, int parseInt2) {
-		HFP2WorkQueueCategory pwqc = new HFP2WorkQueueCategory();
-//	      try {
-//	         List<AdminWorkQueueCategory> categories = adminWorkQueueCategoryRepository.findAllCategoriesByTypeId(adminWorkQueueTypeId);
-//	         if (categories != null) {
-//	            for (AdminWorkQueueCategory adminWorkQueueCategory : categories) {
-//	               AdminPartnerWorkQueueCategoryDetail newCategory = new AdminPartnerWorkQueueCategoryDetail();
-//	               newCategory.setAdminWorkQueueTypeId(adminWorkQueueCategory.getAdminWorkQueueType().getAdminWQTypeId());
-//	               newCategory.setCategoryId(adminWorkQueueCategory.getAdminWorkQueueCategoryId());
-//	               newCategory.setCategoryName(adminWorkQueueCategory.getAdminWorkQueueCategoryName());
-//	               if (adminWorkQueueCategory.getAdminWorkQueueType().getAdminWQTypeName().equalsIgnoreCase(WORK_QUEUE_TYPE_APPLICATION)) {
-//	                  if (newCategory.getCategoryName().equals(CATEGORY_NAME_SUBMITTED)) {
-//	                     newCategory.setServiceUrl(CCIConstants.SERVICE_URL_WORK_QUEUE_CATEGORY_SUBMITTED_TYPE_APPLICATION_1);
-//	                  } else {
-//	                     newCategory.setServiceUrl(CCIConstants.SERVICE_URL_NDY);
-//	                  }
-//	               } else {
-//	                  newCategory.setServiceUrl(CCIConstants.SERVICE_URL_NDY);
-//	               }
-//	               Login login = loginRepository.findByLoginId(Integer.valueOf(userId));
-//	               int goId = login.getGoIdSequence().getGoId().intValue();
-//	               AdminWorkQueueCategoryAggregate categoryAggregate = adminWorkQueueCategoryAggregateRepository.findAggregateValueForCategory(adminWorkQueueTypeId,
-//	                     adminWorkQueueCategory.getAdminWorkQueueCategoryId(), goId);
-//	               if (categoryAggregate != null) {
-//	                  newCategory.setCategoryAggregate(categoryAggregate.getAdminWQCategoryAggregate());
-//	               }
-//	               pwqc.getAdminWorkQueueCategory().add(newCategory);
-//	            }
-//	            pwqc.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE, messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
-//	         } else {
-//	            pwqc.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD_IN_DB, CCIConstants.TYPE_INFO, CCIConstants.NO_DATA_CODE, messageUtil.getMessage(CCIConstants.NO_RECORD)));
-//	         }
-//	      } catch (Exception e) {
-//	         ExceptionUtil.logException(e, logger);
-//	         pwqc.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, PartnerCodes.NO_WOEKQUEUE_CATEGORY.getValue(),
-//	               messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_CATEGORY)));
-//	         logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_CATEGORY));
-//	      }
-	      return pwqc;
-	}
+   @Override
+   public HFP2WorkQueueType getWorkQueueType(String roleType) {
+      HFP2WorkQueueType pwt = new HFP2WorkQueueType();
+      // try {
+      // List<AdminWorkQueueType> types =
+      // adminWorkQueueTypeRepository.findTypesByPartnerRole(roleType);
+      // if (types != null) {
+      // for (AdminWorkQueueType adminWorkQueueType : types) {
+      // AdminPartnerWorkQueueTypeDetail newType = new
+      // AdminPartnerWorkQueueTypeDetail();
+      // newType.setTypeId(adminWorkQueueType.getAdminWQTypeId());
+      // newType.setTypeName(adminWorkQueueType.getAdminWQTypeName());
+      // pwt.getWorkQueueType().add(newType);
+      // }
+      // pwt.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS,
+      // CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE,
+      // messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      // } else {
+      // pwt.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD_IN_DB,
+      // CCIConstants.TYPE_INFO, CCIConstants.NO_DATA_CODE,
+      // messageUtil.getMessage(CCIConstants.NO_RECORD)));
+      // }
+      // } catch (Exception e) {
+      // ExceptionUtil.logException(e, LOGGER);
+      // pwt.setStatus(componentUtils.getStatus(CCIConstants.FAILURE,
+      // CCIConstants.TYPE_ERROR, PartnerCodes.NO_WOEKQUEUE_TYPE.getValue(),
+      // messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_TYPE)));
+      // LOGGER.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_TYPE));
+      // }
+      return pwt;
+   }
+
+   @Override
+   public HFP2WorkQueueCategory getWorkQueueCategory(int parseInt, int parseInt2) {
+      HFP2WorkQueueCategory pwqc = new HFP2WorkQueueCategory();
+      // try {
+      // List<AdminWorkQueueCategory> categories =
+      // adminWorkQueueCategoryRepository.findAllCategoriesByTypeId(adminWorkQueueTypeId);
+      // if (categories != null) {
+      // for (AdminWorkQueueCategory adminWorkQueueCategory : categories) {
+      // AdminPartnerWorkQueueCategoryDetail newCategory = new
+      // AdminPartnerWorkQueueCategoryDetail();
+      // newCategory.setAdminWorkQueueTypeId(adminWorkQueueCategory.getAdminWorkQueueType().getAdminWQTypeId());
+      // newCategory.setCategoryId(adminWorkQueueCategory.getAdminWorkQueueCategoryId());
+      // newCategory.setCategoryName(adminWorkQueueCategory.getAdminWorkQueueCategoryName());
+      // if
+      // (adminWorkQueueCategory.getAdminWorkQueueType().getAdminWQTypeName().equalsIgnoreCase(WORK_QUEUE_TYPE_APPLICATION))
+      // {
+      // if (newCategory.getCategoryName().equals(CATEGORY_NAME_SUBMITTED)) {
+      // newCategory.setServiceUrl(CCIConstants.SERVICE_URL_WORK_QUEUE_CATEGORY_SUBMITTED_TYPE_APPLICATION_1);
+      // } else {
+      // newCategory.setServiceUrl(CCIConstants.SERVICE_URL_NDY);
+      // }
+      // } else {
+      // newCategory.setServiceUrl(CCIConstants.SERVICE_URL_NDY);
+      // }
+      // Login login = loginRepository.findByLoginId(Integer.valueOf(userId));
+      // int goId = login.getGoIdSequence().getGoId().intValue();
+      // AdminWorkQueueCategoryAggregate categoryAggregate =
+      // adminWorkQueueCategoryAggregateRepository.findAggregateValueForCategory(adminWorkQueueTypeId,
+      // adminWorkQueueCategory.getAdminWorkQueueCategoryId(), goId);
+      // if (categoryAggregate != null) {
+      // newCategory.setCategoryAggregate(categoryAggregate.getAdminWQCategoryAggregate());
+      // }
+      // pwqc.getAdminWorkQueueCategory().add(newCategory);
+      // }
+      // pwqc.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS,
+      // CCIConstants.TYPE_INFO, CCIConstants.SUCCESS_CODE,
+      // messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+      // } else {
+      // pwqc.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD_IN_DB,
+      // CCIConstants.TYPE_INFO, CCIConstants.NO_DATA_CODE,
+      // messageUtil.getMessage(CCIConstants.NO_RECORD)));
+      // }
+      // } catch (Exception e) {
+      // ExceptionUtil.logException(e, logger);
+      // pwqc.setStatus(componentUtils.getStatus(CCIConstants.FAILURE,
+      // CCIConstants.TYPE_ERROR, PartnerCodes.NO_WOEKQUEUE_CATEGORY.getValue(),
+      // messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_CATEGORY)));
+      // logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_CATEGORY));
+      // }
+      return pwqc;
+   }
 
 }

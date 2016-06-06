@@ -18,5 +18,7 @@ public interface StateRepository extends JpaRepository<LookupUSState, Integer> {
 
    @Query("SELECT s FROM LookupUSState s WHERE s.stateName = ?1")
    LookupUSState getStateByName(String state);
-
+   
+   @Query("SELECT s FROM LookupUSState s WHERE s.stateCode = ?1")
+   LookupUSState getStateByStateCode(String stateCode);
 }

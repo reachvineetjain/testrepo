@@ -16,7 +16,7 @@ public interface PartnerProgramRepository extends JpaRepository<PartnerProgram, 
 
    @Query("SELECT p FROM PartnerProgram p WHERE p.partner.partnerGoId =?1 AND p.lookupDepartmentProgram.lookupDepartmentProgramId = ?2")
    public PartnerProgram findByPartnerIdAndDepartmentProgramId(Integer partnerGoId, Integer departmentProgramId);
-   @Query("SELECT p FROM PartnerProgram p WHERE p.partner.parentPartnerGoId =?1")
+   @Query("SELECT p FROM PartnerProgram p WHERE p.partner.partnerGoId =?1")
    List<PartnerProgram> findAllPartnerProgramsByPartnerParentGoId(int goId);
 
 }

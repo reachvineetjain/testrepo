@@ -793,3 +793,4 @@ UPDATE `SeasonWPAllocation` swpa
 SET swpa.`maxPax`=0
 WHERE swpa.`departmentProgramOptionId` = 20 AND swpa.`seasonId` = 15;
 
+SET FOREIGN_KEY_CHECKS= 1;
