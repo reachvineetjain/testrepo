@@ -304,8 +304,11 @@ public class PartnerGenericNote implements PartnerGenericNoteInterface {
          topicData.setIsVisibleToPartner(CCIConstants.TRUE_BYTE);
          topicData.setCreatedBy(topic.getLoginId());
          topicData.setModifiedBy(topic.getLoginId());
+         if (topic.getCreatedOn() == null) {
+            topic.setCreatedOn(DateUtils.getDateAndTime2(new Date()));
+         }
+         topicData.setCreatedOn(new java.sql.Timestamp(DateUtils.getMysqlDateFromStringFormatwithSlash(topic.getCreatedOn()).getTime()));
          topicData.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);
-         topicData.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
          if (topic.isCompetitorInfo() != null) {
             topicData.setCompetitorInfo(topic.isCompetitorInfo() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
          }
@@ -593,7 +596,10 @@ public class PartnerGenericNote implements PartnerGenericNoteInterface {
          topicData.setPartnerSeasonNoteTopicName(topic.getPartnerSeasonNoteTopicName());
          topicData.setIsPublic(topic.isIsPublic() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
          topicData.setIsVisibleToPartner(CCIConstants.TRUE_BYTE);
-         topicData.setCreatedOn(CCIConstants.CURRENT_TIMESTAMP);
+         if (topic.getCreatedOn() == null) {
+            topic.setCreatedOn(DateUtils.getDateAndTime2(new Date()));
+         }
+         topicData.setCreatedOn(new java.sql.Timestamp(DateUtils.getMysqlDateFromStringFormatwithSlash(topic.getCreatedOn()).getTime()));
          topicData.setCreatedBy(topic.getLoginId());
          topicData.setModifiedBy(topic.getLoginId());
          topicData.setModifiedOn(CCIConstants.CURRENT_TIMESTAMP);

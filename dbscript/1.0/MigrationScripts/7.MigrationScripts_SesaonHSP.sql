@@ -935,6 +935,6 @@ createdBy = 1,
 modifiedOn = CURRENT_TIMESTAMP,
 modifiedBy = 1;
 
-
+SET FOREIGN_KEY_CHECKS= 1;
 
 		

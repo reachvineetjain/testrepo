@@ -311,6 +311,15 @@ public class PartnerAdmin {
       LOGGER.debug("fun : updatePartnerInquiryContact");
       return partnerAdminService.updatePartnerInquiryContact(ContactsDetails);
    }
+   
+   @GET
+   @Path("setPrimaryContact/{contactId}/{primaryValue}")
+   @Produces("application/json")
+   public WSDefaultResponse setPrimaryContact(@PathParam("contactId") String contactId, @PathParam("primaryValue") String primaryValue) {
+      LOGGER.debug("fun : setPrimaryContact");
+      return partnerAdminService.setPrimaryContact(contactId, primaryValue);
+   }
+
 
    @POST
    @Path("removeNewPartnerInquiryContact")
