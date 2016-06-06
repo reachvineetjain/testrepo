@@ -13,95 +13,95 @@ import java.util.List;
 @Table(name="FieldStaffStatus")
 @NamedQuery(name="FieldStaffStatus.findAll", query="SELECT f FROM FieldStaffStatus f")
 public class FieldStaffStatus implements Serializable {
-	private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
-	private Integer fieldStaffStatusId;
+   @Id
+   @GeneratedValue(strategy=GenerationType.IDENTITY)
+   @Column(unique=true, nullable=false)
+   private Integer fieldStaffStatusId;
 
-	@Column(nullable=false, length=50)
-	private String fieldStaffStatusName;
+   @Column(nullable=false, length=50)
+   private String fieldStaffStatusName;
 
-	private Byte isSeasonStatus;
+   private Byte isSeasonStatus;
 
-	//bi-directional many-to-one association to FieldStaff
-	@OneToMany(mappedBy="fieldStaffStatus")
-	private List<FieldStaff> fieldStaffs;
+   //bi-directional many-to-one association to FieldStaff
+   @OneToMany(mappedBy="fieldStaffStatus")
+   private List<FieldStaff> fieldStaffs;
 
-	//bi-directional many-to-one association to FieldStaffSeason
-	@OneToMany(mappedBy="fieldStaffStatus")
-	private List<FieldStaffSeason> fieldStaffSeasons;
+   //bi-directional many-to-one association to FieldStaffSeason
+   @OneToMany(mappedBy="fieldStaffStatus")
+   private List<FieldStaffSeason> fieldStaffSeasons;
 
-	public FieldStaffStatus() {
-	}
+   public FieldStaffStatus() {
+   }
 
-	public Integer getFieldStaffStatusId() {
-		return this.fieldStaffStatusId;
-	}
+   public Integer getFieldStaffStatusId() {
+      return this.fieldStaffStatusId;
+   }
 
-	public void setFieldStaffStatusId(Integer fieldStaffStatusId) {
-		this.fieldStaffStatusId = fieldStaffStatusId;
-	}
+   public void setFieldStaffStatusId(Integer fieldStaffStatusId) {
+      this.fieldStaffStatusId = fieldStaffStatusId;
+   }
 
-	public String getFieldStaffStatusName() {
-		return this.fieldStaffStatusName;
-	}
+   public String getFieldStaffStatusName() {
+      return this.fieldStaffStatusName;
+   }
 
-	public void setFieldStaffStatusName(String fieldStaffStatusName) {
-		this.fieldStaffStatusName = fieldStaffStatusName;
-	}
+   public void setFieldStaffStatusName(String fieldStaffStatusName) {
+      this.fieldStaffStatusName = fieldStaffStatusName;
+   }
 
-	public Byte getIsSeasonStatus() {
-		return this.isSeasonStatus;
-	}
+   public Byte getIsSeasonStatus() {
+      return this.isSeasonStatus;
+   }
 
-	public void setIsSeasonStatus(Byte isSeasonStatus) {
-		this.isSeasonStatus = isSeasonStatus;
-	}
+   public void setIsSeasonStatus(Byte isSeasonStatus) {
+      this.isSeasonStatus = isSeasonStatus;
+   }
 
-	public List<FieldStaff> getFieldStaffs() {
-		return this.fieldStaffs;
-	}
+   public List<FieldStaff> getFieldStaffs() {
+      return this.fieldStaffs;
+   }
 
-	public void setFieldStaffs(List<FieldStaff> fieldStaffs) {
-		this.fieldStaffs = fieldStaffs;
-	}
+   public void setFieldStaffs(List<FieldStaff> fieldStaffs) {
+      this.fieldStaffs = fieldStaffs;
+   }
 
-	public FieldStaff addFieldStaff(FieldStaff fieldStaff) {
-		getFieldStaffs().add(fieldStaff);
-		fieldStaff.setFieldStaffStatus(this);
+   public FieldStaff addFieldStaff(FieldStaff fieldStaff) {
+      getFieldStaffs().add(fieldStaff);
+      fieldStaff.setFieldStaffStatus(this);
 
-		return fieldStaff;
-	}
+      return fieldStaff;
+   }
 
-	public FieldStaff removeFieldStaff(FieldStaff fieldStaff) {
-		getFieldStaffs().remove(fieldStaff);
-		fieldStaff.setFieldStaffStatus(null);
+   public FieldStaff removeFieldStaff(FieldStaff fieldStaff) {
+      getFieldStaffs().remove(fieldStaff);
+      fieldStaff.setFieldStaffStatus(null);
 
-		return fieldStaff;
-	}
+      return fieldStaff;
+   }
 
-	public List<FieldStaffSeason> getFieldStaffSeasons() {
-		return this.fieldStaffSeasons;
-	}
+   public List<FieldStaffSeason> getFieldStaffSeasons() {
+      return this.fieldStaffSeasons;
+   }
 
-	public void setFieldStaffSeasons(List<FieldStaffSeason> fieldStaffSeasons) {
-		this.fieldStaffSeasons = fieldStaffSeasons;
-	}
+   public void setFieldStaffSeasons(List<FieldStaffSeason> fieldStaffSeasons) {
+      this.fieldStaffSeasons = fieldStaffSeasons;
+   }
 
-	public FieldStaffSeason addFieldStaffSeason(FieldStaffSeason fieldStaffSeason) {
-		getFieldStaffSeasons().add(fieldStaffSeason);
-		fieldStaffSeason.setFieldStaffStatus(this);
+   public FieldStaffSeason addFieldStaffSeason(FieldStaffSeason fieldStaffSeason) {
+      getFieldStaffSeasons().add(fieldStaffSeason);
+      fieldStaffSeason.setFieldStaffStatus(this);
 
-		return fieldStaffSeason;
-	}
+      return fieldStaffSeason;
+   }
 
-	public FieldStaffSeason removeFieldStaffSeason(FieldStaffSeason fieldStaffSeason) {
-		getFieldStaffSeasons().remove(fieldStaffSeason);
-		fieldStaffSeason.setFieldStaffStatus(null);
+   public FieldStaffSeason removeFieldStaffSeason(FieldStaffSeason fieldStaffSeason) {
+      getFieldStaffSeasons().remove(fieldStaffSeason);
+      fieldStaffSeason.setFieldStaffStatus(null);
 
-		return fieldStaffSeason;
-	}
+      return fieldStaffSeason;
+   }
 
 }

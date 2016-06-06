@@ -13,124 +13,124 @@ import java.util.List;
 @Table(name="FieldStaffQuickStatsType")
 @NamedQuery(name="FieldStaffQuickStatsType.findAll", query="SELECT f FROM FieldStaffQuickStatsType f")
 public class FieldStaffQuickStatsType implements Serializable {
-	private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
-	private Integer fieldStaffQSTypeId;
+   @Id
+   @GeneratedValue(strategy=GenerationType.IDENTITY)
+   @Column(unique=true, nullable=false)
+   private Integer fieldStaffQSTypeId;
 
-	@Column(length=50)
-	private String fieldStaffQSTypeName;
+   @Column(length=50)
+   private String fieldStaffQSTypeName;
 
-	//bi-directional many-to-one association to FieldStaffQuickStatsCategory
-	@OneToMany(mappedBy="fieldStaffQuickStatsType")
-	private List<FieldStaffQuickStatsCategory> fieldStaffQuickStatsCategories;
+   //bi-directional many-to-one association to FieldStaffQuickStatsCategory
+   @OneToMany(mappedBy="fieldStaffQuickStatsType")
+   private List<FieldStaffQuickStatsCategory> fieldStaffQuickStatsCategories;
 
-	//bi-directional many-to-one association to FieldStaffQuickStatsCategoryAggregate
-	@OneToMany(mappedBy="fieldStaffQuickStatsType")
-	private List<FieldStaffQuickStatsCategoryAggregate> fieldStaffQuickStatsCategoryAggregates;
+   //bi-directional many-to-one association to FieldStaffQuickStatsCategoryAggregate
+   @OneToMany(mappedBy="fieldStaffQuickStatsType")
+   private List<FieldStaffQuickStatsCategoryAggregate> fieldStaffQuickStatsCategoryAggregates;
 
-	//bi-directional many-to-one association to LookupDepartmentProgram
-	@ManyToOne
-	@JoinColumn(name="lookupDepartmentProgramId")
-	private LookupDepartmentProgram lookupDepartmentProgram;
+   //bi-directional many-to-one association to LookupDepartmentProgram
+   @ManyToOne
+   @JoinColumn(name="lookupDepartmentProgramId")
+   private LookupDepartmentProgram lookupDepartmentProgram;
 
-	//bi-directional many-to-one association to FieldStaffQuickStatsTypeAggregate
-	@OneToMany(mappedBy="fieldStaffQuickStatsType")
-	private List<FieldStaffQuickStatsTypeAggregate> fieldStaffQuickStatsTypeAggregates;
+   //bi-directional many-to-one association to FieldStaffQuickStatsTypeAggregate
+   @OneToMany(mappedBy="fieldStaffQuickStatsType")
+   private List<FieldStaffQuickStatsTypeAggregate> fieldStaffQuickStatsTypeAggregates;
 
-	public FieldStaffQuickStatsType() {
-	}
+   public FieldStaffQuickStatsType() {
+   }
 
-	public Integer getFieldStaffQSTypeId() {
-		return this.fieldStaffQSTypeId;
-	}
+   public Integer getFieldStaffQSTypeId() {
+      return this.fieldStaffQSTypeId;
+   }
 
-	public void setFieldStaffQSTypeId(Integer fieldStaffQSTypeId) {
-		this.fieldStaffQSTypeId = fieldStaffQSTypeId;
-	}
+   public void setFieldStaffQSTypeId(Integer fieldStaffQSTypeId) {
+      this.fieldStaffQSTypeId = fieldStaffQSTypeId;
+   }
 
-	public String getFieldStaffQSTypeName() {
-		return this.fieldStaffQSTypeName;
-	}
+   public String getFieldStaffQSTypeName() {
+      return this.fieldStaffQSTypeName;
+   }
 
-	public void setFieldStaffQSTypeName(String fieldStaffQSTypeName) {
-		this.fieldStaffQSTypeName = fieldStaffQSTypeName;
-	}
+   public void setFieldStaffQSTypeName(String fieldStaffQSTypeName) {
+      this.fieldStaffQSTypeName = fieldStaffQSTypeName;
+   }
 
-	public List<FieldStaffQuickStatsCategory> getFieldStaffQuickStatsCategories() {
-		return this.fieldStaffQuickStatsCategories;
-	}
+   public List<FieldStaffQuickStatsCategory> getFieldStaffQuickStatsCategories() {
+      return this.fieldStaffQuickStatsCategories;
+   }
 
-	public void setFieldStaffQuickStatsCategories(List<FieldStaffQuickStatsCategory> fieldStaffQuickStatsCategories) {
-		this.fieldStaffQuickStatsCategories = fieldStaffQuickStatsCategories;
-	}
+   public void setFieldStaffQuickStatsCategories(List<FieldStaffQuickStatsCategory> fieldStaffQuickStatsCategories) {
+      this.fieldStaffQuickStatsCategories = fieldStaffQuickStatsCategories;
+   }
 
-	public FieldStaffQuickStatsCategory addFieldStaffQuickStatsCategory(FieldStaffQuickStatsCategory fieldStaffQuickStatsCategory) {
-		getFieldStaffQuickStatsCategories().add(fieldStaffQuickStatsCategory);
-		fieldStaffQuickStatsCategory.setFieldStaffQuickStatsType(this);
+   public FieldStaffQuickStatsCategory addFieldStaffQuickStatsCategory(FieldStaffQuickStatsCategory fieldStaffQuickStatsCategory) {
+      getFieldStaffQuickStatsCategories().add(fieldStaffQuickStatsCategory);
+      fieldStaffQuickStatsCategory.setFieldStaffQuickStatsType(this);
 
-		return fieldStaffQuickStatsCategory;
-	}
+      return fieldStaffQuickStatsCategory;
+   }
 
-	public FieldStaffQuickStatsCategory removeFieldStaffQuickStatsCategory(FieldStaffQuickStatsCategory fieldStaffQuickStatsCategory) {
-		getFieldStaffQuickStatsCategories().remove(fieldStaffQuickStatsCategory);
-		fieldStaffQuickStatsCategory.setFieldStaffQuickStatsType(null);
+   public FieldStaffQuickStatsCategory removeFieldStaffQuickStatsCategory(FieldStaffQuickStatsCategory fieldStaffQuickStatsCategory) {
+      getFieldStaffQuickStatsCategories().remove(fieldStaffQuickStatsCategory);
+      fieldStaffQuickStatsCategory.setFieldStaffQuickStatsType(null);
 
-		return fieldStaffQuickStatsCategory;
-	}
+      return fieldStaffQuickStatsCategory;
+   }
 
-	public List<FieldStaffQuickStatsCategoryAggregate> getFieldStaffQuickStatsCategoryAggregates() {
-		return this.fieldStaffQuickStatsCategoryAggregates;
-	}
+   public List<FieldStaffQuickStatsCategoryAggregate> getFieldStaffQuickStatsCategoryAggregates() {
+      return this.fieldStaffQuickStatsCategoryAggregates;
+   }
 
-	public void setFieldStaffQuickStatsCategoryAggregates(List<FieldStaffQuickStatsCategoryAggregate> fieldStaffQuickStatsCategoryAggregates) {
-		this.fieldStaffQuickStatsCategoryAggregates = fieldStaffQuickStatsCategoryAggregates;
-	}
+   public void setFieldStaffQuickStatsCategoryAggregates(List<FieldStaffQuickStatsCategoryAggregate> fieldStaffQuickStatsCategoryAggregates) {
+      this.fieldStaffQuickStatsCategoryAggregates = fieldStaffQuickStatsCategoryAggregates;
+   }
 
-	public FieldStaffQuickStatsCategoryAggregate addFieldStaffQuickStatsCategoryAggregate(FieldStaffQuickStatsCategoryAggregate fieldStaffQuickStatsCategoryAggregate) {
-		getFieldStaffQuickStatsCategoryAggregates().add(fieldStaffQuickStatsCategoryAggregate);
-		fieldStaffQuickStatsCategoryAggregate.setFieldStaffQuickStatsType(this);
+   public FieldStaffQuickStatsCategoryAggregate addFieldStaffQuickStatsCategoryAggregate(FieldStaffQuickStatsCategoryAggregate fieldStaffQuickStatsCategoryAggregate) {
+      getFieldStaffQuickStatsCategoryAggregates().add(fieldStaffQuickStatsCategoryAggregate);
+      fieldStaffQuickStatsCategoryAggregate.setFieldStaffQuickStatsType(this);
 
-		return fieldStaffQuickStatsCategoryAggregate;
-	}
+      return fieldStaffQuickStatsCategoryAggregate;
+   }
 
-	public FieldStaffQuickStatsCategoryAggregate removeFieldStaffQuickStatsCategoryAggregate(FieldStaffQuickStatsCategoryAggregate fieldStaffQuickStatsCategoryAggregate) {
-		getFieldStaffQuickStatsCategoryAggregates().remove(fieldStaffQuickStatsCategoryAggregate);
-		fieldStaffQuickStatsCategoryAggregate.setFieldStaffQuickStatsType(null);
+   public FieldStaffQuickStatsCategoryAggregate removeFieldStaffQuickStatsCategoryAggregate(FieldStaffQuickStatsCategoryAggregate fieldStaffQuickStatsCategoryAggregate) {
+      getFieldStaffQuickStatsCategoryAggregates().remove(fieldStaffQuickStatsCategoryAggregate);
+      fieldStaffQuickStatsCategoryAggregate.setFieldStaffQuickStatsType(null);
 
-		return fieldStaffQuickStatsCategoryAggregate;
-	}
+      return fieldStaffQuickStatsCategoryAggregate;
+   }
 
-	public LookupDepartmentProgram getLookupDepartmentProgram() {
-		return this.lookupDepartmentProgram;
-	}
+   public LookupDepartmentProgram getLookupDepartmentProgram() {
+      return this.lookupDepartmentProgram;
+   }
 
-	public void setLookupDepartmentProgram(LookupDepartmentProgram lookupDepartmentProgram) {
-		this.lookupDepartmentProgram = lookupDepartmentProgram;
-	}
+   public void setLookupDepartmentProgram(LookupDepartmentProgram lookupDepartmentProgram) {
+      this.lookupDepartmentProgram = lookupDepartmentProgram;
+   }
 
-	public List<FieldStaffQuickStatsTypeAggregate> getFieldStaffQuickStatsTypeAggregates() {
-		return this.fieldStaffQuickStatsTypeAggregates;
-	}
+   public List<FieldStaffQuickStatsTypeAggregate> getFieldStaffQuickStatsTypeAggregates() {
+      return this.fieldStaffQuickStatsTypeAggregates;
+   }
 
-	public void setFieldStaffQuickStatsTypeAggregates(List<FieldStaffQuickStatsTypeAggregate> fieldStaffQuickStatsTypeAggregates) {
-		this.fieldStaffQuickStatsTypeAggregates = fieldStaffQuickStatsTypeAggregates;
-	}
+   public void setFieldStaffQuickStatsTypeAggregates(List<FieldStaffQuickStatsTypeAggregate> fieldStaffQuickStatsTypeAggregates) {
+      this.fieldStaffQuickStatsTypeAggregates = fieldStaffQuickStatsTypeAggregates;
+   }
 
-	public FieldStaffQuickStatsTypeAggregate addFieldStaffQuickStatsTypeAggregate(FieldStaffQuickStatsTypeAggregate fieldStaffQuickStatsTypeAggregate) {
-		getFieldStaffQuickStatsTypeAggregates().add(fieldStaffQuickStatsTypeAggregate);
-		fieldStaffQuickStatsTypeAggregate.setFieldStaffQuickStatsType(this);
+   public FieldStaffQuickStatsTypeAggregate addFieldStaffQuickStatsTypeAggregate(FieldStaffQuickStatsTypeAggregate fieldStaffQuickStatsTypeAggregate) {
+      getFieldStaffQuickStatsTypeAggregates().add(fieldStaffQuickStatsTypeAggregate);
+      fieldStaffQuickStatsTypeAggregate.setFieldStaffQuickStatsType(this);
 
-		return fieldStaffQuickStatsTypeAggregate;
-	}
+      return fieldStaffQuickStatsTypeAggregate;
+   }
 
-	public FieldStaffQuickStatsTypeAggregate removeFieldStaffQuickStatsTypeAggregate(FieldStaffQuickStatsTypeAggregate fieldStaffQuickStatsTypeAggregate) {
-		getFieldStaffQuickStatsTypeAggregates().remove(fieldStaffQuickStatsTypeAggregate);
-		fieldStaffQuickStatsTypeAggregate.setFieldStaffQuickStatsType(null);
+   public FieldStaffQuickStatsTypeAggregate removeFieldStaffQuickStatsTypeAggregate(FieldStaffQuickStatsTypeAggregate fieldStaffQuickStatsTypeAggregate) {
+      getFieldStaffQuickStatsTypeAggregates().remove(fieldStaffQuickStatsTypeAggregate);
+      fieldStaffQuickStatsTypeAggregate.setFieldStaffQuickStatsType(null);
 
-		return fieldStaffQuickStatsTypeAggregate;
-	}
+      return fieldStaffQuickStatsTypeAggregate;
+   }
 
 }

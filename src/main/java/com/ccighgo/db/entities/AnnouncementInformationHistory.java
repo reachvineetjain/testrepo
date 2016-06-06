@@ -18,7 +18,7 @@ public class AnnouncementInformationHistory implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private Integer announcementInformationHistoryId;
+	private int announcementInformationHistoryId;
 
 	@Column(length=200)
 	private String announcementPollOption1;
@@ -38,7 +38,7 @@ public class AnnouncementInformationHistory implements Serializable {
 	@Column(length=1000)
 	private String announement;
 
-	private Integer createdBy;
+	private int createdBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdOn;
@@ -83,11 +83,11 @@ public class AnnouncementInformationHistory implements Serializable {
 	public AnnouncementInformationHistory() {
 	}
 
-	public Integer getAnnouncementInformationHistoryId() {
+	public int getAnnouncementInformationHistoryId() {
 		return this.announcementInformationHistoryId;
 	}
 
-	public void setAnnouncementInformationHistoryId(Integer announcementInformationHistoryId) {
+	public void setAnnouncementInformationHistoryId(int announcementInformationHistoryId) {
 		this.announcementInformationHistoryId = announcementInformationHistoryId;
 	}
 
@@ -139,11 +139,11 @@ public class AnnouncementInformationHistory implements Serializable {
 		this.announement = announement;
 	}
 
-	public Integer getCreatedBy() {
+	public int getCreatedBy() {
 		return this.createdBy;
 	}
 
-	public void setCreatedBy(Integer createdBy) {
+	public void setCreatedBy(int createdBy) {
 		this.createdBy = createdBy;
 	}
 

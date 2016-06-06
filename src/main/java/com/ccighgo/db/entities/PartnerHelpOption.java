@@ -14,111 +14,111 @@ import java.util.List;
 @Table(name="PartnerHelpOption")
 @NamedQuery(name="PartnerHelpOption.findAll", query="SELECT p FROM PartnerHelpOption p")
 public class PartnerHelpOption implements Serializable {
-	private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
-	private Integer partnerHelpOptionId;
+   @Id
+   @GeneratedValue(strategy=GenerationType.IDENTITY)
+   @Column(unique=true, nullable=false)
+   private Integer partnerHelpOptionId;
 
-	private Byte active;
+   private Byte active;
 
-	private Integer createdBy;
+   private Integer createdBy;
 
-	@Column(nullable=false)
-	private Timestamp createdOn;
+   @Column(nullable=false)
+   private Timestamp createdOn;
 
-	private Integer modifiedBy;
+   private Integer modifiedBy;
 
-	@Column(nullable=false)
-	private Timestamp modifiedOn;
+   @Column(nullable=false)
+   private Timestamp modifiedOn;
 
-	@Column(length=50)
-	private String partnerHelpOptionName;
+   @Column(length=50)
+   private String partnerHelpOptionName;
 
-	//bi-directional many-to-one association to PartnerHelpRequest
-	@OneToMany(mappedBy="partnerHelpOption")
-	private List<PartnerHelpRequest> partnerHelpRequests;
+   //bi-directional many-to-one association to PartnerHelpRequest
+   @OneToMany(mappedBy="partnerHelpOption")
+   private List<PartnerHelpRequest> partnerHelpRequests;
 
-	public PartnerHelpOption() {
-	}
+   public PartnerHelpOption() {
+   }
 
-	public Integer getPartnerHelpOptionId() {
-		return this.partnerHelpOptionId;
-	}
+   public Integer getPartnerHelpOptionId() {
+      return this.partnerHelpOptionId;
+   }
 
-	public void setPartnerHelpOptionId(Integer partnerHelpOptionId) {
-		this.partnerHelpOptionId = partnerHelpOptionId;
-	}
+   public void setPartnerHelpOptionId(Integer partnerHelpOptionId) {
+      this.partnerHelpOptionId = partnerHelpOptionId;
+   }
 
-	public Byte getActive() {
-		return this.active;
-	}
+   public Byte getActive() {
+      return this.active;
+   }
 
-	public void setActive(Byte active) {
-		this.active = active;
-	}
+   public void setActive(Byte active) {
+      this.active = active;
+   }
 
-	public Integer getCreatedBy() {
-		return this.createdBy;
-	}
+   public Integer getCreatedBy() {
+      return this.createdBy;
+   }
 
-	public void setCreatedBy(Integer createdBy) {
-		this.createdBy = createdBy;
-	}
+   public void setCreatedBy(Integer createdBy) {
+      this.createdBy = createdBy;
+   }
 
-	public Timestamp getCreatedOn() {
-		return this.createdOn;
-	}
+   public Timestamp getCreatedOn() {
+      return this.createdOn;
+   }
 
-	public void setCreatedOn(Timestamp createdOn) {
-		this.createdOn = createdOn;
-	}
+   public void setCreatedOn(Timestamp createdOn) {
+      this.createdOn = createdOn;
+   }
 
-	public Integer getModifiedBy() {
-		return this.modifiedBy;
-	}
+   public Integer getModifiedBy() {
+      return this.modifiedBy;
+   }
 
-	public void setModifiedBy(Integer modifiedBy) {
-		this.modifiedBy = modifiedBy;
-	}
+   public void setModifiedBy(Integer modifiedBy) {
+      this.modifiedBy = modifiedBy;
+   }
 
-	public Timestamp getModifiedOn() {
-		return this.modifiedOn;
-	}
+   public Timestamp getModifiedOn() {
+      return this.modifiedOn;
+   }
 
-	public void setModifiedOn(Timestamp modifiedOn) {
-		this.modifiedOn = modifiedOn;
-	}
+   public void setModifiedOn(Timestamp modifiedOn) {
+      this.modifiedOn = modifiedOn;
+   }
 
-	public String getPartnerHelpOptionName() {
-		return this.partnerHelpOptionName;
-	}
+   public String getPartnerHelpOptionName() {
+      return this.partnerHelpOptionName;
+   }
 
-	public void setPartnerHelpOptionName(String partnerHelpOptionName) {
-		this.partnerHelpOptionName = partnerHelpOptionName;
-	}
+   public void setPartnerHelpOptionName(String partnerHelpOptionName) {
+      this.partnerHelpOptionName = partnerHelpOptionName;
+   }
 
-	public List<PartnerHelpRequest> getPartnerHelpRequests() {
-		return this.partnerHelpRequests;
-	}
+   public List<PartnerHelpRequest> getPartnerHelpRequests() {
+      return this.partnerHelpRequests;
+   }
 
-	public void setPartnerHelpRequests(List<PartnerHelpRequest> partnerHelpRequests) {
-		this.partnerHelpRequests = partnerHelpRequests;
-	}
+   public void setPartnerHelpRequests(List<PartnerHelpRequest> partnerHelpRequests) {
+      this.partnerHelpRequests = partnerHelpRequests;
+   }
 
-	public PartnerHelpRequest addPartnerHelpRequest(PartnerHelpRequest partnerHelpRequest) {
-		getPartnerHelpRequests().add(partnerHelpRequest);
-		partnerHelpRequest.setPartnerHelpOption(this);
+   public PartnerHelpRequest addPartnerHelpRequest(PartnerHelpRequest partnerHelpRequest) {
+      getPartnerHelpRequests().add(partnerHelpRequest);
+      partnerHelpRequest.setPartnerHelpOption(this);
 
-		return partnerHelpRequest;
-	}
+      return partnerHelpRequest;
+   }
 
-	public PartnerHelpRequest removePartnerHelpRequest(PartnerHelpRequest partnerHelpRequest) {
-		getPartnerHelpRequests().remove(partnerHelpRequest);
-		partnerHelpRequest.setPartnerHelpOption(null);
+   public PartnerHelpRequest removePartnerHelpRequest(PartnerHelpRequest partnerHelpRequest) {
+      getPartnerHelpRequests().remove(partnerHelpRequest);
+      partnerHelpRequest.setPartnerHelpOption(null);
 
-		return partnerHelpRequest;
-	}
+      return partnerHelpRequest;
+   }
 
 }

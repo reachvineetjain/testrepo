@@ -14,133 +14,133 @@ import java.util.List;
 @Table(name="HostFamilySeasonNoteTopics")
 @NamedQuery(name="HostFamilySeasonNoteTopic.findAll", query="SELECT h FROM HostFamilySeasonNoteTopic h")
 public class HostFamilySeasonNoteTopic implements Serializable {
-	private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
-	private Integer hostFamilySeasonNoteTopicsId;
+   @Id
+   @GeneratedValue(strategy=GenerationType.IDENTITY)
+   @Column(unique=true, nullable=false)
+   private Integer hostFamilySeasonNoteTopicsId;
 
-	private Integer createdBy;
+   private Integer createdBy;
 
-	private Timestamp createdOn;
+   private Timestamp createdOn;
 
-	private Byte isPublic;
+   private Byte isPublic;
 
-	private Integer modifiedBy;
+   private Integer modifiedBy;
 
-	private Timestamp modifiedOn;
+   private Timestamp modifiedOn;
 
-	@Column(length=50)
-	private String title;
+   @Column(length=50)
+   private String title;
 
-	@Column(length=50)
-	private String topicName;
+   @Column(length=50)
+   private String topicName;
 
-	//bi-directional many-to-one association to HostFamilySeasonNote
-	@OneToMany(mappedBy="hostFamilySeasonNoteTopic")
-	private List<HostFamilySeasonNote> hostFamilySeasonNotes;
+   //bi-directional many-to-one association to HostFamilySeasonNote
+   @OneToMany(mappedBy="hostFamilySeasonNoteTopic")
+   private List<HostFamilySeasonNote> hostFamilySeasonNotes;
 
-	//bi-directional many-to-one association to HostFamilySeason
-	@ManyToOne
-	@JoinColumn(name="hostFamilySeasonId")
-	private HostFamilySeason hostFamilySeason;
+   //bi-directional many-to-one association to HostFamilySeason
+   @ManyToOne
+   @JoinColumn(name="hostFamilySeasonId")
+   private HostFamilySeason hostFamilySeason;
 
-	public HostFamilySeasonNoteTopic() {
-	}
+   public HostFamilySeasonNoteTopic() {
+   }
 
-	public Integer getHostFamilySeasonNoteTopicsId() {
-		return this.hostFamilySeasonNoteTopicsId;
-	}
+   public Integer getHostFamilySeasonNoteTopicsId() {
+      return this.hostFamilySeasonNoteTopicsId;
+   }
 
-	public void setHostFamilySeasonNoteTopicsId(Integer hostFamilySeasonNoteTopicsId) {
-		this.hostFamilySeasonNoteTopicsId = hostFamilySeasonNoteTopicsId;
-	}
+   public void setHostFamilySeasonNoteTopicsId(Integer hostFamilySeasonNoteTopicsId) {
+      this.hostFamilySeasonNoteTopicsId = hostFamilySeasonNoteTopicsId;
+   }
 
-	public Integer getCreatedBy() {
-		return this.createdBy;
-	}
+   public Integer getCreatedBy() {
+      return this.createdBy;
+   }
 
-	public void setCreatedBy(Integer createdBy) {
-		this.createdBy = createdBy;
-	}
+   public void setCreatedBy(Integer createdBy) {
+      this.createdBy = createdBy;
+   }
 
-	public Timestamp getCreatedOn() {
-		return this.createdOn;
-	}
+   public Timestamp getCreatedOn() {
+      return this.createdOn;
+   }
 
-	public void setCreatedOn(Timestamp createdOn) {
-		this.createdOn = createdOn;
-	}
+   public void setCreatedOn(Timestamp createdOn) {
+      this.createdOn = createdOn;
+   }
 
-	public Byte getIsPublic() {
-		return this.isPublic;
-	}
+   public Byte getIsPublic() {
+      return this.isPublic;
+   }
 
-	public void setIsPublic(Byte isPublic) {
-		this.isPublic = isPublic;
-	}
+   public void setIsPublic(Byte isPublic) {
+      this.isPublic = isPublic;
+   }
 
-	public Integer getModifiedBy() {
-		return this.modifiedBy;
-	}
+   public Integer getModifiedBy() {
+      return this.modifiedBy;
+   }
 
-	public void setModifiedBy(Integer modifiedBy) {
-		this.modifiedBy = modifiedBy;
-	}
+   public void setModifiedBy(Integer modifiedBy) {
+      this.modifiedBy = modifiedBy;
+   }
 
-	public Timestamp getModifiedOn() {
-		return this.modifiedOn;
-	}
+   public Timestamp getModifiedOn() {
+      return this.modifiedOn;
+   }
 
-	public void setModifiedOn(Timestamp modifiedOn) {
-		this.modifiedOn = modifiedOn;
-	}
+   public void setModifiedOn(Timestamp modifiedOn) {
+      this.modifiedOn = modifiedOn;
+   }
 
-	public String getTitle() {
-		return this.title;
-	}
+   public String getTitle() {
+      return this.title;
+   }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+   public void setTitle(String title) {
+      this.title = title;
+   }
 
-	public String getTopicName() {
-		return this.topicName;
-	}
+   public String getTopicName() {
+      return this.topicName;
+   }
 
-	public void setTopicName(String topicName) {
-		this.topicName = topicName;
-	}
+   public void setTopicName(String topicName) {
+      this.topicName = topicName;
+   }
 
-	public List<HostFamilySeasonNote> getHostFamilySeasonNotes() {
-		return this.hostFamilySeasonNotes;
-	}
+   public List<HostFamilySeasonNote> getHostFamilySeasonNotes() {
+      return this.hostFamilySeasonNotes;
+   }
 
-	public void setHostFamilySeasonNotes(List<HostFamilySeasonNote> hostFamilySeasonNotes) {
-		this.hostFamilySeasonNotes = hostFamilySeasonNotes;
-	}
+   public void setHostFamilySeasonNotes(List<HostFamilySeasonNote> hostFamilySeasonNotes) {
+      this.hostFamilySeasonNotes = hostFamilySeasonNotes;
+   }
 
-	public HostFamilySeasonNote addHostFamilySeasonNote(HostFamilySeasonNote hostFamilySeasonNote) {
-		getHostFamilySeasonNotes().add(hostFamilySeasonNote);
-		hostFamilySeasonNote.setHostFamilySeasonNoteTopic(this);
+   public HostFamilySeasonNote addHostFamilySeasonNote(HostFamilySeasonNote hostFamilySeasonNote) {
+      getHostFamilySeasonNotes().add(hostFamilySeasonNote);
+      hostFamilySeasonNote.setHostFamilySeasonNoteTopic(this);
 
-		return hostFamilySeasonNote;
-	}
+      return hostFamilySeasonNote;
+   }
 
-	public HostFamilySeasonNote removeHostFamilySeasonNote(HostFamilySeasonNote hostFamilySeasonNote) {
-		getHostFamilySeasonNotes().remove(hostFamilySeasonNote);
-		hostFamilySeasonNote.setHostFamilySeasonNoteTopic(null);
+   public HostFamilySeasonNote removeHostFamilySeasonNote(HostFamilySeasonNote hostFamilySeasonNote) {
+      getHostFamilySeasonNotes().remove(hostFamilySeasonNote);
+      hostFamilySeasonNote.setHostFamilySeasonNoteTopic(null);
 
-		return hostFamilySeasonNote;
-	}
+      return hostFamilySeasonNote;
+   }
 
-	public HostFamilySeason getHostFamilySeason() {
-		return this.hostFamilySeason;
-	}
+   public HostFamilySeason getHostFamilySeason() {
+      return this.hostFamilySeason;
+   }
 
-	public void setHostFamilySeason(HostFamilySeason hostFamilySeason) {
-		this.hostFamilySeason = hostFamilySeason;
-	}
+   public void setHostFamilySeason(HostFamilySeason hostFamilySeason) {
+      this.hostFamilySeason = hostFamilySeason;
+   }
 
 }

@@ -14,113 +14,113 @@ import java.util.List;
 @Table(name="UserType")
 @NamedQuery(name="UserType.findAll", query="SELECT u FROM UserType u")
 public class UserType implements Serializable {
-	private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
-	private Integer userTypeId;
+   @Id
+   @GeneratedValue(strategy=GenerationType.IDENTITY)
+   @Column(unique=true, nullable=false)
+   private Integer userTypeId;
 
-	@Column(nullable=false)
-	private Integer createdBy;
+   @Column(nullable=false)
+   private Integer createdBy;
 
-	private Timestamp createdOn;
+   private Timestamp createdOn;
 
-	@Column(nullable=false)
-	private Integer modifiedBy;
+   @Column(nullable=false)
+   private Integer modifiedBy;
 
-	@Column(nullable=false)
-	private Timestamp modifiedOn;
+   @Column(nullable=false)
+   private Timestamp modifiedOn;
 
-	@Column(nullable=false, length=20)
-	private String userTypeCode;
+   @Column(nullable=false, length=20)
+   private String userTypeCode;
 
-	@Column(nullable=false, length=50)
-	private String userTypeName;
+   @Column(nullable=false, length=50)
+   private String userTypeName;
 
-	//bi-directional many-to-one association to LoginUserType
-	@OneToMany(mappedBy="userType")
-	private List<LoginUserType> loginUserTypes;
+   //bi-directional many-to-one association to LoginUserType
+   @OneToMany(mappedBy="userType")
+   private List<LoginUserType> loginUserTypes;
 
-	public UserType() {
-	}
+   public UserType() {
+   }
 
-	public Integer getUserTypeId() {
-		return this.userTypeId;
-	}
+   public Integer getUserTypeId() {
+      return this.userTypeId;
+   }
 
-	public void setUserTypeId(Integer userTypeId) {
-		this.userTypeId = userTypeId;
-	}
+   public void setUserTypeId(Integer userTypeId) {
+      this.userTypeId = userTypeId;
+   }
 
-	public Integer getCreatedBy() {
-		return this.createdBy;
-	}
+   public Integer getCreatedBy() {
+      return this.createdBy;
+   }
 
-	public void setCreatedBy(Integer createdBy) {
-		this.createdBy = createdBy;
-	}
+   public void setCreatedBy(Integer createdBy) {
+      this.createdBy = createdBy;
+   }
 
-	public Timestamp getCreatedOn() {
-		return this.createdOn;
-	}
+   public Timestamp getCreatedOn() {
+      return this.createdOn;
+   }
 
-	public void setCreatedOn(Timestamp createdOn) {
-		this.createdOn = createdOn;
-	}
+   public void setCreatedOn(Timestamp createdOn) {
+      this.createdOn = createdOn;
+   }
 
-	public Integer getModifiedBy() {
-		return this.modifiedBy;
-	}
+   public Integer getModifiedBy() {
+      return this.modifiedBy;
+   }
 
-	public void setModifiedBy(Integer modifiedBy) {
-		this.modifiedBy = modifiedBy;
-	}
+   public void setModifiedBy(Integer modifiedBy) {
+      this.modifiedBy = modifiedBy;
+   }
 
-	public Timestamp getModifiedOn() {
-		return this.modifiedOn;
-	}
+   public Timestamp getModifiedOn() {
+      return this.modifiedOn;
+   }
 
-	public void setModifiedOn(Timestamp modifiedOn) {
-		this.modifiedOn = modifiedOn;
-	}
+   public void setModifiedOn(Timestamp modifiedOn) {
+      this.modifiedOn = modifiedOn;
+   }
 
-	public String getUserTypeCode() {
-		return this.userTypeCode;
-	}
+   public String getUserTypeCode() {
+      return this.userTypeCode;
+   }
 
-	public void setUserTypeCode(String userTypeCode) {
-		this.userTypeCode = userTypeCode;
-	}
+   public void setUserTypeCode(String userTypeCode) {
+      this.userTypeCode = userTypeCode;
+   }
 
-	public String getUserTypeName() {
-		return this.userTypeName;
-	}
+   public String getUserTypeName() {
+      return this.userTypeName;
+   }
 
-	public void setUserTypeName(String userTypeName) {
-		this.userTypeName = userTypeName;
-	}
+   public void setUserTypeName(String userTypeName) {
+      this.userTypeName = userTypeName;
+   }
 
-	public List<LoginUserType> getLoginUserTypes() {
-		return this.loginUserTypes;
-	}
+   public List<LoginUserType> getLoginUserTypes() {
+      return this.loginUserTypes;
+   }
 
-	public void setLoginUserTypes(List<LoginUserType> loginUserTypes) {
-		this.loginUserTypes = loginUserTypes;
-	}
+   public void setLoginUserTypes(List<LoginUserType> loginUserTypes) {
+      this.loginUserTypes = loginUserTypes;
+   }
 
-	public LoginUserType addLoginUserType(LoginUserType loginUserType) {
-		getLoginUserTypes().add(loginUserType);
-		loginUserType.setUserType(this);
+   public LoginUserType addLoginUserType(LoginUserType loginUserType) {
+      getLoginUserTypes().add(loginUserType);
+      loginUserType.setUserType(this);
 
-		return loginUserType;
-	}
+      return loginUserType;
+   }
 
-	public LoginUserType removeLoginUserType(LoginUserType loginUserType) {
-		getLoginUserTypes().remove(loginUserType);
-		loginUserType.setUserType(null);
+   public LoginUserType removeLoginUserType(LoginUserType loginUserType) {
+      getLoginUserTypes().remove(loginUserType);
+      loginUserType.setUserType(null);
 
-		return loginUserType;
-	}
+      return loginUserType;
+   }
 
 }

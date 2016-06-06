@@ -14,135 +14,135 @@ import java.util.List;
 @Table(name="FieldStaffNoteTopics")
 @NamedQuery(name="FieldStaffNoteTopic.findAll", query="SELECT f FROM FieldStaffNoteTopic f")
 public class FieldStaffNoteTopic implements Serializable {
-	private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
-	private Integer fieldStaffNoteTopicsId;
+   @Id
+   @GeneratedValue(strategy=GenerationType.IDENTITY)
+   @Column(unique=true, nullable=false)
+   private Integer fieldStaffNoteTopicsId;
 
-	private Integer createdBy;
+   private Integer createdBy;
 
-	@Column(nullable=false)
-	private Timestamp createdOn;
+   @Column(nullable=false)
+   private Timestamp createdOn;
 
-	@Column(length=50)
-	private String fieldStaffNoteTopicName;
+   @Column(length=50)
+   private String fieldStaffNoteTopicName;
 
-	private Byte isPublic;
+   private Byte isPublic;
 
-	private Integer modifiedBy;
+   private Integer modifiedBy;
 
-	@Column(nullable=false)
-	private Timestamp modifiedOn;
+   @Column(nullable=false)
+   private Timestamp modifiedOn;
 
-	@Column(length=50)
-	private String title;
+   @Column(length=50)
+   private String title;
 
-	//bi-directional many-to-one association to FieldStaffNote
-	@OneToMany(mappedBy="fieldStaffNoteTopic")
-	private List<FieldStaffNote> fieldStaffNotes;
+   //bi-directional many-to-one association to FieldStaffNote
+   @OneToMany(mappedBy="fieldStaffNoteTopic")
+   private List<FieldStaffNote> fieldStaffNotes;
 
-	//bi-directional many-to-one association to FieldStaff
-	@ManyToOne
-	@JoinColumn(name="fieldStaffGoId")
-	private FieldStaff fieldStaff;
+   //bi-directional many-to-one association to FieldStaff
+   @ManyToOne
+   @JoinColumn(name="fieldStaffGoId")
+   private FieldStaff fieldStaff;
 
-	public FieldStaffNoteTopic() {
-	}
+   public FieldStaffNoteTopic() {
+   }
 
-	public Integer getFieldStaffNoteTopicsId() {
-		return this.fieldStaffNoteTopicsId;
-	}
+   public Integer getFieldStaffNoteTopicsId() {
+      return this.fieldStaffNoteTopicsId;
+   }
 
-	public void setFieldStaffNoteTopicsId(Integer fieldStaffNoteTopicsId) {
-		this.fieldStaffNoteTopicsId = fieldStaffNoteTopicsId;
-	}
+   public void setFieldStaffNoteTopicsId(Integer fieldStaffNoteTopicsId) {
+      this.fieldStaffNoteTopicsId = fieldStaffNoteTopicsId;
+   }
 
-	public Integer getCreatedBy() {
-		return this.createdBy;
-	}
+   public Integer getCreatedBy() {
+      return this.createdBy;
+   }
 
-	public void setCreatedBy(Integer createdBy) {
-		this.createdBy = createdBy;
-	}
+   public void setCreatedBy(Integer createdBy) {
+      this.createdBy = createdBy;
+   }
 
-	public Timestamp getCreatedOn() {
-		return this.createdOn;
-	}
+   public Timestamp getCreatedOn() {
+      return this.createdOn;
+   }
 
-	public void setCreatedOn(Timestamp createdOn) {
-		this.createdOn = createdOn;
-	}
+   public void setCreatedOn(Timestamp createdOn) {
+      this.createdOn = createdOn;
+   }
 
-	public String getFieldStaffNoteTopicName() {
-		return this.fieldStaffNoteTopicName;
-	}
+   public String getFieldStaffNoteTopicName() {
+      return this.fieldStaffNoteTopicName;
+   }
 
-	public void setFieldStaffNoteTopicName(String fieldStaffNoteTopicName) {
-		this.fieldStaffNoteTopicName = fieldStaffNoteTopicName;
-	}
+   public void setFieldStaffNoteTopicName(String fieldStaffNoteTopicName) {
+      this.fieldStaffNoteTopicName = fieldStaffNoteTopicName;
+   }
 
-	public Byte getIsPublic() {
-		return this.isPublic;
-	}
+   public Byte getIsPublic() {
+      return this.isPublic;
+   }
 
-	public void setIsPublic(Byte isPublic) {
-		this.isPublic = isPublic;
-	}
+   public void setIsPublic(Byte isPublic) {
+      this.isPublic = isPublic;
+   }
 
-	public Integer getModifiedBy() {
-		return this.modifiedBy;
-	}
+   public Integer getModifiedBy() {
+      return this.modifiedBy;
+   }
 
-	public void setModifiedBy(Integer modifiedBy) {
-		this.modifiedBy = modifiedBy;
-	}
+   public void setModifiedBy(Integer modifiedBy) {
+      this.modifiedBy = modifiedBy;
+   }
 
-	public Timestamp getModifiedOn() {
-		return this.modifiedOn;
-	}
+   public Timestamp getModifiedOn() {
+      return this.modifiedOn;
+   }
 
-	public void setModifiedOn(Timestamp modifiedOn) {
-		this.modifiedOn = modifiedOn;
-	}
+   public void setModifiedOn(Timestamp modifiedOn) {
+      this.modifiedOn = modifiedOn;
+   }
 
-	public String getTitle() {
-		return this.title;
-	}
+   public String getTitle() {
+      return this.title;
+   }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+   public void setTitle(String title) {
+      this.title = title;
+   }
 
-	public List<FieldStaffNote> getFieldStaffNotes() {
-		return this.fieldStaffNotes;
-	}
+   public List<FieldStaffNote> getFieldStaffNotes() {
+      return this.fieldStaffNotes;
+   }
 
-	public void setFieldStaffNotes(List<FieldStaffNote> fieldStaffNotes) {
-		this.fieldStaffNotes = fieldStaffNotes;
-	}
+   public void setFieldStaffNotes(List<FieldStaffNote> fieldStaffNotes) {
+      this.fieldStaffNotes = fieldStaffNotes;
+   }
 
-	public FieldStaffNote addFieldStaffNote(FieldStaffNote fieldStaffNote) {
-		getFieldStaffNotes().add(fieldStaffNote);
-		fieldStaffNote.setFieldStaffNoteTopic(this);
+   public FieldStaffNote addFieldStaffNote(FieldStaffNote fieldStaffNote) {
+      getFieldStaffNotes().add(fieldStaffNote);
+      fieldStaffNote.setFieldStaffNoteTopic(this);
 
-		return fieldStaffNote;
-	}
+      return fieldStaffNote;
+   }
 
-	public FieldStaffNote removeFieldStaffNote(FieldStaffNote fieldStaffNote) {
-		getFieldStaffNotes().remove(fieldStaffNote);
-		fieldStaffNote.setFieldStaffNoteTopic(null);
+   public FieldStaffNote removeFieldStaffNote(FieldStaffNote fieldStaffNote) {
+      getFieldStaffNotes().remove(fieldStaffNote);
+      fieldStaffNote.setFieldStaffNoteTopic(null);
 
-		return fieldStaffNote;
-	}
+      return fieldStaffNote;
+   }
 
-	public FieldStaff getFieldStaff() {
-		return this.fieldStaff;
-	}
+   public FieldStaff getFieldStaff() {
+      return this.fieldStaff;
+   }
 
-	public void setFieldStaff(FieldStaff fieldStaff) {
-		this.fieldStaff = fieldStaff;
-	}
+   public void setFieldStaff(FieldStaff fieldStaff) {
+      this.fieldStaff = fieldStaff;
+   }
 
 }

@@ -14,103 +14,103 @@ import java.sql.Timestamp;
 @Table(name="SeasonWPConfiguration")
 @NamedQuery(name="SeasonWPConfiguration.findAll", query="SELECT s FROM SeasonWPConfiguration s")
 public class SeasonWPConfiguration implements Serializable {
-	private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
-	private Integer seasonWPConfigurationId;
+   @Id
+   @GeneratedValue(strategy=GenerationType.IDENTITY)
+   @Column(unique=true, nullable=false)
+   private Integer seasonWPConfigurationId;
 
-	@Column(nullable=false)
-	private Integer createdBy;
+   @Column(nullable=false)
+   private Integer createdBy;
 
-	@Column(nullable=false)
-	private Timestamp createdOn;
+   @Column(nullable=false)
+   private Timestamp createdOn;
 
-	@Column(nullable=false)
-	private Integer modifiedBy;
+   @Column(nullable=false)
+   private Integer modifiedBy;
 
-	@Column(nullable=false)
-	private Timestamp modifiedOn;
+   @Column(nullable=false)
+   private Timestamp modifiedOn;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(nullable=false)
-	private Date seasonEndDate;
+   @Temporal(TemporalType.TIMESTAMP)
+   @Column(nullable=false)
+   private Date seasonEndDate;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(nullable=false)
-	private Date seasonStartDate;
+   @Temporal(TemporalType.TIMESTAMP)
+   @Column(nullable=false)
+   private Date seasonStartDate;
 
-	//bi-directional many-to-one association to Season
-	@ManyToOne
-	@JoinColumn(name="seasonId", nullable=false)
-	private Season season;
+   //bi-directional many-to-one association to Season
+   @ManyToOne
+   @JoinColumn(name="seasonId", nullable=false)
+   private Season season;
 
-	public SeasonWPConfiguration() {
-	}
+   public SeasonWPConfiguration() {
+   }
 
-	public Integer getSeasonWPConfigurationId() {
-		return this.seasonWPConfigurationId;
-	}
+   public Integer getSeasonWPConfigurationId() {
+      return this.seasonWPConfigurationId;
+   }
 
-	public void setSeasonWPConfigurationId(Integer seasonWPConfigurationId) {
-		this.seasonWPConfigurationId = seasonWPConfigurationId;
-	}
+   public void setSeasonWPConfigurationId(Integer seasonWPConfigurationId) {
+      this.seasonWPConfigurationId = seasonWPConfigurationId;
+   }
 
-	public Integer getCreatedBy() {
-		return this.createdBy;
-	}
+   public Integer getCreatedBy() {
+      return this.createdBy;
+   }
 
-	public void setCreatedBy(Integer createdBy) {
-		this.createdBy = createdBy;
-	}
+   public void setCreatedBy(Integer createdBy) {
+      this.createdBy = createdBy;
+   }
 
-	public Timestamp getCreatedOn() {
-		return this.createdOn;
-	}
+   public Timestamp getCreatedOn() {
+      return this.createdOn;
+   }
 
-	public void setCreatedOn(Timestamp createdOn) {
-		this.createdOn = createdOn;
-	}
+   public void setCreatedOn(Timestamp createdOn) {
+      this.createdOn = createdOn;
+   }
 
-	public Integer getModifiedBy() {
-		return this.modifiedBy;
-	}
+   public Integer getModifiedBy() {
+      return this.modifiedBy;
+   }
 
-	public void setModifiedBy(Integer modifiedBy) {
-		this.modifiedBy = modifiedBy;
-	}
+   public void setModifiedBy(Integer modifiedBy) {
+      this.modifiedBy = modifiedBy;
+   }
 
-	public Timestamp getModifiedOn() {
-		return this.modifiedOn;
-	}
+   public Timestamp getModifiedOn() {
+      return this.modifiedOn;
+   }
 
-	public void setModifiedOn(Timestamp modifiedOn) {
-		this.modifiedOn = modifiedOn;
-	}
+   public void setModifiedOn(Timestamp modifiedOn) {
+      this.modifiedOn = modifiedOn;
+   }
 
-	public Date getSeasonEndDate() {
-		return this.seasonEndDate;
-	}
+   public Date getSeasonEndDate() {
+      return this.seasonEndDate;
+   }
 
-	public void setSeasonEndDate(Date seasonEndDate) {
-		this.seasonEndDate = seasonEndDate;
-	}
+   public void setSeasonEndDate(Date seasonEndDate) {
+      this.seasonEndDate = seasonEndDate;
+   }
 
-	public Date getSeasonStartDate() {
-		return this.seasonStartDate;
-	}
+   public Date getSeasonStartDate() {
+      return this.seasonStartDate;
+   }
 
-	public void setSeasonStartDate(Date seasonStartDate) {
-		this.seasonStartDate = seasonStartDate;
-	}
+   public void setSeasonStartDate(Date seasonStartDate) {
+      this.seasonStartDate = seasonStartDate;
+   }
 
-	public Season getSeason() {
-		return this.season;
-	}
+   public Season getSeason() {
+      return this.season;
+   }
 
-	public void setSeason(Season season) {
-		this.season = season;
-	}
+   public void setSeason(Season season) {
+      this.season = season;
+   }
 
 }

@@ -13,155 +13,155 @@ import java.sql.Timestamp;
 @Table(name="AdminWorkQueue")
 @NamedQuery(name="AdminWorkQueue.findAll", query="SELECT a FROM AdminWorkQueue a")
 public class AdminWorkQueue implements Serializable {
-	private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
-	private Integer adminWQId;
+   @Id
+   @GeneratedValue(strategy=GenerationType.IDENTITY)
+   @Column(unique=true, nullable=false)
+   private Integer adminWQId;
 
-	@Column(length=45)
-	private String cciStaaffUserRole;
+   @Column(length=45)
+   private String cciStaaffUserRole;
 
-	private Integer cciStaffUserGoId;
+   private Integer cciStaffUserGoId;
 
-	@Column(nullable=false)
-	private Timestamp createdDate;
+   @Column(nullable=false)
+   private Timestamp createdDate;
 
-	private Integer departmentProgramId;
+   private Integer departmentProgramId;
 
-	private Integer lookupDepartmentProgramId;
+   private Integer lookupDepartmentProgramId;
 
-	@Lob
-	private String queueData;
+   @Lob
+   private String queueData;
 
-	private Integer seasonId;
+   private Integer seasonId;
 
-	private Integer targetGoId;
+   private Integer targetGoId;
 
-	@Column(length=45)
-	private String targetRoleType;
+   @Column(length=45)
+   private String targetRoleType;
 
-	//bi-directional many-to-one association to AdminWorkQueueCategory
-	@ManyToOne
-	@JoinColumn(name="adminWQCategoryId", nullable=false)
-	private AdminWorkQueueCategory adminWorkQueueCategory;
+   //bi-directional many-to-one association to AdminWorkQueueCategory
+   @ManyToOne
+   @JoinColumn(name="adminWQCategoryId", nullable=false)
+   private AdminWorkQueueCategory adminWorkQueueCategory;
 
-	//bi-directional many-to-one association to AdminWorkQueueType
-	@ManyToOne
-	@JoinColumn(name="adminWQTypeId", nullable=false)
-	private AdminWorkQueueType adminWorkQueueType;
+   //bi-directional many-to-one association to AdminWorkQueueType
+   @ManyToOne
+   @JoinColumn(name="adminWQTypeId", nullable=false)
+   private AdminWorkQueueType adminWorkQueueType;
 
-	//bi-directional many-to-one association to StateType
-	@ManyToOne
-	@JoinColumn(name="stateTypeId")
-	private StateType stateType;
+   //bi-directional many-to-one association to StateType
+   @ManyToOne
+   @JoinColumn(name="stateTypeId")
+   private StateType stateType;
 
-	public AdminWorkQueue() {
-	}
+   public AdminWorkQueue() {
+   }
 
-	public Integer getAdminWQId() {
-		return this.adminWQId;
-	}
+   public Integer getAdminWQId() {
+      return this.adminWQId;
+   }
 
-	public void setAdminWQId(Integer adminWQId) {
-		this.adminWQId = adminWQId;
-	}
+   public void setAdminWQId(Integer adminWQId) {
+      this.adminWQId = adminWQId;
+   }
 
-	public String getCciStaaffUserRole() {
-		return this.cciStaaffUserRole;
-	}
+   public String getCciStaaffUserRole() {
+      return this.cciStaaffUserRole;
+   }
 
-	public void setCciStaaffUserRole(String cciStaaffUserRole) {
-		this.cciStaaffUserRole = cciStaaffUserRole;
-	}
+   public void setCciStaaffUserRole(String cciStaaffUserRole) {
+      this.cciStaaffUserRole = cciStaaffUserRole;
+   }
 
-	public Integer getCciStaffUserGoId() {
-		return this.cciStaffUserGoId;
-	}
+   public Integer getCciStaffUserGoId() {
+      return this.cciStaffUserGoId;
+   }
 
-	public void setCciStaffUserGoId(Integer cciStaffUserGoId) {
-		this.cciStaffUserGoId = cciStaffUserGoId;
-	}
+   public void setCciStaffUserGoId(Integer cciStaffUserGoId) {
+      this.cciStaffUserGoId = cciStaffUserGoId;
+   }
 
-	public Timestamp getCreatedDate() {
-		return this.createdDate;
-	}
+   public Timestamp getCreatedDate() {
+      return this.createdDate;
+   }
 
-	public void setCreatedDate(Timestamp createdDate) {
-		this.createdDate = createdDate;
-	}
+   public void setCreatedDate(Timestamp createdDate) {
+      this.createdDate = createdDate;
+   }
 
-	public Integer getDepartmentProgramId() {
-		return this.departmentProgramId;
-	}
+   public Integer getDepartmentProgramId() {
+      return this.departmentProgramId;
+   }
 
-	public void setDepartmentProgramId(Integer departmentProgramId) {
-		this.departmentProgramId = departmentProgramId;
-	}
+   public void setDepartmentProgramId(Integer departmentProgramId) {
+      this.departmentProgramId = departmentProgramId;
+   }
 
-	public Integer getLookupDepartmentProgramId() {
-		return this.lookupDepartmentProgramId;
-	}
+   public Integer getLookupDepartmentProgramId() {
+      return this.lookupDepartmentProgramId;
+   }
 
-	public void setLookupDepartmentProgramId(Integer lookupDepartmentProgramId) {
-		this.lookupDepartmentProgramId = lookupDepartmentProgramId;
-	}
+   public void setLookupDepartmentProgramId(Integer lookupDepartmentProgramId) {
+      this.lookupDepartmentProgramId = lookupDepartmentProgramId;
+   }
 
-	public String getQueueData() {
-		return this.queueData;
-	}
+   public String getQueueData() {
+      return this.queueData;
+   }
 
-	public void setQueueData(String queueData) {
-		this.queueData = queueData;
-	}
+   public void setQueueData(String queueData) {
+      this.queueData = queueData;
+   }
 
-	public Integer getSeasonId() {
-		return this.seasonId;
-	}
+   public Integer getSeasonId() {
+      return this.seasonId;
+   }
 
-	public void setSeasonId(Integer seasonId) {
-		this.seasonId = seasonId;
-	}
+   public void setSeasonId(Integer seasonId) {
+      this.seasonId = seasonId;
+   }
 
-	public Integer getTargetGoId() {
-		return this.targetGoId;
-	}
+   public Integer getTargetGoId() {
+      return this.targetGoId;
+   }
 
-	public void setTargetGoId(Integer targetGoId) {
-		this.targetGoId = targetGoId;
-	}
+   public void setTargetGoId(Integer targetGoId) {
+      this.targetGoId = targetGoId;
+   }
 
-	public String getTargetRoleType() {
-		return this.targetRoleType;
-	}
+   public String getTargetRoleType() {
+      return this.targetRoleType;
+   }
 
-	public void setTargetRoleType(String targetRoleType) {
-		this.targetRoleType = targetRoleType;
-	}
+   public void setTargetRoleType(String targetRoleType) {
+      this.targetRoleType = targetRoleType;
+   }
 
-	public AdminWorkQueueCategory getAdminWorkQueueCategory() {
-		return this.adminWorkQueueCategory;
-	}
+   public AdminWorkQueueCategory getAdminWorkQueueCategory() {
+      return this.adminWorkQueueCategory;
+   }
 
-	public void setAdminWorkQueueCategory(AdminWorkQueueCategory adminWorkQueueCategory) {
-		this.adminWorkQueueCategory = adminWorkQueueCategory;
-	}
+   public void setAdminWorkQueueCategory(AdminWorkQueueCategory adminWorkQueueCategory) {
+      this.adminWorkQueueCategory = adminWorkQueueCategory;
+   }
 
-	public AdminWorkQueueType getAdminWorkQueueType() {
-		return this.adminWorkQueueType;
-	}
+   public AdminWorkQueueType getAdminWorkQueueType() {
+      return this.adminWorkQueueType;
+   }
 
-	public void setAdminWorkQueueType(AdminWorkQueueType adminWorkQueueType) {
-		this.adminWorkQueueType = adminWorkQueueType;
-	}
+   public void setAdminWorkQueueType(AdminWorkQueueType adminWorkQueueType) {
+      this.adminWorkQueueType = adminWorkQueueType;
+   }
 
-	public StateType getStateType() {
-		return this.stateType;
-	}
+   public StateType getStateType() {
+      return this.stateType;
+   }
 
-	public void setStateType(StateType stateType) {
-		this.stateType = stateType;
-	}
+   public void setStateType(StateType stateType) {
+      this.stateType = stateType;
+   }
 
 }

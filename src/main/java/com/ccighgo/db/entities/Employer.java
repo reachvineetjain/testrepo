@@ -13,71 +13,71 @@ import java.util.List;
 @Table(name="Employer")
 @NamedQuery(name="Employer.findAll", query="SELECT e FROM Employer e")
 public class Employer implements Serializable {
-	private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
-	private Integer employerGoId;
+   @Id
+   @GeneratedValue(strategy=GenerationType.IDENTITY)
+   @Column(unique=true, nullable=false)
+   private Integer employerGoId;
 
-	private Integer employerStatusId;
+   private Integer employerStatusId;
 
-	//bi-directional one-to-one association to GoIdSequence
-	@OneToOne
-	@JoinColumn(name="employerGoId", nullable=false, insertable=false, updatable=false)
-	private GoIdSequence goIdSequence;
+   //bi-directional one-to-one association to GoIdSequence
+   @OneToOne
+   @JoinColumn(name="employerGoId", nullable=false, insertable=false, updatable=false)
+   private GoIdSequence goIdSequence;
 
-	//bi-directional many-to-one association to EmployerPermission
-	@OneToMany(mappedBy="employer")
-	private List<EmployerPermission> employerPermissions;
+   //bi-directional many-to-one association to EmployerPermission
+   @OneToMany(mappedBy="employer")
+   private List<EmployerPermission> employerPermissions;
 
-	public Employer() {
-	}
+   public Employer() {
+   }
 
-	public Integer getEmployerGoId() {
-		return this.employerGoId;
-	}
+   public Integer getEmployerGoId() {
+      return this.employerGoId;
+   }
 
-	public void setEmployerGoId(Integer employerGoId) {
-		this.employerGoId = employerGoId;
-	}
+   public void setEmployerGoId(Integer employerGoId) {
+      this.employerGoId = employerGoId;
+   }
 
-	public Integer getEmployerStatusId() {
-		return this.employerStatusId;
-	}
+   public Integer getEmployerStatusId() {
+      return this.employerStatusId;
+   }
 
-	public void setEmployerStatusId(Integer employerStatusId) {
-		this.employerStatusId = employerStatusId;
-	}
+   public void setEmployerStatusId(Integer employerStatusId) {
+      this.employerStatusId = employerStatusId;
+   }
 
-	public GoIdSequence getGoIdSequence() {
-		return this.goIdSequence;
-	}
+   public GoIdSequence getGoIdSequence() {
+      return this.goIdSequence;
+   }
 
-	public void setGoIdSequence(GoIdSequence goIdSequence) {
-		this.goIdSequence = goIdSequence;
-	}
+   public void setGoIdSequence(GoIdSequence goIdSequence) {
+      this.goIdSequence = goIdSequence;
+   }
 
-	public List<EmployerPermission> getEmployerPermissions() {
-		return this.employerPermissions;
-	}
+   public List<EmployerPermission> getEmployerPermissions() {
+      return this.employerPermissions;
+   }
 
-	public void setEmployerPermissions(List<EmployerPermission> employerPermissions) {
-		this.employerPermissions = employerPermissions;
-	}
+   public void setEmployerPermissions(List<EmployerPermission> employerPermissions) {
+      this.employerPermissions = employerPermissions;
+   }
 
-	public EmployerPermission addEmployerPermission(EmployerPermission employerPermission) {
-		getEmployerPermissions().add(employerPermission);
-		employerPermission.setEmployer(this);
+   public EmployerPermission addEmployerPermission(EmployerPermission employerPermission) {
+      getEmployerPermissions().add(employerPermission);
+      employerPermission.setEmployer(this);
 
-		return employerPermission;
-	}
+      return employerPermission;
+   }
 
-	public EmployerPermission removeEmployerPermission(EmployerPermission employerPermission) {
-		getEmployerPermissions().remove(employerPermission);
-		employerPermission.setEmployer(null);
+   public EmployerPermission removeEmployerPermission(EmployerPermission employerPermission) {
+      getEmployerPermissions().remove(employerPermission);
+      employerPermission.setEmployer(null);
 
-		return employerPermission;
-	}
+      return employerPermission;
+   }
 
 }

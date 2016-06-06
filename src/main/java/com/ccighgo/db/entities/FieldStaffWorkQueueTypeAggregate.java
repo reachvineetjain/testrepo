@@ -13,93 +13,93 @@ import java.sql.Timestamp;
 @Table(name="FieldStaffWorkQueueTypeAggregate")
 @NamedQuery(name="FieldStaffWorkQueueTypeAggregate.findAll", query="SELECT f FROM FieldStaffWorkQueueTypeAggregate f")
 public class FieldStaffWorkQueueTypeAggregate implements Serializable {
-	private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
-	private Integer fieldStaffWQTypeAggregateId;
+   @Id
+   @GeneratedValue(strategy=GenerationType.IDENTITY)
+   @Column(unique=true, nullable=false)
+   private Integer fieldStaffWQTypeAggregateId;
 
-	private Integer fieldStaffWQTypeAggregate;
+   private Integer fieldStaffWQTypeAggregate;
 
-	@Column(length=50)
-	private String fieldStaffWQTypeName;
+   @Column(length=50)
+   private String fieldStaffWQTypeName;
 
-	@Column(nullable=false)
-	private Timestamp modifiedDate;
+   @Column(nullable=false)
+   private Timestamp modifiedDate;
 
-	//bi-directional many-to-one association to FieldStaff
-	@ManyToOne
-	@JoinColumn(name="fieldStaffGoId")
-	private FieldStaff fieldStaff;
+   //bi-directional many-to-one association to FieldStaff
+   @ManyToOne
+   @JoinColumn(name="fieldStaffGoId")
+   private FieldStaff fieldStaff;
 
-	//bi-directional many-to-one association to FieldStaffWorkQueueType
-	@ManyToOne
-	@JoinColumn(name="fieldStaffWQTypeId")
-	private FieldStaffWorkQueueType fieldStaffWorkQueueType;
+   //bi-directional many-to-one association to FieldStaffWorkQueueType
+   @ManyToOne
+   @JoinColumn(name="fieldStaffWQTypeId")
+   private FieldStaffWorkQueueType fieldStaffWorkQueueType;
 
-	//bi-directional many-to-one association to LookupDepartmentProgram
-	@ManyToOne
-	@JoinColumn(name="lookupDepartmentProgramId")
-	private LookupDepartmentProgram lookupDepartmentProgram;
+   //bi-directional many-to-one association to LookupDepartmentProgram
+   @ManyToOne
+   @JoinColumn(name="lookupDepartmentProgramId")
+   private LookupDepartmentProgram lookupDepartmentProgram;
 
-	public FieldStaffWorkQueueTypeAggregate() {
-	}
+   public FieldStaffWorkQueueTypeAggregate() {
+   }
 
-	public Integer getFieldStaffWQTypeAggregateId() {
-		return this.fieldStaffWQTypeAggregateId;
-	}
+   public Integer getFieldStaffWQTypeAggregateId() {
+      return this.fieldStaffWQTypeAggregateId;
+   }
 
-	public void setFieldStaffWQTypeAggregateId(Integer fieldStaffWQTypeAggregateId) {
-		this.fieldStaffWQTypeAggregateId = fieldStaffWQTypeAggregateId;
-	}
+   public void setFieldStaffWQTypeAggregateId(Integer fieldStaffWQTypeAggregateId) {
+      this.fieldStaffWQTypeAggregateId = fieldStaffWQTypeAggregateId;
+   }
 
-	public Integer getFieldStaffWQTypeAggregate() {
-		return this.fieldStaffWQTypeAggregate;
-	}
+   public Integer getFieldStaffWQTypeAggregate() {
+      return this.fieldStaffWQTypeAggregate;
+   }
 
-	public void setFieldStaffWQTypeAggregate(Integer fieldStaffWQTypeAggregate) {
-		this.fieldStaffWQTypeAggregate = fieldStaffWQTypeAggregate;
-	}
+   public void setFieldStaffWQTypeAggregate(Integer fieldStaffWQTypeAggregate) {
+      this.fieldStaffWQTypeAggregate = fieldStaffWQTypeAggregate;
+   }
 
-	public String getFieldStaffWQTypeName() {
-		return this.fieldStaffWQTypeName;
-	}
+   public String getFieldStaffWQTypeName() {
+      return this.fieldStaffWQTypeName;
+   }
 
-	public void setFieldStaffWQTypeName(String fieldStaffWQTypeName) {
-		this.fieldStaffWQTypeName = fieldStaffWQTypeName;
-	}
+   public void setFieldStaffWQTypeName(String fieldStaffWQTypeName) {
+      this.fieldStaffWQTypeName = fieldStaffWQTypeName;
+   }
 
-	public Timestamp getModifiedDate() {
-		return this.modifiedDate;
-	}
+   public Timestamp getModifiedDate() {
+      return this.modifiedDate;
+   }
 
-	public void setModifiedDate(Timestamp modifiedDate) {
-		this.modifiedDate = modifiedDate;
-	}
+   public void setModifiedDate(Timestamp modifiedDate) {
+      this.modifiedDate = modifiedDate;
+   }
 
-	public FieldStaff getFieldStaff() {
-		return this.fieldStaff;
-	}
+   public FieldStaff getFieldStaff() {
+      return this.fieldStaff;
+   }
 
-	public void setFieldStaff(FieldStaff fieldStaff) {
-		this.fieldStaff = fieldStaff;
-	}
+   public void setFieldStaff(FieldStaff fieldStaff) {
+      this.fieldStaff = fieldStaff;
+   }
 
-	public FieldStaffWorkQueueType getFieldStaffWorkQueueType() {
-		return this.fieldStaffWorkQueueType;
-	}
+   public FieldStaffWorkQueueType getFieldStaffWorkQueueType() {
+      return this.fieldStaffWorkQueueType;
+   }
 
-	public void setFieldStaffWorkQueueType(FieldStaffWorkQueueType fieldStaffWorkQueueType) {
-		this.fieldStaffWorkQueueType = fieldStaffWorkQueueType;
-	}
+   public void setFieldStaffWorkQueueType(FieldStaffWorkQueueType fieldStaffWorkQueueType) {
+      this.fieldStaffWorkQueueType = fieldStaffWorkQueueType;
+   }
 
-	public LookupDepartmentProgram getLookupDepartmentProgram() {
-		return this.lookupDepartmentProgram;
-	}
+   public LookupDepartmentProgram getLookupDepartmentProgram() {
+      return this.lookupDepartmentProgram;
+   }
 
-	public void setLookupDepartmentProgram(LookupDepartmentProgram lookupDepartmentProgram) {
-		this.lookupDepartmentProgram = lookupDepartmentProgram;
-	}
+   public void setLookupDepartmentProgram(LookupDepartmentProgram lookupDepartmentProgram) {
+      this.lookupDepartmentProgram = lookupDepartmentProgram;
+   }
 
 }

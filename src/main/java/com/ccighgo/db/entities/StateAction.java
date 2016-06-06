@@ -12,46 +12,46 @@ import javax.persistence.*;
 @Table(name="StateActions")
 @NamedQuery(name="StateAction.findAll", query="SELECT s FROM StateAction s")
 public class StateAction implements Serializable {
-	private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
-	private Integer stateActionId;
+   @Id
+   @GeneratedValue(strategy=GenerationType.IDENTITY)
+   @Column(unique=true, nullable=false)
+   private Integer stateActionId;
 
-	@Column(length=50)
-	private String action;
+   @Column(length=50)
+   private String action;
 
-	//bi-directional many-to-one association to StateType
-	@ManyToOne
-	@JoinColumn(name="stateTypeId", nullable=false)
-	private StateType stateType;
+   //bi-directional many-to-one association to StateType
+   @ManyToOne
+   @JoinColumn(name="stateTypeId", nullable=false)
+   private StateType stateType;
 
-	public StateAction() {
-	}
+   public StateAction() {
+   }
 
-	public Integer getStateActionId() {
-		return this.stateActionId;
-	}
+   public Integer getStateActionId() {
+      return this.stateActionId;
+   }
 
-	public void setStateActionId(Integer stateActionId) {
-		this.stateActionId = stateActionId;
-	}
+   public void setStateActionId(Integer stateActionId) {
+      this.stateActionId = stateActionId;
+   }
 
-	public String getAction() {
-		return this.action;
-	}
+   public String getAction() {
+      return this.action;
+   }
 
-	public void setAction(String action) {
-		this.action = action;
-	}
+   public void setAction(String action) {
+      this.action = action;
+   }
 
-	public StateType getStateType() {
-		return this.stateType;
-	}
+   public StateType getStateType() {
+      return this.stateType;
+   }
 
-	public void setStateType(StateType stateType) {
-		this.stateType = stateType;
-	}
+   public void setStateType(StateType stateType) {
+      this.stateType = stateType;
+   }
 
 }

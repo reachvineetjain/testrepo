@@ -13,89 +13,89 @@ import java.util.List;
 @Table(name="ParticipantStatus")
 @NamedQuery(name="ParticipantStatus.findAll", query="SELECT p FROM ParticipantStatus p")
 public class ParticipantStatus implements Serializable {
-	private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
-	private Integer participantStatusId;
+   @Id
+   @GeneratedValue(strategy=GenerationType.IDENTITY)
+   @Column(unique=true, nullable=false)
+   private Integer participantStatusId;
 
-	private Byte active;
+   private Byte active;
 
-	private Byte isApplicationStatus;
+   private Byte isApplicationStatus;
 
-	private Byte isPlacementStatus;
+   private Byte isPlacementStatus;
 
-	@Column(nullable=false, length=50)
-	private String participantStatusName;
+   @Column(nullable=false, length=50)
+   private String participantStatusName;
 
-	//bi-directional many-to-one association to Participant
-	@OneToMany(mappedBy="participantStatus")
-	private List<Participant> participants;
+   //bi-directional many-to-one association to Participant
+   @OneToMany(mappedBy="participantStatus")
+   private List<Participant> participants;
 
-	public ParticipantStatus() {
-	}
+   public ParticipantStatus() {
+   }
 
-	public Integer getParticipantStatusId() {
-		return this.participantStatusId;
-	}
+   public Integer getParticipantStatusId() {
+      return this.participantStatusId;
+   }
 
-	public void setParticipantStatusId(Integer participantStatusId) {
-		this.participantStatusId = participantStatusId;
-	}
+   public void setParticipantStatusId(Integer participantStatusId) {
+      this.participantStatusId = participantStatusId;
+   }
 
-	public Byte getActive() {
-		return this.active;
-	}
+   public Byte getActive() {
+      return this.active;
+   }
 
-	public void setActive(Byte active) {
-		this.active = active;
-	}
+   public void setActive(Byte active) {
+      this.active = active;
+   }
 
-	public Byte getIsApplicationStatus() {
-		return this.isApplicationStatus;
-	}
+   public Byte getIsApplicationStatus() {
+      return this.isApplicationStatus;
+   }
 
-	public void setIsApplicationStatus(Byte isApplicationStatus) {
-		this.isApplicationStatus = isApplicationStatus;
-	}
+   public void setIsApplicationStatus(Byte isApplicationStatus) {
+      this.isApplicationStatus = isApplicationStatus;
+   }
 
-	public Byte getIsPlacementStatus() {
-		return this.isPlacementStatus;
-	}
+   public Byte getIsPlacementStatus() {
+      return this.isPlacementStatus;
+   }
 
-	public void setIsPlacementStatus(Byte isPlacementStatus) {
-		this.isPlacementStatus = isPlacementStatus;
-	}
+   public void setIsPlacementStatus(Byte isPlacementStatus) {
+      this.isPlacementStatus = isPlacementStatus;
+   }
 
-	public String getParticipantStatusName() {
-		return this.participantStatusName;
-	}
+   public String getParticipantStatusName() {
+      return this.participantStatusName;
+   }
 
-	public void setParticipantStatusName(String participantStatusName) {
-		this.participantStatusName = participantStatusName;
-	}
+   public void setParticipantStatusName(String participantStatusName) {
+      this.participantStatusName = participantStatusName;
+   }
 
-	public List<Participant> getParticipants() {
-		return this.participants;
-	}
+   public List<Participant> getParticipants() {
+      return this.participants;
+   }
 
-	public void setParticipants(List<Participant> participants) {
-		this.participants = participants;
-	}
+   public void setParticipants(List<Participant> participants) {
+      this.participants = participants;
+   }
 
-	public Participant addParticipant(Participant participant) {
-		getParticipants().add(participant);
-		participant.setParticipantStatus(this);
+   public Participant addParticipant(Participant participant) {
+      getParticipants().add(participant);
+      participant.setParticipantStatus(this);
 
-		return participant;
-	}
+      return participant;
+   }
 
-	public Participant removeParticipant(Participant participant) {
-		getParticipants().remove(participant);
-		participant.setParticipantStatus(null);
+   public Participant removeParticipant(Participant participant) {
+      getParticipants().remove(participant);
+      participant.setParticipantStatus(null);
 
-		return participant;
-	}
+      return participant;
+   }
 
 }

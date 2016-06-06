@@ -13,121 +13,121 @@ import java.util.List;
 @Table(name="Salutation")
 @NamedQuery(name="Salutation.findAll", query="SELECT s FROM Salutation s")
 public class Salutation implements Serializable {
-	private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
-	private Integer salutationId;
+   @Id
+   @GeneratedValue(strategy=GenerationType.IDENTITY)
+   @Column(unique=true, nullable=false)
+   private Integer salutationId;
 
-	private Byte active;
+   private Byte active;
 
-	@Column(length=30)
-	private String salutationName;
+   @Column(length=30)
+   private String salutationName;
 
-	//bi-directional many-to-one association to FieldStaff
-	@OneToMany(mappedBy="salutation")
-	private List<FieldStaff> fieldStaffs;
+   //bi-directional many-to-one association to FieldStaff
+   @OneToMany(mappedBy="salutation")
+   private List<FieldStaff> fieldStaffs;
 
-	//bi-directional many-to-one association to PartnerAgentInquiry
-	@OneToMany(mappedBy="salutation")
-	private List<PartnerAgentInquiry> partnerAgentInquiries;
+   //bi-directional many-to-one association to PartnerAgentInquiry
+   @OneToMany(mappedBy="salutation")
+   private List<PartnerAgentInquiry> partnerAgentInquiries;
 
-	//bi-directional many-to-one association to PartnerUser
-	@OneToMany(mappedBy="salutation")
-	private List<PartnerUser> partnerUsers;
+   //bi-directional many-to-one association to PartnerUser
+   @OneToMany(mappedBy="salutation")
+   private List<PartnerUser> partnerUsers;
 
-	public Salutation() {
-	}
+   public Salutation() {
+   }
 
-	public Integer getSalutationId() {
-		return this.salutationId;
-	}
+   public Integer getSalutationId() {
+      return this.salutationId;
+   }
 
-	public void setSalutationId(Integer salutationId) {
-		this.salutationId = salutationId;
-	}
+   public void setSalutationId(Integer salutationId) {
+      this.salutationId = salutationId;
+   }
 
-	public Byte getActive() {
-		return this.active;
-	}
+   public Byte getActive() {
+      return this.active;
+   }
 
-	public void setActive(Byte active) {
-		this.active = active;
-	}
+   public void setActive(Byte active) {
+      this.active = active;
+   }
 
-	public String getSalutationName() {
-		return this.salutationName;
-	}
+   public String getSalutationName() {
+      return this.salutationName;
+   }
 
-	public void setSalutationName(String salutationName) {
-		this.salutationName = salutationName;
-	}
+   public void setSalutationName(String salutationName) {
+      this.salutationName = salutationName;
+   }
 
-	public List<FieldStaff> getFieldStaffs() {
-		return this.fieldStaffs;
-	}
+   public List<FieldStaff> getFieldStaffs() {
+      return this.fieldStaffs;
+   }
 
-	public void setFieldStaffs(List<FieldStaff> fieldStaffs) {
-		this.fieldStaffs = fieldStaffs;
-	}
+   public void setFieldStaffs(List<FieldStaff> fieldStaffs) {
+      this.fieldStaffs = fieldStaffs;
+   }
 
-	public FieldStaff addFieldStaff(FieldStaff fieldStaff) {
-		getFieldStaffs().add(fieldStaff);
-		fieldStaff.setSalutation(this);
+   public FieldStaff addFieldStaff(FieldStaff fieldStaff) {
+      getFieldStaffs().add(fieldStaff);
+      fieldStaff.setSalutation(this);
 
-		return fieldStaff;
-	}
+      return fieldStaff;
+   }
 
-	public FieldStaff removeFieldStaff(FieldStaff fieldStaff) {
-		getFieldStaffs().remove(fieldStaff);
-		fieldStaff.setSalutation(null);
+   public FieldStaff removeFieldStaff(FieldStaff fieldStaff) {
+      getFieldStaffs().remove(fieldStaff);
+      fieldStaff.setSalutation(null);
 
-		return fieldStaff;
-	}
+      return fieldStaff;
+   }
 
-	public List<PartnerAgentInquiry> getPartnerAgentInquiries() {
-		return this.partnerAgentInquiries;
-	}
+   public List<PartnerAgentInquiry> getPartnerAgentInquiries() {
+      return this.partnerAgentInquiries;
+   }
 
-	public void setPartnerAgentInquiries(List<PartnerAgentInquiry> partnerAgentInquiries) {
-		this.partnerAgentInquiries = partnerAgentInquiries;
-	}
+   public void setPartnerAgentInquiries(List<PartnerAgentInquiry> partnerAgentInquiries) {
+      this.partnerAgentInquiries = partnerAgentInquiries;
+   }
 
-	public PartnerAgentInquiry addPartnerAgentInquiry(PartnerAgentInquiry partnerAgentInquiry) {
-		getPartnerAgentInquiries().add(partnerAgentInquiry);
-		partnerAgentInquiry.setSalutation(this);
+   public PartnerAgentInquiry addPartnerAgentInquiry(PartnerAgentInquiry partnerAgentInquiry) {
+      getPartnerAgentInquiries().add(partnerAgentInquiry);
+      partnerAgentInquiry.setSalutation(this);
 
-		return partnerAgentInquiry;
-	}
+      return partnerAgentInquiry;
+   }
 
-	public PartnerAgentInquiry removePartnerAgentInquiry(PartnerAgentInquiry partnerAgentInquiry) {
-		getPartnerAgentInquiries().remove(partnerAgentInquiry);
-		partnerAgentInquiry.setSalutation(null);
+   public PartnerAgentInquiry removePartnerAgentInquiry(PartnerAgentInquiry partnerAgentInquiry) {
+      getPartnerAgentInquiries().remove(partnerAgentInquiry);
+      partnerAgentInquiry.setSalutation(null);
 
-		return partnerAgentInquiry;
-	}
+      return partnerAgentInquiry;
+   }
 
-	public List<PartnerUser> getPartnerUsers() {
-		return this.partnerUsers;
-	}
+   public List<PartnerUser> getPartnerUsers() {
+      return this.partnerUsers;
+   }
 
-	public void setPartnerUsers(List<PartnerUser> partnerUsers) {
-		this.partnerUsers = partnerUsers;
-	}
+   public void setPartnerUsers(List<PartnerUser> partnerUsers) {
+      this.partnerUsers = partnerUsers;
+   }
 
-	public PartnerUser addPartnerUser(PartnerUser partnerUser) {
-		getPartnerUsers().add(partnerUser);
-		partnerUser.setSalutation(this);
+   public PartnerUser addPartnerUser(PartnerUser partnerUser) {
+      getPartnerUsers().add(partnerUser);
+      partnerUser.setSalutation(this);
 
-		return partnerUser;
-	}
+      return partnerUser;
+   }
 
-	public PartnerUser removePartnerUser(PartnerUser partnerUser) {
-		getPartnerUsers().remove(partnerUser);
-		partnerUser.setSalutation(null);
+   public PartnerUser removePartnerUser(PartnerUser partnerUser) {
+      getPartnerUsers().remove(partnerUser);
+      partnerUser.setSalutation(null);
 
-		return partnerUser;
-	}
+      return partnerUser;
+   }
 
 }
