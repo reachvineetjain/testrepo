@@ -730,7 +730,12 @@ public class HFApplicationImpl implements HFApplication {
                   HFAdultDetails adult = new HFAdultDetails();
                   com.ccighgo.service.transport.hostfamily.beans.application.familydetails.Photo photo = new com.ccighgo.service.transport.hostfamily.beans.application.familydetails.Photo();
                   photo.setFilePath(String.valueOf(obj[0]));
-                  photo.setPhotoId(Integer.valueOf(String.valueOf(obj[25])));
+                  // put the null check for PhotoId
+                  try {
+                  photo.setPhotoId(Integer.valueOf(String.valueOf(obj[25])!=null ? String.valueOf(obj[25]) : ""));
+                  } catch (NumberFormatException nfe){
+                     LOGGER.error(nfe.getMessage());
+                  }
                   photo.setTypeId(CCIConstants.ACTIVE);
                   photo.setDescription(String.valueOf(obj[30]));
                   hfbs.setPhoto(photo);
