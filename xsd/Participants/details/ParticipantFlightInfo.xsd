@@ -34,14 +34,21 @@
                <xsd:element name="season" type="xsd:string" minOccurs="1" maxOccurs="1" />
                <xsd:element name="programStartDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
                <xsd:element name="programEndtDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="school" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="lcPicture" type="xsd:string" minOccurs="1" maxOccurs="1" />
                <xsd:element name="lcFirstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
                <xsd:element name="lcLastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="acPicture" type="xsd:string" minOccurs="1" maxOccurs="1" />
                <xsd:element name="acFirstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
                <xsd:element name="acLastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="rmPicture" type="xsd:string" minOccurs="1" maxOccurs="1" />
                <xsd:element name="rmFirstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
                <xsd:element name="rmLastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="rdPicture" type="xsd:string" minOccurs="1" maxOccurs="1" />
                <xsd:element name="rdFirstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
                <xsd:element name="rdLastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="applicationStatus" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="placementStatus" type="xsd:string" minOccurs="1" maxOccurs="1" />
                <xsd:element name="departureFlightInfo" type="p:Flight" minOccurs="1" maxOccurs="1" />
                <xsd:element name="arrivalFlightInfo" type="p:Flight" minOccurs="1" maxOccurs="1" />
             </xsd:sequence>
