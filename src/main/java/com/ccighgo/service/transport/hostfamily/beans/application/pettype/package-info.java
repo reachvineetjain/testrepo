@@ -5,5 +5,5 @@
 // Generated on: 2016.06.07 at 03:38:59 PM IST 
 //
 
-@javax.xml.bind.annotation.XmlSchema(namespace = "http://www.ccighgo.com/common")
-package com.ccighgo.service.transport.common.response.beans;
+@javax.xml.bind.annotation.XmlSchema(namespace = "http://www.ccighgo.com/hfpettype")
+package com.ccighgo.service.transport.hostfamily.beans.application.pettype;
