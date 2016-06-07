@@ -12,35 +12,35 @@ import javax.persistence.*;
 @Table(name="EmployerPermissions")
 @NamedQuery(name="EmployerPermission.findAll", query="SELECT e FROM EmployerPermission e")
 public class EmployerPermission implements Serializable {
-	private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
-	private Integer empolyerPermissionsId;
+   @Id
+   @GeneratedValue(strategy=GenerationType.IDENTITY)
+   @Column(unique=true, nullable=false)
+   private Integer empolyerPermissionsId;
 
-	//bi-directional many-to-one association to Employer
-	@ManyToOne
-	@JoinColumn(name="employerGoId")
-	private Employer employer;
+   //bi-directional many-to-one association to Employer
+   @ManyToOne
+   @JoinColumn(name="employerGoId")
+   private Employer employer;
 
-	public EmployerPermission() {
-	}
+   public EmployerPermission() {
+   }
 
-	public Integer getEmpolyerPermissionsId() {
-		return this.empolyerPermissionsId;
-	}
+   public Integer getEmpolyerPermissionsId() {
+      return this.empolyerPermissionsId;
+   }
 
-	public void setEmpolyerPermissionsId(Integer empolyerPermissionsId) {
-		this.empolyerPermissionsId = empolyerPermissionsId;
-	}
+   public void setEmpolyerPermissionsId(Integer empolyerPermissionsId) {
+      this.empolyerPermissionsId = empolyerPermissionsId;
+   }
 
-	public Employer getEmployer() {
-		return this.employer;
-	}
+   public Employer getEmployer() {
+      return this.employer;
+   }
 
-	public void setEmployer(Employer employer) {
-		this.employer = employer;
-	}
+   public void setEmployer(Employer employer) {
+      this.employer = employer;
+   }
 
 }

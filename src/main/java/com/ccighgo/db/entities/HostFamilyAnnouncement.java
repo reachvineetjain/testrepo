@@ -13,163 +13,163 @@ import java.sql.Timestamp;
 @Table(name="HostFamilyAnnouncement")
 @NamedQuery(name="HostFamilyAnnouncement.findAll", query="SELECT h FROM HostFamilyAnnouncement h")
 public class HostFamilyAnnouncement implements Serializable {
-	private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
-	private Integer hostFamilyAnnouncementId;
+   @Id
+   @GeneratedValue(strategy=GenerationType.IDENTITY)
+   @Column(unique=true, nullable=false)
+   private Integer hostFamilyAnnouncementId;
 
-	private Byte active;
+   private Byte active;
 
-	@Lob
-	private String announcement;
+   @Lob
+   private String announcement;
 
-	private Byte archived;
+   private Byte archived;
 
-	private Integer createdBy;
+   private Integer createdBy;
 
-	private Timestamp createdOn;
+   private Timestamp createdOn;
 
-	private Byte currentlyHosting;
+   private Byte currentlyHosting;
 
-	private Integer modifiedBy;
+   private Integer modifiedBy;
 
-	private Timestamp modifiedOn;
+   private Timestamp modifiedOn;
 
-	@Column(length=300)
-	private String title;
+   @Column(length=300)
+   private String title;
 
-	private Byte unplaced;
+   private Byte unplaced;
 
-	//bi-directional many-to-one association to DepartmentProgram
-	@ManyToOne
-	@JoinColumn(name="departmentProgramId")
-	private DepartmentProgram departmentProgram;
+   //bi-directional many-to-one association to DepartmentProgram
+   @ManyToOne
+   @JoinColumn(name="departmentProgramId")
+   private DepartmentProgram departmentProgram;
 
-	//bi-directional many-to-one association to HostFamily
-	@ManyToOne
-	@JoinColumn(name="hostFamilyGoId")
-	private HostFamily hostFamily;
+   //bi-directional many-to-one association to HostFamily
+   @ManyToOne
+   @JoinColumn(name="hostFamilyGoId")
+   private HostFamily hostFamily;
 
-	//bi-directional many-to-one association to Season
-	@ManyToOne
-	@JoinColumn(name="seasonId")
-	private Season season;
+   //bi-directional many-to-one association to Season
+   @ManyToOne
+   @JoinColumn(name="seasonId")
+   private Season season;
 
-	public HostFamilyAnnouncement() {
-	}
+   public HostFamilyAnnouncement() {
+   }
 
-	public Integer getHostFamilyAnnouncementId() {
-		return this.hostFamilyAnnouncementId;
-	}
+   public Integer getHostFamilyAnnouncementId() {
+      return this.hostFamilyAnnouncementId;
+   }
 
-	public void setHostFamilyAnnouncementId(Integer hostFamilyAnnouncementId) {
-		this.hostFamilyAnnouncementId = hostFamilyAnnouncementId;
-	}
+   public void setHostFamilyAnnouncementId(Integer hostFamilyAnnouncementId) {
+      this.hostFamilyAnnouncementId = hostFamilyAnnouncementId;
+   }
 
-	public Byte getActive() {
-		return this.active;
-	}
+   public Byte getActive() {
+      return this.active;
+   }
 
-	public void setActive(Byte active) {
-		this.active = active;
-	}
+   public void setActive(Byte active) {
+      this.active = active;
+   }
 
-	public String getAnnouncement() {
-		return this.announcement;
-	}
+   public String getAnnouncement() {
+      return this.announcement;
+   }
 
-	public void setAnnouncement(String announcement) {
-		this.announcement = announcement;
-	}
+   public void setAnnouncement(String announcement) {
+      this.announcement = announcement;
+   }
 
-	public Byte getArchived() {
-		return this.archived;
-	}
+   public Byte getArchived() {
+      return this.archived;
+   }
 
-	public void setArchived(Byte archived) {
-		this.archived = archived;
-	}
+   public void setArchived(Byte archived) {
+      this.archived = archived;
+   }
 
-	public Integer getCreatedBy() {
-		return this.createdBy;
-	}
+   public Integer getCreatedBy() {
+      return this.createdBy;
+   }
 
-	public void setCreatedBy(Integer createdBy) {
-		this.createdBy = createdBy;
-	}
+   public void setCreatedBy(Integer createdBy) {
+      this.createdBy = createdBy;
+   }
 
-	public Timestamp getCreatedOn() {
-		return this.createdOn;
-	}
+   public Timestamp getCreatedOn() {
+      return this.createdOn;
+   }
 
-	public void setCreatedOn(Timestamp createdOn) {
-		this.createdOn = createdOn;
-	}
+   public void setCreatedOn(Timestamp createdOn) {
+      this.createdOn = createdOn;
+   }
 
-	public Byte getCurrentlyHosting() {
-		return this.currentlyHosting;
-	}
+   public Byte getCurrentlyHosting() {
+      return this.currentlyHosting;
+   }
 
-	public void setCurrentlyHosting(Byte currentlyHosting) {
-		this.currentlyHosting = currentlyHosting;
-	}
+   public void setCurrentlyHosting(Byte currentlyHosting) {
+      this.currentlyHosting = currentlyHosting;
+   }
 
-	public Integer getModifiedBy() {
-		return this.modifiedBy;
-	}
+   public Integer getModifiedBy() {
+      return this.modifiedBy;
+   }
 
-	public void setModifiedBy(Integer modifiedBy) {
-		this.modifiedBy = modifiedBy;
-	}
+   public void setModifiedBy(Integer modifiedBy) {
+      this.modifiedBy = modifiedBy;
+   }
 
-	public Timestamp getModifiedOn() {
-		return this.modifiedOn;
-	}
+   public Timestamp getModifiedOn() {
+      return this.modifiedOn;
+   }
 
-	public void setModifiedOn(Timestamp modifiedOn) {
-		this.modifiedOn = modifiedOn;
-	}
+   public void setModifiedOn(Timestamp modifiedOn) {
+      this.modifiedOn = modifiedOn;
+   }
 
-	public String getTitle() {
-		return this.title;
-	}
+   public String getTitle() {
+      return this.title;
+   }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+   public void setTitle(String title) {
+      this.title = title;
+   }
 
-	public Byte getUnplaced() {
-		return this.unplaced;
-	}
+   public Byte getUnplaced() {
+      return this.unplaced;
+   }
 
-	public void setUnplaced(Byte unplaced) {
-		this.unplaced = unplaced;
-	}
+   public void setUnplaced(Byte unplaced) {
+      this.unplaced = unplaced;
+   }
 
-	public DepartmentProgram getDepartmentProgram() {
-		return this.departmentProgram;
-	}
+   public DepartmentProgram getDepartmentProgram() {
+      return this.departmentProgram;
+   }
 
-	public void setDepartmentProgram(DepartmentProgram departmentProgram) {
-		this.departmentProgram = departmentProgram;
-	}
+   public void setDepartmentProgram(DepartmentProgram departmentProgram) {
+      this.departmentProgram = departmentProgram;
+   }
 
-	public HostFamily getHostFamily() {
-		return this.hostFamily;
-	}
+   public HostFamily getHostFamily() {
+      return this.hostFamily;
+   }
 
-	public void setHostFamily(HostFamily hostFamily) {
-		this.hostFamily = hostFamily;
-	}
+   public void setHostFamily(HostFamily hostFamily) {
+      this.hostFamily = hostFamily;
+   }
 
-	public Season getSeason() {
-		return this.season;
-	}
+   public Season getSeason() {
+      return this.season;
+   }
 
-	public void setSeason(Season season) {
-		this.season = season;
-	}
+   public void setSeason(Season season) {
+      this.season = season;
+   }
 
 }

@@ -13,69 +13,69 @@ import java.util.List;
 @Table(name="HostFamilyPhotosType")
 @NamedQuery(name="HostFamilyPhotosType.findAll", query="SELECT h FROM HostFamilyPhotosType h")
 public class HostFamilyPhotosType implements Serializable {
-	private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
-	private Integer hostFamilyPhotoTypeId;
+   @Id
+   @GeneratedValue(strategy=GenerationType.IDENTITY)
+   @Column(unique=true, nullable=false)
+   private Integer hostFamilyPhotoTypeId;
 
-	@Column(length=50)
-	private String hostFamilyPhotoTypeName;
+   @Column(length=50)
+   private String hostFamilyPhotoTypeName;
 
-	private Byte isOptional;
+   private Byte isOptional;
 
-	//bi-directional many-to-one association to HostFamilyPhoto
-	@OneToMany(mappedBy="hostFamilyPhotosType")
-	private List<HostFamilyPhoto> hostFamilyPhotos;
+   //bi-directional many-to-one association to HostFamilyPhoto
+   @OneToMany(mappedBy="hostFamilyPhotosType")
+   private List<HostFamilyPhoto> hostFamilyPhotos;
 
-	public HostFamilyPhotosType() {
-	}
+   public HostFamilyPhotosType() {
+   }
 
-	public Integer getHostFamilyPhotoTypeId() {
-		return this.hostFamilyPhotoTypeId;
-	}
+   public Integer getHostFamilyPhotoTypeId() {
+      return this.hostFamilyPhotoTypeId;
+   }
 
-	public void setHostFamilyPhotoTypeId(Integer hostFamilyPhotoTypeId) {
-		this.hostFamilyPhotoTypeId = hostFamilyPhotoTypeId;
-	}
+   public void setHostFamilyPhotoTypeId(Integer hostFamilyPhotoTypeId) {
+      this.hostFamilyPhotoTypeId = hostFamilyPhotoTypeId;
+   }
 
-	public String getHostFamilyPhotoTypeName() {
-		return this.hostFamilyPhotoTypeName;
-	}
+   public String getHostFamilyPhotoTypeName() {
+      return this.hostFamilyPhotoTypeName;
+   }
 
-	public void setHostFamilyPhotoTypeName(String hostFamilyPhotoTypeName) {
-		this.hostFamilyPhotoTypeName = hostFamilyPhotoTypeName;
-	}
+   public void setHostFamilyPhotoTypeName(String hostFamilyPhotoTypeName) {
+      this.hostFamilyPhotoTypeName = hostFamilyPhotoTypeName;
+   }
 
-	public Byte getIsOptional() {
-		return this.isOptional;
-	}
+   public Byte getIsOptional() {
+      return this.isOptional;
+   }
 
-	public void setIsOptional(Byte isOptional) {
-		this.isOptional = isOptional;
-	}
+   public void setIsOptional(Byte isOptional) {
+      this.isOptional = isOptional;
+   }
 
-	public List<HostFamilyPhoto> getHostFamilyPhotos() {
-		return this.hostFamilyPhotos;
-	}
+   public List<HostFamilyPhoto> getHostFamilyPhotos() {
+      return this.hostFamilyPhotos;
+   }
 
-	public void setHostFamilyPhotos(List<HostFamilyPhoto> hostFamilyPhotos) {
-		this.hostFamilyPhotos = hostFamilyPhotos;
-	}
+   public void setHostFamilyPhotos(List<HostFamilyPhoto> hostFamilyPhotos) {
+      this.hostFamilyPhotos = hostFamilyPhotos;
+   }
 
-	public HostFamilyPhoto addHostFamilyPhoto(HostFamilyPhoto hostFamilyPhoto) {
-		getHostFamilyPhotos().add(hostFamilyPhoto);
-		hostFamilyPhoto.setHostFamilyPhotosType(this);
+   public HostFamilyPhoto addHostFamilyPhoto(HostFamilyPhoto hostFamilyPhoto) {
+      getHostFamilyPhotos().add(hostFamilyPhoto);
+      hostFamilyPhoto.setHostFamilyPhotosType(this);
 
-		return hostFamilyPhoto;
-	}
+      return hostFamilyPhoto;
+   }
 
-	public HostFamilyPhoto removeHostFamilyPhoto(HostFamilyPhoto hostFamilyPhoto) {
-		getHostFamilyPhotos().remove(hostFamilyPhoto);
-		hostFamilyPhoto.setHostFamilyPhotosType(null);
+   public HostFamilyPhoto removeHostFamilyPhoto(HostFamilyPhoto hostFamilyPhoto) {
+      getHostFamilyPhotos().remove(hostFamilyPhoto);
+      hostFamilyPhoto.setHostFamilyPhotosType(null);
 
-		return hostFamilyPhoto;
-	}
+      return hostFamilyPhoto;
+   }
 
 }

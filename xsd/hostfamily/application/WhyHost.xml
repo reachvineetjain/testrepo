@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pu:WhyHost xmlns:common="http://www.ccighgo.com/common" xmlns:pu="http://www.ccighgo.com/whyhost" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.ccighgo.com/whyhost WhyHost.xsd ">
+  <header>
+    <subject>subject</subject>
+    <transaction>transaction</transaction>
+    <retry>0</retry>
+    <sequence>0</sequence>
+  </header>
+  <status>
+    <statusCode>statusCode</statusCode>
+    <messages>
+      <type>type</type>
+      <serviceId>0</serviceId>
+      <message>message</message>
+    </messages>
+  </status>
+  <loginId>0</loginId>
+  <goId>0</goId>
+  <hostfamilySeasonId>0</hostfamilySeasonId>
+  <hostFamilyHomeId>0</hostFamilyHomeId>
+  <fieldsFilled>0</fieldsFilled>
+  <percentUpdate>0.0</percentUpdate>
+  <whyFamilyInterestedInHosting>whyFamilyInterestedInHosting</whyFamilyInterestedInHosting>
+  <hopingToLearn>hopingToLearn</hopingToLearn>
+  <aspectsOfAmericanCultureYouWillShare>aspectsOfAmericanCultureYouWillShare</aspectsOfAmericanCultureYouWillShare>
+  <willYouBeWorkingasLCForAnotherOrg>true</willYouBeWorkingasLCForAnotherOrg>
+  <forWhomYouWillBeWorkingasLCForAnotherOrg>forWhomYouWillBeWorkingasLCForAnotherOrg</forWhomYouWillBeWorkingasLCForAnotherOrg>
+  <haveYouHostedForAnotherOrg>true</haveYouHostedForAnotherOrg>
+  <ifYesForWhomAndHowManyYears>ifYesForWhomAndHowManyYears</ifYesForWhomAndHowManyYears>
+  <familyExpectationOnStudentResponsibility>familyExpectationOnStudentResponsibility</familyExpectationOnStudentResponsibility>
+</pu:WhyHost>

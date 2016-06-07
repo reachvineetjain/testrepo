@@ -22,6 +22,7 @@ import com.ccighgo.service.transport.hostfamily.beans.application.familymembers.
 import com.ccighgo.service.transport.hostfamily.beans.application.hfcommunityandschoolpage.HFCommunityAndSchoolPage;
 import com.ccighgo.service.transport.hostfamily.beans.application.hfhousedescriptionpage.HFHomeDescriptionPage;
 import com.ccighgo.service.transport.hostfamily.beans.application.homepage.HFHomePage;
+import com.ccighgo.service.transport.hostfamily.beans.application.pettype.HFPetType;
 import com.ccighgo.service.transport.hostfamily.beans.application.photo.upload.HFApplicationUploadPhotos;
 import com.ccighgo.service.transport.hostfamily.beans.application.potential.hostfamily.PotentialHostFamily;
 import com.ccighgo.service.transport.hostfamily.beans.application.profile.HFProfile;
@@ -250,6 +251,12 @@ public interface HFApplication {
     * @return
     */
    public HostFamilyMembers getHFDetails(Integer hostfamilySeasonId);
+   
+   /**
+    * @param 
+    * @return HFPetType
+    */
+   public HFPetType getHFPetTypeDetails();
 
    /**
     * 

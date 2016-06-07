@@ -12,72 +12,72 @@ import javax.persistence.*;
 @Table(name="PartnerDocument")
 @NamedQuery(name="PartnerDocument.findAll", query="SELECT p FROM PartnerDocument p")
 public class PartnerDocument implements Serializable {
-	private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
-	private Integer partnerDocumentId;
+   @Id
+   @GeneratedValue(strategy=GenerationType.IDENTITY)
+   @Column(unique=true, nullable=false)
+   private Integer partnerDocumentId;
 
-	@Lob
-	private String description;
+   @Lob
+   private String description;
 
-	//bi-directional many-to-one association to DocumentInformation
-	@ManyToOne
-	@JoinColumn(name="documentInformationId")
-	private DocumentInformation documentInformation;
+   //bi-directional many-to-one association to DocumentInformation
+   @ManyToOne
+   @JoinColumn(name="documentInformationId")
+   private DocumentInformation documentInformation;
 
-	//bi-directional many-to-one association to Partner
-	@ManyToOne
-	@JoinColumn(name="partnerGoId")
-	private Partner partner;
+   //bi-directional many-to-one association to Partner
+   @ManyToOne
+   @JoinColumn(name="partnerGoId")
+   private Partner partner;
 
-	//bi-directional many-to-one association to PartnerProgram
-	@ManyToOne
-	@JoinColumn(name="partnerProgramId")
-	private PartnerProgram partnerProgram;
+   //bi-directional many-to-one association to PartnerProgram
+   @ManyToOne
+   @JoinColumn(name="partnerProgramId")
+   private PartnerProgram partnerProgram;
 
-	public PartnerDocument() {
-	}
+   public PartnerDocument() {
+   }
 
-	public Integer getPartnerDocumentId() {
-		return this.partnerDocumentId;
-	}
+   public Integer getPartnerDocumentId() {
+      return this.partnerDocumentId;
+   }
 
-	public void setPartnerDocumentId(Integer partnerDocumentId) {
-		this.partnerDocumentId = partnerDocumentId;
-	}
+   public void setPartnerDocumentId(Integer partnerDocumentId) {
+      this.partnerDocumentId = partnerDocumentId;
+   }
 
-	public String getDescription() {
-		return this.description;
-	}
+   public String getDescription() {
+      return this.description;
+   }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+   public void setDescription(String description) {
+      this.description = description;
+   }
 
-	public DocumentInformation getDocumentInformation() {
-		return this.documentInformation;
-	}
+   public DocumentInformation getDocumentInformation() {
+      return this.documentInformation;
+   }
 
-	public void setDocumentInformation(DocumentInformation documentInformation) {
-		this.documentInformation = documentInformation;
-	}
+   public void setDocumentInformation(DocumentInformation documentInformation) {
+      this.documentInformation = documentInformation;
+   }
 
-	public Partner getPartner() {
-		return this.partner;
-	}
+   public Partner getPartner() {
+      return this.partner;
+   }
 
-	public void setPartner(Partner partner) {
-		this.partner = partner;
-	}
+   public void setPartner(Partner partner) {
+      this.partner = partner;
+   }
 
-	public PartnerProgram getPartnerProgram() {
-		return this.partnerProgram;
-	}
+   public PartnerProgram getPartnerProgram() {
+      return this.partnerProgram;
+   }
 
-	public void setPartnerProgram(PartnerProgram partnerProgram) {
-		this.partnerProgram = partnerProgram;
-	}
+   public void setPartnerProgram(PartnerProgram partnerProgram) {
+      this.partnerProgram = partnerProgram;
+   }
 
 }

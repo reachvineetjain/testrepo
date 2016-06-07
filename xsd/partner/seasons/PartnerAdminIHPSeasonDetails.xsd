@@ -25,6 +25,7 @@
                   <xsd:element name="seasonStatus" type="psd:SeasonStatus" minOccurs="1" maxOccurs="1" />
                   <xsd:element name="partnerActiveForSeason" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
                   <xsd:element name="partnerSeasonDetails" type="psd:PartnerSeasonDetails" minOccurs="1" maxOccurs="1" />
+                  <xsd:element name="dates" type="psd:Dates" minOccurs="1" maxOccurs="1" />
                   <xsd:element name="operatingAgreements" type="psd:OperatingAgreements" minOccurs="1" maxOccurs="1" />
                   <xsd:element name="documents" type="psd:Documents" minOccurs="1" maxOccurs="1" />
                   <xsd:element name="partnerSeasonNotes" type="psd:NoteTopics" minOccurs="1" maxOccurs="1" />
@@ -56,6 +57,19 @@
          <xsd:element name="insurancePhoneNumber" type="xsd:string" minOccurs="1" maxOccurs="1" />
          <xsd:element name="questionireRequired" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
          <xsd:element name="insurancePolicyNumber" type="xsd:string" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="Dates">
+      <xsd:sequence>
+         <xsd:element name="seasonDefaultStartDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="seasonDefaultEndDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="seasonDefaultAppDeadlineDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="seasonDefaultExtAppDeadlineDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="partValStartDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="partValEndDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="partValAppDeadlineDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
+         <xsd:element name="partValExtAppDeadlineDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
       </xsd:sequence>
    </xsd:complexType>
 

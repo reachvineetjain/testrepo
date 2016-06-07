@@ -13,215 +13,215 @@ import java.util.List;
 @Table(name="LookupGender")
 @NamedQuery(name="LookupGender.findAll", query="SELECT l FROM LookupGender l")
 public class LookupGender implements Serializable {
-	private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
-	private Integer genderId;
+   @Id
+   @GeneratedValue(strategy=GenerationType.IDENTITY)
+   @Column(unique=true, nullable=false)
+   private Integer genderId;
 
-	@Column(nullable=false, length=1)
-	private String genderName;
+   @Column(nullable=false, length=1)
+   private String genderName;
 
-	//bi-directional many-to-one association to CCIStaffUser
-	@OneToMany(mappedBy="lookupGender")
-	private List<CCIStaffUser> ccistaffUsers;
+   //bi-directional many-to-one association to CCIStaffUser
+   @OneToMany(mappedBy="lookupGender")
+   private List<CCIStaffUser> ccistaffUsers;
 
-	//bi-directional many-to-one association to FieldStaff
-	@OneToMany(mappedBy="lookupGender")
-	private List<FieldStaff> fieldStaffs;
+   //bi-directional many-to-one association to FieldStaff
+   @OneToMany(mappedBy="lookupGender")
+   private List<FieldStaff> fieldStaffs;
 
-	//bi-directional many-to-one association to FieldStaffFamilyMember
-	@OneToMany(mappedBy="lookupGender")
-	private List<FieldStaffFamilyMember> fieldStaffFamilyMembers;
+   //bi-directional many-to-one association to FieldStaffFamilyMember
+   @OneToMany(mappedBy="lookupGender")
+   private List<FieldStaffFamilyMember> fieldStaffFamilyMembers;
 
-	//bi-directional many-to-one association to HostFamilyHome
-	@OneToMany(mappedBy="lookupGender")
-	private List<HostFamilyHome> hostFamilyHomes;
+   //bi-directional many-to-one association to HostFamilyHome
+   @OneToMany(mappedBy="lookupGender")
+   private List<HostFamilyHome> hostFamilyHomes;
 
-	//bi-directional many-to-one association to HostFamilyMember
-	@OneToMany(mappedBy="lookupGender")
-	private List<HostFamilyMember> hostFamilyMembers;
+   //bi-directional many-to-one association to HostFamilyMember
+   @OneToMany(mappedBy="lookupGender")
+   private List<HostFamilyMember> hostFamilyMembers;
 
-	//bi-directional many-to-one association to PartnerUser
-	@OneToMany(mappedBy="lookupGender")
-	private List<PartnerUser> partnerUsers;
+   //bi-directional many-to-one association to PartnerUser
+   @OneToMany(mappedBy="lookupGender")
+   private List<PartnerUser> partnerUsers;
 
-	//bi-directional many-to-one association to SeasonIHPDetail
-	@OneToMany(mappedBy="lookupGender")
-	private List<SeasonIHPDetail> seasonIhpdetails;
+   //bi-directional many-to-one association to SeasonIHPDetail
+   @OneToMany(mappedBy="lookupGender")
+   private List<SeasonIHPDetail> seasonIhpdetails;
 
-	public LookupGender() {
-	}
+   public LookupGender() {
+   }
 
-	public Integer getGenderId() {
-		return this.genderId;
-	}
+   public Integer getGenderId() {
+      return this.genderId;
+   }
 
-	public void setGenderId(Integer genderId) {
-		this.genderId = genderId;
-	}
+   public void setGenderId(Integer genderId) {
+      this.genderId = genderId;
+   }
 
-	public String getGenderName() {
-		return this.genderName;
-	}
+   public String getGenderName() {
+      return this.genderName;
+   }
 
-	public void setGenderName(String genderName) {
-		this.genderName = genderName;
-	}
+   public void setGenderName(String genderName) {
+      this.genderName = genderName;
+   }
 
-	public List<CCIStaffUser> getCcistaffUsers() {
-		return this.ccistaffUsers;
-	}
+   public List<CCIStaffUser> getCcistaffUsers() {
+      return this.ccistaffUsers;
+   }
 
-	public void setCcistaffUsers(List<CCIStaffUser> ccistaffUsers) {
-		this.ccistaffUsers = ccistaffUsers;
-	}
+   public void setCcistaffUsers(List<CCIStaffUser> ccistaffUsers) {
+      this.ccistaffUsers = ccistaffUsers;
+   }
 
-	public CCIStaffUser addCcistaffUser(CCIStaffUser ccistaffUser) {
-		getCcistaffUsers().add(ccistaffUser);
-		ccistaffUser.setLookupGender(this);
+   public CCIStaffUser addCcistaffUser(CCIStaffUser ccistaffUser) {
+      getCcistaffUsers().add(ccistaffUser);
+      ccistaffUser.setLookupGender(this);
 
-		return ccistaffUser;
-	}
+      return ccistaffUser;
+   }
 
-	public CCIStaffUser removeCcistaffUser(CCIStaffUser ccistaffUser) {
-		getCcistaffUsers().remove(ccistaffUser);
-		ccistaffUser.setLookupGender(null);
+   public CCIStaffUser removeCcistaffUser(CCIStaffUser ccistaffUser) {
+      getCcistaffUsers().remove(ccistaffUser);
+      ccistaffUser.setLookupGender(null);
 
-		return ccistaffUser;
-	}
+      return ccistaffUser;
+   }
 
-	public List<FieldStaff> getFieldStaffs() {
-		return this.fieldStaffs;
-	}
+   public List<FieldStaff> getFieldStaffs() {
+      return this.fieldStaffs;
+   }
 
-	public void setFieldStaffs(List<FieldStaff> fieldStaffs) {
-		this.fieldStaffs = fieldStaffs;
-	}
+   public void setFieldStaffs(List<FieldStaff> fieldStaffs) {
+      this.fieldStaffs = fieldStaffs;
+   }
 
-	public FieldStaff addFieldStaff(FieldStaff fieldStaff) {
-		getFieldStaffs().add(fieldStaff);
-		fieldStaff.setLookupGender(this);
+   public FieldStaff addFieldStaff(FieldStaff fieldStaff) {
+      getFieldStaffs().add(fieldStaff);
+      fieldStaff.setLookupGender(this);
 
-		return fieldStaff;
-	}
+      return fieldStaff;
+   }
 
-	public FieldStaff removeFieldStaff(FieldStaff fieldStaff) {
-		getFieldStaffs().remove(fieldStaff);
-		fieldStaff.setLookupGender(null);
+   public FieldStaff removeFieldStaff(FieldStaff fieldStaff) {
+      getFieldStaffs().remove(fieldStaff);
+      fieldStaff.setLookupGender(null);
 
-		return fieldStaff;
-	}
+      return fieldStaff;
+   }
 
-	public List<FieldStaffFamilyMember> getFieldStaffFamilyMembers() {
-		return this.fieldStaffFamilyMembers;
-	}
+   public List<FieldStaffFamilyMember> getFieldStaffFamilyMembers() {
+      return this.fieldStaffFamilyMembers;
+   }
 
-	public void setFieldStaffFamilyMembers(List<FieldStaffFamilyMember> fieldStaffFamilyMembers) {
-		this.fieldStaffFamilyMembers = fieldStaffFamilyMembers;
-	}
+   public void setFieldStaffFamilyMembers(List<FieldStaffFamilyMember> fieldStaffFamilyMembers) {
+      this.fieldStaffFamilyMembers = fieldStaffFamilyMembers;
+   }
 
-	public FieldStaffFamilyMember addFieldStaffFamilyMember(FieldStaffFamilyMember fieldStaffFamilyMember) {
-		getFieldStaffFamilyMembers().add(fieldStaffFamilyMember);
-		fieldStaffFamilyMember.setLookupGender(this);
+   public FieldStaffFamilyMember addFieldStaffFamilyMember(FieldStaffFamilyMember fieldStaffFamilyMember) {
+      getFieldStaffFamilyMembers().add(fieldStaffFamilyMember);
+      fieldStaffFamilyMember.setLookupGender(this);
 
-		return fieldStaffFamilyMember;
-	}
+      return fieldStaffFamilyMember;
+   }
 
-	public FieldStaffFamilyMember removeFieldStaffFamilyMember(FieldStaffFamilyMember fieldStaffFamilyMember) {
-		getFieldStaffFamilyMembers().remove(fieldStaffFamilyMember);
-		fieldStaffFamilyMember.setLookupGender(null);
+   public FieldStaffFamilyMember removeFieldStaffFamilyMember(FieldStaffFamilyMember fieldStaffFamilyMember) {
+      getFieldStaffFamilyMembers().remove(fieldStaffFamilyMember);
+      fieldStaffFamilyMember.setLookupGender(null);
 
-		return fieldStaffFamilyMember;
-	}
+      return fieldStaffFamilyMember;
+   }
 
-	public List<HostFamilyHome> getHostFamilyHomes() {
-		return this.hostFamilyHomes;
-	}
+   public List<HostFamilyHome> getHostFamilyHomes() {
+      return this.hostFamilyHomes;
+   }
 
-	public void setHostFamilyHomes(List<HostFamilyHome> hostFamilyHomes) {
-		this.hostFamilyHomes = hostFamilyHomes;
-	}
+   public void setHostFamilyHomes(List<HostFamilyHome> hostFamilyHomes) {
+      this.hostFamilyHomes = hostFamilyHomes;
+   }
 
-	public HostFamilyHome addHostFamilyHome(HostFamilyHome hostFamilyHome) {
-		getHostFamilyHomes().add(hostFamilyHome);
-		hostFamilyHome.setLookupGender(this);
+   public HostFamilyHome addHostFamilyHome(HostFamilyHome hostFamilyHome) {
+      getHostFamilyHomes().add(hostFamilyHome);
+      hostFamilyHome.setLookupGender(this);
 
-		return hostFamilyHome;
-	}
+      return hostFamilyHome;
+   }
 
-	public HostFamilyHome removeHostFamilyHome(HostFamilyHome hostFamilyHome) {
-		getHostFamilyHomes().remove(hostFamilyHome);
-		hostFamilyHome.setLookupGender(null);
+   public HostFamilyHome removeHostFamilyHome(HostFamilyHome hostFamilyHome) {
+      getHostFamilyHomes().remove(hostFamilyHome);
+      hostFamilyHome.setLookupGender(null);
 
-		return hostFamilyHome;
-	}
+      return hostFamilyHome;
+   }
 
-	public List<HostFamilyMember> getHostFamilyMembers() {
-		return this.hostFamilyMembers;
-	}
+   public List<HostFamilyMember> getHostFamilyMembers() {
+      return this.hostFamilyMembers;
+   }
 
-	public void setHostFamilyMembers(List<HostFamilyMember> hostFamilyMembers) {
-		this.hostFamilyMembers = hostFamilyMembers;
-	}
+   public void setHostFamilyMembers(List<HostFamilyMember> hostFamilyMembers) {
+      this.hostFamilyMembers = hostFamilyMembers;
+   }
 
-	public HostFamilyMember addHostFamilyMember(HostFamilyMember hostFamilyMember) {
-		getHostFamilyMembers().add(hostFamilyMember);
-		hostFamilyMember.setLookupGender(this);
+   public HostFamilyMember addHostFamilyMember(HostFamilyMember hostFamilyMember) {
+      getHostFamilyMembers().add(hostFamilyMember);
+      hostFamilyMember.setLookupGender(this);
 
-		return hostFamilyMember;
-	}
+      return hostFamilyMember;
+   }
 
-	public HostFamilyMember removeHostFamilyMember(HostFamilyMember hostFamilyMember) {
-		getHostFamilyMembers().remove(hostFamilyMember);
-		hostFamilyMember.setLookupGender(null);
+   public HostFamilyMember removeHostFamilyMember(HostFamilyMember hostFamilyMember) {
+      getHostFamilyMembers().remove(hostFamilyMember);
+      hostFamilyMember.setLookupGender(null);
 
-		return hostFamilyMember;
-	}
+      return hostFamilyMember;
+   }
 
-	public List<PartnerUser> getPartnerUsers() {
-		return this.partnerUsers;
-	}
+   public List<PartnerUser> getPartnerUsers() {
+      return this.partnerUsers;
+   }
 
-	public void setPartnerUsers(List<PartnerUser> partnerUsers) {
-		this.partnerUsers = partnerUsers;
-	}
+   public void setPartnerUsers(List<PartnerUser> partnerUsers) {
+      this.partnerUsers = partnerUsers;
+   }
 
-	public PartnerUser addPartnerUser(PartnerUser partnerUser) {
-		getPartnerUsers().add(partnerUser);
-		partnerUser.setLookupGender(this);
+   public PartnerUser addPartnerUser(PartnerUser partnerUser) {
+      getPartnerUsers().add(partnerUser);
+      partnerUser.setLookupGender(this);
 
-		return partnerUser;
-	}
+      return partnerUser;
+   }
 
-	public PartnerUser removePartnerUser(PartnerUser partnerUser) {
-		getPartnerUsers().remove(partnerUser);
-		partnerUser.setLookupGender(null);
+   public PartnerUser removePartnerUser(PartnerUser partnerUser) {
+      getPartnerUsers().remove(partnerUser);
+      partnerUser.setLookupGender(null);
 
-		return partnerUser;
-	}
+      return partnerUser;
+   }
 
-	public List<SeasonIHPDetail> getSeasonIhpdetails() {
-		return this.seasonIhpdetails;
-	}
+   public List<SeasonIHPDetail> getSeasonIhpdetails() {
+      return this.seasonIhpdetails;
+   }
 
-	public void setSeasonIhpdetails(List<SeasonIHPDetail> seasonIhpdetails) {
-		this.seasonIhpdetails = seasonIhpdetails;
-	}
+   public void setSeasonIhpdetails(List<SeasonIHPDetail> seasonIhpdetails) {
+      this.seasonIhpdetails = seasonIhpdetails;
+   }
 
-	public SeasonIHPDetail addSeasonIhpdetail(SeasonIHPDetail seasonIhpdetail) {
-		getSeasonIhpdetails().add(seasonIhpdetail);
-		seasonIhpdetail.setLookupGender(this);
+   public SeasonIHPDetail addSeasonIhpdetail(SeasonIHPDetail seasonIhpdetail) {
+      getSeasonIhpdetails().add(seasonIhpdetail);
+      seasonIhpdetail.setLookupGender(this);
 
-		return seasonIhpdetail;
-	}
+      return seasonIhpdetail;
+   }
 
-	public SeasonIHPDetail removeSeasonIhpdetail(SeasonIHPDetail seasonIhpdetail) {
-		getSeasonIhpdetails().remove(seasonIhpdetail);
-		seasonIhpdetail.setLookupGender(null);
+   public SeasonIHPDetail removeSeasonIhpdetail(SeasonIHPDetail seasonIhpdetail) {
+      getSeasonIhpdetails().remove(seasonIhpdetail);
+      seasonIhpdetail.setLookupGender(null);
 
-		return seasonIhpdetail;
-	}
+      return seasonIhpdetail;
+   }
 
 }

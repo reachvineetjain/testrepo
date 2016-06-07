@@ -13,90 +13,90 @@ import java.sql.Timestamp;
 @Table(name="CCIStaffUserNotes")
 @NamedQuery(name="CCIStaffUserNote.findAll", query="SELECT c FROM CCIStaffUserNote c")
 public class CCIStaffUserNote implements Serializable {
-	private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
-	private Integer cciStaffUserNoteId;
+   @Id
+   @GeneratedValue(strategy=GenerationType.IDENTITY)
+   @Column(unique=true, nullable=false)
+   private Integer cciStaffUserNoteId;
 
-	@Column(nullable=false)
-	private Integer createdBy;
+   @Column(nullable=false)
+   private Integer createdBy;
 
-	@Column(nullable=false)
-	private Timestamp createdOn;
+   @Column(nullable=false)
+   private Timestamp createdOn;
 
-	@Column(nullable=false)
-	private Integer modifiedBy;
+   @Column(nullable=false)
+   private Integer modifiedBy;
 
-	@Column(nullable=false)
-	private Timestamp modifiedOn;
+   @Column(nullable=false)
+   private Timestamp modifiedOn;
 
-	@Column(length=1000)
-	private String note;
+   @Column(length=1000)
+   private String note;
 
-	//bi-directional many-to-one association to CCIStaffUser
-	@ManyToOne
-	@JoinColumn(name="ccistaffuserID", nullable=false)
-	private CCIStaffUser ccistaffUser;
+   //bi-directional many-to-one association to CCIStaffUser
+   @ManyToOne
+   @JoinColumn(name="ccistaffuserID", nullable=false)
+   private CCIStaffUser ccistaffUser;
 
-	public CCIStaffUserNote() {
-	}
+   public CCIStaffUserNote() {
+   }
 
-	public Integer getCciStaffUserNoteId() {
-		return this.cciStaffUserNoteId;
-	}
+   public Integer getCciStaffUserNoteId() {
+      return this.cciStaffUserNoteId;
+   }
 
-	public void setCciStaffUserNoteId(Integer cciStaffUserNoteId) {
-		this.cciStaffUserNoteId = cciStaffUserNoteId;
-	}
+   public void setCciStaffUserNoteId(Integer cciStaffUserNoteId) {
+      this.cciStaffUserNoteId = cciStaffUserNoteId;
+   }
 
-	public Integer getCreatedBy() {
-		return this.createdBy;
-	}
+   public Integer getCreatedBy() {
+      return this.createdBy;
+   }
 
-	public void setCreatedBy(Integer createdBy) {
-		this.createdBy = createdBy;
-	}
+   public void setCreatedBy(Integer createdBy) {
+      this.createdBy = createdBy;
+   }
 
-	public Timestamp getCreatedOn() {
-		return this.createdOn;
-	}
+   public Timestamp getCreatedOn() {
+      return this.createdOn;
+   }
 
-	public void setCreatedOn(Timestamp createdOn) {
-		this.createdOn = createdOn;
-	}
+   public void setCreatedOn(Timestamp createdOn) {
+      this.createdOn = createdOn;
+   }
 
-	public Integer getModifiedBy() {
-		return this.modifiedBy;
-	}
+   public Integer getModifiedBy() {
+      return this.modifiedBy;
+   }
 
-	public void setModifiedBy(Integer modifiedBy) {
-		this.modifiedBy = modifiedBy;
-	}
+   public void setModifiedBy(Integer modifiedBy) {
+      this.modifiedBy = modifiedBy;
+   }
 
-	public Timestamp getModifiedOn() {
-		return this.modifiedOn;
-	}
+   public Timestamp getModifiedOn() {
+      return this.modifiedOn;
+   }
 
-	public void setModifiedOn(Timestamp modifiedOn) {
-		this.modifiedOn = modifiedOn;
-	}
+   public void setModifiedOn(Timestamp modifiedOn) {
+      this.modifiedOn = modifiedOn;
+   }
 
-	public String getNote() {
-		return this.note;
-	}
+   public String getNote() {
+      return this.note;
+   }
 
-	public void setNote(String note) {
-		this.note = note;
-	}
+   public void setNote(String note) {
+      this.note = note;
+   }
 
-	public CCIStaffUser getCcistaffUser() {
-		return this.ccistaffUser;
-	}
+   public CCIStaffUser getCcistaffUser() {
+      return this.ccistaffUser;
+   }
 
-	public void setCcistaffUser(CCIStaffUser ccistaffUser) {
-		this.ccistaffUser = ccistaffUser;
-	}
+   public void setCcistaffUser(CCIStaffUser ccistaffUser) {
+      this.ccistaffUser = ccistaffUser;
+   }
 
 }

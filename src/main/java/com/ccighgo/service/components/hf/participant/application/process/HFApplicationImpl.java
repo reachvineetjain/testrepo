@@ -19,9 +19,6 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ccighgo.db.entities.AdminWorkQueueCategory;
-import com.ccighgo.db.entities.AdminWorkQueueCategoryAggregate;
-import com.ccighgo.db.entities.AdminWorkQueueType;
 import com.ccighgo.db.entities.Airport;
 import com.ccighgo.db.entities.HostFamily;
 import com.ccighgo.db.entities.HostFamilyAirport;
@@ -39,13 +36,11 @@ import com.ccighgo.db.entities.HostFamilyPotentialReference;
 import com.ccighgo.db.entities.HostFamilyReference;
 import com.ccighgo.db.entities.HostFamilySeason;
 import com.ccighgo.db.entities.HostFamilySeasonCategory;
-import com.ccighgo.db.entities.Login;
 import com.ccighgo.db.entities.LookupGender;
 import com.ccighgo.db.entities.LookupUSState;
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.exception.HostFamilyCodes;
-import com.ccighgo.exception.PartnerCodes;
 import com.ccighgo.jpa.repositories.AirportRepository;
 import com.ccighgo.jpa.repositories.GenderRepository;
 import com.ccighgo.jpa.repositories.HostFamilyAirportRepository;
@@ -72,7 +67,6 @@ import com.ccighgo.jpa.repositories.UserTypeRepository;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.components.errormessages.constants.HostFamilyMessageConstants;
-import com.ccighgo.service.components.errormessages.constants.PartnerAdminMessageConstants;
 import com.ccighgo.service.components.hf.participant.application.process.util.ChangeHostFamilyProfilePicParam;
 import com.ccighgo.service.components.hf.participant.application.process.util.FamilyBasicsPageParam;
 import com.ccighgo.service.components.hf.participant.application.process.util.FamilyStylePageParam;
@@ -112,6 +106,8 @@ import com.ccighgo.service.transport.hostfamily.beans.application.hfhousedescrip
 import com.ccighgo.service.transport.hostfamily.beans.application.homepage.HFApplicationCheckList;
 import com.ccighgo.service.transport.hostfamily.beans.application.homepage.HFApplicationCheckListStages;
 import com.ccighgo.service.transport.hostfamily.beans.application.homepage.HFHomePage;
+import com.ccighgo.service.transport.hostfamily.beans.application.pettype.HFPetType;
+import com.ccighgo.service.transport.hostfamily.beans.application.pettype.PetDetails;
 import com.ccighgo.service.transport.hostfamily.beans.application.photo.upload.HFApplicationUploadPhotos;
 import com.ccighgo.service.transport.hostfamily.beans.application.photo.upload.Photo;
 import com.ccighgo.service.transport.hostfamily.beans.application.photo.upload.PhotoType;
@@ -134,14 +130,9 @@ import com.ccighgo.service.transport.partner.beans.hfFieldNetworkInformation.HFF
 import com.ccighgo.service.transport.partner.beans.hfHostAgainQuestion.HFHostAgainQuestionDetail;
 import com.ccighgo.service.transport.partner.beans.hfp2workqueuecategory.HFP2WorkQueueCategory;
 import com.ccighgo.service.transport.partner.beans.hfp2workqueuetype.HFP2WorkQueueType;
-import com.ccighgo.service.transport.partner.beans.partnerworkqueuecategory.AdminPartnerWorkQueueCategory;
-import com.ccighgo.service.transport.partner.beans.partnerworkqueuecategory.AdminPartnerWorkQueueCategoryDetail;
-import com.ccighgo.service.transport.partner.beans.partnerworkqueuetype.AdminPartnerWorkQueueType;
-import com.ccighgo.service.transport.partner.beans.partnerworkqueuetype.AdminPartnerWorkQueueTypeDetail;
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.CCIUtils;
 import com.ccighgo.utils.DateUtils;
-import com.ccighgo.utils.ExceptionUtil;
 import com.ccighgo.utils.WSDefaultResponse;
 
 /**
@@ -649,6 +640,8 @@ public class HFApplicationImpl implements HFApplication {
                familyDay.setTypicalWeekdayAtHome(String.valueOf(obj[7]));
                familyDay.setTypicalWeekendAtHome(String.valueOf(obj[8]));
                familyDay.setFavouriteThingsToDoAsFamily(String.valueOf(obj[9]));
+               familyDay.setFamilyHomeLanguage(String.valueOf(obj[37]));
+               familyDay.setFamilyOtherLanguage(String.valueOf(obj[38]));
                hfl.setFamilyDay(familyDay);
 
                HFFamilyReligious religious = new HFFamilyReligious();
@@ -732,7 +725,12 @@ public class HFApplicationImpl implements HFApplication {
                   HFAdultDetails adult = new HFAdultDetails();
                   com.ccighgo.service.transport.hostfamily.beans.application.familydetails.Photo photo = new com.ccighgo.service.transport.hostfamily.beans.application.familydetails.Photo();
                   photo.setFilePath(String.valueOf(obj[0]));
-                  photo.setPhotoId(Integer.valueOf(String.valueOf(obj[25])));
+                  // put the null check for PhotoId
+                  try {
+                  photo.setPhotoId(Integer.valueOf(String.valueOf(obj[25])!=null ? String.valueOf(obj[25]) : ""));
+                  } catch (NumberFormatException nfe){
+                     LOGGER.error(nfe.getMessage());
+                  }
                   photo.setTypeId(CCIConstants.ACTIVE);
                   photo.setDescription(String.valueOf(obj[30]));
                   hfbs.setPhoto(photo);
@@ -743,14 +741,16 @@ public class HFApplicationImpl implements HFApplication {
                   adult.setIsHostParent(Boolean.valueOf(String.valueOf(obj[5])));
                   adult.setEmail(String.valueOf(obj[6]));
                   adult.setPersonalPhone(String.valueOf(obj[7]));
-                  adult.setBirthdate(String.valueOf(obj[8]));
+                  Date dateformat = (Date) obj[8];
+                  adult.setBirthdate(DateUtils.getMMddYyyyString(dateformat));
                   adult.setGenderId(Integer.valueOf(String.valueOf(obj[9])));
                   adult.setEducationLevel(String.valueOf(obj[10]));
-                  adult.setLivesinsideOfHomePartTime(Boolean.valueOf(String.valueOf(obj[11])));
+                  adult.setResidencyTime(String.valueOf(String.valueOf(obj[11])));
                   adult.setLivingInsideHomeExplanation(String.valueOf(obj[12]));
                   adult.setCommunityInvolvement(String.valueOf(obj[13]));
                   adult.setActivitiesOrInterests(String.valueOf(obj[14]));
                   adult.setEmployed(String.valueOf(obj[15]));
+                  adult.setEmploymentType(String.valueOf(obj[31]));
                   adult.setEmployer(String.valueOf(obj[16]));
                   adult.setJobTitle(String.valueOf(obj[17]));
                   adult.setContactName(String.valueOf(obj[18]));
@@ -1277,11 +1277,12 @@ public class HFApplicationImpl implements HFApplication {
             LookupGender gender = genderRepository.findOne(member.getGenderId());
             hfm.setLookupGender(gender);
             hfm.setEducationLevel(member.getEducationLevel());
-            hfm.setLivingAtHome(member.isLivesinsideOfHomePartTime() ? CCIConstants.TRUE_BYTE : CCIConstants.FALSE_BYTE);
+            hfm.setLivingAtHome(member.getResidencyTime());
             hfm.setLivingAtHomeExplanation(member.getLivingInsideHomeExplanation());
             hfm.setCommunityInvolvement(member.getCommunityInvolvement());
             hfm.setInterests(member.getActivitiesOrInterests());
             hfm.setEmployed(member.getEmployed());
+            hfm.setEmploymentType(member.getEmploymentType());
             hfm.setEmployer1(member.getEmployer());
             hfm.setJobTitle1(member.getJobTitle());
             hfm.setContactName1(member.getContactName());
@@ -1461,6 +1462,9 @@ public class HFApplicationImpl implements HFApplication {
          hfd.setTypicalWeekday(hfApplicationFamilyDetails.getFamilyDay().getTypicalWeekdayAtHome());
          hfd.setTypicalWeekend(hfApplicationFamilyDetails.getFamilyDay().getTypicalWeekendAtHome());
          hfd.setFavouriteWeekend(hfApplicationFamilyDetails.getFamilyDay().getFavouriteThingsToDoAsFamily());
+         hfd.setHomeLanguage(hfApplicationFamilyDetails.getFamilyDay().getFamilyHomeLanguage());
+         hfd.setOtherLaungage(hfApplicationFamilyDetails.getFamilyDay().getFamilyOtherLanguage());
+
 
          // Religion
          hfd.setReligiousAffiliation(hfApplicationFamilyDetails.getReligious().getReligious());
@@ -2007,6 +2011,7 @@ public class HFApplicationImpl implements HFApplication {
          HostFamilySeason hfSeason = hostFamilySeasonRepository.findOne(application.getSeasonId());
          if (hfSeason != null) {
             hfSeason.setSignature(application.getSignature());
+            hfSeason.setIsDoublePlacement(application.isDbHostingAgreementCheck()?CCIConstants.ACTIVE:CCIConstants.INACTIVE);
             hfSeason.setModifiedBy(application.getLoginId());
             hostFamilySeasonRepository.saveAndFlush(hfSeason);
             resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, HostFamilyCodes.SUCCESS.getValue(),
@@ -2204,6 +2209,32 @@ public class HFApplicationImpl implements HFApplication {
          LOGGER.error(e.getMessage());
       }
       return hfM;
+   }
+   
+   @Override
+   public HFPetType getHFPetTypeDetails() {
+      HFPetType hfPetType = new HFPetType();
+      try {
+         List<HostFamilyPetType> hfPetTypeList = hostFamilyPetTypeRepository.findAll();
+         if (hfPetTypeList != null && !hfPetTypeList.isEmpty()) {
+            for (HostFamilyPetType petType : hfPetTypeList) {
+               PetDetails pd = new PetDetails();
+               pd.setPetTypeId(petType.getHostFamilyPetTypeId());
+               pd.setPetTypeName(petType.getHostFamilyPetTypeName());
+               hfPetType.getPetDetails().add(pd);
+            }
+            hfPetType.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, HostFamilyCodes.SUCCESS.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         } else {
+            hfPetType.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, HostFamilyCodes.NO_RECORD.getValue(),
+                  messageUtil.getMessage(CCIConstants.NO_RECORD)));
+         }
+      } catch (CcighgoException e) {
+         hfPetType.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, HostFamilyCodes.ERROR_FETCH_HF_PETTYPE.getValue(), e.getMessage()));
+         LOGGER.error(e.getMessage());
+      }
+      return hfPetType;
+
    }
 
    @Override

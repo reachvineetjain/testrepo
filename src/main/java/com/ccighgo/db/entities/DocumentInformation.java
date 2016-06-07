@@ -14,356 +14,356 @@ import java.util.List;
 @Table(name="DocumentInformation")
 @NamedQuery(name="DocumentInformation.findAll", query="SELECT d FROM DocumentInformation d")
 public class DocumentInformation implements Serializable {
-	private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
-	private Integer documentInformationId;
+   @Id
+   @GeneratedValue(strategy=GenerationType.IDENTITY)
+   @Column(unique=true, nullable=false)
+   private Integer documentInformationId;
 
-	private Byte active;
+   private Byte active;
 
-	@Column(nullable=false)
-	private Integer createdBy;
+   @Column(nullable=false)
+   private Integer createdBy;
 
-	@Column(nullable=false)
-	private Timestamp createdOn;
+   @Column(nullable=false)
+   private Timestamp createdOn;
 
-	@Column(length=50)
-	private String documentName;
+   @Column(length=50)
+   private String documentName;
 
-	@Column(length=50)
-	private String fileName;
+   @Column(length=50)
+   private String fileName;
 
-	@Column(nullable=false)
-	private Integer modifiedBy;
+   @Column(nullable=false)
+   private Integer modifiedBy;
 
-	@Column(nullable=false)
-	private Timestamp modifiedOn;
+   @Column(nullable=false)
+   private Timestamp modifiedOn;
 
-	@Column(length=1000)
-	private String url;
+   @Column(length=1000)
+   private String url;
 
-	//bi-directional many-to-one association to AddendumDocumentInformation
-	@OneToMany(mappedBy="documentInformation")
-	private List<AddendumDocumentInformation> addendumDocumentInformations;
+   //bi-directional many-to-one association to AddendumDocumentInformation
+   @OneToMany(mappedBy="documentInformation")
+   private List<AddendumDocumentInformation> addendumDocumentInformations;
 
-	//bi-directional many-to-one association to DocumentTypeDocumentCategoryProcess
-	@ManyToOne
-	@JoinColumn(name="documentTypeDocumentCategoryProcessId", nullable=false)
-	private DocumentTypeDocumentCategoryProcess documentTypeDocumentCategoryProcess;
+   //bi-directional many-to-one association to DocumentTypeDocumentCategoryProcess
+   @ManyToOne
+   @JoinColumn(name="documentTypeDocumentCategoryProcessId", nullable=false)
+   private DocumentTypeDocumentCategoryProcess documentTypeDocumentCategoryProcess;
 
-	//bi-directional many-to-one association to FieldStaffDocument
-	@OneToMany(mappedBy="documentInformation")
-	private List<FieldStaffDocument> fieldStaffDocuments;
+   //bi-directional many-to-one association to FieldStaffDocument
+   @OneToMany(mappedBy="documentInformation")
+   private List<FieldStaffDocument> fieldStaffDocuments;
 
-	//bi-directional many-to-one association to FieldStaffSeasonDocument
-	@OneToMany(mappedBy="documentInformation")
-	private List<FieldStaffSeasonDocument> fieldStaffSeasonDocuments;
+   //bi-directional many-to-one association to FieldStaffSeasonDocument
+   @OneToMany(mappedBy="documentInformation")
+   private List<FieldStaffSeasonDocument> fieldStaffSeasonDocuments;
 
-	//bi-directional many-to-one association to HostFamilyDocument
-	@OneToMany(mappedBy="documentInformation")
-	private List<HostFamilyDocument> hostFamilyDocuments;
+   //bi-directional many-to-one association to HostFamilyDocument
+   @OneToMany(mappedBy="documentInformation")
+   private List<HostFamilyDocument> hostFamilyDocuments;
 
-	//bi-directional many-to-one association to PartnerDocument
-	@OneToMany(mappedBy="documentInformation")
-	private List<PartnerDocument> partnerDocuments;
+   //bi-directional many-to-one association to PartnerDocument
+   @OneToMany(mappedBy="documentInformation")
+   private List<PartnerDocument> partnerDocuments;
 
-	//bi-directional many-to-one association to PartnerSeasonContract
-	@OneToMany(mappedBy="documentInformation")
-	private List<PartnerSeasonContract> partnerSeasonContracts;
+   //bi-directional many-to-one association to PartnerSeasonContract
+   @OneToMany(mappedBy="documentInformation")
+   private List<PartnerSeasonContract> partnerSeasonContracts;
 
-	//bi-directional many-to-one association to PartnerSeasonDocument
-	@OneToMany(mappedBy="documentInformation")
-	private List<PartnerSeasonDocument> partnerSeasonDocuments;
+   //bi-directional many-to-one association to PartnerSeasonDocument
+   @OneToMany(mappedBy="documentInformation")
+   private List<PartnerSeasonDocument> partnerSeasonDocuments;
 
-	//bi-directional many-to-one association to SeasonDepartmentDocument
-	@OneToMany(mappedBy="documentInformation")
-	private List<SeasonDepartmentDocument> seasonDepartmentDocuments;
+   //bi-directional many-to-one association to SeasonDepartmentDocument
+   @OneToMany(mappedBy="documentInformation")
+   private List<SeasonDepartmentDocument> seasonDepartmentDocuments;
 
-	//bi-directional many-to-one association to SeasonProgramDocument
-	@OneToMany(mappedBy="documentInformation")
-	private List<SeasonProgramDocument> seasonProgramDocuments;
+   //bi-directional many-to-one association to SeasonProgramDocument
+   @OneToMany(mappedBy="documentInformation")
+   private List<SeasonProgramDocument> seasonProgramDocuments;
 
-	public DocumentInformation() {
-	}
+   public DocumentInformation() {
+   }
 
-	public Integer getDocumentInformationId() {
-		return this.documentInformationId;
-	}
+   public Integer getDocumentInformationId() {
+      return this.documentInformationId;
+   }
 
-	public void setDocumentInformationId(Integer documentInformationId) {
-		this.documentInformationId = documentInformationId;
-	}
+   public void setDocumentInformationId(Integer documentInformationId) {
+      this.documentInformationId = documentInformationId;
+   }
 
-	public Byte getActive() {
-		return this.active;
-	}
+   public Byte getActive() {
+      return this.active;
+   }
 
-	public void setActive(Byte active) {
-		this.active = active;
-	}
+   public void setActive(Byte active) {
+      this.active = active;
+   }
 
-	public Integer getCreatedBy() {
-		return this.createdBy;
-	}
+   public Integer getCreatedBy() {
+      return this.createdBy;
+   }
 
-	public void setCreatedBy(Integer createdBy) {
-		this.createdBy = createdBy;
-	}
+   public void setCreatedBy(Integer createdBy) {
+      this.createdBy = createdBy;
+   }
 
-	public Timestamp getCreatedOn() {
-		return this.createdOn;
-	}
+   public Timestamp getCreatedOn() {
+      return this.createdOn;
+   }
 
-	public void setCreatedOn(Timestamp createdOn) {
-		this.createdOn = createdOn;
-	}
+   public void setCreatedOn(Timestamp createdOn) {
+      this.createdOn = createdOn;
+   }
 
-	public String getDocumentName() {
-		return this.documentName;
-	}
+   public String getDocumentName() {
+      return this.documentName;
+   }
 
-	public void setDocumentName(String documentName) {
-		this.documentName = documentName;
-	}
+   public void setDocumentName(String documentName) {
+      this.documentName = documentName;
+   }
 
-	public String getFileName() {
-		return this.fileName;
-	}
+   public String getFileName() {
+      return this.fileName;
+   }
 
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-	}
+   public void setFileName(String fileName) {
+      this.fileName = fileName;
+   }
 
-	public Integer getModifiedBy() {
-		return this.modifiedBy;
-	}
+   public Integer getModifiedBy() {
+      return this.modifiedBy;
+   }
 
-	public void setModifiedBy(Integer modifiedBy) {
-		this.modifiedBy = modifiedBy;
-	}
+   public void setModifiedBy(Integer modifiedBy) {
+      this.modifiedBy = modifiedBy;
+   }
 
-	public Timestamp getModifiedOn() {
-		return this.modifiedOn;
-	}
+   public Timestamp getModifiedOn() {
+      return this.modifiedOn;
+   }
 
-	public void setModifiedOn(Timestamp modifiedOn) {
-		this.modifiedOn = modifiedOn;
-	}
+   public void setModifiedOn(Timestamp modifiedOn) {
+      this.modifiedOn = modifiedOn;
+   }
 
-	public String getUrl() {
-		return this.url;
-	}
+   public String getUrl() {
+      return this.url;
+   }
 
-	public void setUrl(String url) {
-		this.url = url;
-	}
+   public void setUrl(String url) {
+      this.url = url;
+   }
 
-	public List<AddendumDocumentInformation> getAddendumDocumentInformations() {
-		return this.addendumDocumentInformations;
-	}
+   public List<AddendumDocumentInformation> getAddendumDocumentInformations() {
+      return this.addendumDocumentInformations;
+   }
 
-	public void setAddendumDocumentInformations(List<AddendumDocumentInformation> addendumDocumentInformations) {
-		this.addendumDocumentInformations = addendumDocumentInformations;
-	}
+   public void setAddendumDocumentInformations(List<AddendumDocumentInformation> addendumDocumentInformations) {
+      this.addendumDocumentInformations = addendumDocumentInformations;
+   }
 
-	public AddendumDocumentInformation addAddendumDocumentInformation(AddendumDocumentInformation addendumDocumentInformation) {
-		getAddendumDocumentInformations().add(addendumDocumentInformation);
-		addendumDocumentInformation.setDocumentInformation(this);
+   public AddendumDocumentInformation addAddendumDocumentInformation(AddendumDocumentInformation addendumDocumentInformation) {
+      getAddendumDocumentInformations().add(addendumDocumentInformation);
+      addendumDocumentInformation.setDocumentInformation(this);
 
-		return addendumDocumentInformation;
-	}
+      return addendumDocumentInformation;
+   }
 
-	public AddendumDocumentInformation removeAddendumDocumentInformation(AddendumDocumentInformation addendumDocumentInformation) {
-		getAddendumDocumentInformations().remove(addendumDocumentInformation);
-		addendumDocumentInformation.setDocumentInformation(null);
+   public AddendumDocumentInformation removeAddendumDocumentInformation(AddendumDocumentInformation addendumDocumentInformation) {
+      getAddendumDocumentInformations().remove(addendumDocumentInformation);
+      addendumDocumentInformation.setDocumentInformation(null);
 
-		return addendumDocumentInformation;
-	}
+      return addendumDocumentInformation;
+   }
 
-	public DocumentTypeDocumentCategoryProcess getDocumentTypeDocumentCategoryProcess() {
-		return this.documentTypeDocumentCategoryProcess;
-	}
+   public DocumentTypeDocumentCategoryProcess getDocumentTypeDocumentCategoryProcess() {
+      return this.documentTypeDocumentCategoryProcess;
+   }
 
-	public void setDocumentTypeDocumentCategoryProcess(DocumentTypeDocumentCategoryProcess documentTypeDocumentCategoryProcess) {
-		this.documentTypeDocumentCategoryProcess = documentTypeDocumentCategoryProcess;
-	}
+   public void setDocumentTypeDocumentCategoryProcess(DocumentTypeDocumentCategoryProcess documentTypeDocumentCategoryProcess) {
+      this.documentTypeDocumentCategoryProcess = documentTypeDocumentCategoryProcess;
+   }
 
-	public List<FieldStaffDocument> getFieldStaffDocuments() {
-		return this.fieldStaffDocuments;
-	}
+   public List<FieldStaffDocument> getFieldStaffDocuments() {
+      return this.fieldStaffDocuments;
+   }
 
-	public void setFieldStaffDocuments(List<FieldStaffDocument> fieldStaffDocuments) {
-		this.fieldStaffDocuments = fieldStaffDocuments;
-	}
+   public void setFieldStaffDocuments(List<FieldStaffDocument> fieldStaffDocuments) {
+      this.fieldStaffDocuments = fieldStaffDocuments;
+   }
 
-	public FieldStaffDocument addFieldStaffDocument(FieldStaffDocument fieldStaffDocument) {
-		getFieldStaffDocuments().add(fieldStaffDocument);
-		fieldStaffDocument.setDocumentInformation(this);
+   public FieldStaffDocument addFieldStaffDocument(FieldStaffDocument fieldStaffDocument) {
+      getFieldStaffDocuments().add(fieldStaffDocument);
+      fieldStaffDocument.setDocumentInformation(this);
 
-		return fieldStaffDocument;
-	}
+      return fieldStaffDocument;
+   }
 
-	public FieldStaffDocument removeFieldStaffDocument(FieldStaffDocument fieldStaffDocument) {
-		getFieldStaffDocuments().remove(fieldStaffDocument);
-		fieldStaffDocument.setDocumentInformation(null);
+   public FieldStaffDocument removeFieldStaffDocument(FieldStaffDocument fieldStaffDocument) {
+      getFieldStaffDocuments().remove(fieldStaffDocument);
+      fieldStaffDocument.setDocumentInformation(null);
 
-		return fieldStaffDocument;
-	}
+      return fieldStaffDocument;
+   }
 
-	public List<FieldStaffSeasonDocument> getFieldStaffSeasonDocuments() {
-		return this.fieldStaffSeasonDocuments;
-	}
+   public List<FieldStaffSeasonDocument> getFieldStaffSeasonDocuments() {
+      return this.fieldStaffSeasonDocuments;
+   }
 
-	public void setFieldStaffSeasonDocuments(List<FieldStaffSeasonDocument> fieldStaffSeasonDocuments) {
-		this.fieldStaffSeasonDocuments = fieldStaffSeasonDocuments;
-	}
+   public void setFieldStaffSeasonDocuments(List<FieldStaffSeasonDocument> fieldStaffSeasonDocuments) {
+      this.fieldStaffSeasonDocuments = fieldStaffSeasonDocuments;
+   }
 
-	public FieldStaffSeasonDocument addFieldStaffSeasonDocument(FieldStaffSeasonDocument fieldStaffSeasonDocument) {
-		getFieldStaffSeasonDocuments().add(fieldStaffSeasonDocument);
-		fieldStaffSeasonDocument.setDocumentInformation(this);
+   public FieldStaffSeasonDocument addFieldStaffSeasonDocument(FieldStaffSeasonDocument fieldStaffSeasonDocument) {
+      getFieldStaffSeasonDocuments().add(fieldStaffSeasonDocument);
+      fieldStaffSeasonDocument.setDocumentInformation(this);
 
-		return fieldStaffSeasonDocument;
-	}
+      return fieldStaffSeasonDocument;
+   }
 
-	public FieldStaffSeasonDocument removeFieldStaffSeasonDocument(FieldStaffSeasonDocument fieldStaffSeasonDocument) {
-		getFieldStaffSeasonDocuments().remove(fieldStaffSeasonDocument);
-		fieldStaffSeasonDocument.setDocumentInformation(null);
+   public FieldStaffSeasonDocument removeFieldStaffSeasonDocument(FieldStaffSeasonDocument fieldStaffSeasonDocument) {
+      getFieldStaffSeasonDocuments().remove(fieldStaffSeasonDocument);
+      fieldStaffSeasonDocument.setDocumentInformation(null);
 
-		return fieldStaffSeasonDocument;
-	}
+      return fieldStaffSeasonDocument;
+   }
 
-	public List<HostFamilyDocument> getHostFamilyDocuments() {
-		return this.hostFamilyDocuments;
-	}
+   public List<HostFamilyDocument> getHostFamilyDocuments() {
+      return this.hostFamilyDocuments;
+   }
 
-	public void setHostFamilyDocuments(List<HostFamilyDocument> hostFamilyDocuments) {
-		this.hostFamilyDocuments = hostFamilyDocuments;
-	}
+   public void setHostFamilyDocuments(List<HostFamilyDocument> hostFamilyDocuments) {
+      this.hostFamilyDocuments = hostFamilyDocuments;
+   }
 
-	public HostFamilyDocument addHostFamilyDocument(HostFamilyDocument hostFamilyDocument) {
-		getHostFamilyDocuments().add(hostFamilyDocument);
-		hostFamilyDocument.setDocumentInformation(this);
+   public HostFamilyDocument addHostFamilyDocument(HostFamilyDocument hostFamilyDocument) {
+      getHostFamilyDocuments().add(hostFamilyDocument);
+      hostFamilyDocument.setDocumentInformation(this);
 
-		return hostFamilyDocument;
-	}
+      return hostFamilyDocument;
+   }
 
-	public HostFamilyDocument removeHostFamilyDocument(HostFamilyDocument hostFamilyDocument) {
-		getHostFamilyDocuments().remove(hostFamilyDocument);
-		hostFamilyDocument.setDocumentInformation(null);
+   public HostFamilyDocument removeHostFamilyDocument(HostFamilyDocument hostFamilyDocument) {
+      getHostFamilyDocuments().remove(hostFamilyDocument);
+      hostFamilyDocument.setDocumentInformation(null);
 
-		return hostFamilyDocument;
-	}
+      return hostFamilyDocument;
+   }
 
-	public List<PartnerDocument> getPartnerDocuments() {
-		return this.partnerDocuments;
-	}
+   public List<PartnerDocument> getPartnerDocuments() {
+      return this.partnerDocuments;
+   }
 
-	public void setPartnerDocuments(List<PartnerDocument> partnerDocuments) {
-		this.partnerDocuments = partnerDocuments;
-	}
+   public void setPartnerDocuments(List<PartnerDocument> partnerDocuments) {
+      this.partnerDocuments = partnerDocuments;
+   }
 
-	public PartnerDocument addPartnerDocument(PartnerDocument partnerDocument) {
-		getPartnerDocuments().add(partnerDocument);
-		partnerDocument.setDocumentInformation(this);
+   public PartnerDocument addPartnerDocument(PartnerDocument partnerDocument) {
+      getPartnerDocuments().add(partnerDocument);
+      partnerDocument.setDocumentInformation(this);
 
-		return partnerDocument;
-	}
+      return partnerDocument;
+   }
 
-	public PartnerDocument removePartnerDocument(PartnerDocument partnerDocument) {
-		getPartnerDocuments().remove(partnerDocument);
-		partnerDocument.setDocumentInformation(null);
+   public PartnerDocument removePartnerDocument(PartnerDocument partnerDocument) {
+      getPartnerDocuments().remove(partnerDocument);
+      partnerDocument.setDocumentInformation(null);
 
-		return partnerDocument;
-	}
+      return partnerDocument;
+   }
 
-	public List<PartnerSeasonContract> getPartnerSeasonContracts() {
-		return this.partnerSeasonContracts;
-	}
+   public List<PartnerSeasonContract> getPartnerSeasonContracts() {
+      return this.partnerSeasonContracts;
+   }
 
-	public void setPartnerSeasonContracts(List<PartnerSeasonContract> partnerSeasonContracts) {
-		this.partnerSeasonContracts = partnerSeasonContracts;
-	}
+   public void setPartnerSeasonContracts(List<PartnerSeasonContract> partnerSeasonContracts) {
+      this.partnerSeasonContracts = partnerSeasonContracts;
+   }
 
-	public PartnerSeasonContract addPartnerSeasonContract(PartnerSeasonContract partnerSeasonContract) {
-		getPartnerSeasonContracts().add(partnerSeasonContract);
-		partnerSeasonContract.setDocumentInformation(this);
+   public PartnerSeasonContract addPartnerSeasonContract(PartnerSeasonContract partnerSeasonContract) {
+      getPartnerSeasonContracts().add(partnerSeasonContract);
+      partnerSeasonContract.setDocumentInformation(this);
 
-		return partnerSeasonContract;
-	}
+      return partnerSeasonContract;
+   }
 
-	public PartnerSeasonContract removePartnerSeasonContract(PartnerSeasonContract partnerSeasonContract) {
-		getPartnerSeasonContracts().remove(partnerSeasonContract);
-		partnerSeasonContract.setDocumentInformation(null);
+   public PartnerSeasonContract removePartnerSeasonContract(PartnerSeasonContract partnerSeasonContract) {
+      getPartnerSeasonContracts().remove(partnerSeasonContract);
+      partnerSeasonContract.setDocumentInformation(null);
 
-		return partnerSeasonContract;
-	}
+      return partnerSeasonContract;
+   }
 
-	public List<PartnerSeasonDocument> getPartnerSeasonDocuments() {
-		return this.partnerSeasonDocuments;
-	}
+   public List<PartnerSeasonDocument> getPartnerSeasonDocuments() {
+      return this.partnerSeasonDocuments;
+   }
 
-	public void setPartnerSeasonDocuments(List<PartnerSeasonDocument> partnerSeasonDocuments) {
-		this.partnerSeasonDocuments = partnerSeasonDocuments;
-	}
+   public void setPartnerSeasonDocuments(List<PartnerSeasonDocument> partnerSeasonDocuments) {
+      this.partnerSeasonDocuments = partnerSeasonDocuments;
+   }
 
-	public PartnerSeasonDocument addPartnerSeasonDocument(PartnerSeasonDocument partnerSeasonDocument) {
-		getPartnerSeasonDocuments().add(partnerSeasonDocument);
-		partnerSeasonDocument.setDocumentInformation(this);
+   public PartnerSeasonDocument addPartnerSeasonDocument(PartnerSeasonDocument partnerSeasonDocument) {
+      getPartnerSeasonDocuments().add(partnerSeasonDocument);
+      partnerSeasonDocument.setDocumentInformation(this);
 
-		return partnerSeasonDocument;
-	}
+      return partnerSeasonDocument;
+   }
 
-	public PartnerSeasonDocument removePartnerSeasonDocument(PartnerSeasonDocument partnerSeasonDocument) {
-		getPartnerSeasonDocuments().remove(partnerSeasonDocument);
-		partnerSeasonDocument.setDocumentInformation(null);
+   public PartnerSeasonDocument removePartnerSeasonDocument(PartnerSeasonDocument partnerSeasonDocument) {
+      getPartnerSeasonDocuments().remove(partnerSeasonDocument);
+      partnerSeasonDocument.setDocumentInformation(null);
 
-		return partnerSeasonDocument;
-	}
+      return partnerSeasonDocument;
+   }
 
-	public List<SeasonDepartmentDocument> getSeasonDepartmentDocuments() {
-		return this.seasonDepartmentDocuments;
-	}
+   public List<SeasonDepartmentDocument> getSeasonDepartmentDocuments() {
+      return this.seasonDepartmentDocuments;
+   }
 
-	public void setSeasonDepartmentDocuments(List<SeasonDepartmentDocument> seasonDepartmentDocuments) {
-		this.seasonDepartmentDocuments = seasonDepartmentDocuments;
-	}
+   public void setSeasonDepartmentDocuments(List<SeasonDepartmentDocument> seasonDepartmentDocuments) {
+      this.seasonDepartmentDocuments = seasonDepartmentDocuments;
+   }
 
-	public SeasonDepartmentDocument addSeasonDepartmentDocument(SeasonDepartmentDocument seasonDepartmentDocument) {
-		getSeasonDepartmentDocuments().add(seasonDepartmentDocument);
-		seasonDepartmentDocument.setDocumentInformation(this);
+   public SeasonDepartmentDocument addSeasonDepartmentDocument(SeasonDepartmentDocument seasonDepartmentDocument) {
+      getSeasonDepartmentDocuments().add(seasonDepartmentDocument);
+      seasonDepartmentDocument.setDocumentInformation(this);
 
-		return seasonDepartmentDocument;
-	}
+      return seasonDepartmentDocument;
+   }
 
-	public SeasonDepartmentDocument removeSeasonDepartmentDocument(SeasonDepartmentDocument seasonDepartmentDocument) {
-		getSeasonDepartmentDocuments().remove(seasonDepartmentDocument);
-		seasonDepartmentDocument.setDocumentInformation(null);
+   public SeasonDepartmentDocument removeSeasonDepartmentDocument(SeasonDepartmentDocument seasonDepartmentDocument) {
+      getSeasonDepartmentDocuments().remove(seasonDepartmentDocument);
+      seasonDepartmentDocument.setDocumentInformation(null);
 
-		return seasonDepartmentDocument;
-	}
+      return seasonDepartmentDocument;
+   }
 
-	public List<SeasonProgramDocument> getSeasonProgramDocuments() {
-		return this.seasonProgramDocuments;
-	}
+   public List<SeasonProgramDocument> getSeasonProgramDocuments() {
+      return this.seasonProgramDocuments;
+   }
 
-	public void setSeasonProgramDocuments(List<SeasonProgramDocument> seasonProgramDocuments) {
-		this.seasonProgramDocuments = seasonProgramDocuments;
-	}
+   public void setSeasonProgramDocuments(List<SeasonProgramDocument> seasonProgramDocuments) {
+      this.seasonProgramDocuments = seasonProgramDocuments;
+   }
 
-	public SeasonProgramDocument addSeasonProgramDocument(SeasonProgramDocument seasonProgramDocument) {
-		getSeasonProgramDocuments().add(seasonProgramDocument);
-		seasonProgramDocument.setDocumentInformation(this);
+   public SeasonProgramDocument addSeasonProgramDocument(SeasonProgramDocument seasonProgramDocument) {
+      getSeasonProgramDocuments().add(seasonProgramDocument);
+      seasonProgramDocument.setDocumentInformation(this);
 
-		return seasonProgramDocument;
-	}
+      return seasonProgramDocument;
+   }
 
-	public SeasonProgramDocument removeSeasonProgramDocument(SeasonProgramDocument seasonProgramDocument) {
-		getSeasonProgramDocuments().remove(seasonProgramDocument);
-		seasonProgramDocument.setDocumentInformation(null);
+   public SeasonProgramDocument removeSeasonProgramDocument(SeasonProgramDocument seasonProgramDocument) {
+      getSeasonProgramDocuments().remove(seasonProgramDocument);
+      seasonProgramDocument.setDocumentInformation(null);
 
-		return seasonProgramDocument;
-	}
+      return seasonProgramDocument;
+   }
 
 }

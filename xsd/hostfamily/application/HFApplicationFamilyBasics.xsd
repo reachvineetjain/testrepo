@@ -230,11 +230,13 @@
 			<xsd:element
 				name="singleAdultWithnoRelatedByBloodOrMarrageOrAdoptionLivingHome"
 				type="xsd:boolean" minOccurs="1" maxOccurs="1" />
-			<xsd:element name="livesinsideOfHomePartTime" type="xsd:boolean"
+			<xsd:element name="residencyTime" type="xsd:string"
 				minOccurs="1" maxOccurs="1" />
 			<xsd:element name="livingInsideHomeExplanation" type="xsd:string"
 				minOccurs="1" maxOccurs="1" />
 			<xsd:element name="employed" type="xsd:string" minOccurs="1"
+				maxOccurs="1" />
+				<xsd:element name="employmentType" type="xsd:string" minOccurs="1"
 				maxOccurs="1" />
 			<xsd:element name="employer" type="xsd:string" minOccurs="1"
 				maxOccurs="1" />

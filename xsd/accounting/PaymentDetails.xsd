@@ -1,50 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema targetNamespace="http://www.ccighgo.com/paymentdetails"
-	elementFormDefault="unqualified" attributeFormDefault="unqualified"
-	jaxb:version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:cd="http://www.ccighgo.com/paymentdetails"
-	xmlns:Q1="http://www.ccighgo.com" xmlns:common="http://www.ccighgo.com/common">
-	<xsd:annotation>
-		<xsd:appinfo>
-			<jaxb:schemaBindings>
-				<jaxb:package
-					name="com.ccighgo.service.transport.hostfamily.beans.payment.details" />
-			</jaxb:schemaBindings>
-		</xsd:appinfo>
-	</xsd:annotation>
-	<xsd:import schemaLocation="../Common.xsd" namespace="http://www.ccighgo.com/common" />
+<xsd:schema targetNamespace="http://www.ccighgo.com/paymentdetails" elementFormDefault="unqualified" attributeFormDefault="unqualified" jaxb:version="2.0"
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:cd="http://www.ccighgo.com/paymentdetails" xmlns:Q1="http://www.ccighgo.com"
+   xmlns:common="http://www.ccighgo.com/common">
+   <xsd:annotation>
+      <xsd:appinfo>
+         <jaxb:schemaBindings>
+            <jaxb:package name="com.ccighgo.service.transport.hostfamily.beans.payment.details" />
+         </jaxb:schemaBindings>
+      </xsd:appinfo>
+   </xsd:annotation>
+   <xsd:import schemaLocation="../Common.xsd" namespace="http://www.ccighgo.com/common" />
 
-	<xsd:element name="PaymentDetails" type="cd:PaymentDetails" />
+   <xsd:element name="PaymentDetails" type="cd:PaymentDetails" />
 
-	<xsd:complexType name="PaymentDetails">
-		<xsd:complexContent>
-			<xsd:extension base="common:Response">
-				<xsd:sequence>
-					<xsd:element name="paymentId" type="xsd:int" minOccurs="1"
-						maxOccurs="1" />
-					<xsd:element name="participantFirstName" type="xsd:string"
-						minOccurs="1" maxOccurs="1" />
-					<xsd:element name="participantLastName" type="xsd:string"
-						minOccurs="1" maxOccurs="1" />
-					<xsd:element name="participantGoId" type="xsd:int"
-						minOccurs="1" maxOccurs="1" />
-					<xsd:element name="programOption" type="xsd:string"
-						minOccurs="1" maxOccurs="1" />
-					<xsd:element name="programStartDate" type="xsd:string"
-						minOccurs="1" maxOccurs="1" />
-					<xsd:element name="month" type="xsd:string" minOccurs="1"
-						maxOccurs="1" />
-					<xsd:element name="noOfDaysHosted" type="xsd:int"
-						minOccurs="1" maxOccurs="1" />
-					<xsd:element name="paymentName" type="xsd:string"
-						minOccurs="1" maxOccurs="1" />
-					<xsd:element name="paymentDate" type="xsd:string"
-						minOccurs="1" maxOccurs="1" />
-					<xsd:element name="totalAmount" type="xsd:decimal"
-						minOccurs="1" maxOccurs="1" />
-				</xsd:sequence>
-			</xsd:extension>
-		</xsd:complexContent>
-	</xsd:complexType>
+   <xsd:complexType name="PaymentDetails">
+      <xsd:complexContent>
+         <xsd:extension base="common:Response">
+            <xsd:sequence>
+               <xsd:element name="paymentId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="participantFirstName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="participantLastName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="participantGoId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="programOption" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="programStartDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="month" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="noOfDaysHosted" type="xsd:int" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="paymentName" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="paymentDate" type="xsd:string" minOccurs="1" maxOccurs="1" />
+               <xsd:element name="totalAmount" type="xsd:decimal" minOccurs="1" maxOccurs="1" />
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
 
 </xsd:schema>

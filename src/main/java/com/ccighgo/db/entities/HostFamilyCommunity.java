@@ -18,9 +18,9 @@ public class HostFamilyCommunity implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private Integer hostFamilyCommunityId;
+	private int hostFamilyCommunityId;
 
-	private Byte active;
+	private byte active;
 
 	@Column(length=1000)
 	private String areasToAvoid;
@@ -34,12 +34,12 @@ public class HostFamilyCommunity implements Serializable {
 	@Column(length=50)
 	private String cityWebsite;
 
-	private Byte contactACoach;
+	private byte contactACoach;
 
 	@Column(length=1000)
 	private String contactByCoachDetails;
 
-	private Integer createdBy;
+	private int createdBy;
 
 	private Timestamp createdOn;
 
@@ -49,7 +49,7 @@ public class HostFamilyCommunity implements Serializable {
 	@Column(length=50)
 	private String distanceToSchool;
 
-	private Integer modifiedBy;
+	private int modifiedBy;
 
 	private Timestamp modifiedOn;
 
@@ -59,7 +59,7 @@ public class HostFamilyCommunity implements Serializable {
 	@Column(length=50)
 	private String nearestCityPopulation;
 
-	private Byte parentIsTeacher;
+	private byte parentIsTeacher;
 
 	@Column(length=1000)
 	private String placesOfInterest;
@@ -70,7 +70,7 @@ public class HostFamilyCommunity implements Serializable {
 	@Column(length=100)
 	private String schoolTravelMethod;
 
-	private Byte transportationToActivities;
+	private byte transportationToActivities;
 
 	@Column(length=1000)
 	private String transportationToActivitiesDetails;
@@ -89,19 +89,19 @@ public class HostFamilyCommunity implements Serializable {
 	public HostFamilyCommunity() {
 	}
 
-	public Integer getHostFamilyCommunityId() {
+	public int getHostFamilyCommunityId() {
 		return this.hostFamilyCommunityId;
 	}
 
-	public void setHostFamilyCommunityId(Integer hostFamilyCommunityId) {
+	public void setHostFamilyCommunityId(int hostFamilyCommunityId) {
 		this.hostFamilyCommunityId = hostFamilyCommunityId;
 	}
 
-	public Byte getActive() {
+	public byte getActive() {
 		return this.active;
 	}
 
-	public void setActive(Byte active) {
+	public void setActive(byte active) {
 		this.active = active;
 	}
 
@@ -137,11 +137,11 @@ public class HostFamilyCommunity implements Serializable {
 		this.cityWebsite = cityWebsite;
 	}
 
-	public Byte getContactACoach() {
+	public byte getContactACoach() {
 		return this.contactACoach;
 	}
 
-	public void setContactACoach(Byte contactACoach) {
+	public void setContactACoach(byte contactACoach) {
 		this.contactACoach = contactACoach;
 	}
 
@@ -153,11 +153,11 @@ public class HostFamilyCommunity implements Serializable {
 		this.contactByCoachDetails = contactByCoachDetails;
 	}
 
-	public Integer getCreatedBy() {
+	public int getCreatedBy() {
 		return this.createdBy;
 	}
 
-	public void setCreatedBy(Integer createdBy) {
+	public void setCreatedBy(int createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -185,11 +185,11 @@ public class HostFamilyCommunity implements Serializable {
 		this.distanceToSchool = distanceToSchool;
 	}
 
-	public Integer getModifiedBy() {
+	public int getModifiedBy() {
 		return this.modifiedBy;
 	}
 
-	public void setModifiedBy(Integer modifiedBy) {
+	public void setModifiedBy(int modifiedBy) {
 		this.modifiedBy = modifiedBy;
 	}
 
@@ -217,11 +217,11 @@ public class HostFamilyCommunity implements Serializable {
 		this.nearestCityPopulation = nearestCityPopulation;
 	}
 
-	public Byte getParentIsTeacher() {
+	public byte getParentIsTeacher() {
 		return this.parentIsTeacher;
 	}
 
-	public void setParentIsTeacher(Byte parentIsTeacher) {
+	public void setParentIsTeacher(byte parentIsTeacher) {
 		this.parentIsTeacher = parentIsTeacher;
 	}
 
@@ -249,11 +249,11 @@ public class HostFamilyCommunity implements Serializable {
 		this.schoolTravelMethod = schoolTravelMethod;
 	}
 
-	public Byte getTransportationToActivities() {
+	public byte getTransportationToActivities() {
 		return this.transportationToActivities;
 	}
 
-	public void setTransportationToActivities(Byte transportationToActivities) {
+	public void setTransportationToActivities(byte transportationToActivities) {
 		this.transportationToActivities = transportationToActivities;
 	}
 
