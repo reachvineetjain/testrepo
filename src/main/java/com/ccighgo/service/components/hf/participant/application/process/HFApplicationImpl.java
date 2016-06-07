@@ -19,9 +19,6 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ccighgo.db.entities.AdminWorkQueueCategory;
-import com.ccighgo.db.entities.AdminWorkQueueCategoryAggregate;
-import com.ccighgo.db.entities.AdminWorkQueueType;
 import com.ccighgo.db.entities.Airport;
 import com.ccighgo.db.entities.HostFamily;
 import com.ccighgo.db.entities.HostFamilyAirport;
@@ -39,13 +36,11 @@ import com.ccighgo.db.entities.HostFamilyPotentialReference;
 import com.ccighgo.db.entities.HostFamilyReference;
 import com.ccighgo.db.entities.HostFamilySeason;
 import com.ccighgo.db.entities.HostFamilySeasonCategory;
-import com.ccighgo.db.entities.Login;
 import com.ccighgo.db.entities.LookupGender;
 import com.ccighgo.db.entities.LookupUSState;
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.exception.HostFamilyCodes;
-import com.ccighgo.exception.PartnerCodes;
 import com.ccighgo.jpa.repositories.AirportRepository;
 import com.ccighgo.jpa.repositories.GenderRepository;
 import com.ccighgo.jpa.repositories.HostFamilyAirportRepository;
@@ -72,7 +67,6 @@ import com.ccighgo.jpa.repositories.UserTypeRepository;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.components.errormessages.constants.HostFamilyMessageConstants;
-import com.ccighgo.service.components.errormessages.constants.PartnerAdminMessageConstants;
 import com.ccighgo.service.components.hf.participant.application.process.util.ChangeHostFamilyProfilePicParam;
 import com.ccighgo.service.components.hf.participant.application.process.util.FamilyBasicsPageParam;
 import com.ccighgo.service.components.hf.participant.application.process.util.FamilyStylePageParam;
@@ -112,6 +106,8 @@ import com.ccighgo.service.transport.hostfamily.beans.application.hfhousedescrip
 import com.ccighgo.service.transport.hostfamily.beans.application.homepage.HFApplicationCheckList;
 import com.ccighgo.service.transport.hostfamily.beans.application.homepage.HFApplicationCheckListStages;
 import com.ccighgo.service.transport.hostfamily.beans.application.homepage.HFHomePage;
+import com.ccighgo.service.transport.hostfamily.beans.application.pettype.HFPetType;
+import com.ccighgo.service.transport.hostfamily.beans.application.pettype.PetDetails;
 import com.ccighgo.service.transport.hostfamily.beans.application.photo.upload.HFApplicationUploadPhotos;
 import com.ccighgo.service.transport.hostfamily.beans.application.photo.upload.Photo;
 import com.ccighgo.service.transport.hostfamily.beans.application.photo.upload.PhotoType;
@@ -130,14 +126,9 @@ import com.ccighgo.service.transport.participant.beans.hfparticipantlist.HFParti
 import com.ccighgo.service.transport.participant.beans.hfparticipantlist.ParticipantDetails;
 import com.ccighgo.service.transport.partner.beans.hfp2workqueuecategory.HFP2WorkQueueCategory;
 import com.ccighgo.service.transport.partner.beans.hfp2workqueuetype.HFP2WorkQueueType;
-import com.ccighgo.service.transport.partner.beans.partnerworkqueuecategory.AdminPartnerWorkQueueCategory;
-import com.ccighgo.service.transport.partner.beans.partnerworkqueuecategory.AdminPartnerWorkQueueCategoryDetail;
-import com.ccighgo.service.transport.partner.beans.partnerworkqueuetype.AdminPartnerWorkQueueType;
-import com.ccighgo.service.transport.partner.beans.partnerworkqueuetype.AdminPartnerWorkQueueTypeDetail;
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.CCIUtils;
 import com.ccighgo.utils.DateUtils;
-import com.ccighgo.utils.ExceptionUtil;
 import com.ccighgo.utils.WSDefaultResponse;
 
 /**
@@ -730,7 +721,12 @@ public class HFApplicationImpl implements HFApplication {
                   HFAdultDetails adult = new HFAdultDetails();
                   com.ccighgo.service.transport.hostfamily.beans.application.familydetails.Photo photo = new com.ccighgo.service.transport.hostfamily.beans.application.familydetails.Photo();
                   photo.setFilePath(String.valueOf(obj[0]));
-                  photo.setPhotoId(Integer.valueOf(String.valueOf(obj[25])));
+                  // put the null check for PhotoId
+                  try {
+                  photo.setPhotoId(Integer.valueOf(String.valueOf(obj[25])!=null ? String.valueOf(obj[25]) : ""));
+                  } catch (NumberFormatException nfe){
+                     LOGGER.error(nfe.getMessage());
+                  }
                   photo.setTypeId(CCIConstants.ACTIVE);
                   photo.setDescription(String.valueOf(obj[30]));
                   hfbs.setPhoto(photo);
@@ -2209,6 +2205,32 @@ public class HFApplicationImpl implements HFApplication {
          LOGGER.error(e.getMessage());
       }
       return hfM;
+   }
+   
+   @Override
+   public HFPetType getHFPetTypeDetails() {
+      HFPetType hfPetType = new HFPetType();
+      try {
+         List<HostFamilyPetType> hfPetTypeList = hostFamilyPetTypeRepository.findAll();
+         if (hfPetTypeList != null && !hfPetTypeList.isEmpty()) {
+            for (HostFamilyPetType petType : hfPetTypeList) {
+               PetDetails pd = new PetDetails();
+               pd.setPetTypeId(petType.getHostFamilyPetTypeId());
+               pd.setPetTypeName(petType.getHostFamilyPetTypeName());
+               hfPetType.getPetDetails().add(pd);
+            }
+            hfPetType.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, HostFamilyCodes.SUCCESS.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         } else {
+            hfPetType.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, HostFamilyCodes.NO_RECORD.getValue(),
+                  messageUtil.getMessage(CCIConstants.NO_RECORD)));
+         }
+      } catch (CcighgoException e) {
+         hfPetType.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, HostFamilyCodes.ERROR_FETCH_HF_PETTYPE.getValue(), e.getMessage()));
+         LOGGER.error(e.getMessage());
+      }
+      return hfPetType;
+
    }
 
    @Override
