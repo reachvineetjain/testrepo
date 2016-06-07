@@ -2007,6 +2007,7 @@ public class HFApplicationImpl implements HFApplication {
          HostFamilySeason hfSeason = hostFamilySeasonRepository.findOne(application.getSeasonId());
          if (hfSeason != null) {
             hfSeason.setSignature(application.getSignature());
+            hfSeason.setIsDoublePlacement(application.isDbHostingAgreementCheck()?CCIConstants.ACTIVE:CCIConstants.INACTIVE);
             hfSeason.setModifiedBy(application.getLoginId());
             hostFamilySeasonRepository.saveAndFlush(hfSeason);
             resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, HostFamilyCodes.SUCCESS.getValue(),

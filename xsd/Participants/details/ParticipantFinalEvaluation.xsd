@@ -29,9 +29,11 @@
                <xsd:element name="suggestionsImprovment" type="xsd:string" minOccurs="0" maxOccurs="1" />
                <xsd:element name="insuranceQuality" type="xsd:string" minOccurs="0" maxOccurs="1" />
                <xsd:element name="studentFulfillFamilyChores" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
+               <xsd:element name="studentFulfillFamilyRules" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
                <xsd:element name="studentFulfillHygiene" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
                <xsd:element name="studentFulfillComments" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
                <xsd:element name="wellAtSchoolAcademically" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
+               <xsd:element name="wellAtSchoolECCActivities" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
                <xsd:element name="wellAtSchoolUSRelationship" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
                <xsd:element name="recieveAdequateOrientation" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
                <xsd:element name="anyProblemDescription" type="xsd:string" minOccurs="0" maxOccurs="1" />
