@@ -36,12 +36,16 @@ import com.ccighgo.service.transport.hostfamily.beans.application.pettype.HFPetT
 import com.ccighgo.service.transport.hostfamily.beans.application.photo.upload.HFApplicationUploadPhotos;
 import com.ccighgo.service.transport.hostfamily.beans.application.potential.hostfamily.PotentialHostFamily;
 import com.ccighgo.service.transport.hostfamily.beans.application.profile.HFProfile;
+import com.ccighgo.service.transport.hostfamily.beans.application.profile.landingpage.HFLandingPage;
 import com.ccighgo.service.transport.hostfamily.beans.application.progress.HFApplicationProgress;
 import com.ccighgo.service.transport.hostfamily.beans.application.references.HostFamilyReferences;
 import com.ccighgo.service.transport.hostfamily.beans.application.submit.HFSubmitApplication;
 import com.ccighgo.service.transport.hostfamily.beans.application.whyhost.WhyHost;
 import com.ccighgo.service.transport.participant.beans.hfparticipantlist.HFParticipantDetail;
 import com.ccighgo.service.transport.participant.beans.hfparticipantlist.HFParticipantList;
+import com.ccighgo.service.transport.partner.beans.hfFieldNetworkInformation.HFFieldNetworkInformationDetail;
+import com.ccighgo.service.transport.partner.beans.hfFieldNetworkInformation.HFFieldStaffForFieldNetworkInformation;
+import com.ccighgo.service.transport.partner.beans.hfHostAgainQuestion.HFHostAgainQuestionDetail;
 import com.ccighgo.service.transport.partner.beans.hfp2workqueuecategory.HFP2WorkQueueCategory;
 import com.ccighgo.service.transport.partner.beans.hfp2workqueuetype.HFP2WorkQueueType;
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuecategory.AdminPartnerWorkQueueCategory;
@@ -397,6 +401,46 @@ public class HFApplicationProcess {
    public HFP2WorkQueueCategory getWorkQueueCategory(@PathParam("workQueueTypeId") String workQueueTypeId, @PathParam("loginId") String loginId) {
       LOGGER.debug("fun : getWorkQueueCategory [] type id: " + workQueueTypeId + " loginId: " + loginId);
       return hfApplication.getWorkQueueCategory(Integer.parseInt(workQueueTypeId), Integer.parseInt(loginId));
+   }
+   
+   @GET
+   @Path("fetchFieldNetworkInformation/{hfSeasonId}/{hfGoId}")
+   @Produces("application/json")
+   public HFFieldNetworkInformationDetail fetchFieldNetworkInformation(@PathParam("hfSeasonId") String hfSeasonId,@PathParam("hfGoId") String hfGoId) {
+      LOGGER.debug("fun : fetchFieldNetworkInformation ");
+      return hfApplication.fetchFieldNetworkInformation(hfSeasonId,hfGoId);
+   }
+   
+   @GET
+   @Path("fetchHostAgainQuestion")
+   @Produces("application/json")
+   public HFHostAgainQuestionDetail fetchHostAgainQuestion() {
+      LOGGER.debug("fun : fetchHostAgainQuestion ");
+      return hfApplication.fetchHostAgainQuestion();
+   }
+   @GET
+   @Path("isUserLoggedInForFirstTime/{hfUserId}")
+   @Produces("application/json")
+   public WSDefaultResponse isUserLoggedInForFirstTime(@PathParam("hfUserId") String hfUserId) {
+      LOGGER.debug("fun : isUserLoggedInForFirstTime ");
+      return hfApplication.isUserLoggedInForFirstTime(hfUserId);
+   }
+   
+   @POST
+   @Path("updateLandingPage")
+   @Produces("application/json")
+   public WSDefaultResponse updateLandingPage(HFLandingPage hfLandingPage) {
+      LOGGER.debug("fun : updateLandingPage ");
+      return hfApplication.updateLandingPage(hfLandingPage);
+   }
+   
+   
+   @POST
+   @Path("updateHostAgainQuestion")
+   @Produces("application/json")
+   public WSDefaultResponse updateHostAgainQuestion(HFHostAgainQuestionDetail detail) {
+      LOGGER.debug("fun : updateHostAgainQuestion ");
+      return hfApplication.updateHostAgainQuestion(detail);
    }
 
 }

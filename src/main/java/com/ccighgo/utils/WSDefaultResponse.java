@@ -9,6 +9,7 @@ public class WSDefaultResponse extends Response {
    private Integer topicOfNotesId;
    private int goId;
    private ExtraData extraData;
+   private boolean booleanResult ;
 
    public NoteUserCreator getCreatedBy() {
       return createdBy;
@@ -42,5 +43,14 @@ public class WSDefaultResponse extends Response {
       this.extraData = extraData;
    }
 
+   public boolean isBooleanResult() {
+      return booleanResult;
+   }
+
+   public void setBooleanResult(boolean booleanResult) {
+      this.booleanResult = booleanResult;
+   }
+
+   
    
 }
