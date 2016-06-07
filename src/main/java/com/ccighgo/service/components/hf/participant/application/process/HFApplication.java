@@ -25,12 +25,16 @@ import com.ccighgo.service.transport.hostfamily.beans.application.homepage.HFHom
 import com.ccighgo.service.transport.hostfamily.beans.application.photo.upload.HFApplicationUploadPhotos;
 import com.ccighgo.service.transport.hostfamily.beans.application.potential.hostfamily.PotentialHostFamily;
 import com.ccighgo.service.transport.hostfamily.beans.application.profile.HFProfile;
+import com.ccighgo.service.transport.hostfamily.beans.application.profile.landingpage.HFLandingPage;
 import com.ccighgo.service.transport.hostfamily.beans.application.progress.HFApplicationProgress;
 import com.ccighgo.service.transport.hostfamily.beans.application.references.HostFamilyReferences;
 import com.ccighgo.service.transport.hostfamily.beans.application.submit.HFSubmitApplication;
 import com.ccighgo.service.transport.hostfamily.beans.application.whyhost.WhyHost;
 import com.ccighgo.service.transport.participant.beans.hfparticipantlist.HFParticipantDetail;
 import com.ccighgo.service.transport.participant.beans.hfparticipantlist.HFParticipantList;
+import com.ccighgo.service.transport.partner.beans.hfFieldNetworkInformation.HFFieldNetworkInformationDetail;
+import com.ccighgo.service.transport.partner.beans.hfFieldNetworkInformation.HFFieldStaffForFieldNetworkInformation;
+import com.ccighgo.service.transport.partner.beans.hfHostAgainQuestion.HFHostAgainQuestionDetail;
 import com.ccighgo.service.transport.partner.beans.hfp2workqueuecategory.HFP2WorkQueueCategory;
 import com.ccighgo.service.transport.partner.beans.hfp2workqueuetype.HFP2WorkQueueType;
 import com.ccighgo.utils.WSDefaultResponse;
@@ -285,5 +289,15 @@ public interface HFApplication {
 	public HFP2WorkQueueType getWorkQueueType(String roleType);
 	
 	public HFP2WorkQueueCategory getWorkQueueCategory(int parseInt, int parseInt2);
+
+   public HFFieldNetworkInformationDetail fetchFieldNetworkInformation(String hfSeasonId, String hfGoId);
+
+   public HFHostAgainQuestionDetail fetchHostAgainQuestion();
+
+   public WSDefaultResponse updateHostAgainQuestion(HFHostAgainQuestionDetail detail);
+
+   public WSDefaultResponse updateLandingPage(HFLandingPage hfLandingPage);
+
+   public WSDefaultResponse isUserLoggedInForFirstTime(String hfUserId);
 
 }

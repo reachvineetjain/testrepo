@@ -119,6 +119,7 @@ import com.ccighgo.service.transport.hostfamily.beans.application.photo.upload.P
 import com.ccighgo.service.transport.hostfamily.beans.application.potential.hostfamily.PotentialHostFamily;
 import com.ccighgo.service.transport.hostfamily.beans.application.profile.HFProfile;
 import com.ccighgo.service.transport.hostfamily.beans.application.profile.HFState;
+import com.ccighgo.service.transport.hostfamily.beans.application.profile.landingpage.HFLandingPage;
 import com.ccighgo.service.transport.hostfamily.beans.application.progress.HFApplicationProgress;
 import com.ccighgo.service.transport.hostfamily.beans.application.progress.Progress;
 import com.ccighgo.service.transport.hostfamily.beans.application.references.HostFamilyReferences;
@@ -128,6 +129,9 @@ import com.ccighgo.service.transport.hostfamily.beans.application.whyhost.WhyHos
 import com.ccighgo.service.transport.participant.beans.hfparticipantlist.HFParticipantDetail;
 import com.ccighgo.service.transport.participant.beans.hfparticipantlist.HFParticipantList;
 import com.ccighgo.service.transport.participant.beans.hfparticipantlist.ParticipantDetails;
+import com.ccighgo.service.transport.partner.beans.hfFieldNetworkInformation.HFFieldNetworkInformationDetail;
+import com.ccighgo.service.transport.partner.beans.hfFieldNetworkInformation.HFFieldStaffForFieldNetworkInformation;
+import com.ccighgo.service.transport.partner.beans.hfHostAgainQuestion.HFHostAgainQuestionDetail;
 import com.ccighgo.service.transport.partner.beans.hfp2workqueuecategory.HFP2WorkQueueCategory;
 import com.ccighgo.service.transport.partner.beans.hfp2workqueuetype.HFP2WorkQueueType;
 import com.ccighgo.service.transport.partner.beans.partnerworkqueuecategory.AdminPartnerWorkQueueCategory;
@@ -2363,6 +2367,126 @@ public class HFApplicationImpl implements HFApplication {
       // logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_CATEGORY));
       // }
       return pwqc;
+   }
+
+   @Override
+   public HFFieldNetworkInformationDetail fetchFieldNetworkInformation(String hfSeasonId, String hfGoId) {
+      HFFieldNetworkInformationDetail info = new HFFieldNetworkInformationDetail();
+      try {
+         //TODO
+         // Static Data Until Phani send The Business Logic
+       
+           HFFieldStaffForFieldNetworkInformation hfInfo = new HFFieldStaffForFieldNetworkInformation();
+           hfInfo.setFieldStaffEmail("crespan@gmail.com");
+           hfInfo.setFieldStaffLink("www.creospan.com");
+           hfInfo.setFieldStaffName("StaffName");
+           hfInfo.setFieldStaffPhone("6304880523");
+           hfInfo.setFieldStaffPic("pic1.jpg");
+           hfInfo.setFieldStaffType("Regional Director");
+           info.getFieldStaff().add(hfInfo);
+           
+           HFFieldStaffForFieldNetworkInformation hfInfo2 = new HFFieldStaffForFieldNetworkInformation();
+           hfInfo2.setFieldStaffEmail("crespan@gmail.com");
+           hfInfo2.setFieldStaffLink("www.creospan.com");
+           hfInfo2.setFieldStaffName("StaffName");
+           hfInfo2.setFieldStaffPhone("6304880523");
+           hfInfo2.setFieldStaffPic("pic1.jpg");
+           hfInfo2.setFieldStaffType("Regional Director");
+           info.getFieldStaff().add(hfInfo2);
+           
+           
+           
+         info.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+//         } else {
+//            info.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
+//         }
+
+      } catch (CcighgoException e) {
+         info.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FETCHING_STAFF_FIELD_NETWORK_INFORMATION.getValue(), e.getMessage()));
+         LOGGER.error(e.getMessage());
+      }
+      return info;
+   }
+
+   @Override
+   public HFHostAgainQuestionDetail fetchHostAgainQuestion() {
+      HFHostAgainQuestionDetail detail = new HFHostAgainQuestionDetail();
+      try {
+            //TODO 
+            detail.setLikeToHostAgain(true);
+            detail.getHostFor().add("Full Academic Year");
+            detail.getHostFor().add("Short Term");
+            
+            
+            detail.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+//          } else {
+//             detail.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
+//          }
+
+       } catch (CcighgoException e) {
+          detail.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FETCHING_HOST_AGAIN_QUESTIONS.getValue(), e.getMessage()));
+          LOGGER.error(e.getMessage());
+       }
+      return detail;
+   }
+
+   @Override
+   public WSDefaultResponse updateHostAgainQuestion(HFHostAgainQuestionDetail detail) {
+      WSDefaultResponse result = new WSDefaultResponse();
+      try {
+         //TODO
+            result.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+//          } else {
+//             result.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
+//          }
+
+       } catch (CcighgoException e) {
+//          info.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.Exce.getValue(), e.getMessage()));
+          LOGGER.error(e.getMessage());
+       }
+      return result;
+   }
+
+   @Override
+   public WSDefaultResponse updateLandingPage(HFLandingPage hfLandingPage) {
+      WSDefaultResponse result = new WSDefaultResponse();
+      try {
+         //TODO
+//         if(true){
+            result.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+//          } else {
+//             result.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
+//          }
+
+       } catch (CcighgoException e) {
+//          info.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.Exce.getValue(), e.getMessage()));
+          LOGGER.error(e.getMessage());
+       }
+      return result;
+   }
+
+   @Override
+   public WSDefaultResponse isUserLoggedInForFirstTime(String hfUserId) {
+      WSDefaultResponse result = new WSDefaultResponse();
+      try {
+         //TODO
+//         if(true){
+         result.setBooleanResult(true);
+            result.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+                   messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+//          } else {
+//             result.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD, CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
+//          }
+
+       } catch (CcighgoException e) {
+//          info.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.Exce.getValue(), e.getMessage()));
+          LOGGER.error(e.getMessage());
+       }
+      return result;
    }
 
 }

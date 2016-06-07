@@ -1851,6 +1851,26 @@
 						<arg value="${xsd.dir}/generic/announcement/HFAnnouncement.xsd" />
 					</java>
 				</target>
-	
+	<target name="HF2FieldNetworkInformation">
+						<java classname="com.sun.tools.internal.xjc.XJCFacade">
+							<arg value="-d" />
+							<arg value="${java.dir}" />
+							<arg value="${xsd.dir}/hostfamily/application_part2/page2/HFP2FieldNetworkInformation.xsd" />
+						</java>
+	</target>
+	<target name="HF2HostAgainQuestions">
+						<java classname="com.sun.tools.internal.xjc.XJCFacade">
+							<arg value="-d" />
+							<arg value="${java.dir}" />
+							<arg value="${xsd.dir}/hostfamily/application_part2/page2/HostAgainQuestion.xsd" />
+							</java>
+		</target>
+	<target name="HF1LandingPage">
+		<java classname="com.sun.tools.internal.xjc.XJCFacade">
+			<arg value="-d" />
+			<arg value="${java.dir}" />
+			<arg value="${xsd.dir}/hostfamily/application/HFLandingPage.xsd" />
+	</java>
+	</target>
 
 </project>

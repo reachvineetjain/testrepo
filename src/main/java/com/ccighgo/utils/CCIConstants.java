@@ -318,4 +318,6 @@ public class CCIConstants {
    public static final Integer StudentPreProgram = 7;
    public static final Integer Contracting = 8;
    public static final Integer Insurance = 9;
+
+   public static final Integer NO_SETTED_ERROR_CODE = 11111111;
 }
