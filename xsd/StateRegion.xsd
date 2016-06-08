@@ -24,7 +24,13 @@
 				<xsd:sequence>
 					<xsd:element name="seasonId" type="xsd:int" minOccurs="1"
 						maxOccurs="1" />
-					<xsd:element name="superRegionId" type="xsd:int"
+					<xsd:element name="newSuperRegionId" type="xsd:int"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="existingSuperRegionId" type="xsd:int"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="newRegionId" type="xsd:int"
+						minOccurs="1" maxOccurs="1" />
+					<xsd:element name="isStateORRegion" type="xsd:int"
 						minOccurs="1" maxOccurs="1" />
 					<xsd:element name="stateRegions" type="sr:StateRegion"
 						minOccurs="1" maxOccurs="unbounded" />
