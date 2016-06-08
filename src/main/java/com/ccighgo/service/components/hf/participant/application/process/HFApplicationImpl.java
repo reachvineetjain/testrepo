@@ -2191,10 +2191,12 @@ public class HFApplicationImpl implements HFApplication {
                hfMD.setHostfamilyMemberId(hf.getHostFamilyMemberId());
                hfMD.setGenderId(hf.getLookupGender().getGenderId());
                hfMD.setGender(hf.getLookupGender().getGenderName());
-               DateTime d1 = new DateTime(hf.getBirthDate().getTime());
-               DateTime d2 = new DateTime(new Date().getTime());
-               Years age = Years.yearsBetween(d1, d2);
-               hfMD.setAge(age.getYears());
+               if (hf.getBirthDate() != null) {
+                  DateTime d1 = new DateTime(hf.getBirthDate().getTime());
+                  DateTime d2 = new DateTime(new Date().getTime());
+                  Years age = Years.yearsBetween(d1, d2);
+                  hfMD.setAge(age.getYears());
+               }
                hfM.getFamilyMembers().add(hfMD);
             }
             hfM.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, HostFamilyCodes.SUCCESS.getValue(),
