@@ -1027,9 +1027,11 @@ public class HFApplicationImpl implements HFApplication {
                // hfh.sharesBedroomWith AS sharesBedroomWith,
                hd.setRoomMateName(String.valueOf(obj[10]));
                // lg.genderName AS sharingBedroomGender,
-               hd.setRoomMateGenderId(Integer.valueOf(String.valueOf(obj[11])));
+               if (obj[11] != null)
+                  hd.setRoomMateGenderId(Integer.valueOf(String.valueOf(obj[11])));
                // hfh.sharingAge AS sharingAge,
-               hd.setRoomMateAge(Integer.valueOf(String.valueOf(obj[12])));
+               if (obj[12] != null)
+                  hd.setRoomMateAge(Integer.valueOf(String.valueOf(obj[12])));
                // hfh.extraFacilities AS extraFacilities,
                hd.setExtraFacilities(String.valueOf(obj[13]));
                // hfh.isStudentsRoomBasement AS isStudentsRoomBasement,
