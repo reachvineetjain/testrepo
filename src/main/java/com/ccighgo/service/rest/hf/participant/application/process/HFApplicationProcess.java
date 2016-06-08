@@ -37,6 +37,7 @@ import com.ccighgo.service.transport.hostfamily.beans.application.photo.upload.H
 import com.ccighgo.service.transport.hostfamily.beans.application.potential.hostfamily.PotentialHostFamily;
 import com.ccighgo.service.transport.hostfamily.beans.application.profile.HFProfile;
 import com.ccighgo.service.transport.hostfamily.beans.application.profile.landingpage.HFLandingPage;
+import com.ccighgo.service.transport.hostfamily.beans.application.profile.update.password.UpdatedPassword;
 import com.ccighgo.service.transport.hostfamily.beans.application.progress.HFApplicationProgress;
 import com.ccighgo.service.transport.hostfamily.beans.application.references.HostFamilyReferences;
 import com.ccighgo.service.transport.hostfamily.beans.application.submit.HFSubmitApplication;
@@ -328,11 +329,11 @@ public class HFApplicationProcess {
       LOGGER.info("Calling service HFApplicationProcess.getHFDetails");
       return hfApplication.getHFDetails(hostfamilySeasonId);
    }
-   
+
    @GET
    @Path("getPetTypeDetails")
    @Produces("application/json")
-   public HFPetType getHFPetTypeDetails(){
+   public HFPetType getHFPetTypeDetails() {
       LOGGER.info("Calling service HFApplicationProcess.getHFPetTypeDetails");
       return hfApplication.getHFPetTypeDetails();
    }
@@ -386,7 +387,7 @@ public class HFApplicationProcess {
       LOGGER.info("Calling service HFApplicationProcess.hfCreateMandatoryPhotos");
       return hfApplication.hfCreateMandatoryPhotos(Integer.valueOf(hfSeasonId), Integer.valueOf(loginId));
    }
-   
+
    @GET
    @Path("workQueueType/{roleType}")
    @Produces("application/json")
@@ -402,15 +403,15 @@ public class HFApplicationProcess {
       LOGGER.debug("fun : getWorkQueueCategory [] type id: " + workQueueTypeId + " loginId: " + loginId);
       return hfApplication.getWorkQueueCategory(Integer.parseInt(workQueueTypeId), Integer.parseInt(loginId));
    }
-   
+
    @GET
    @Path("fetchFieldNetworkInformation/{hfSeasonId}/{hfGoId}")
    @Produces("application/json")
-   public HFFieldNetworkInformationDetail fetchFieldNetworkInformation(@PathParam("hfSeasonId") String hfSeasonId,@PathParam("hfGoId") String hfGoId) {
+   public HFFieldNetworkInformationDetail fetchFieldNetworkInformation(@PathParam("hfSeasonId") String hfSeasonId, @PathParam("hfGoId") String hfGoId) {
       LOGGER.debug("fun : fetchFieldNetworkInformation ");
-      return hfApplication.fetchFieldNetworkInformation(hfSeasonId,hfGoId);
+      return hfApplication.fetchFieldNetworkInformation(hfSeasonId, hfGoId);
    }
-   
+
    @GET
    @Path("fetchHostAgainQuestion")
    @Produces("application/json")
@@ -418,6 +419,7 @@ public class HFApplicationProcess {
       LOGGER.debug("fun : fetchHostAgainQuestion ");
       return hfApplication.fetchHostAgainQuestion();
    }
+
    @GET
    @Path("isUserLoggedInForFirstTime/{hfUserId}")
    @Produces("application/json")
@@ -425,7 +427,7 @@ public class HFApplicationProcess {
       LOGGER.debug("fun : isUserLoggedInForFirstTime ");
       return hfApplication.isUserLoggedInForFirstTime(hfUserId);
    }
-   
+
    @POST
    @Path("updateLandingPage")
    @Produces("application/json")
@@ -433,14 +435,41 @@ public class HFApplicationProcess {
       LOGGER.debug("fun : updateLandingPage ");
       return hfApplication.updateLandingPage(hfLandingPage);
    }
-   
-   
+
    @POST
    @Path("updateHostAgainQuestion")
    @Produces("application/json")
    public WSDefaultResponse updateHostAgainQuestion(HFHostAgainQuestionDetail detail) {
       LOGGER.debug("fun : updateHostAgainQuestion ");
       return hfApplication.updateHostAgainQuestion(detail);
+   }
+
+   @GET
+   @Path("update/email/{loginId}/{email}")
+   @Produces("application/json")
+   public Response updateHFEmail(@PathParam("loginId") String loginId, @PathParam("email") String email) {
+      return hfApplication.updateHFEmail(loginId, email);
+   }
+
+   @GET
+   @Path("update/username/{loginId}/{userName}")
+   @Produces("application/json")
+   public Response updateHFUserName(@PathParam("loginId") String loginId, @PathParam("userName") String userName) {
+      return hfApplication.updateHFUserName(loginId, userName);
+   }
+
+   @GET
+   @Path("send/test/email/{email}")
+   @Produces("application/json")
+   public Response sendTestEmail(@PathParam("email") String email) {
+      return hfApplication.sendTestEmail(email);
+   }
+
+   @POST
+   @Path("update/password")
+   @Produces("application/json")
+   public Response updatePassword(UpdatedPassword updatedPassword) {
+      return hfApplication.updatePassword(updatedPassword);
    }
 
 }
