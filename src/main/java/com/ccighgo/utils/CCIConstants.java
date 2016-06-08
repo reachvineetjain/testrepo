@@ -229,6 +229,7 @@ public class CCIConstants {
    public static final String PARTNER_AGENT = "PA";
    public static final String RESET_PASSWORD_LINK = "/module/login/#/reset/";
    public static final String RESET_PASSWORD_SUBJECT = "Greenheart Online Password Request";
+   public static final String TEST_SUBJECT = "Greenheart Online Test Email";
    public static final String CREATE_CCI_USER_SUBJECT = "Greenheart Online application account creation notification";
    public static final String SERVICE_URL_WORK_QUEUE_CATEGORY_SUBMITTED_TYPE_APPLICATION_1 = "partnerAdmin/workQueueSubmittedApplications/";
    public static final String SERVICE_URL_NDY = "Not Determined Yet";
@@ -318,4 +319,6 @@ public class CCIConstants {
    public static final Integer StudentPreProgram = 7;
    public static final Integer Contracting = 8;
    public static final Integer Insurance = 9;
+
+   public static final Integer NO_SETTED_ERROR_CODE = 11111111;
 }

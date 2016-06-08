@@ -22,15 +22,21 @@ import com.ccighgo.service.transport.hostfamily.beans.application.familymembers.
 import com.ccighgo.service.transport.hostfamily.beans.application.hfcommunityandschoolpage.HFCommunityAndSchoolPage;
 import com.ccighgo.service.transport.hostfamily.beans.application.hfhousedescriptionpage.HFHomeDescriptionPage;
 import com.ccighgo.service.transport.hostfamily.beans.application.homepage.HFHomePage;
+import com.ccighgo.service.transport.hostfamily.beans.application.pettype.HFPetType;
 import com.ccighgo.service.transport.hostfamily.beans.application.photo.upload.HFApplicationUploadPhotos;
 import com.ccighgo.service.transport.hostfamily.beans.application.potential.hostfamily.PotentialHostFamily;
 import com.ccighgo.service.transport.hostfamily.beans.application.profile.HFProfile;
+import com.ccighgo.service.transport.hostfamily.beans.application.profile.landingpage.HFLandingPage;
+import com.ccighgo.service.transport.hostfamily.beans.application.profile.update.password.UpdatedPassword;
 import com.ccighgo.service.transport.hostfamily.beans.application.progress.HFApplicationProgress;
 import com.ccighgo.service.transport.hostfamily.beans.application.references.HostFamilyReferences;
 import com.ccighgo.service.transport.hostfamily.beans.application.submit.HFSubmitApplication;
 import com.ccighgo.service.transport.hostfamily.beans.application.whyhost.WhyHost;
 import com.ccighgo.service.transport.participant.beans.hfparticipantlist.HFParticipantDetail;
 import com.ccighgo.service.transport.participant.beans.hfparticipantlist.HFParticipantList;
+import com.ccighgo.service.transport.partner.beans.hfFieldNetworkInformation.HFFieldNetworkInformationDetail;
+import com.ccighgo.service.transport.partner.beans.hfFieldNetworkInformation.HFFieldStaffForFieldNetworkInformation;
+import com.ccighgo.service.transport.partner.beans.hfHostAgainQuestion.HFHostAgainQuestionDetail;
 import com.ccighgo.service.transport.partner.beans.hfp2workqueuecategory.HFP2WorkQueueCategory;
 import com.ccighgo.service.transport.partner.beans.hfp2workqueuetype.HFP2WorkQueueType;
 import com.ccighgo.utils.WSDefaultResponse;
@@ -246,6 +252,12 @@ public interface HFApplication {
     * @return
     */
    public HostFamilyMembers getHFDetails(Integer hostfamilySeasonId);
+   
+   /**
+    * @param 
+    * @return HFPetType
+    */
+   public HFPetType getHFPetTypeDetails();
 
    /**
     * 
@@ -285,5 +297,39 @@ public interface HFApplication {
 	public HFP2WorkQueueType getWorkQueueType(String roleType);
 	
 	public HFP2WorkQueueCategory getWorkQueueCategory(int parseInt, int parseInt2);
+
+   public HFFieldNetworkInformationDetail fetchFieldNetworkInformation(String hfSeasonId, String hfGoId);
+
+   public HFHostAgainQuestionDetail fetchHostAgainQuestion();
+
+   public WSDefaultResponse updateHostAgainQuestion(HFHostAgainQuestionDetail detail);
+
+   public WSDefaultResponse updateLandingPage(HFLandingPage hfLandingPage);
+
+   public WSDefaultResponse isUserLoggedInForFirstTime(String hfUserId);
+   
+   /**
+    * @param email
+    * @return
+    */
+   public Response updateHFEmail(String loginId,String email);
+   
+   /**
+    * @param userName
+    * @return
+    */
+   public Response updateHFUserName(String loginId, String userName);
+   
+   /**
+    * @param email
+    * @return
+    */
+   public Response sendTestEmail(String email);
+   
+   /**
+    * @param email
+    * @return
+    */
+   public Response updatePassword(UpdatedPassword updatedPassword);
 
 }

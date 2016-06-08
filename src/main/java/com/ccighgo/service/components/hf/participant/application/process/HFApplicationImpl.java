@@ -19,9 +19,6 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ccighgo.db.entities.AdminWorkQueueCategory;
-import com.ccighgo.db.entities.AdminWorkQueueCategoryAggregate;
-import com.ccighgo.db.entities.AdminWorkQueueType;
 import com.ccighgo.db.entities.Airport;
 import com.ccighgo.db.entities.HostFamily;
 import com.ccighgo.db.entities.HostFamilyAirport;
@@ -45,7 +42,6 @@ import com.ccighgo.db.entities.LookupUSState;
 import com.ccighgo.exception.CcighgoException;
 import com.ccighgo.exception.ErrorCode;
 import com.ccighgo.exception.HostFamilyCodes;
-import com.ccighgo.exception.PartnerCodes;
 import com.ccighgo.jpa.repositories.AirportRepository;
 import com.ccighgo.jpa.repositories.GenderRepository;
 import com.ccighgo.jpa.repositories.HostFamilyAirportRepository;
@@ -69,10 +65,10 @@ import com.ccighgo.jpa.repositories.HostFamilySeasonRepository;
 import com.ccighgo.jpa.repositories.LoginRepository;
 import com.ccighgo.jpa.repositories.StateRepository;
 import com.ccighgo.jpa.repositories.UserTypeRepository;
+import com.ccighgo.service.component.emailing.EmailServiceImpl;
 import com.ccighgo.service.component.serviceutils.CommonComponentUtils;
 import com.ccighgo.service.component.serviceutils.MessageUtils;
 import com.ccighgo.service.components.errormessages.constants.HostFamilyMessageConstants;
-import com.ccighgo.service.components.errormessages.constants.PartnerAdminMessageConstants;
 import com.ccighgo.service.components.hf.participant.application.process.util.ChangeHostFamilyProfilePicParam;
 import com.ccighgo.service.components.hf.participant.application.process.util.FamilyBasicsPageParam;
 import com.ccighgo.service.components.hf.participant.application.process.util.FamilyStylePageParam;
@@ -112,6 +108,8 @@ import com.ccighgo.service.transport.hostfamily.beans.application.hfhousedescrip
 import com.ccighgo.service.transport.hostfamily.beans.application.homepage.HFApplicationCheckList;
 import com.ccighgo.service.transport.hostfamily.beans.application.homepage.HFApplicationCheckListStages;
 import com.ccighgo.service.transport.hostfamily.beans.application.homepage.HFHomePage;
+import com.ccighgo.service.transport.hostfamily.beans.application.pettype.HFPetType;
+import com.ccighgo.service.transport.hostfamily.beans.application.pettype.PetDetails;
 import com.ccighgo.service.transport.hostfamily.beans.application.photo.upload.HFApplicationUploadPhotos;
 import com.ccighgo.service.transport.hostfamily.beans.application.photo.upload.Photo;
 import com.ccighgo.service.transport.hostfamily.beans.application.photo.upload.PhotoType;
@@ -119,6 +117,8 @@ import com.ccighgo.service.transport.hostfamily.beans.application.photo.upload.P
 import com.ccighgo.service.transport.hostfamily.beans.application.potential.hostfamily.PotentialHostFamily;
 import com.ccighgo.service.transport.hostfamily.beans.application.profile.HFProfile;
 import com.ccighgo.service.transport.hostfamily.beans.application.profile.HFState;
+import com.ccighgo.service.transport.hostfamily.beans.application.profile.landingpage.HFLandingPage;
+import com.ccighgo.service.transport.hostfamily.beans.application.profile.update.password.UpdatedPassword;
 import com.ccighgo.service.transport.hostfamily.beans.application.progress.HFApplicationProgress;
 import com.ccighgo.service.transport.hostfamily.beans.application.progress.Progress;
 import com.ccighgo.service.transport.hostfamily.beans.application.references.HostFamilyReferences;
@@ -128,16 +128,15 @@ import com.ccighgo.service.transport.hostfamily.beans.application.whyhost.WhyHos
 import com.ccighgo.service.transport.participant.beans.hfparticipantlist.HFParticipantDetail;
 import com.ccighgo.service.transport.participant.beans.hfparticipantlist.HFParticipantList;
 import com.ccighgo.service.transport.participant.beans.hfparticipantlist.ParticipantDetails;
+import com.ccighgo.service.transport.partner.beans.hfFieldNetworkInformation.HFFieldNetworkInformationDetail;
+import com.ccighgo.service.transport.partner.beans.hfFieldNetworkInformation.HFFieldStaffForFieldNetworkInformation;
+import com.ccighgo.service.transport.partner.beans.hfHostAgainQuestion.HFHostAgainQuestionDetail;
 import com.ccighgo.service.transport.partner.beans.hfp2workqueuecategory.HFP2WorkQueueCategory;
 import com.ccighgo.service.transport.partner.beans.hfp2workqueuetype.HFP2WorkQueueType;
-import com.ccighgo.service.transport.partner.beans.partnerworkqueuecategory.AdminPartnerWorkQueueCategory;
-import com.ccighgo.service.transport.partner.beans.partnerworkqueuecategory.AdminPartnerWorkQueueCategoryDetail;
-import com.ccighgo.service.transport.partner.beans.partnerworkqueuetype.AdminPartnerWorkQueueType;
-import com.ccighgo.service.transport.partner.beans.partnerworkqueuetype.AdminPartnerWorkQueueTypeDetail;
 import com.ccighgo.utils.CCIConstants;
 import com.ccighgo.utils.CCIUtils;
 import com.ccighgo.utils.DateUtils;
-import com.ccighgo.utils.ExceptionUtil;
+import com.ccighgo.utils.PasswordUtil;
 import com.ccighgo.utils.WSDefaultResponse;
 
 /**
@@ -179,6 +178,7 @@ public class HFApplicationImpl implements HFApplication {
    @Autowired HostFamilyGeneralQuestionRepository hostFamilyGeneralQuestionRepository;
    @Autowired HostFamilyReferenceRepository hostFamilyReferenceRepository;
    @Autowired HostFamilyBackgroundRepository hostFamilyBackgroundRepository;
+   @Autowired EmailServiceImpl emailService;
 
    @Autowired EntityManager em;
 
@@ -732,8 +732,8 @@ public class HFApplicationImpl implements HFApplication {
                   photo.setFilePath(String.valueOf(obj[0]));
                   // put the null check for PhotoId
                   try {
-                  photo.setPhotoId(Integer.valueOf(String.valueOf(obj[25])!=null ? String.valueOf(obj[25]) : ""));
-                  } catch (NumberFormatException nfe){
+                     photo.setPhotoId(Integer.valueOf(String.valueOf(obj[25]) != null ? String.valueOf(obj[25]) : ""));
+                  } catch (NumberFormatException nfe) {
                      LOGGER.error(nfe.getMessage());
                   }
                   photo.setTypeId(CCIConstants.ACTIVE);
@@ -1032,9 +1032,11 @@ public class HFApplicationImpl implements HFApplication {
                // hfh.sharesBedroomWith AS sharesBedroomWith,
                hd.setRoomMateName(String.valueOf(obj[10]));
                // lg.genderName AS sharingBedroomGender,
-               hd.setRoomMateGenderId(Integer.valueOf(String.valueOf(obj[11])));
+               if (obj[11] != null)
+                  hd.setRoomMateGenderId(Integer.valueOf(String.valueOf(obj[11])));
                // hfh.sharingAge AS sharingAge,
-               hd.setRoomMateAge(Integer.valueOf(String.valueOf(obj[12])));
+               if (obj[12] != null)
+                  hd.setRoomMateAge(Integer.valueOf(String.valueOf(obj[12])));
                // hfh.extraFacilities AS extraFacilities,
                hd.setExtraFacilities(String.valueOf(obj[13]));
                // hfh.isStudentsRoomBasement AS isStudentsRoomBasement,
@@ -1394,11 +1396,11 @@ public class HFApplicationImpl implements HFApplication {
                hRef1.setAddress(hfApplicationFamilyDetails.getSingleHostDetail().getStreetAddress());
                hRef1.setCity(hfApplicationFamilyDetails.getSingleHostDetail().getCity());
                LookupUSState lookupUsstate = stateRepository.getStateByStateCode(hfApplicationFamilyDetails.getSingleHostDetail().getState());
-               hRef1.setLookupUsstate(lookupUsstate );
+               hRef1.setLookupUsstate(lookupUsstate);
                hRef1.setZipCode(hfApplicationFamilyDetails.getSingleHostDetail().getZipCode());
                hRef1.setPhone(hfApplicationFamilyDetails.getSingleHostDetail().getPhone());
                hRef1.setRelationship(hfApplicationFamilyDetails.getSingleHostDetail().getRelationshipToFamily());
-               
+
                hRef1.setActive(CCIConstants.ACTIVE);
                hRef1.setHostFamilySeason(hostFamilySeasonRepository.findOne(hfApplicationFamilyDetails.getSeasonId()));
                hRef1.setCreatedBy(hfApplicationFamilyDetails.getLoginId());
@@ -1469,7 +1471,6 @@ public class HFApplicationImpl implements HFApplication {
          hfd.setFavouriteWeekend(hfApplicationFamilyDetails.getFamilyDay().getFavouriteThingsToDoAsFamily());
          hfd.setHomeLanguage(hfApplicationFamilyDetails.getFamilyDay().getFamilyHomeLanguage());
          hfd.setOtherLaungage(hfApplicationFamilyDetails.getFamilyDay().getFamilyOtherLanguage());
-
 
          // Religion
          hfd.setReligiousAffiliation(hfApplicationFamilyDetails.getReligious().getReligious());
@@ -2016,6 +2017,7 @@ public class HFApplicationImpl implements HFApplication {
          HostFamilySeason hfSeason = hostFamilySeasonRepository.findOne(application.getSeasonId());
          if (hfSeason != null) {
             hfSeason.setSignature(application.getSignature());
+            hfSeason.setIsDoublePlacement(application.isDbHostingAgreementCheck() ? CCIConstants.ACTIVE : CCIConstants.INACTIVE);
             hfSeason.setModifiedBy(application.getLoginId());
             hostFamilySeasonRepository.saveAndFlush(hfSeason);
             resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, HostFamilyCodes.SUCCESS.getValue(),
@@ -2120,9 +2122,14 @@ public class HFApplicationImpl implements HFApplication {
          if (hostFamily != null) {
 
             hfProfile.setPrimaryPhone(hostFamily.getPhone());
+            hfProfile.setPicUrl(hostFamily.getPhoto());
             hfProfile.setFirstName(hostFamily.getFirstName());
             hfProfile.setLastName(hostFamily.getLastName());
-            hfProfile.setEmail(hostFamily.getPreferredEmail());
+            Login hfLogin = loginRepository.findByCCIGoId(hostFamily.getHostFamilyGoId());
+            if (hfLogin != null) {
+               hfProfile.setEmail(hfLogin.getEmail());
+               hfProfile.setUserName(hfLogin.getLoginName());
+            }
             hfProfile.setEmergencyPhone(hostFamily.getEmergencyPhone());
             hfProfile.setEmergencyContact(hostFamily.getEmergencyContact());
             hfProfile.setPhysicalAddress(hostFamily.getPhysicalAddress());
@@ -2195,10 +2202,12 @@ public class HFApplicationImpl implements HFApplication {
                hfMD.setHostfamilyMemberId(hf.getHostFamilyMemberId());
                hfMD.setGenderId(hf.getLookupGender().getGenderId());
                hfMD.setGender(hf.getLookupGender().getGenderName());
-               DateTime d1 = new DateTime(hf.getBirthDate().getTime());
-               DateTime d2 = new DateTime(new Date().getTime());
-               Years age = Years.yearsBetween(d1, d2);
-               hfMD.setAge(age.getYears());
+               if (hf.getBirthDate() != null) {
+                  DateTime d1 = new DateTime(hf.getBirthDate().getTime());
+                  DateTime d2 = new DateTime(new Date().getTime());
+                  Years age = Years.yearsBetween(d1, d2);
+                  hfMD.setAge(age.getYears());
+               }
                hfM.getFamilyMembers().add(hfMD);
             }
             hfM.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, HostFamilyCodes.SUCCESS.getValue(),
@@ -2213,6 +2222,32 @@ public class HFApplicationImpl implements HFApplication {
          LOGGER.error(e.getMessage());
       }
       return hfM;
+   }
+
+   @Override
+   public HFPetType getHFPetTypeDetails() {
+      HFPetType hfPetType = new HFPetType();
+      try {
+         List<HostFamilyPetType> hfPetTypeList = hostFamilyPetTypeRepository.findAll();
+         if (hfPetTypeList != null && !hfPetTypeList.isEmpty()) {
+            for (HostFamilyPetType petType : hfPetTypeList) {
+               PetDetails pd = new PetDetails();
+               pd.setPetTypeId(petType.getHostFamilyPetTypeId());
+               pd.setPetTypeName(petType.getHostFamilyPetTypeName());
+               hfPetType.getPetDetails().add(pd);
+            }
+            hfPetType.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, HostFamilyCodes.SUCCESS.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         } else {
+            hfPetType.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, HostFamilyCodes.NO_RECORD.getValue(),
+                  messageUtil.getMessage(CCIConstants.NO_RECORD)));
+         }
+      } catch (CcighgoException e) {
+         hfPetType.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, HostFamilyCodes.ERROR_FETCH_HF_PETTYPE.getValue(), e.getMessage()));
+         LOGGER.error(e.getMessage());
+      }
+      return hfPetType;
+
    }
 
    @Override
@@ -2376,6 +2411,238 @@ public class HFApplicationImpl implements HFApplication {
       // logger.error(messageUtil.getMessage(PartnerAdminMessageConstants.EXCEPTION_WORKQUEUE_CATEGORY));
       // }
       return pwqc;
+   }
+
+   @Override
+   public HFFieldNetworkInformationDetail fetchFieldNetworkInformation(String hfSeasonId, String hfGoId) {
+      HFFieldNetworkInformationDetail info = new HFFieldNetworkInformationDetail();
+      try {
+         // TODO
+         // Static Data Until Phani send The Business Logic
+
+         HFFieldStaffForFieldNetworkInformation hfInfo = new HFFieldStaffForFieldNetworkInformation();
+         hfInfo.setFieldStaffEmail("crespan@gmail.com");
+         hfInfo.setFieldStaffLink("www.creospan.com");
+         hfInfo.setFieldStaffName("StaffName");
+         hfInfo.setFieldStaffPhone("6304880523");
+         hfInfo.setFieldStaffPic("pic1.jpg");
+         hfInfo.setFieldStaffType("Regional Director");
+         info.getFieldStaff().add(hfInfo);
+
+         HFFieldStaffForFieldNetworkInformation hfInfo2 = new HFFieldStaffForFieldNetworkInformation();
+         hfInfo2.setFieldStaffEmail("crespan@gmail.com");
+         hfInfo2.setFieldStaffLink("www.creospan.com");
+         hfInfo2.setFieldStaffName("StaffName");
+         hfInfo2.setFieldStaffPhone("6304880523");
+         hfInfo2.setFieldStaffPic("pic1.jpg");
+         hfInfo2.setFieldStaffType("Regional Director");
+         info.getFieldStaff().add(hfInfo2);
+
+         info.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         // } else {
+         // info.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD,
+         // CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
+         // messageUtil.getMessage(CCIConstants.NO_RECORD)));
+         // }
+
+      } catch (CcighgoException e) {
+         info.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FETCHING_STAFF_FIELD_NETWORK_INFORMATION.getValue(), e.getMessage()));
+         LOGGER.error(e.getMessage());
+      }
+      return info;
+   }
+
+   @Override
+   public HFHostAgainQuestionDetail fetchHostAgainQuestion() {
+      HFHostAgainQuestionDetail detail = new HFHostAgainQuestionDetail();
+      try {
+         // TODO
+         detail.setLikeToHostAgain(true);
+         detail.getHostFor().add("Full Academic Year");
+         detail.getHostFor().add("Short Term");
+
+         detail.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         // } else {
+         // detail.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD,
+         // CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
+         // messageUtil.getMessage(CCIConstants.NO_RECORD)));
+         // }
+
+      } catch (CcighgoException e) {
+         detail.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.FETCHING_HOST_AGAIN_QUESTIONS.getValue(), e.getMessage()));
+         LOGGER.error(e.getMessage());
+      }
+      return detail;
+   }
+
+   @Override
+   public WSDefaultResponse updateHostAgainQuestion(HFHostAgainQuestionDetail detail) {
+      WSDefaultResponse result = new WSDefaultResponse();
+      try {
+         // TODO
+         result.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         // } else {
+         // result.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD,
+         // CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
+         // messageUtil.getMessage(CCIConstants.NO_RECORD)));
+         // }
+
+      } catch (CcighgoException e) {
+         // info.setStatus(componentUtils.getStatus(CCIConstants.FAILURE,
+         // CCIConstants.TYPE_ERROR, ErrorCode.Exce.getValue(),
+         // e.getMessage()));
+         LOGGER.error(e.getMessage());
+      }
+      return result;
+   }
+
+   @Override
+   public WSDefaultResponse updateLandingPage(HFLandingPage hfLandingPage) {
+      WSDefaultResponse result = new WSDefaultResponse();
+      try {
+         // TODO
+         // if(true){
+         result.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         // } else {
+         // result.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD,
+         // CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
+         // messageUtil.getMessage(CCIConstants.NO_RECORD)));
+         // }
+
+      } catch (CcighgoException e) {
+         // info.setStatus(componentUtils.getStatus(CCIConstants.FAILURE,
+         // CCIConstants.TYPE_ERROR, ErrorCode.Exce.getValue(),
+         // e.getMessage()));
+         LOGGER.error(e.getMessage());
+      }
+      return result;
+   }
+
+   @Override
+   public WSDefaultResponse isUserLoggedInForFirstTime(String hfUserId) {
+      WSDefaultResponse result = new WSDefaultResponse();
+      try {
+         // TODO
+         // if(true){
+         result.setBooleanResult(true);
+         result.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         // } else {
+         // result.setStatus(componentUtils.getStatus(CCIConstants.NO_RECORD,
+         // CCIConstants.TYPE_INFO, ErrorCode.NO_RECORD.getValue(),
+         // messageUtil.getMessage(CCIConstants.NO_RECORD)));
+         // }
+
+      } catch (CcighgoException e) {
+         // info.setStatus(componentUtils.getStatus(CCIConstants.FAILURE,
+         // CCIConstants.TYPE_ERROR, ErrorCode.Exce.getValue(),
+         // e.getMessage()));
+         LOGGER.error(e.getMessage());
+      }
+      return result;
+   }
+
+   @Override
+   @Transactional
+   public Response updateHFEmail(String loginId, String email) {
+      Response resp = new Response();
+      if (email == null || email.isEmpty()) {
+         resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage("valid email is required")));
+      }
+      try {
+         Login login = loginRepository.findByEmail(email);
+         if (login != null) {
+            resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+                  messageUtil.getMessage("user with same email already exists")));
+         } else {
+            Login updateLogin = loginRepository.findOne(Integer.valueOf(loginId));
+            updateLogin.setEmail(email);
+            loginRepository.saveAndFlush(updateLogin);
+            resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         }
+      } catch (CcighgoException e) {
+         resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage("an error occured while updating email")));
+      }
+      return resp;
+   }
+
+   @Override
+   @Transactional
+   public Response updateHFUserName(String loginId, String userName) {
+      Response resp = new Response();
+      if (userName == null || userName.isEmpty()) {
+         resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage("valid user name is required")));
+      }
+      try {
+         Login login = loginRepository.findByLoginName(userName);
+         if (login != null) {
+            resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+                  messageUtil.getMessage("user with same username already exists")));
+         } else {
+            Login updateLogin = loginRepository.findOne(Integer.valueOf(loginId));
+            updateLogin.setLoginName(userName);
+            loginRepository.saveAndFlush(updateLogin);
+            resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         }
+      } catch (CcighgoException e) {
+         resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage("an error occured while updating user name")));
+      }
+      return resp;
+   }
+
+   @Override
+   public Response sendTestEmail(String email) {
+      Response resp = new Response();
+      if (email == null || email.isEmpty()) {
+         resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage("valid email is required")));
+      }
+      try{
+         String body = "<p>Ciao! </p>" + "<p>This email was sent automatically by Greenheart Online (GO) in response to your request to test email address. </p>" + "<p>"
+               + "<p>CCI Greenheart</p>";
+         emailService.send(email, CCIConstants.TEST_SUBJECT, body, true);
+         resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.UTILITY_SERVICE_CODE.getValue(),
+               messageUtil.getMessage((CCIConstants.SERVICE_SUCCESS))));
+      }catch (CcighgoException e) {
+         resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage("an error occured while sending test email")));
+      }
+      return resp;
+   }
+
+   @Override
+   @Transactional
+   public Response updatePassword(UpdatedPassword updatedPassword) {
+      Response resp = new Response();
+      if (updatedPassword == null || updatedPassword.getPassword() == null) {
+         resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage("valid password is required")));
+      }
+      try {
+         Login updateLogin = loginRepository.findOne(updatedPassword.getLoginId());
+         if (updateLogin != null) {
+            updateLogin.setPassword(PasswordUtil.hashKey(updatedPassword.getPassword()));
+            loginRepository.saveAndFlush(updateLogin);
+            resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(),
+                  messageUtil.getMessage(CCIConstants.SERVICE_SUCCESS)));
+         } else {
+            resp.setStatus(componentUtils.getStatus(CCIConstants.SUCCESS, CCIConstants.TYPE_INFO, ErrorCode.DEFAULT_CODE.getValue(), messageUtil.getMessage(CCIConstants.NO_RECORD)));
+         }
+      } catch (CcighgoException e) {
+         resp.setStatus(componentUtils.getStatus(CCIConstants.FAILURE, CCIConstants.TYPE_ERROR, ErrorCode.DEFAULT_CODE.getValue(),
+               messageUtil.getMessage("an error occured while updating passsword")));
+      }
+      return resp;
    }
 
 }

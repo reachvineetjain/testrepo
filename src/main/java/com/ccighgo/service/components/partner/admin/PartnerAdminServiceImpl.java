@@ -588,6 +588,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                for (PartnerProgram partnerProgram : partnerPrograms) {
                   AdminPartnerProgramsElgibilityAndCCIContact contact = new AdminPartnerProgramsElgibilityAndCCIContact();
                   contact.setCciContactProgramName(partnerProgram.getLookupDepartmentProgram().getProgramName());
+                  contact.setDepartmentProgramId(partnerProgram.getLookupDepartmentProgram().getLookupDepartmentProgramId());
                   contact.setMarked(partnerProgram.getIsEligible() == CCIConstants.ACTIVE ? true : false);
                   contact.setProgramId((partnerProgram.getPartnerProgramId()));
                   CCIInquiryFormPerson cciContact = new CCIInquiryFormPerson();
