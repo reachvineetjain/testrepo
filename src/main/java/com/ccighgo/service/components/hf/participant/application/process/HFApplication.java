@@ -27,6 +27,7 @@ import com.ccighgo.service.transport.hostfamily.beans.application.photo.upload.H
 import com.ccighgo.service.transport.hostfamily.beans.application.potential.hostfamily.PotentialHostFamily;
 import com.ccighgo.service.transport.hostfamily.beans.application.profile.HFProfile;
 import com.ccighgo.service.transport.hostfamily.beans.application.profile.landingpage.HFLandingPage;
+import com.ccighgo.service.transport.hostfamily.beans.application.profile.update.password.UpdatedPassword;
 import com.ccighgo.service.transport.hostfamily.beans.application.progress.HFApplicationProgress;
 import com.ccighgo.service.transport.hostfamily.beans.application.references.HostFamilyReferences;
 import com.ccighgo.service.transport.hostfamily.beans.application.submit.HFSubmitApplication;
@@ -306,5 +307,29 @@ public interface HFApplication {
    public WSDefaultResponse updateLandingPage(HFLandingPage hfLandingPage);
 
    public WSDefaultResponse isUserLoggedInForFirstTime(String hfUserId);
+   
+   /**
+    * @param email
+    * @return
+    */
+   public Response updateHFEmail(String loginId,String email);
+   
+   /**
+    * @param userName
+    * @return
+    */
+   public Response updateHFUserName(String loginId, String userName);
+   
+   /**
+    * @param email
+    * @return
+    */
+   public Response sendTestEmail(String email);
+   
+   /**
+    * @param email
+    * @return
+    */
+   public Response updatePassword(UpdatedPassword updatedPassword);
 
 }
