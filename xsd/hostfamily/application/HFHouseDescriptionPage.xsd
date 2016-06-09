@@ -49,6 +49,7 @@
            
             <xsd:element name="roomMateName" type="xsd:string" minOccurs="1" maxOccurs="1" />
              <xsd:element name="roomMateGenderId" type="xsd:int" minOccurs="1" maxOccurs="1" />
+             <xsd:element name="roomMateGender" type="xsd:string" minOccurs="1" maxOccurs="1" />
               <xsd:element name="roomMateAge" type="xsd:int" minOccurs="1" maxOccurs="1" /> 
             
             

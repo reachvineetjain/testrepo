@@ -1032,8 +1032,10 @@ public class HFApplicationImpl implements HFApplication {
                // hfh.sharesBedroomWith AS sharesBedroomWith,
                hd.setRoomMateName(String.valueOf(obj[10]));
                // lg.genderName AS sharingBedroomGender,
-               if (obj[11] != null)
+               if (obj[11] != null) {
                   hd.setRoomMateGenderId(Integer.valueOf(String.valueOf(obj[11])));
+                  hd.setRoomMateGender(genderRepository.findOne(Integer.valueOf(String.valueOf(obj[11]))).getGenderName());
+               }
                // hfh.sharingAge AS sharingAge,
                if (obj[12] != null)
                   hd.setRoomMateAge(Integer.valueOf(String.valueOf(obj[12])));
@@ -2198,7 +2200,7 @@ public class HFApplicationImpl implements HFApplication {
          if (members != null && members.size() != 0) {
             for (HostFamilyMember hf : members) {
                HostFamilyMemberDetails hfMD = new HostFamilyMemberDetails();
-               hfMD.setName(hf.getFirstName() + " " + hf.getLastName());
+               hfMD.setRoomMateName(hf.getFirstName() + " " + hf.getLastName());
                hfMD.setHostfamilyMemberId(hf.getHostFamilyMemberId());
                hfMD.setGenderId(hf.getLookupGender().getGenderId());
                hfMD.setGender(hf.getLookupGender().getGenderName());

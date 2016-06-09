@@ -246,6 +246,9 @@ public class CCIConstants {
    public static final Integer VALID = 11;
    public static final Integer INVALID = 12;
    public static final Integer DELETED_STATUS = 13;
+   public static final String PLACED = "Placed";
+   
+
 
    public static final String SUBMITTED = "Submitted";
    public static final String PARTNER_REVIEW = "Partner Review";
