@@ -2200,7 +2200,7 @@ public class HFApplicationImpl implements HFApplication {
          if (members != null && members.size() != 0) {
             for (HostFamilyMember hf : members) {
                HostFamilyMemberDetails hfMD = new HostFamilyMemberDetails();
-               hfMD.setName(hf.getFirstName() + " " + hf.getLastName());
+               hfMD.setRoomMateName(hf.getFirstName() + " " + hf.getLastName());
                hfMD.setHostfamilyMemberId(hf.getHostFamilyMemberId());
                hfMD.setGenderId(hf.getLookupGender().getGenderId());
                hfMD.setGender(hf.getLookupGender().getGenderName());
