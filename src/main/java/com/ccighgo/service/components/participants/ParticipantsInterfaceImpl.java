@@ -672,7 +672,7 @@ public class ParticipantsInterfaceImpl implements ParticipantsInterface {
 						}
 						if (participant.getParticipantStatus().getIsPlacementStatus() == CCIConstants.ACTIVE) {
 							details.setParticipantPlacementStatus(
-									participant.getParticipantStatus().getParticipantStatusName());
+									participant.getParticipantStatus().getParticipantStatusName().equals( CCIConstants.PLACED) ? "Placed" : "Pending");
 							details.setParticipantPlacementStatusId(
 									participant.getParticipantStatus().getParticipantStatusId());
 						}
