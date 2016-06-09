@@ -20,5 +20,10 @@ public interface LookupDepartmentProgramRepository extends JpaRepository<LookupD
 
    @Query("select d from LookupDepartmentProgram d where d.programName = ?1")
    public LookupDepartmentProgram findDepartmentProgramByProgramName(String programName);
+   
+   @Query("select d from LookupDepartmentProgram d where d.lookupDepartmentProgramId = ?1")
+   public LookupDepartmentProgram findDepartmentProgramId(int departmentId);
+   
+   
 
 }

@@ -472,7 +472,7 @@ public class PartnerAdminServiceImpl implements PartnerAdminService {
                PartnerProgram program = new PartnerProgram();
                program.setPartnerProgramId(contact.getProgramId());
                program.setCcistaffUser(cciStaffUsersRepository.findOne(contact.getCciContact().getCciUserId()));
-               program.setLookupDepartmentProgram(lookupDepartmentProgramRepository.findDepartmentProgramByProgramName(contact.getCciContactProgramName()));
+               program.setLookupDepartmentProgram(lookupDepartmentProgramRepository.findDepartmentProgramId(contact.getDepartmentProgramId()));
                if (partner.getIsSubPartner() != null && partner.getIsSubPartner().equals(CCIConstants.TRUE_BYTE)) {
                   Partner partnerProgramsPartner = partnerRepository.findOne(partner.getParentPartnerGoId());
                   program.setPartner(partnerProgramsPartner);
